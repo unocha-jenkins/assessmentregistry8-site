@@ -1,4 +1,4 @@
-uuid: c09967ae-b7f4-497a-8728-49be37efed93
+uuid: cdc7bdc4-f638-456a-bac4-e39ae774fe3f
 langcode: en
 status: true
 dependencies:
@@ -7,12 +7,12 @@ dependencies:
   module:
     - system
   theme:
-    - bartik
+    - common_design_subtheme
 _core:
   default_config_hash: 8a31Ywc1t2zlddGd3bmDrFMefWqgSK2E02ceFdr-bfc
-id: bartik_account_menu
-theme: bartik
-region: secondary_menu
+id: common_design_subtheme_account_menu
+theme: common_design_subtheme
+region: header_top
 weight: 0
 provider: null
 plugin: 'system_menu_block:account'

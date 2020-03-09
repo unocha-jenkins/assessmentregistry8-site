@@ -1,15 +1,15 @@
-uuid: ce0686c5-75bf-46a2-8e3d-d5bd7b56b3d2
+uuid: 17c151c3-a3a9-44b7-ad76-d3bacc6b56ff
 langcode: en
 status: true
 dependencies:
   module:
     - system
   theme:
-    - bartik
+    - common_design_subtheme
 _core:
   default_config_hash: KHQIJ7Vfl25lTjzIc7qIvnuistt-Mw2O0kG4jCofmkI
-id: bartik_messages
-theme: bartik
+id: common_design_subtheme_messages
+theme: common_design_subtheme
 region: highlighted
 weight: 0
 provider: null

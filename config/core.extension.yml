@@ -15,15 +15,19 @@ module:
   filter: 0
   help: 0
   image: 0
+  language: 0
   link: 0
   media: 0
   media_library: 0
   menu_ui: 0
   node: 0
+  ocha_countries: 0
+  ocha_integrations: 0
   options: 0
   page_cache: 0
   path: 0
   path_alias: 0
+  pcb: 0
   quickedit: 0
   rdf: 0
   shortcut: 0
@@ -43,8 +47,9 @@ module:
 theme:
   stable: 0
   classy: 0
-  bartik: 0
   seven: 0
+  common_design: 0
+  common_design_subtheme: 0
 profile: standard
 _core:
   default_config_hash: R4IF-ClDHXxblLcG0L7MgsLvfBIMAvi_skumNFQwkDc

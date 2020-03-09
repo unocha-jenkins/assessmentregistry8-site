@@ -1,13 +1,13 @@
-uuid: ed95a489-efb0-4c63-b3c7-c948820941f5
+uuid: af78c59b-e209-4085-a424-8abd65105b81
 langcode: en
 status: true
 dependencies:
   theme:
-    - bartik
+    - common_design
 _core:
   default_config_hash: 13GQpeITIJsp1kyPniXtWZfyFH87vb1xxJCHifL4UeE
-id: bartik_local_actions
-theme: bartik
+id: common_design_local_actions
+theme: common_design
 region: content
 weight: -20
 provider: null

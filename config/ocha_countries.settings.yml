@@ -1,0 +1,4 @@
+api:
+  endpoint: 'http://vocabulary.unocha.org/json/beta-v1/countries.json'
+_core:
+  default_config_hash: ZGbOKF5LX9Vqv5y_0pwgOCy3Rn51F8hqczqYVX2GhBY

@@ -1,13 +1,13 @@
-uuid: 8a469364-d625-4328-a094-18d0cd7f3f9a
+uuid: c683e46f-6679-44f8-83ad-e78d553d8ec8
 langcode: en
 status: true
 dependencies:
   theme:
-    - bartik
+    - common_design_subtheme
 _core:
   default_config_hash: X9I1OB0W3WlWtrK-CNcg6hNWwa8wficanpH8pYnDZDE
-id: bartik_local_tasks
-theme: bartik
+id: common_design_subtheme_local_tasks
+theme: common_design_subtheme
 region: content
 weight: -40
 provider: null
