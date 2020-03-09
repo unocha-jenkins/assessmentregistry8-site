@@ -1,0 +1,8 @@
+name: OCHA Countries
+description: List of OCHA countries
+package: OCHA Integrations
+type: module
+core: 8.x
+dependencies:
+  - drupal:ocha_integrations
+  - drupal:pcb

@@ -1,0 +1,10 @@
+services:
+  ocha_countries_controller:
+    class: \Drupal\ocha_countries\Controller\OchaCountriesController
+    arguments: ['@http_client', '@config.factory', '@cache.ocha_countries', '@logger.factory', '@state', '@file_system']
+  cache.ocha_countries:
+    class: Drupal\Core\Cache\CacheBackendInterface
+    tags:
+      - { name: cache.bin, default_backend: cache.backend.permanent_database }
+    factory: cache_factory:get
+    arguments: [ocha_countries]

@@ -1,0 +1,56 @@
+<?php
+
+/**
+ * @file
+ * OCHA countries logic.
+ */
+
+use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\ocha_countries\Controller\OchaCountriesController;
+
+/**
+ * Returns a controller.
+ */
+function ocha_countries_get_controller() {
+  return new OchaCountriesController(
+    \Drupal::service('http_client'),
+    \Drupal::service('config.factory'),
+    \Drupal::service('cache.ocha_countries'),
+    \Drupal::service('logger.factory'),
+    \Drupal::service('state'),
+    \Drupal::service('file_system')
+  );
+}
+
+/**
+ * Allowed values callback.
+ *
+ * @param \Drupal\field\Entity\FieldStorageConfig $definition
+ *   The field definition.
+ * @param \Drupal\Core\Entity\ContentEntityInterface|null $entity
+ *   The entity being created if applicable.
+ * @param bool $cacheable
+ *   Boolean indicating if the results are cacheable.
+ *
+ * @return array
+ *   An array of possible key and value options.
+ *
+ * @see options_allowed_values()
+ */
+ function ocha_countries_allowed_values_function(FieldStorageConfig $definition, ContentEntityInterface $entity = NULL, $cacheable) {
+  $controller = ocha_countries_get_controller();
+
+  // Populate cache.
+  return $controller->getAllowedValues();
+}
+
+/**
+ * Implements hook_cron().
+ */
+function ocha_countries_cron() {
+  $controller = ocha_countries_get_controller();
+
+  // Populate cache.
+  $controller->getApiData(TRUE);
+}
