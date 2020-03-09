@@ -204,4 +204,17 @@ class OchaCountriesController extends ControllerBase {
     return $options;
   }
 
+  /**
+   * Get item.
+   */
+  public function getItem($id) {
+    $data = $this->getApiData();
+
+    if (isset($data[$id])) {
+      return $data[$id];
+    }
+
+    return FALSE;
+  }
+
 }

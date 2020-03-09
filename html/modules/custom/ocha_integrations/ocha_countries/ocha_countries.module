@@ -46,6 +46,53 @@ function ocha_countries_get_controller() {
 }
 
 /**
+ * Get one item().
+ */
+function ocha_countries_get_item($id, $langcode = NULL) {
+  $controller = ocha_countries_get_controller();
+
+  $item = $controller->getItem($id);
+  $item->label->translated = $item->label->default;
+
+  if ($langcode) {
+    switch($langcode) {
+      case 'ar':
+        if (isset($item->label->{'arabic-short'})) {
+          $item->label->translated = $item->label->{'arabic-short'};
+        }
+        break;
+
+      case 'cn':
+        if (isset($item->label->{'chinese-short'})) {
+          $item->label->translated = $item->label->{'chinese-short'};
+        }
+        break;
+
+      case 'fr':
+        if (isset($item->label->{'french-short'})) {
+          $item->label->translated = $item->label->{'french-short'};
+        }
+        break;
+
+      case 'ru':
+        if (isset($item->label->{'russian-short'})) {
+          $item->label->translated = $item->label->{'russian-short'};
+        }
+        break;
+
+      case 'es':
+        if (isset($item->label->{'spanish-short'})) {
+          $item->label->translated = $item->label->{'spanish-short'};
+        }
+        break;
+
+    }
+  }
+
+  return $item;
+}
+
+/**
  * Implements hook_cron().
  */
 function ocha_countries_cron() {

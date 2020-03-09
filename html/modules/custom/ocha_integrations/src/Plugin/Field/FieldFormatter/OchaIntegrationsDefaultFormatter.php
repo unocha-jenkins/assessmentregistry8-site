@@ -7,7 +7,6 @@
 namespace Drupal\ocha_integrations\Plugin\Field\FieldFormatter;
 
 use Drupal\options\Plugin\Field\FieldFormatter\OptionsDefaultFormatter;
-
 /**
  * Plugin implementation of the 'ocha_integrations' formatter.
  *

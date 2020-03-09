@@ -5,3 +5,10 @@ api:
     endpoint:
       type: string
       label: 'API endpoint'
+field.formatter.settings.ocha_countries_default:
+  type: mapping
+  label: 'Default formatter settings'
+  mapping:
+    output:
+      type: string
+      label: 'Text Length'
