@@ -26,6 +26,7 @@
         "drupal-composer/drupal-scaffold": "^2.5",
         "drupal/admin_denied": "^1.0",
         "drupal/core": "^8.8.0",
+        "drupal/pcb": "^2.0",
         "drupal/social_auth_hid": "^2.2",
         "unocha/common_design": "^2.4",
         "webflo/drupal-finder": "^1.0.0",
