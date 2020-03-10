@@ -1,0 +1,8 @@
+name: OCHA LocalGroups
+description: List of OCHA local groups
+package: OCHA Integrations
+type: module
+core: 8.x
+dependencies:
+  - drupal:ocha_integrations
+  - drupal:pcb

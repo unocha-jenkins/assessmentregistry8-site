@@ -1,0 +1,63 @@
+<?php
+
+/**
+ * @file
+ * OCHA local groups logic.
+ */
+
+use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\ocha_local_groups\Controller\OchaLocalGroupsController;
+
+/**
+ * Returns a controller.
+ */
+function ocha_local_groups_get_controller() {
+  return new OchaLocalGroupsController(
+    \Drupal::service('http_client'),
+    \Drupal::service('config.factory'),
+    \Drupal::service('cache.ocha_local_groups'),
+    \Drupal::service('logger.factory'),
+    \Drupal::service('state'),
+    \Drupal::service('file_system')
+  );
+}
+
+/**
+ * Allowed values callback.
+ *
+ * @param \Drupal\field\Entity\FieldStorageConfig $definition
+ *   The field definition.
+ * @param \Drupal\Core\Entity\ContentEntityInterface|null $entity
+ *   The entity being created if applicable.
+ * @param bool $cacheable
+ *   Boolean indicating if the results are cacheable.
+ *
+ * @return array
+ *   An array of possible key and value options.
+ *
+ * @see options_allowed_values()
+ */
+function ocha_local_groups_allowed_values_function(FieldStorageConfig $definition, ContentEntityInterface $entity = NULL, $cacheable) {
+  $controller = ocha_local_groups_get_controller();
+  return $controller->getAllowedValues();
+}
+
+/**
+ * Get one item().
+ */
+function ocha_local_groups_get_item($id, $langcode = NULL) {
+  $controller = ocha_local_groups_get_controller();
+
+  return $controller->getItem($id);
+}
+
+/**
+ * Implements hook_cron().
+ */
+function ocha_local_groups_cron() {
+  $controller = ocha_local_groups_get_controller();
+
+  // Populate cache.
+  $controller->getApiData(TRUE);
+}

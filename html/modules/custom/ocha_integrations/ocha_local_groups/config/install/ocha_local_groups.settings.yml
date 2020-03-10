@@ -1,0 +1,2 @@
+api:
+  endpoint: 'https://www.humanitarianresponse.info/api/v1.0/bundles'

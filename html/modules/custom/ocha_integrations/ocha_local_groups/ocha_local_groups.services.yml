@@ -1,0 +1,10 @@
+services:
+  ocha_local_groups_controller:
+    class: \Drupal\ocha_local_groups\Controller\OchaLocalGroupsController
+    arguments: ['@http_client', '@config.factory', '@cache.ocha_local_groups', '@logger.factory', '@state', '@file_system']
+  cache.ocha_local_groups:
+    class: Drupal\Core\Cache\CacheBackendInterface
+    tags:
+      - { name: cache.bin, default_backend: cache.backend.permanent_database }
+    factory: cache_factory:get
+    arguments: [ocha_local_groups]
