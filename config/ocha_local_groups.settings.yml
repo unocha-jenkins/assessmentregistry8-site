@@ -1,0 +1,4 @@
+api:
+  endpoint: 'https://www.humanitarianresponse.info/api/v1.0/bundles'
+_core:
+  default_config_hash: NUslW6IcvLnY2e0Q1IVKrS2E85_r4tO6fClHjMj2vJA

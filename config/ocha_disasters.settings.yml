@@ -1,0 +1,4 @@
+api:
+  endpoint: 'https://api.reliefweb.int/v1/disasters?appname=microservice&preset=external&fields[include][]=glide'
+_core:
+  default_config_hash: O5xO5d-Ru3o3dOVEXGhDGn6QA7-rp0r0us5SRFxTJ0Y

@@ -1,0 +1,94 @@
+uuid: d09295f5-1fbb-4fe2-adaf-3116b9e77f47
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.assessment.field_countries
+    - field.field.node.assessment.field_disasters
+    - field.field.node.assessment.field_local_groups
+    - node.type.assessment
+  module:
+    - ocha_integrations
+    - path
+id: node.assessment.default
+targetEntityType: node
+bundle: assessment
+mode: default
+content:
+  created:
+    type: datetime_timestamp
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_countries:
+    type: ocha_integrations_select
+    weight: 8
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_disasters:
+    type: ocha_integrations_select
+    weight: 9
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_local_groups:
+    type: ocha_integrations_select
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  langcode:
+    type: language_select
+    weight: 1
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 6
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  promote:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 4
+    region: content
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 7
+    region: content
+    third_party_settings: {  }
+  sticky:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 5
+    region: content
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 2
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+      match_limit: 10
+    region: content
+    third_party_settings: {  }
+hidden: {  }

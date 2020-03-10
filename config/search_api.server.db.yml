@@ -1,0 +1,17 @@
+uuid: afc5fed0-5be0-4aca-936f-ab45e90d0c74
+langcode: ru
+status: true
+dependencies:
+  module:
+    - search_api_db
+id: db
+name: DB
+description: ''
+backend: search_api_db
+backend_config:
+  database: 'default:default'
+  min_chars: 1
+  matching: words
+  autocomplete:
+    suggest_suffix: true
+    suggest_words: true

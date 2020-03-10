@@ -1,0 +1,56 @@
+uuid: 062abda5-9e8b-438b-bdb8-18780c91bdbb
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.assessment.field_countries
+    - field.field.node.assessment.field_disasters
+    - field.field.node.assessment.field_local_groups
+    - node.type.assessment
+  module:
+    - ocha_countries
+    - ocha_disasters
+    - ocha_local_groups
+    - user
+id: node.assessment.default
+targetEntityType: node
+bundle: assessment
+mode: default
+content:
+  field_countries:
+    weight: 1
+    label: above
+    settings:
+      output: iso2
+    third_party_settings: {  }
+    type: ocha_countries_default
+    region: content
+  field_disasters:
+    weight: 0
+    label: above
+    settings:
+      output: glide
+    third_party_settings: {  }
+    type: ocha_disasters_default
+    region: content
+  field_local_groups:
+    weight: 3
+    label: above
+    settings:
+      output: extended
+      output_global_cluster: '0'
+      output_lead_agencies: '0'
+      output_partners: '1'
+      output_activation_document: '1'
+      output_operations: '0'
+    third_party_settings: {  }
+    type: ocha_local_groups_default
+    region: content
+  links:
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  langcode: true
+  search_api_excerpt: true
