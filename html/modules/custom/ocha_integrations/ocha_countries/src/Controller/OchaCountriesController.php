@@ -127,7 +127,7 @@ class OchaCountriesController extends ControllerBase {
 
         // Store file in public://json/ocha_countries.json.
         $this->file->prepareDirectory($this->directory, FileSystemInterface::CREATE_DIRECTORY);
-        $this->file->saveData($raw, $this->directory . '/ocha_countries.json', FileSystemInterface::EXISTS_REPLACE);
+        $this->file->saveData(json_encode($data), $this->directory . '/ocha_countries.json', FileSystemInterface::EXISTS_REPLACE);
       }
       else {
         $this->loggerFactory->get('ocha_countries')->error('Fetching ocha_countries failed with @status', [

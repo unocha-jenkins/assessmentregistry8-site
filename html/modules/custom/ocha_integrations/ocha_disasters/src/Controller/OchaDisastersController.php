@@ -158,7 +158,7 @@ class OchaDisastersController extends ControllerBase {
 
       // Store file in public://json/ocha_disasters.json.
       $this->file->prepareDirectory($this->directory, FileSystemInterface::CREATE_DIRECTORY);
-      $this->file->saveData($raw, $this->directory . '/ocha_disasters.json', FileSystemInterface::EXISTS_REPLACE);
+      $this->file->saveData(json_encode($data), $this->directory . '/ocha_disasters.json', FileSystemInterface::EXISTS_REPLACE);
     }
     catch (RequestException $exception) {
       $this->loggerFactory->get('ocha_disasters')->error('Exception while fetching ocha_disasters with @status', [

@@ -155,7 +155,7 @@ class OchaLocalGroupsController extends ControllerBase {
 
       // Store file in public://json/ocha_local_groups.json.
       $this->file->prepareDirectory($this->directory, FileSystemInterface::CREATE_DIRECTORY);
-      $this->file->saveData($raw, $this->directory . '/ocha_local_groups.json', FileSystemInterface::EXISTS_REPLACE);
+      $this->file->saveData(json_encode($data), $this->directory . '/ocha_local_groups.json', FileSystemInterface::EXISTS_REPLACE);
     }
     catch (RequestException $exception) {
       $this->loggerFactory->get('ocha_local_groups')->error('Exception while fetching ocha_local_groups with @status', [
