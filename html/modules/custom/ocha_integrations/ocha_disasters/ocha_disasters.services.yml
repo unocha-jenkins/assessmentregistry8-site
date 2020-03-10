@@ -1,0 +1,10 @@
+services:
+  ocha_disasters_controller:
+    class: \Drupal\ocha_disasters\Controller\OchaDisastersController
+    arguments: ['@http_client', '@config.factory', '@cache.ocha_disasters', '@logger.factory', '@state', '@file_system']
+  cache.ocha_disasters:
+    class: Drupal\Core\Cache\CacheBackendInterface
+    tags:
+      - { name: cache.bin, default_backend: cache.backend.permanent_database }
+    factory: cache_factory:get
+    arguments: [ocha_disasters]

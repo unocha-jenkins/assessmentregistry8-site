@@ -1,0 +1,8 @@
+name: OCHA Disasters
+description: List of OCHA disasters
+package: OCHA Integrations
+type: module
+core: 8.x
+dependencies:
+  - drupal:ocha_integrations
+  - drupal:pcb

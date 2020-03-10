@@ -1,0 +1,2 @@
+api:
+  endpoint: 'https://api.reliefweb.int/v1/disasters?appname=microservice&preset=external&fields[include][]=glide'
