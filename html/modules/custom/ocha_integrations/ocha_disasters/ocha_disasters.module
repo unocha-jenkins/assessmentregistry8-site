@@ -38,7 +38,7 @@ function ocha_disasters_get_controller() {
  *
  * @see options_allowed_values()
  */
- function ocha_disasters_allowed_values_function(FieldStorageConfig $definition, ContentEntityInterface $entity = NULL, $cacheable) {
+function ocha_disasters_allowed_values_function(FieldStorageConfig $definition, ContentEntityInterface $entity = NULL, $cacheable) {
   $controller = ocha_disasters_get_controller();
   return $controller->getAllowedValues();
 }

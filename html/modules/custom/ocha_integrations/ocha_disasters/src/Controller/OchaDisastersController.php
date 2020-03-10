@@ -114,16 +114,13 @@ class OchaDisastersController extends ControllerBase {
 
     // Add limit.
     $api_endpoint .= '&limit=200';
-
-    // Use offset.
-    $offset = 0;
+    $url = $api_endpoint;
 
     // Combined data.
     $combined_data = [];
 
     try {
       while (TRUE) {
-        $url = $api_endpoint . '&offset=' . $offset;
         $this->loggerFactory->get('ocha_disasters')->notice('Fetching ocha_disasters from @url', [
           '@url' => $url,
         ]);
@@ -139,7 +136,13 @@ class OchaDisastersController extends ControllerBase {
           }
 
           $combined_data = array_merge($combined_data, $data->data);
-          $offset += 200;
+
+          if (isset($data->links->next) && isset($data->links->next->href)) {
+            $url = $data->links->next->href;
+          }
+          else {
+            break;
+          }
         }
         else {
           $this->loggerFactory->get('ocha_disasters')->error('Fetching ocha_disasters failed with @status', [
@@ -179,9 +182,9 @@ class OchaDisastersController extends ControllerBase {
     $keyed_data = [];
     foreach ($data as $row) {
       $keyed_data[$row->id] = (object) [
-        'name' => $row->fields->name,
-        'glide' => $row->fields->glide,
-        'status' => $row->fields->status,
+        'name' => trim($row->fields->name),
+        'glide' => trim($row->fields->glide),
+        'status' => trim($row->fields->status),
         'href' => $row->href,
       ];
     }
@@ -224,7 +227,7 @@ class OchaDisastersController extends ControllerBase {
       }
     }
 
-    uasort($options, function($a, $b) {
+    uasort($options, function ($a, $b) {
       return strcmp(iconv('utf8', 'ASCII//TRANSLIT', $a), iconv('utf8', 'ASCII//TRANSLIT', $b));
     });
 

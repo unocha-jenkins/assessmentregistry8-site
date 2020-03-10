@@ -1,8 +1,4 @@
 <?php
-/**
- * @file
- * Contains \Drupal\ocha_countries\Plugin\Field\FieldFormatter\OchaCountriesDefaultFormatter.
- */
 
 namespace Drupal\ocha_countries\Plugin\Field\FieldFormatter;
 
@@ -73,7 +69,7 @@ class OchaCountriesDefaultFormatter extends OchaIntegrationsDefaultFormatter {
         if ($this->getSetting('output') != 'label') {
           // Get item data.
           $data = ocha_countries_get_item($value, $langcode);
-          switch($this->getSetting('output')) {
+          switch ($this->getSetting('output')) {
             case 'label_translated':
               $output = $data->label->translated;
               break;
@@ -98,4 +94,5 @@ class OchaCountriesDefaultFormatter extends OchaIntegrationsDefaultFormatter {
 
     return $elements;
   }
+
 }

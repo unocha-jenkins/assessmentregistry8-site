@@ -1,8 +1,4 @@
 <?php
-/**
- * @file
- * Contains \Drupal\ocha_disasters\Plugin\Field\FieldFormatter\OchaDisastersDefaultFormatter.
- */
 
 namespace Drupal\ocha_disasters\Plugin\Field\FieldFormatter;
 
@@ -71,7 +67,7 @@ class OchaDisastersDefaultFormatter extends OchaIntegrationsDefaultFormatter {
         if ($this->getSetting('output') != 'label') {
           // Get item data.
           $data = ocha_disasters_get_item($value, $langcode);
-          switch($this->getSetting('output')) {
+          switch ($this->getSetting('output')) {
             case 'glide':
               $output = $data->glide;
               break;
@@ -88,4 +84,5 @@ class OchaDisastersDefaultFormatter extends OchaIntegrationsDefaultFormatter {
 
     return $elements;
   }
+
 }

@@ -38,7 +38,7 @@ function ocha_countries_get_controller() {
  *
  * @see options_allowed_values()
  */
- function ocha_countries_allowed_values_function(FieldStorageConfig $definition, ContentEntityInterface $entity = NULL, $cacheable) {
+function ocha_countries_allowed_values_function(FieldStorageConfig $definition, ContentEntityInterface $entity = NULL, $cacheable) {
   $controller = ocha_countries_get_controller();
   return $controller->getAllowedValues();
 }
@@ -53,7 +53,7 @@ function ocha_countries_get_item($id, $langcode = NULL) {
   $item->label->translated = $item->label->default;
 
   if ($langcode) {
-    switch($langcode) {
+    switch ($langcode) {
       case 'ar':
         if (isset($item->label->{'arabic-short'})) {
           $item->label->translated = $item->label->{'arabic-short'};

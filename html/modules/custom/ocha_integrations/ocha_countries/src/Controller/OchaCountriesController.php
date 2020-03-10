@@ -197,7 +197,7 @@ class OchaCountriesController extends ControllerBase {
       $options[$key] = $value->label->default;
     }
 
-    uasort($options, function($a, $b) {
+    uasort($options, function ($a, $b) {
       return strcmp(iconv('utf8', 'ASCII//TRANSLIT', $a), iconv('utf8', 'ASCII//TRANSLIT', $b));
     });
 
