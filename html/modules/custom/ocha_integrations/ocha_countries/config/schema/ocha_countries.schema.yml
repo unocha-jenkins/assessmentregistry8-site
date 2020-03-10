@@ -11,4 +11,4 @@ field.formatter.settings.ocha_countries_default:
   mapping:
     output:
       type: string
-      label: 'Text Length'
+      label: 'Output'

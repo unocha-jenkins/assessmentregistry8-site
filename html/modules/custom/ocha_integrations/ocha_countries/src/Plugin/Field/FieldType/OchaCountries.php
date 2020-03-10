@@ -18,7 +18,7 @@ use Drupal\options\Plugin\Field\FieldType\ListIntegerItem;
  *   description = @Translation("List of OCHA countries."),
  *   category = @Translation("OCHA"),
  *   default_widget = "options_select",
- *   default_formatter = "ocha_integrations_default"
+ *   default_formatter = "ocha_countries_default"
  * )
  */
 class OchaCountries extends ListIntegerItem {

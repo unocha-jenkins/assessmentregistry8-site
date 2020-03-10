@@ -40,8 +40,6 @@ function ocha_countries_get_controller() {
  */
  function ocha_countries_allowed_values_function(FieldStorageConfig $definition, ContentEntityInterface $entity = NULL, $cacheable) {
   $controller = ocha_countries_get_controller();
-
-  // Populate cache.
   return $controller->getAllowedValues();
 }
 

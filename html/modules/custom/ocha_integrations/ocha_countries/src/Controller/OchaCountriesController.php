@@ -123,7 +123,7 @@ class OchaCountriesController extends ControllerBase {
         $raw = $response->getBody()->getContents();
         $data = json_decode($raw);
 
-        return $this->fillCache($data);
+        $data = $this->fillCache($data);
 
         // Store file in public://json/ocha_countries.json.
         $this->file->prepareDirectory($this->directory, FileSystemInterface::CREATE_DIRECTORY);

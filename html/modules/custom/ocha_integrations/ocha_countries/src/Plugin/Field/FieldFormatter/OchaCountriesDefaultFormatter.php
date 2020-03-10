@@ -69,15 +69,8 @@ class OchaCountriesDefaultFormatter extends OchaIntegrationsDefaultFormatter {
       foreach ($items as $delta => $item) {
         $value = $item->value;
 
-        if ($this->getSetting('output') == 'default') {
-          $output = isset($options[$value]) ? $options[$value] : $value;
-          $elements[$delta] = [
-            '#markup' => $output,
-            '#allowed_tags' => FieldFilteredMarkup::allowedTags(),
-          ];
-        }
-        else {
-          $output = isset($options[$value]) ? $options[$value] : $value;
+        $output = isset($options[$value]) ? $options[$value] : $value;
+        if ($this->getSetting('output') != 'label') {
           // Get item data.
           $data = ocha_countries_get_item($value, $langcode);
           switch($this->getSetting('output')) {
@@ -94,12 +87,12 @@ class OchaCountriesDefaultFormatter extends OchaIntegrationsDefaultFormatter {
               break;
 
           }
-
-          $elements[$delta] = [
-            '#markup' => $output,
-            '#allowed_tags' => FieldFilteredMarkup::allowedTags(),
-          ];
         }
+
+        $elements[$delta] = [
+          '#markup' => $output,
+          '#allowed_tags' => FieldFilteredMarkup::allowedTags(),
+        ];
       }
     }
 
