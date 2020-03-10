@@ -1,0 +1,51 @@
+<?php
+
+/**
+ * @file
+ * OCHA locations logic.
+ */
+
+use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\ocha_locations\Controller\OchaLocationsController;
+
+/**
+ * Returns a controller.
+ */
+function ocha_locations_get_controller() {
+  return new OchaLocationsController(
+    \Drupal::service('http_client'),
+    \Drupal::service('config.factory'),
+    \Drupal::service('cache.ocha_locations'),
+    \Drupal::service('logger.factory'),
+    \Drupal::service('state'),
+    \Drupal::service('file_system')
+  );
+}
+
+/**
+ * Allowed values callback.
+ */
+function ocha_locations_allowed_values_by_parent($parent = 0, $grand_parent = 0) {
+  $controller = ocha_locations_get_controller();
+  return $controller->getAllowedValuesByParent($parent, $grand_parent);
+}
+
+/**
+ * Get one item().
+ */
+function ocha_locations_get_item($id, $langcode = NULL) {
+  $controller = ocha_locations_get_controller();
+
+  return $controller->getItem($id);
+}
+
+/**
+ * Implements hook_cron().
+ */
+function ocha_locations_cron() {
+  $controller = ocha_locations_get_controller();
+
+  // Populate cache.
+  $controller->getApiData(TRUE);
+}

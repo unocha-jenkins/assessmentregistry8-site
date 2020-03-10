@@ -1,0 +1,4 @@
+api:
+  endpoint: 'https://www.humanitarianresponse.info/en/api/v1.0/locations'
+_core:
+  default_config_hash: _hz8uyqRBaCKNjl29aPFwc7UWKmwkKdGRN1WB0bTtl4

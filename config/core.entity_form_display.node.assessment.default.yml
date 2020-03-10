@@ -6,9 +6,11 @@ dependencies:
     - field.field.node.assessment.field_countries
     - field.field.node.assessment.field_disasters
     - field.field.node.assessment.field_local_groups
+    - field.field.node.assessment.field_locations
     - node.type.assessment
   module:
     - ocha_integrations
+    - ocha_locations
     - path
 id: node.assessment.default
 targetEntityType: node
@@ -39,6 +41,12 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_locations:
+    weight: 26
+    settings: {  }
+    third_party_settings: {  }
+    type: ocha_locations_select
+    region: content
   langcode:
     type: language_select
     weight: 1

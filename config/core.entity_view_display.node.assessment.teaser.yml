@@ -7,6 +7,7 @@ dependencies:
     - field.field.node.assessment.field_countries
     - field.field.node.assessment.field_disasters
     - field.field.node.assessment.field_local_groups
+    - field.field.node.assessment.field_locations
     - node.type.assessment
   module:
     - user
@@ -24,5 +25,6 @@ hidden:
   field_countries: true
   field_disasters: true
   field_local_groups: true
+  field_locations: true
   langcode: true
   search_api_excerpt: true

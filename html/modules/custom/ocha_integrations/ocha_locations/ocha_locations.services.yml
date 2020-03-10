@@ -1,0 +1,10 @@
+services:
+  ocha_locations_controller:
+    class: \Drupal\ocha_locations\Controller\OchaLocationsController
+    arguments: ['@http_client', '@config.factory', '@cache.ocha_locations', '@logger.factory', '@state', '@file_system']
+  cache.ocha_locations:
+    class: Drupal\Core\Cache\CacheBackendInterface
+    tags:
+      - { name: cache.bin, default_backend: cache.backend.permanent_database }
+    factory: cache_factory:get
+    arguments: [ocha_locations]

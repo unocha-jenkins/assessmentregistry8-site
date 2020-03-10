@@ -1,0 +1,21 @@
+uuid: 68f4e88f-f743-45a0-a884-85a6a4845683
+langcode: ru
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_locations
+    - node.type.assessment
+  module:
+    - ocha_locations
+id: node.assessment.field_locations
+field_name: field_locations
+entity_type: node
+bundle: assessment
+label: Location(s)
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: ocha_locations

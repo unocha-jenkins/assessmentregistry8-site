@@ -6,11 +6,13 @@ dependencies:
     - field.field.node.assessment.field_countries
     - field.field.node.assessment.field_disasters
     - field.field.node.assessment.field_local_groups
+    - field.field.node.assessment.field_locations
     - node.type.assessment
   module:
     - ocha_countries
     - ocha_disasters
     - ocha_local_groups
+    - ocha_locations
     - user
 id: node.assessment.default
 targetEntityType: node
@@ -45,6 +47,14 @@ content:
       output_operations: '0'
     third_party_settings: {  }
     type: ocha_local_groups_default
+    region: content
+  field_locations:
+    weight: 4
+    label: above
+    settings:
+      output: label
+    third_party_settings: {  }
+    type: ocha_locations_default
     region: content
   links:
     weight: 2
