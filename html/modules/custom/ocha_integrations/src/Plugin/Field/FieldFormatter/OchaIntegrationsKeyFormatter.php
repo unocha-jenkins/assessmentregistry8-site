@@ -1,8 +1,4 @@
 <?php
-/**
- * @file
- * Contains \Drupal\ocha_integrations\Plugin\Field\FieldFormatter\OchaIntegrationsKeyFormatter.
- */
 
 namespace Drupal\ocha_integrations\Plugin\Field\FieldFormatter;
 
@@ -15,7 +11,9 @@ use Drupal\options\Plugin\Field\FieldFormatter\OptionsKeyFormatter;
  *   id = "ocha_integrations_key",
  *   label = @Translation("OCHA key formatter"),
  *   field_types = {
- *     "ocha_countries"
+ *     "ocha_countries",
+ *     "ocha_disasters",
+ *     "ocha_local_groups"
  *   }
  * )
  */

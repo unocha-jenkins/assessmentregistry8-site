@@ -1,8 +1,4 @@
 <?php
-/**
- * @file
- * Contains \Drupal\ocha_integrations\Plugin\Field\FieldWidget\OchaIntegrationsOptionsButtonsWidget.
- */
 
 namespace Drupal\ocha_integrations\Plugin\Field\FieldWidget;
 
@@ -15,7 +11,9 @@ use Drupal\Core\Field\Plugin\Field\FieldWidget\OptionsButtonsWidget;
  *   id = "ocha_integrations_buttons",
  *   label = @Translation("OCHA buttons widget"),
  *   field_types = {
- *     "ocha_countries"
+ *     "ocha_countries",
+ *     "ocha_disasters",
+ *     "ocha_local_groups"
  *   },
  *   multiple_values = TRUE
  * )
