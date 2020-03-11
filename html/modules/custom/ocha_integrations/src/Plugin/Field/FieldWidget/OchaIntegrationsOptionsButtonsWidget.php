@@ -13,7 +13,8 @@ use Drupal\Core\Field\Plugin\Field\FieldWidget\OptionsButtonsWidget;
  *   field_types = {
  *     "ocha_countries",
  *     "ocha_disasters",
- *     "ocha_local_groups"
+ *     "ocha_local_groups",
+ *     "ocha_organizations"
  *   },
  *   multiple_values = TRUE
  * )

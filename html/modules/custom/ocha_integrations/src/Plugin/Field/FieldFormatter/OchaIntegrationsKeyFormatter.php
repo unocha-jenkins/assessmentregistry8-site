@@ -13,7 +13,8 @@ use Drupal\options\Plugin\Field\FieldFormatter\OptionsKeyFormatter;
  *   field_types = {
  *     "ocha_countries",
  *     "ocha_disasters",
- *     "ocha_local_groups"
+ *     "ocha_local_groups",
+ *     "ocha_organizations"
  *   }
  * )
  */
