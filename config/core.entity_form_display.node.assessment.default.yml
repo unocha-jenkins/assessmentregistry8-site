@@ -9,6 +9,7 @@ dependencies:
     - field.field.node.assessment.field_local_groups
     - field.field.node.assessment.field_locations
     - field.field.node.assessment.field_organizations
+    - field.field.node.assessment.field_themes
     - node.type.assessment
   module:
     - ocha_integrations
@@ -60,6 +61,12 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: ocha_integrations_select
+    region: content
+  field_themes:
+    weight: 29
+    settings: {  }
+    third_party_settings: {  }
+    type: ocha_integrations_buttons
     region: content
   langcode:
     type: language_select

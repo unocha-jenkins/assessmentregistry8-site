@@ -14,7 +14,8 @@ use Drupal\Core\Field\Plugin\Field\FieldWidget\OptionsSelectWidget;
  *     "ocha_countries",
  *     "ocha_disasters",
  *     "ocha_local_groups",
- *     "ocha_organizations"
+ *     "ocha_organizations",
+ *     "ocha_themes"
  *   },
  *   multiple_values = TRUE
  * )

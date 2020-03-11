@@ -10,6 +10,7 @@ dependencies:
     - field.field.node.assessment.field_local_groups
     - field.field.node.assessment.field_locations
     - field.field.node.assessment.field_organizations
+    - field.field.node.assessment.field_themes
     - node.type.assessment
   module:
     - user
@@ -30,5 +31,6 @@ hidden:
   field_local_groups: true
   field_locations: true
   field_organizations: true
+  field_themes: true
   langcode: true
   search_api_excerpt: true

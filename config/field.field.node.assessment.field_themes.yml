@@ -1,0 +1,21 @@
+uuid: 20633672-c6f9-4cc4-b2e9-59bbed113eaf
+langcode: ru
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_themes
+    - node.type.assessment
+  module:
+    - ocha_themes
+id: node.assessment.field_themes
+field_name: field_themes
+entity_type: node
+bundle: assessment
+label: Theme(s)
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: ocha_themes

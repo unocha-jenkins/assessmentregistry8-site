@@ -1,0 +1,2 @@
+api:
+  endpoint: 'https://api.reliefweb.int/v1/references/themes?appname=assessmentregistry'

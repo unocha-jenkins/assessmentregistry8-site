@@ -1,0 +1,14 @@
+api:
+  type: config_object
+  label: 'OCHA themes API settings'
+  mapping:
+    endpoint:
+      type: string
+      label: 'API endpoint'
+field.formatter.settings.ocha_themes_default:
+  type: mapping
+  label: 'Default formatter settings'
+  mapping:
+    output:
+      type: string
+      label: 'Output'

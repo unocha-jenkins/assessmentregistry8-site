@@ -14,7 +14,8 @@ use Drupal\options\Plugin\Field\FieldFormatter\OptionsKeyFormatter;
  *     "ocha_countries",
  *     "ocha_disasters",
  *     "ocha_local_groups",
- *     "ocha_organizations"
+ *     "ocha_organizations",
+ *     "ocha_themes"
  *   }
  * )
  */

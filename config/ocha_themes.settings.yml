@@ -1,0 +1,4 @@
+api:
+  endpoint: 'https://api.reliefweb.int/v1/references/themes?appname=assessmentregistry'
+_core:
+  default_config_hash: UGeYo1IJY8SgOot5lTFmlunD6KmA9SPOKkAw38edMRk
