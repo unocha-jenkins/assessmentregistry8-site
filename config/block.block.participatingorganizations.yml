@@ -1,0 +1,29 @@
+uuid: 64c7680e-da0c-483c-a020-407988d98c68
+langcode: en
+status: true
+dependencies:
+  config:
+    - facets.facet.participating_organization_s_
+  module:
+    - facets
+    - system
+  theme:
+    - common_design_subtheme
+id: participatingorganizations
+theme: common_design_subtheme
+region: sidebar_first
+weight: 0
+provider: null
+plugin: 'facet_block:participating_organization_s_'
+settings:
+  id: 'facet_block:participating_organization_s_'
+  label: 'Participating Organization(s)'
+  provider: facets
+  label_display: visible
+  block_id: participatingorganizations
+visibility:
+  request_path:
+    id: request_path
+    pages: "/assessments\r\n/assessments/*"
+    negate: false
+    context_mapping: {  }

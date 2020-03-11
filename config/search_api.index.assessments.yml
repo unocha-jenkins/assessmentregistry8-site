@@ -6,6 +6,13 @@ dependencies:
     - node
     - search_api
   config:
+    - field.storage.node.field_local_groups
+    - field.storage.node.field_countries
+    - field.storage.node.field_disasters
+    - field.storage.node.field_locations
+    - field.storage.node.field_organizations
+    - field.storage.node.field_asst_organizations
+    - field.storage.node.field_themes
     - search_api.server.db
 id: assessments
 name: Assessments
@@ -20,6 +27,62 @@ field_settings:
     dependencies:
       module:
         - node
+  field_asst_organizations:
+    label: 'Participating Organization(s)'
+    datasource_id: 'entity:node'
+    property_path: field_asst_organizations
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_asst_organizations
+  field_countries:
+    label: Countries
+    datasource_id: 'entity:node'
+    property_path: field_countries
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_countries
+  field_disasters:
+    label: Disaster(s)/Emergencies
+    datasource_id: 'entity:node'
+    property_path: field_disasters
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_disasters
+  field_local_groups:
+    label: Cluster(s)/Sector(s)
+    datasource_id: 'entity:node'
+    property_path: field_local_groups
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_local_groups
+  field_locations:
+    label: Location(s)
+    datasource_id: 'entity:node'
+    property_path: field_locations
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_locations
+  field_organizations:
+    label: Organization(s)
+    datasource_id: 'entity:node'
+    property_path: field_organizations
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_organizations
+  field_themes:
+    label: Theme(s)
+    datasource_id: 'entity:node'
+    property_path: field_themes
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_themes
   langcode:
     label: Language
     datasource_id: 'entity:node'

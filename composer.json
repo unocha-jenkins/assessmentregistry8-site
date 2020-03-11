@@ -26,6 +26,8 @@
         "drupal-composer/drupal-scaffold": "^2.5",
         "drupal/admin_denied": "^1.0",
         "drupal/core": "^8.8.0",
+        "drupal/facets": "^1.4",
+        "drupal/facets_pretty_paths": "^1.0",
         "drupal/pcb": "^2.0",
         "drupal/search_api": "^1.15",
         "drupal/social_auth_hid": "^2.2",
