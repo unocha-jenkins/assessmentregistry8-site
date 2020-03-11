@@ -251,7 +251,7 @@ class OchaLocationsController extends ControllerBase {
     // Key data by id.
     foreach ($data as $row) {
       $parents = [];
-      foreach($row->parents as $parent) {
+      foreach ($row->parents as $parent) {
         $parents[] = substr($parent, strrpos($parent, '/') + 1);
       }
 

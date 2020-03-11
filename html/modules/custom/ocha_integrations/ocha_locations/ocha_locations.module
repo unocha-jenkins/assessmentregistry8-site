@@ -5,8 +5,6 @@
  * OCHA locations logic.
  */
 
-use Drupal\Core\Entity\ContentEntityInterface;
-use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\ocha_locations\Controller\OchaLocationsController;
 
 /**
