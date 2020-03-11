@@ -1,0 +1,8 @@
+name: OCHA Organizations
+description: List of OCHA organizations
+package: OCHA Integrations
+type: module
+core: 8.x
+dependencies:
+  - drupal:ocha_integrations
+  - drupal:pcb

@@ -1,0 +1,16 @@
+services:
+  ocha_organizations_controller:
+    class: \Drupal\ocha_organizations\Controller\OchaOrganizationsController
+    arguments: ['@http_client', '@config.factory', '@cache.ocha_organizations', '@logger.factory', '@state', '@file_system']
+  cache.ocha_organizations:
+    class: Drupal\Core\Cache\CacheBackendInterface
+    tags:
+      - { name: cache.bin, default_backend: cache.backend.permanent_database }
+    factory: cache_factory:get
+    arguments: [ocha_organizations]
+  cache.organizations:
+    class: Drupal\Core\Cache\CacheBackendInterface
+    tags:
+      - { name: cache.bin, default_backend: cache.backend.permanent_database }
+    factory: cache_factory:get
+    arguments: [organizations]
