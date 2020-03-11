@@ -1,0 +1,21 @@
+uuid: 81bb2c25-88e1-4c1f-85d0-d772dade63d9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_organizations
+    - node.type.assessment
+  module:
+    - ocha_organizations
+id: node.assessment.field_organizations
+field_name: field_organizations
+entity_type: node
+bundle: assessment
+label: organizations
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: ocha_organizations

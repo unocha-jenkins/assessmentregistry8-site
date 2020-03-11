@@ -3,10 +3,12 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.assessment.field_asst_organizations
     - field.field.node.assessment.field_countries
     - field.field.node.assessment.field_disasters
     - field.field.node.assessment.field_local_groups
     - field.field.node.assessment.field_locations
+    - field.field.node.assessment.field_organizations
     - node.type.assessment
   module:
     - ocha_integrations
@@ -23,6 +25,12 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_asst_organizations:
+    weight: 28
+    settings: {  }
+    third_party_settings: {  }
+    type: ocha_integrations_select
+    region: content
   field_countries:
     type: ocha_integrations_select
     weight: 8
@@ -46,6 +54,12 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: ocha_locations_select
+    region: content
+  field_organizations:
+    weight: 27
+    settings: {  }
+    third_party_settings: {  }
+    type: ocha_integrations_select
     region: content
   langcode:
     type: language_select

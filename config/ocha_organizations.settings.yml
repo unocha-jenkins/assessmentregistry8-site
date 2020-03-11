@@ -1,0 +1,4 @@
+api:
+  endpoint: 'https://www.humanitarianresponse.info/api/v1.0/organizations'
+_core:
+  default_config_hash: QU84bIrT-K5qTlaz2extyS_i5oTCG7eOVVzWFFrJvmM

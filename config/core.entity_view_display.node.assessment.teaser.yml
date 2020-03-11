@@ -4,10 +4,12 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.teaser
+    - field.field.node.assessment.field_asst_organizations
     - field.field.node.assessment.field_countries
     - field.field.node.assessment.field_disasters
     - field.field.node.assessment.field_local_groups
     - field.field.node.assessment.field_locations
+    - field.field.node.assessment.field_organizations
     - node.type.assessment
   module:
     - user
@@ -22,9 +24,11 @@ content:
     third_party_settings: {  }
     region: content
 hidden:
+  field_asst_organizations: true
   field_countries: true
   field_disasters: true
   field_local_groups: true
   field_locations: true
+  field_organizations: true
   langcode: true
   search_api_excerpt: true
