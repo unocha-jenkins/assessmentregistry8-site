@@ -7,6 +7,7 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\Field\Plugin\Field\FieldWidget\OptionsSelectWidget;
 
 /**
  * Plugin implementation of the 'ocha_locations' widget.
@@ -19,7 +20,7 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
  *   }
  * )
  */
-class OchaLocationsOptionsSelectWidget extends WidgetBase {
+class OchaLocationsOptionsSelectWidget extends OptionsSelectWidget {
 
   use StringTranslationTrait;
 

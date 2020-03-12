@@ -20,6 +20,15 @@ use Drupal\Core\TypedData\DataDefinition;
  */
 class OchaLocations extends FieldItemBase {
 
+    /**
+   * {@inheritdoc}
+   */
+  public static function defaultStorageSettings() {
+    return [
+      'allowed_values_function' => 'ocha_locations_allowed_values_function',
+    ] + parent::defaultStorageSettings();
+  }
+
   /**
    * {@inheritdoc}
    */

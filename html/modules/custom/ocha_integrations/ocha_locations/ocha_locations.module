@@ -5,6 +5,8 @@
  * OCHA locations logic.
  */
 
+use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\ocha_locations\Controller\OchaLocationsController;
 
 /**
@@ -19,6 +21,26 @@ function ocha_locations_get_controller() {
     \Drupal::service('state'),
     \Drupal::service('file_system')
   );
+}
+
+/**
+ * Allowed values callback.
+ *
+ * @param \Drupal\field\Entity\FieldStorageConfig $definition
+ *   The field definition.
+ * @param \Drupal\Core\Entity\ContentEntityInterface|null $entity
+ *   The entity being created if applicable.
+ * @param bool $cacheable
+ *   Boolean indicating if the results are cacheable.
+ *
+ * @return array
+ *   An array of possible key and value options.
+ *
+ * @see options_allowed_values()
+ */
+function ocha_locations_allowed_values_function(FieldStorageConfig $definition, ContentEntityInterface $entity = NULL, $cacheable) {
+  $controller = ocha_locations_get_controller();
+  return $controller->getAllowedValues();
 }
 
 /**
@@ -52,3 +74,4 @@ function ocha_locations_import_json() {
   $controller = ocha_locations_get_controller();
   $controller->getApiDataFromJson();
 }
+
