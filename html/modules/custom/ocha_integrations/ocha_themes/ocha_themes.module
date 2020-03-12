@@ -48,7 +48,6 @@ function ocha_themes_allowed_values_function(FieldStorageConfig $definition, Con
  */
 function ocha_themes_get_item($id, $langcode = NULL) {
   $controller = ocha_themes_get_controller();
-
   return $controller->getItem($id);
 }
 
@@ -57,7 +56,13 @@ function ocha_themes_get_item($id, $langcode = NULL) {
  */
 function ocha_themes_cron() {
   $controller = ocha_themes_get_controller();
-
-  // Populate cache.
   $controller->getApiData(TRUE);
+}
+
+/**
+ * Load from JSON.
+ */
+function ocha_themes_import_json() {
+  $controller = ocha_themes_get_controller();
+  $controller->getApiDataFromJson();
 }

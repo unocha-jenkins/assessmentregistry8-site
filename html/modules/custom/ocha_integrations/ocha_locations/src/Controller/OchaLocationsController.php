@@ -2,119 +2,46 @@
 
 namespace Drupal\ocha_locations\Controller;
 
-use Drupal\Core\Cache\Cache;
-use Drupal\Core\Cache\CacheBackendInterface;
-use Drupal\Core\Config\ConfigFactoryInterface;
-use Drupal\Core\Controller\ControllerBase;
-use Drupal\Core\File\FileSystemInterface;
-use Drupal\Core\Logger\LoggerChannelFactoryInterface;
-use Drupal\Core\State\State;
-use GuzzleHttp\ClientInterface;
+use Drupal\ocha_integrations\Controller\OchaIntegrationsController;
 use GuzzleHttp\Exception\RequestException;
 
 /**
  * Class OchaLocationsController.
  */
-class OchaLocationsController extends ControllerBase {
-
-  /**
-   * Directory to read/write json files.
-   *
-   * @var string
-   */
-  protected $directory = 'public://json';
-
-  /**
-   * Guzzle client.
-   *
-   * @var GuzzleHttp\ClientInterface
-   */
-  protected $httpClient;
-
-  /**
-   * The config.
-   *
-   * @var \Drupal\Core\Config\Config
-   */
-  protected $config;
-
-  /**
-   * Cache backend.
-   *
-   * @var \Drupal\Core\Cache\CacheBackendInterface
-   */
-  protected $cacheBackend;
-
-  /**
-   * The logger factory.
-   *
-   * @var \Drupal\Core\Logger\LoggerChannelFactory
-   */
-  protected $loggerFactory;
-
-  /**
-   * The state store.
-   *
-   * @var Drupal\Core\State\State
-   */
-  protected $state;
-
-  /**
-   * The file system.
-   *
-   * @var Drupal\Core\File\FileSystem
-   */
-  protected $file;
+class OchaLocationsController extends OchaIntegrationsController {
 
   /**
    * {@inheritdoc}
    */
-  public function __construct(ClientInterface $httpClient, ConfigFactoryInterface $config, CacheBackendInterface $cache, LoggerChannelFactoryInterface $logger_factory, State $state, FileSystemInterface $file) {
-    $this->httpClient = $httpClient;
-    $this->config = $config->get('ocha_locations.settings');
-    $this->cacheBackend = $cache;
-    $this->loggerFactory = $logger_factory;
-    $this->state = $state;
-    $this->file = $file;
-  }
+  protected $settingsName = 'ocha_locations.settings';
 
   /**
-   * Load API data from json.
+   * {@inheritdoc}
    */
-  public function getApiDataFromJson() {
-    if (file_exists($this->directory . '/ocha_locations.json')) {
-      $this->loggerFactory->get('ocha_locations')->notice('Loading data from ocha_locations.json');
+  protected $jsonFilename = 'ocha_locations.json';
 
-      $data = file_get_contents($this->directory . '/ocha_locations.json');
-      $data = json_decode($data);
+  /**
+   * {@inheritdoc}
+   */
+  protected $cacheId = 'ocha_locations:apiData';
 
-      return $this->fillCache($data);
-    }
-  }
+  /**
+   * {@inheritdoc}
+   */
+  protected $cacheTag = 'ocha_locations';
+
+  /**
+   * {@inheritdoc}
+   */
+  protected $loggerId = 'ocha_locations';
 
   /**
    * Get API data.
    */
-  public function getApiData($reset = FALSE) {
-    $cid = 'ocha_locations:apiData';
-
-    // Return cached data.
-    if (!$reset && $cache = $this->cacheBackend->get($cid)) {
-      return $cache->data;
-    }
-
+  public function getApiDataFromEndpoint() {
     $data = [];
-
-    // Load cached data in case of API failures.
-    if ($cache = $this->cacheBackend->get($cid)) {
-      $data = $cache->data;
-    }
-
     $api_endpoint = $this->config->get('api.endpoint');
     $admin_levels = [0, 1, 2];
-
-    // Add limit.
-    $api_endpoint;
 
     try {
       foreach ($admin_levels as $admin_level) {
@@ -122,12 +49,18 @@ class OchaLocationsController extends ControllerBase {
         $combined_data = [];
 
         $ts = $this->state->get('ocha_locations_fetch_and_sync_ts_' . $admin_level);
+
+        // Reset ts if cache is empty.
+        if (empty($this->getCache())) {
+          $ts = 0;
+        }
+
         $url = $api_endpoint . '?filter[admin_level]=' . $admin_level;
         $url .= '&filter[changed][value]=' . $ts . '&filter[changed][operator]=>';
         $url .= '&sort=changed,id';
 
         while (TRUE) {
-          $this->loggerFactory->get('ocha_locations')->notice('Fetching ocha_locations from @url', [
+          $this->loggerFactory->get($this->loggerId)->notice('Fetching ocha_locations from @url', [
             '@url' => $url,
           ]);
 
@@ -151,7 +84,7 @@ class OchaLocationsController extends ControllerBase {
             }
           }
           else {
-            $this->loggerFactory->get('ocha_locations')->error('Fetching ocha_locations failed with @status', [
+            $this->loggerFactory->get($this->loggerId)->error('Fetching ocha_locations failed with @status', [
               '@status' => $response->getStatusCode(),
             ]);
 
@@ -170,33 +103,24 @@ class OchaLocationsController extends ControllerBase {
         $this->state->set('ocha_locations_fetch_and_sync_ts_' . $admin_level, REQUEST_TIME);
       }
 
-      // Store file in public://json/ocha_locations.json.
-      $this->file->prepareDirectory($this->directory, FileSystemInterface::CREATE_DIRECTORY);
-      $this->file->saveData(json_encode($data), $this->directory . '/ocha_locations.json', FileSystemInterface::EXISTS_REPLACE);
+      $this->saveToJson($data);
+      return $data;
     }
     catch (RequestException $exception) {
-      $this->loggerFactory->get('ocha_locations')->error('Exception while fetching ocha_locations with @status', [
+      $this->loggerFactory->get($this->loggerId)->error('Exception while fetching ocha_locations with @status', [
         '@status' => $exception->getMessage(),
       ]);
 
-      // Return cached data.
-      return $data;
+      return [];
     }
-
-    return $data;
   }
 
   /**
    * Fill cache.
    */
   private function fillCache($data) {
-    $cid = 'ocha_locations:apiData';
-
     // Allow updating the cache.
-    $keyed_data = [];
-    if ($cache = $this->cacheBackend->get($cid)) {
-      $keyed_data = $cache->data;
-    }
+    $keyed_data = $this->getCache();
 
     foreach ($data as $row) {
       $keyed_data[$row->id] = (object) [
@@ -214,13 +138,13 @@ class OchaLocationsController extends ControllerBase {
       $keyed_data[$row->id]->parents[] = $row->id;
     }
 
-    $this->loggerFactory->get('ocha_locations')->notice('OCHA locations imported, got @num locations', [
+    $this->loggerFactory->get($this->loggerId)->notice('OCHA locations imported, got @num locations', [
       '@num' => count($keyed_data),
     ]);
 
     // Check if we have fewer locations then last time.
     if (count($keyed_data) < $this->state->get('ocha_locations_count')) {
-      $this->loggerFactory->get('ocha_locations')->error('We had @before locations before, now only @after', [
+      $this->loggerFactory->get($this->loggerId)->error('We had @before locations before, now only @after', [
         '@before' => $this->state->get('ocha_locations_count'),
         '@after' => count($keyed_data),
       ]);
@@ -228,11 +152,7 @@ class OchaLocationsController extends ControllerBase {
     $this->state->set('ocha_locations_count', count($keyed_data));
 
     if (!empty($keyed_data)) {
-      // Cache forever.
-      $this->cacheBackend->set($cid, $keyed_data, Cache::PERMANENT);
-
-      // Invalidate cache.
-      Cache::invalidateTags(['ocha_locations']);
+      $this->populateCache($keyed_data);
     }
 
     return $keyed_data;
@@ -242,11 +162,8 @@ class OchaLocationsController extends ControllerBase {
    * Append to cache.
    */
   private function appendToCache($data) {
-    $cid = 'ocha_locations:apiData';
-
-    if ($cache = $this->cacheBackend->get($cid)) {
-      $keyed_data = $cache->data;
-    }
+    // Allow updating the cache.
+    $keyed_data = $this->getCache();
 
     // Key data by id.
     foreach ($data as $row) {
@@ -280,18 +197,14 @@ class OchaLocationsController extends ControllerBase {
         ];
       }
       else {
-        $this->loggerFactory->get('ocha_locations')->notice('Missing parent @num', [
+        $this->loggerFactory->get($this->loggerId)->notice('Missing parent @num', [
           '@num' => $row->parent[0]->id,
         ]);
       }
     }
 
     if (!empty($keyed_data)) {
-      // Cache forever.
-      $this->cacheBackend->set($cid, $keyed_data, Cache::PERMANENT);
-
-      // Invalidate cache.
-      Cache::invalidateTags(['ocha_locations']);
+      $this->populateCache($keyed_data);
     }
 
     return $keyed_data;
@@ -316,24 +229,9 @@ class OchaLocationsController extends ControllerBase {
       $options[$key] = $value->name;
     }
 
-    uasort($options, function ($a, $b) {
-      return strcmp(iconv('utf8', 'ASCII//TRANSLIT', $a), iconv('utf8', 'ASCII//TRANSLIT', $b));
-    });
+    uasort($options, [$this, 'orderOptions']);
 
     return $options;
-  }
-
-  /**
-   * Get item.
-   */
-  public function getItem($id) {
-    $data = $this->getApiData();
-
-    if (isset($data[$id])) {
-      return $data[$id];
-    }
-
-    return FALSE;
   }
 
 }

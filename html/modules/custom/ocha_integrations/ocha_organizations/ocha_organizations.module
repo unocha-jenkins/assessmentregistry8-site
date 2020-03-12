@@ -48,7 +48,6 @@ function ocha_organizations_allowed_values_function(FieldStorageConfig $definiti
  */
 function ocha_organizations_get_item($id, $langcode = NULL) {
   $controller = ocha_organizations_get_controller();
-
   return $controller->getItem($id);
 }
 
@@ -57,7 +56,14 @@ function ocha_organizations_get_item($id, $langcode = NULL) {
  */
 function ocha_organizations_cron() {
   $controller = ocha_organizations_get_controller();
-
-  // Populate cache.
   $controller->getApiData(TRUE);
 }
+
+/**
+ * Load from JSON.
+ */
+function ocha_organizations_import_json() {
+  $controller = ocha_organizations_get_controller();
+  $controller->getApiDataFromJson();
+}
+

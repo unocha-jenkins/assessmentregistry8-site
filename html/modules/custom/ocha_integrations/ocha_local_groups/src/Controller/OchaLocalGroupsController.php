@@ -2,121 +2,50 @@
 
 namespace Drupal\ocha_local_groups\Controller;
 
-use Drupal\Core\Cache\Cache;
-use Drupal\Core\Cache\CacheBackendInterface;
-use Drupal\Core\Config\ConfigFactoryInterface;
-use Drupal\Core\Controller\ControllerBase;
-use Drupal\Core\File\FileSystemInterface;
-use Drupal\Core\Logger\LoggerChannelFactoryInterface;
-use Drupal\Core\State\State;
-use GuzzleHttp\ClientInterface;
+use Drupal\ocha_integrations\Controller\OchaIntegrationsController;
 use GuzzleHttp\Exception\RequestException;
 
 /**
  * Class OchaLocalGroupsController.
  */
-class OchaLocalGroupsController extends ControllerBase {
-
-  /**
-   * Directory to read/write json files.
-   *
-   * @var string
-   */
-  protected $directory = 'public://json';
-
-  /**
-   * Guzzle client.
-   *
-   * @var GuzzleHttp\ClientInterface
-   */
-  protected $httpClient;
-
-  /**
-   * The config.
-   *
-   * @var \Drupal\Core\Config\Config
-   */
-  protected $config;
-
-  /**
-   * Cache backend.
-   *
-   * @var \Drupal\Core\Cache\CacheBackendInterface
-   */
-  protected $cacheBackend;
-
-  /**
-   * The logger factory.
-   *
-   * @var \Drupal\Core\Logger\LoggerChannelFactory
-   */
-  protected $loggerFactory;
-
-  /**
-   * The state store.
-   *
-   * @var Drupal\Core\State\State
-   */
-  protected $state;
-
-  /**
-   * The file system.
-   *
-   * @var Drupal\Core\File\FileSystem
-   */
-  protected $file;
+class OchaLocalGroupsController extends OchaIntegrationsController {
 
   /**
    * {@inheritdoc}
    */
-  public function __construct(ClientInterface $httpClient, ConfigFactoryInterface $config, CacheBackendInterface $cache, LoggerChannelFactoryInterface $logger_factory, State $state, FileSystemInterface $file) {
-    $this->httpClient = $httpClient;
-    $this->config = $config->get('ocha_local_groups.settings');
-    $this->cacheBackend = $cache;
-    $this->loggerFactory = $logger_factory;
-    $this->state = $state;
-    $this->file = $file;
-  }
+  protected $settingsName = 'ocha_local_groups.settings';
 
   /**
-   * Load API data from json.
+   * {@inheritdoc}
    */
-  public function getApiDataFromJson() {
-    if (file_exists($this->directory . '/ocha_local_groups.json')) {
-      $this->loggerFactory->get('ocha_local_groups')->notice('Loading data from ocha_local_groups.json');
+  protected $jsonFilename = 'ocha_local_groups.json';
 
-      $data = file_get_contents($this->directory . '/ocha_local_groups.json');
-      $data = json_decode($data);
+  /**
+   * {@inheritdoc}
+   */
+  protected $cacheId = 'ocha_local_groups:apiData';
 
-      return $this->fillCache($data);
-    }
-  }
+  /**
+   * {@inheritdoc}
+   */
+  protected $cacheTag = 'ocha_local_groups';
+
+  /**
+   * {@inheritdoc}
+   */
+  protected $loggerId = 'ocha_local_groups';
 
   /**
    * Get API data.
    */
-  public function getApiData($reset = FALSE) {
-    $cid = 'ocha_local_groups:apiData';
-
-    // Return cached data.
-    if (!$reset && $cache = $this->cacheBackend->get($cid)) {
-      return $cache->data;
-    }
-
-    $data = [];
-
-    // Load cached data in case of API failures.
-    if ($cache = $this->cacheBackend->get($cid)) {
-      $data = $cache->data;
-    }
-
+  public function getApiDataFromEndpoint() {
     $api_endpoint = $this->config->get('api.endpoint');
     $url = $api_endpoint;
 
-    // Combined data.
-    $combined_data = [];
-
     try {
+      // Combined data.
+      $combined_data = [];
+
       while (TRUE) {
         $this->loggerFactory->get('ocha_local_groups')->notice('Fetching ocha_local_groups from @url', [
           '@url' => $url,
@@ -146,45 +75,37 @@ class OchaLocalGroupsController extends ControllerBase {
             '@status' => $response->getStatusCode(),
           ]);
 
-          // Return cached data.
-          return $data;
+          return [];
         }
       }
 
       $data = $this->fillCache($combined_data);
-
-      // Store file in public://json/ocha_local_groups.json.
-      $this->file->prepareDirectory($this->directory, FileSystemInterface::CREATE_DIRECTORY);
-      $this->file->saveData(json_encode($data), $this->directory . '/ocha_local_groups.json', FileSystemInterface::EXISTS_REPLACE);
+      $this->saveToJson($data);
+      return $data;
     }
     catch (RequestException $exception) {
       $this->loggerFactory->get('ocha_local_groups')->error('Exception while fetching ocha_local_groups with @status', [
         '@status' => $exception->getMessage(),
       ]);
 
-      // Return cached data.
-      return $data;
+      return [];
     }
-
-    return $data;
   }
 
   /**
    * Fill cache.
    */
   private function fillCache($data) {
-    $cid = 'ocha_local_groups:apiData';
-
     // Key data by id.
     $keyed_data = [];
     foreach ($data as $row) {
       $keyed_data[$row->id] = (object) [
         'name' => trim($row->label),
         'href' => $row->self,
-        'global_cluster' => $row->global_cluster,
+        'global_cluster' => isset($row->global_cluster) ? $row->global_cluster : [],
         'lead_agencies' => $row->lead_agencies,
         'partners' => $row->partners,
-        'activation_document' => $row->activation_document,
+        'activation_document' => isset($row->activation_document) ? $row->activation_document : [],
         'operations' => $row->operation,
       ];
     }
@@ -203,11 +124,7 @@ class OchaLocalGroupsController extends ControllerBase {
     $this->state->set('ocha_local_groups_count', count($keyed_data));
 
     if (!empty($keyed_data)) {
-      // Cache forever.
-      $this->cacheBackend->set($cid, $keyed_data, Cache::PERMANENT);
-
-      // Invalidate cache.
-      Cache::invalidateTags(['ocha_local_groups']);
+      $this->populateCache($keyed_data);
     }
 
     return $keyed_data;
@@ -227,24 +144,9 @@ class OchaLocalGroupsController extends ControllerBase {
       }
     }
 
-    uasort($options, function ($a, $b) {
-      return strcmp(iconv('utf8', 'ASCII//TRANSLIT', $a), iconv('utf8', 'ASCII//TRANSLIT', $b));
-    });
+    uasort($options, [$this, 'orderOptions']);
 
     return $options;
-  }
-
-  /**
-   * Get item.
-   */
-  public function getItem($id) {
-    $data = $this->getApiData();
-
-    if (isset($data[$id])) {
-      return $data[$id];
-    }
-
-    return FALSE;
   }
 
 }

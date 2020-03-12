@@ -95,7 +95,13 @@ function ocha_countries_get_item($id, $langcode = NULL) {
  */
 function ocha_countries_cron() {
   $controller = ocha_countries_get_controller();
-
-  // Populate cache.
   $controller->getApiData(TRUE);
+}
+
+/**
+ * Load from JSON.
+ */
+function ocha_countries_import_json() {
+  $controller = ocha_countries_get_controller();
+  $controller->getApiDataFromJson();
 }

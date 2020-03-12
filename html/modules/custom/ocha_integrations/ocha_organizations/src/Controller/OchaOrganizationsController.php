@@ -2,123 +2,53 @@
 
 namespace Drupal\ocha_organizations\Controller;
 
-use Drupal\Core\Cache\Cache;
-use Drupal\Core\Cache\CacheBackendInterface;
-use Drupal\Core\Config\ConfigFactoryInterface;
-use Drupal\Core\Controller\ControllerBase;
-use Drupal\Core\File\FileSystemInterface;
-use Drupal\Core\Logger\LoggerChannelFactoryInterface;
-use Drupal\Core\State\State;
-use GuzzleHttp\ClientInterface;
+use Drupal\ocha_integrations\Controller\OchaIntegrationsController;
 use GuzzleHttp\Exception\RequestException;
+use stdClass;
 
 /**
  * Class OchaOrganizationsController.
  */
-class OchaOrganizationsController extends ControllerBase {
-
-  /**
-   * Directory to read/write json files.
-   *
-   * @var string
-   */
-  protected $directory = 'public://json';
-
-  /**
-   * Guzzle client.
-   *
-   * @var GuzzleHttp\ClientInterface
-   */
-  protected $httpClient;
-
-  /**
-   * The config.
-   *
-   * @var \Drupal\Core\Config\Config
-   */
-  protected $config;
-
-  /**
-   * Cache backend.
-   *
-   * @var \Drupal\Core\Cache\CacheBackendInterface
-   */
-  protected $cacheBackend;
-
-  /**
-   * The logger factory.
-   *
-   * @var \Drupal\Core\Logger\LoggerChannelFactory
-   */
-  protected $loggerFactory;
-
-  /**
-   * The state store.
-   *
-   * @var Drupal\Core\State\State
-   */
-  protected $state;
-
-  /**
-   * The file system.
-   *
-   * @var Drupal\Core\File\FileSystem
-   */
-  protected $file;
+class OchaOrganizationsController extends OchaIntegrationsController {
 
   /**
    * {@inheritdoc}
    */
-  public function __construct(ClientInterface $httpClient, ConfigFactoryInterface $config, CacheBackendInterface $cache, LoggerChannelFactoryInterface $logger_factory, State $state, FileSystemInterface $file) {
-    $this->httpClient = $httpClient;
-    $this->config = $config->get('ocha_organizations.settings');
-    $this->cacheBackend = $cache;
-    $this->loggerFactory = $logger_factory;
-    $this->state = $state;
-    $this->file = $file;
-  }
+  protected $settingsName = 'ocha_organizations.settings';
 
   /**
-   * Load API data from json.
+   * {@inheritdoc}
    */
-  public function getApiDataFromJson() {
-    if (file_exists($this->directory . '/ocha_organizations.json')) {
-      $this->loggerFactory->get('ocha_organizations')->notice('Loading data from ocha_organizations.json');
+  protected $jsonFilename = 'ocha_organizations.json';
 
-      $data = file_get_contents($this->directory . '/ocha_organizations.json');
-      $data = json_decode($data);
+  /**
+   * {@inheritdoc}
+   */
+  protected $cacheId = 'ocha_organizations:apiData';
 
-      return $this->fillCache($data);
-    }
-  }
+  /**
+   * {@inheritdoc}
+   */
+  protected $cacheTag = 'ocha_organizations';
+
+  /**
+   * {@inheritdoc}
+   */
+  protected $loggerId = 'ocha_organizations';
 
   /**
    * Get API data.
    */
-  public function getApiData($reset = FALSE) {
-    $cid = 'ocha_organizations:apiData';
-
-    // Return cached data.
-    if (!$reset && $cache = $this->cacheBackend->get($cid)) {
-      return $cache->data;
-    }
-
-    $data = [];
-
-    // Load cached data in case of API failures.
-    if ($cache = $this->cacheBackend->get($cid)) {
-      $data = $cache->data;
-    }
-
+  public function getApiDataFromEndpoint() {
     $api_endpoint = $this->config->get('api.endpoint');
     $url = $api_endpoint;
 
-    // Combined data.
-    $combined_data = [];
-
     try {
+      // Combined data.
+      $combined_data = [];
+
       while (TRUE) {
-        $this->loggerFactory->get('ocha_organizations')->notice('Fetching ocha_organizations from @url', [
+        $this->loggerFactory->get($this->loggerId)->notice('Fetching ocha_organizations from @url', [
           '@url' => $url,
         ]);
 
@@ -142,60 +72,52 @@ class OchaOrganizationsController extends ControllerBase {
           }
         }
         else {
-          $this->loggerFactory->get('ocha_organizations')->error('Fetching ocha_organizations failed with @status', [
+          $this->loggerFactory->get($this->loggerId)->error('Fetching ocha_organizations failed with @status', [
             '@status' => $response->getStatusCode(),
           ]);
 
-          // Return cached data.
-          return $data;
+          return [];
         }
       }
 
       $data = $this->fillCache($combined_data);
-
-      // Store file in public://json/ocha_organizations.json.
-      $this->file->prepareDirectory($this->directory, FileSystemInterface::CREATE_DIRECTORY);
-      $this->file->saveData(json_encode($data), $this->directory . '/ocha_organizations.json', FileSystemInterface::EXISTS_REPLACE);
+      $this->saveToJson($data);
+      return $data;
     }
     catch (RequestException $exception) {
-      $this->loggerFactory->get('ocha_organizations')->error('Exception while fetching ocha_organizations with @status', [
+      $this->loggerFactory->get($this->loggerId)->error('Exception while fetching ocha_organizations with @status', [
         '@status' => $exception->getMessage(),
       ]);
 
-      // Return cached data.
-      return $data;
+      return [];
     }
-
-    return $data;
   }
 
   /**
    * Fill cache.
    */
   private function fillCache($data) {
-    $cid = 'ocha_organizations:apiData';
-
     // Key data by id.
     $keyed_data = [];
     foreach ($data as $row) {
       $keyed_data[$row->id] = (object) [
         'name' => trim($row->label),
         'href' => $row->self,
-        'global_cluster' => $row->global_cluster,
-        'lead_agencies' => $row->lead_agencies,
-        'partners' => $row->partners,
-        'activation_document' => $row->activation_document,
-        'operations' => $row->operation,
+        'global_cluster' => isset($row->global_cluster) ? $row->global_cluster : NULL,
+        'lead_agencies' => isset($row->lead_agencies) ? $row->lead_agencies : [],
+        'partners' => isset($row->partners) ? $row->partners : [],
+        'activation_document' => isset($row->activation_document) ? $row->activation_document : NULL,
+        'operations' => isset($row->operation) ? $row->operation : [],
       ];
     }
 
-    $this->loggerFactory->get('ocha_organizations')->notice('OCHA organizations imported, got @num organizations', [
+    $this->loggerFactory->get($this->loggerId)->notice('OCHA organizations imported, got @num organizations', [
       '@num' => count($keyed_data),
     ]);
 
     // Check if we have fewer organizations then last time.
     if (count($keyed_data) < $this->state->get('ocha_organizations_count')) {
-      $this->loggerFactory->get('ocha_organizations')->error('We had @before organizations before, now only @after', [
+      $this->loggerFactory->get($this->loggerId)->error('We had @before organizations before, now only @after', [
         '@before' => $this->state->get('ocha_organizations_count'),
         '@after' => count($keyed_data),
       ]);
@@ -203,11 +125,7 @@ class OchaOrganizationsController extends ControllerBase {
     $this->state->set('ocha_organizations_count', count($keyed_data));
 
     if (!empty($keyed_data)) {
-      // Cache forever.
-      $this->cacheBackend->set($cid, $keyed_data, Cache::PERMANENT);
-
-      // Invalidate cache.
-      Cache::invalidateTags(['ocha_organizations']);
+      $this->populateCache($keyed_data);
     }
 
     return $keyed_data;
@@ -227,24 +145,9 @@ class OchaOrganizationsController extends ControllerBase {
       }
     }
 
-    uasort($options, function ($a, $b) {
-      return strcmp(iconv('utf8', 'ASCII//TRANSLIT', $a), iconv('utf8', 'ASCII//TRANSLIT', $b));
-    });
+    uasort($options, [$this, 'orderOptions']);
 
     return $options;
-  }
-
-  /**
-   * Get item.
-   */
-  public function getItem($id) {
-    $data = $this->getApiData();
-
-    if (isset($data[$id])) {
-      return $data[$id];
-    }
-
-    return FALSE;
   }
 
 }

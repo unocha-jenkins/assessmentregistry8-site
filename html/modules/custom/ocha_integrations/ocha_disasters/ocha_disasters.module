@@ -61,3 +61,11 @@ function ocha_disasters_cron() {
   // Populate cache.
   $controller->getApiData(TRUE);
 }
+
+/**
+ * Load from JSON.
+ */
+function ocha_disasters_import_json() {
+  $controller = ocha_disasters_get_controller();
+  $controller->getApiDataFromJson();
+}

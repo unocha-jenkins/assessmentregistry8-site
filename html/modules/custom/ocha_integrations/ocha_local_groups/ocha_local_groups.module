@@ -48,7 +48,6 @@ function ocha_local_groups_allowed_values_function(FieldStorageConfig $definitio
  */
 function ocha_local_groups_get_item($id, $langcode = NULL) {
   $controller = ocha_local_groups_get_controller();
-
   return $controller->getItem($id);
 }
 
@@ -57,7 +56,13 @@ function ocha_local_groups_get_item($id, $langcode = NULL) {
  */
 function ocha_local_groups_cron() {
   $controller = ocha_local_groups_get_controller();
-
-  // Populate cache.
   $controller->getApiData(TRUE);
+}
+
+/**
+ * Load from JSON.
+ */
+function ocha_local_groups_import_json() {
+  $controller = ocha_local_groups_get_controller();
+  $controller->getApiDataFromJson();
 }

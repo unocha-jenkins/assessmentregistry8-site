@@ -34,7 +34,6 @@ function ocha_locations_allowed_values_by_parent($parent = 0, $grand_parent = 0)
  */
 function ocha_locations_get_item($id, $langcode = NULL) {
   $controller = ocha_locations_get_controller();
-
   return $controller->getItem($id);
 }
 
@@ -43,7 +42,13 @@ function ocha_locations_get_item($id, $langcode = NULL) {
  */
 function ocha_locations_cron() {
   $controller = ocha_locations_get_controller();
-
-  // Populate cache.
   $controller->getApiData(TRUE);
+}
+
+/**
+ * Load from JSON.
+ */
+function ocha_locations_import_json() {
+  $controller = ocha_locations_get_controller();
+  $controller->getApiDataFromJson();
 }
