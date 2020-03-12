@@ -73,7 +73,34 @@ class OchaLocations extends FieldItemBase {
       ->setRequired(FALSE)
       ->setDescription(t('Level 2'));
 
+    $properties['hierarchy'] = DataDefinition::create('string')
+      ->setLabel(t('Hierarchy'))
+      ->setDescription(t('Hierarchy of the levels'))
+      ->setComputed(TRUE)
+      ->setClass('\Drupal\ocha_locations\OchaLocationsHierachy');
+
     return $properties;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setValue($values, $notify = TRUE) {
+    parent::setValue($values);
+    $this->populateComputedValues();
+  }
+
+   /**
+   * Populates computed variables.
+   */
+  protected function populateComputedValues() {
+      $this->hierarchy = $this->level0;
+      if (!empty($this->level1)) {
+        $this->hierarchy .= '|' . $this->level1;
+      }
+      if (!empty($this->level2)) {
+        $this->hierarchy .= '|' . $this->level2;
+      }
   }
 
 }
