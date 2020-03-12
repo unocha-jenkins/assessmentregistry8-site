@@ -1,0 +1,29 @@
+uuid: b9b02c90-1bdb-4230-8449-eb707a518ac0
+langcode: en
+status: true
+dependencies:
+  config:
+    - facets.facet.clusters_sectors
+  module:
+    - facets
+    - system
+  theme:
+    - common_design_subtheme
+id: clusters_sectors
+theme: common_design_subtheme
+region: sidebar_first
+weight: 0
+provider: null
+plugin: 'facet_block:clusters_sectors'
+settings:
+  id: 'facet_block:clusters_sectors'
+  label: Cluster(s)/Sector(s)
+  provider: facets
+  label_display: visible
+  block_id: clusters_sectors
+visibility:
+  request_path:
+    id: request_path
+    pages: "/assessments\r\n/assessments/*"
+    negate: false
+    context_mapping: {  }

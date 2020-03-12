@@ -1,4 +1,4 @@
-uuid: dd7e81fc-5ae3-44a7-b66b-91f848b8894a
+uuid: 2fc2491c-3f1d-46fb-a38a-04392a716758
 langcode: en
 status: true
 dependencies:
@@ -11,18 +11,18 @@ dependencies:
 third_party_settings:
   facets_pretty_paths:
     coder: node_title_coder
-id: participating_organization_s_
-name: 'Participating Organization(s)'
-url_alias: participating-organization
+id: themes
+name: Theme(s)
+url_alias: themes
 weight: 0
 min_count: 1
-show_only_one_result: true
-field_identifier: field_asst_organizations
+show_only_one_result: false
+field_identifier: field_themes
 facet_source_id: 'search_api:views_page__assessments__page_1'
 widget:
-  type: checkbox
+  type: links
   config:
-    show_numbers: true
+    show_numbers: false
     soft_limit: 0
     soft_limit_settings:
       show_less_label: 'Show less'
@@ -36,8 +36,14 @@ expand_hierarchy: false
 enable_parent_when_child_gets_disabled: true
 hard_limit: 0
 exclude: false
-only_visible_when_facet_source_is_visible: false
+only_visible_when_facet_source_is_visible: true
 processor_configs:
+  active_widget_order:
+    processor_id: active_widget_order
+    weights:
+      sort: 20
+    settings:
+      sort: DESC
   display_value_widget_order:
     processor_id: display_value_widget_order
     weights:

@@ -1,0 +1,29 @@
+uuid: d40ad146-4e47-4cbb-a6f1-a575e4e2afab
+langcode: en
+status: true
+dependencies:
+  config:
+    - facets.facet.themes
+  module:
+    - facets
+    - system
+  theme:
+    - common_design_subtheme
+id: themes
+theme: common_design_subtheme
+region: sidebar_first
+weight: 0
+provider: null
+plugin: 'facet_block:themes'
+settings:
+  id: 'facet_block:themes'
+  label: Theme(s)
+  provider: facets
+  label_display: visible
+  block_id: themes
+visibility:
+  request_path:
+    id: request_path
+    pages: "/assessments\r\n/assessments/*"
+    negate: false
+    context_mapping: {  }

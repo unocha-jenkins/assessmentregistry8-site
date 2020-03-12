@@ -68,16 +68,13 @@ display:
         type: fields
       fields:
         created:
+          id: created
           table: search_api_index_assessments
           field: created
-          id: created
-          entity_type: null
-          entity_field: null
-          plugin_id: search_api_field
           relationship: none
           group_type: group
           admin_label: ''
-          label: 'Authored on (indexed field)'
+          label: Date
           exclude: false
           alter:
             alter_text: false
@@ -120,7 +117,10 @@ display:
           hide_alter_empty: true
           click_sort_column: value
           type: timestamp
-          settings: {  }
+          settings:
+            date_format: html_date
+            custom_date_format: ''
+            timezone: ''
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -134,13 +134,16 @@ display:
           field_rendering: true
           fallback_handler: search_api_date
           fallback_options:
-            date_format: small
+            date_format: fallback
             custom_date_format: ''
             timezone: ''
             link_to_item: false
             use_highlighting: false
             multi_type: separator
             multi_separator: ', '
+          entity_type: null
+          entity_field: null
+          plugin_id: search_api_field
         title:
           id: title
           table: search_api_index_assessments
@@ -148,7 +151,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: 'Title (indexed field)'
+          label: Title
           exclude: false
           alter:
             alter_text: false
