@@ -211,7 +211,7 @@ class OchaLocationsController extends OchaIntegrationsController {
   }
 
   /**
-   * Get allowed values.
+   * Get allowed values by parent.
    */
   public function getAllowedValuesByParent($parent = 0, $grand_parent = 0) {
     $data = $this->getApiData();
@@ -240,8 +240,6 @@ class OchaLocationsController extends OchaIntegrationsController {
    * Get allowed values.
    */
   public function getAllowedValues() {
-    \Drupal::logger('getAllowedValues')->notice('called');
-
     $data = $this->getApiData();
     $options = [];
 
