@@ -59,36 +59,7 @@ class AddLocationHierarchy extends AddHierarchy {
     return $processor;
   }
 
-  /**
-   * Retrieves the entity type manager service.
-   *
-   * @return \Drupal\Core\Entity\EntityTypeManagerInterface
-   *   The entity type manager service.
-   */
-  public function getEntityTypeManager() {
-    return $this->entityTypeManager ?: \Drupal::entityTypeManager();
-  }
 
-  /**
-   * Sets the entity type manager service.
-   *
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager service.
-   *
-   * @return $this
-   */
-  public function setEntityTypeManager(EntityTypeManagerInterface $entity_type_manager) {
-    $this->entityTypeManager = $entity_type_manager;
-    return $this;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function supportsIndex(IndexInterface $index) {
-    $processor = new static(['#index' => $index], 'hierarchy', []);
-    return (bool) $processor->getHierarchyFields();
-  }
 
   /**
    * Finds all (potentially) hierarchical fields for this processor's index.
@@ -127,96 +98,27 @@ class AddLocationHierarchy extends AddHierarchy {
   /**
    * {@inheritdoc}
    */
-  public function defaultConfiguration() {
-    return [
-      'fields' => [],
-    ];
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function buildConfigurationForm(array $form, FormStateInterface $formState) {
-    $form['#description'] = $this->t('Select the fields to which hierarchical data should be added.');
-
-    foreach ($this->getHierarchyFields() as $field_id => $options) {
-      $enabled = !empty($this->configuration['fields'][$field_id]);
-      $form['fields'][$field_id]['status'] = [
-        '#type' => 'checkbox',
-        '#title' => $this->index->getField($field_id)->getLabel(),
-        '#default_value' => $enabled,
-      ];
-      reset($options);
-      $form['fields'][$field_id]['property'] = [
-        '#type' => 'radios',
-        '#title' => $this->t('Hierarchy property to use'),
-        '#description' => $this->t("This field has several nested properties which look like they might contain hierarchy data for the field. Please pick the one that should be used."),
-        '#options' => $options,
-        '#default_value' => $enabled ? $this->configuration['fields'][$field_id] : key($options),
-        '#access' => count($options) > 1,
-        '#states' => [
-          'visible' => [
-            // @todo This shouldn't be dependent on the form array structure.
-            //   Use the '#process' trick instead.
-            ":input[name=\"processors[hierarchy][settings][fields][$field_id][status]\"]" => [
-              'checked' => TRUE,
-            ],
-          ],
-        ],
-      ];
-    }
-
-    return $form;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function validateConfigurationForm(array &$form, FormStateInterface $formState) {
-    $fields = [];
-    foreach ($formState->getValue('fields', []) as $field_id => $values) {
-      if (!empty($values['status'])) {
-        if (empty($values['property'])) {
-          $formState->setError($form['fields'][$field_id]['property'], $this->t('You need to select a nested property to use for the hierarchy data.'));
-        }
-        else {
-          $fields[$field_id] = $values['property'];
-        }
-      }
-    }
-    $formState->setValue('fields', $fields);
-    if (!$fields) {
-      $formState->setError($form['fields'], $this->t('You need to select at least one field for which to add hierarchy data.'));
-    }
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function preprocessIndexItems(array $items) {
     /** @var \Drupal\search_api\Item\ItemInterface $item */
     foreach ($items as $item) {
       foreach ($this->configuration['fields'] as $field_id => $property_specifier) {
-        // Convert to a processor that adds the field.
-        $field = $item->getField($field_id . '_hierarchy');
-        $field_values = $field->getValues();
-        \Drupal::logger('my_module')->notice(print_r($field_values, TRUE));
         // Fetch correct field.
         $field = $item->getField($field_id);
         $field_values = $field->getValues();
-        \Drupal::logger('my_module2')->notice(print_r($field_values, TRUE));
 
         if (!$field) {
           continue;
         }
 
-        foreach ($field_values as $idstring) {
-          $ids = explode('|', $idstring);
-          foreach ($ids as $id) {
-            if (!in_array($id, $field_values)) {
-              $field->addValue($id);
+        foreach ($field_values as $id) {
+          // Get all parent ids;
+          $location = ocha_locations_get_item($id);
+          do {
+            if (!in_array($location->id, $field->getValues())) {
+              $field->addValue($location->id);
             }
-          }
+            $location = ocha_locations_get_item($location->parent);
+          } while ($location);
         }
       }
     }
