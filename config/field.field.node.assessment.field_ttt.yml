@@ -1,0 +1,29 @@
+uuid: d6e9c60f-7771-4dad-b110-655848e723b2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ttt
+    - node.type.assessment
+    - taxonomy.vocabulary.test
+id: node.assessment.field_ttt
+field_name: field_ttt
+entity_type: node
+bundle: assessment
+label: ttt
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      test: test
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

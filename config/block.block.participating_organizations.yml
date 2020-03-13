@@ -1,4 +1,4 @@
-uuid: ebdf40b1-a7a9-4c0d-9455-8a8ac368fbbe
+uuid: 6b8e2817-8998-42bd-b04c-bab23c999de4
 langcode: en
 status: true
 dependencies:
@@ -12,7 +12,7 @@ dependencies:
 id: participating_organizations
 theme: common_design_subtheme
 region: sidebar_first
-weight: 0
+weight: -4
 provider: null
 plugin: 'facet_block:participating_organizations'
 settings:

@@ -3,7 +3,6 @@
 namespace Drupal\ocha_integrations\Plugin\facets_pretty_paths\coder;
 
 use Drupal\facets_pretty_paths\Coder\CoderPluginBase;
-use Drupal\taxonomy\Entity\Term;
 
 /**
  * Banana facets pretty paths coder.
