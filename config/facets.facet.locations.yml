@@ -1,4 +1,4 @@
-uuid: 7c8395a7-0678-4985-ab5c-670baa97b873
+uuid: 41ffe431-6af1-4e70-af80-0507f544a03a
 langcode: en
 status: true
 dependencies:
@@ -11,13 +11,13 @@ dependencies:
 third_party_settings:
   facets_pretty_paths:
     coder: ocha_integer_list_coder
-id: clusters_sectors
-name: Cluster(s)/Sector(s)
-url_alias: clusters_sectors
+id: locations
+name: Location(s)
+url_alias: locations
 weight: 0
 min_count: 1
 show_only_one_result: false
-field_identifier: field_local_groups
+field_identifier: field_locations
 facet_source_id: 'search_api:views_page__assessments__page_1'
 widget:
   type: links
@@ -31,11 +31,11 @@ widget:
     reset_text: 'Show all'
     hide_reset_when_no_selection: false
 query_operator: and
-use_hierarchy: false
+use_hierarchy: true
 hierarchy:
-  type: taxonomy
+  type: ocha_locations_hierarchy
   config: {  }
-expand_hierarchy: false
+expand_hierarchy: true
 enable_parent_when_child_gets_disabled: true
 hard_limit: 0
 exclude: false
@@ -45,6 +45,12 @@ processor_configs:
     processor_id: active_widget_order
     weights:
       sort: 20
+    settings:
+      sort: DESC
+  count_widget_order:
+    processor_id: count_widget_order
+    weights:
+      sort: 30
     settings:
       sort: DESC
   display_value_widget_order:

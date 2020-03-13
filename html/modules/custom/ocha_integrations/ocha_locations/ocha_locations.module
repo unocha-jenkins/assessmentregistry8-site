@@ -5,6 +5,8 @@
  * OCHA locations logic.
  */
 
+use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\ocha_locations\Controller\OchaLocationsController;
 
 /**
@@ -23,10 +25,38 @@ function ocha_locations_get_controller() {
 
 /**
  * Allowed values callback.
+ *
+ * @param \Drupal\field\Entity\FieldStorageConfig $definition
+ *   The field definition.
+ * @param \Drupal\Core\Entity\ContentEntityInterface|null $entity
+ *   The entity being created if applicable.
+ * @param bool $cacheable
+ *   Boolean indicating if the results are cacheable.
+ *
+ * @return array
+ *   An array of possible key and value options.
+ *
+ * @see options_allowed_values()
+ */
+function ocha_locations_allowed_values_function(FieldStorageConfig $definition, ContentEntityInterface $entity = NULL, $cacheable) {
+  $controller = ocha_locations_get_controller();
+  return $controller->getAllowedValues();
+}
+
+/**
+ * Allowed values callback.
  */
 function ocha_locations_allowed_values_by_parent($parent = 0, $grand_parent = 0) {
   $controller = ocha_locations_get_controller();
   return $controller->getAllowedValuesByParent($parent, $grand_parent);
+}
+
+/**
+ * Convert children to options.
+ */
+function ocha_locations_children_to_options($location) {
+  $controller = ocha_locations_get_controller();
+  return $controller->getChildrenAsOptions($location);
 }
 
 /**
@@ -52,3 +82,4 @@ function ocha_locations_import_json() {
   $controller = ocha_locations_get_controller();
   $controller->getApiDataFromJson();
 }
+

@@ -1,26 +1,26 @@
-uuid: b18c2d94-1934-4a64-85f4-b37904519de6
+uuid: 859059c3-4b03-48b2-bef0-e3c1c460de9e
 langcode: en
 status: true
 dependencies:
   config:
-    - facets.facet.organizations
+    - facets.facet.locations
   module:
     - facets
     - system
   theme:
     - common_design_subtheme
-id: organizations
+id: locations
 theme: common_design_subtheme
 region: sidebar_first
-weight: -5
+weight: -9
 provider: null
-plugin: 'facet_block:organizations'
+plugin: 'facet_block:locations'
 settings:
-  id: 'facet_block:organizations'
-  label: Organization(s)
+  id: 'facet_block:locations'
+  label: Location(s)
   provider: facets
   label_display: visible
-  block_id: organizations
+  block_id: locations
 visibility:
   request_path:
     id: request_path

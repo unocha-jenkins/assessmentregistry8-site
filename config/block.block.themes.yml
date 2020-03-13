@@ -1,4 +1,4 @@
-uuid: d40ad146-4e47-4cbb-a6f1-a575e4e2afab
+uuid: e2c99c8e-4b8b-4293-b357-337402a3a25a
 langcode: en
 status: true
 dependencies:
@@ -12,7 +12,7 @@ dependencies:
 id: themes
 theme: common_design_subtheme
 region: sidebar_first
-weight: 0
+weight: -3
 provider: null
 plugin: 'facet_block:themes'
 settings:

@@ -7,6 +7,7 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\Field\Plugin\Field\FieldWidget\OptionsSelectWidget;
 
 /**
  * Plugin implementation of the 'ocha_locations' widget.
@@ -19,7 +20,7 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
  *   }
  * )
  */
-class OchaLocationsOptionsSelectWidget extends WidgetBase {
+class OchaLocationsOptionsSelectWidget extends OptionsSelectWidget {
 
   use StringTranslationTrait;
 
@@ -27,54 +28,77 @@ class OchaLocationsOptionsSelectWidget extends WidgetBase {
    * {@inheritdoc}
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
-    // Check form state for Ajax changes.
+    $location_value = $items[$delta]->value;
+    $parents = [];
+
+    // Get new value from AJAX.
     if ($form_state->get('level')) {
       if ($form_state->get('delta') == $delta) {
-        switch ($form_state->get('level')) {
-          case 'l0':
-            $items[$delta]->level0 = $form_state->get('value');
-            break;
-
-          case 'l1':
-            $items[$delta]->level1 = $form_state->get('value');
-            break;
-
-        }
+        $location_value = $form_state->get('value');
       }
     }
 
-    $element['level0'] = [
-      '#type' => 'select',
-      '#options' => ocha_locations_allowed_values_by_parent(),
-      '#title' => $this->t('Level 0'),
-      '#default_value' => isset($items[$delta]->level0) ? $items[$delta]->level0 : '',
-      '#empty_option' => $this->t('- Select admin level 0 -'),
-      '#delta' => $delta,
-      '#level' => 'l0',
-      '#element_validate' => [
-        [$this, 'validate'],
-      ],
-      '#ajax' => [
-        'callback' => [$this, 'changeLevel'],
-        'event' => 'change',
-        'wrapper' => 'ocha-location-wrapper-' . $delta,
-        'progress' => [
-          'type' => 'throbber',
+    if (!empty($location_value)) {
+      $location = ocha_locations_get_item($location_value);
+      do {
+        $parents[] = $location;
+        $location = ocha_locations_get_item($location->parent);
+      } while ($location);
+    }
+
+    // Reverse array so we render parents first.
+    $parents = array_reverse($parents);
+
+    $level_counter = 0;
+    foreach ($parents as $location) {
+      $element['level' . $level_counter] = [
+        '#type' => 'select',
+        '#title' => $this->t('Level @level', ['@level' => $level_counter]),
+        '#default_value' => $location->id,
+        '#empty_option' => $this->t('- Select admin level @level -', ['@level' => $level_counter]),
+        '#delta' => $delta,
+        '#level' => 'l' . $level_counter,
+        '#element_validate' => [
+          [$this, 'validate'],
         ],
-      ],
+        '#ajax' => [
+          'callback' => [$this, 'changeLevel'],
+          'event' => 'change',
+          'wrapper' => 'ocha-location-wrapper-' . $delta,
+          'progress' => [
+            'type' => 'throbber',
+          ],
+        ],
+      ];
+
+      // Set options.
+      if ($level_counter == 0) {
+        $element['level' . $level_counter]['#options'] = ocha_locations_allowed_values_by_parent();
+      }
+      else {
+        $element['level' . $level_counter]['#options'] = ocha_locations_children_to_options($parents[$level_counter - 1]);
+      }
+
+      $level_counter++;
+    }
+
+    $element['level_counter'] = [
+      '#type' => 'value',
+      '#value' => $level_counter,
     ];
 
-    if (isset($items[$delta]->level0) && !empty($items[$delta]->level0)) {
-      $options = ocha_locations_allowed_values_by_parent($items[$delta]->level0);
-      if (count($options)) {
-        $element['level1'] = [
+    // Add next level if needed.
+    if ($level_counter > 0) {
+      $location = end($parents);
+      if (!empty($location->children)) {
+        $element['level' . $level_counter] = [
           '#type' => 'select',
-          '#options' => $options,
-          '#title' => $this->t('Level 1'),
-          '#default_value' => isset($items[$delta]->level1) ? $items[$delta]->level1 : '',
-          '#empty_option' => $this->t('- Select admin level 1 -'),
+          '#options' => ocha_locations_children_to_options($location),
+          '#title' => $this->t('Level @level', ['@level' => $level_counter]),
+          '#default_value' => '',
+          '#empty_option' => $this->t('- Select admin level @level -', ['@level' => $level_counter]),
           '#delta' => $delta,
-          '#level' => 'l1',
+          '#level' => 'l' . $level_counter,
           '#element_validate' => [
             [$this, 'validate'],
           ],
@@ -87,20 +111,29 @@ class OchaLocationsOptionsSelectWidget extends WidgetBase {
             ],
           ],
         ];
-
-        if (isset($items[$delta]->level1) && !empty($items[$delta]->level1)) {
-          $options = ocha_locations_allowed_values_by_parent($items[$delta]->level1, $items[$delta]->level0);
-          if (count($options)) {
-            $element['level2'] = [
-              '#type' => 'select',
-              '#options' => ocha_locations_allowed_values_by_parent($items[$delta]->level1, $items[$delta]->level0),
-              '#title' => $this->t('Level 2'),
-              '#default_value' => isset($items[$delta]->level2) ? $items[$delta]->level2 : '',
-              '#empty_option' => $this->t('- Select admin level 2 -'),
-            ];
-          }
-        }
       }
+    }
+    else {
+      $element['level' . $level_counter] = [
+        '#type' => 'select',
+        '#options' => ocha_locations_allowed_values_by_parent(),
+        '#title' => $this->t('Level @level', ['@level' => $level_counter]),
+        '#default_value' => '',
+        '#empty_option' => $this->t('- Select admin level @level -', ['@level' => $level_counter]),
+        '#delta' => $delta,
+        '#level' => 'l' . $level_counter,
+        '#element_validate' => [
+          [$this, 'validate'],
+        ],
+        '#ajax' => [
+          'callback' => [$this, 'changeLevel'],
+          'event' => 'change',
+          'wrapper' => 'ocha-location-wrapper-' . $delta,
+          'progress' => [
+            'type' => 'throbber',
+          ],
+        ],
+      ];
     }
 
     // If cardinality is 1, ensure a label is output for the field by wrapping
@@ -157,15 +190,13 @@ class OchaLocationsOptionsSelectWidget extends WidgetBase {
    * {@inheritdoc}
    */
   public function massageFormValues(array $values, array $form, FormStateInterface $form_state) {
+
     foreach ($values as $key => $value) {
-      if (empty($value['level0'])) {
-        unset($values[$key]['level0']);
+      if (isset($value['level_counter']) && $value['level_counter'] > 0) {
+        $values[$key]['value'] = $value['level' . ($value['level_counter'] - 1)];
       }
-      if (empty($value['level1'])) {
-        unset($values[$key]['level1']);
-      }
-      if (empty($value['level2'])) {
-        unset($values[$key]['level2']);
+      else {
+        $values[$key]['value'] = $value['level0'];
       }
     }
 

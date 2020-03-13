@@ -1,5 +1,5 @@
-uuid: 0d990a0a-b80b-4781-99ac-6ac3e7857541
-langcode: ru
+uuid: 123a2f5c-ca2c-43a1-955d-f44b425193ff
+langcode: en
 status: true
 dependencies:
   module:
@@ -9,7 +9,9 @@ id: node.field_locations
 field_name: field_locations
 entity_type: node
 type: ocha_locations
-settings: {  }
+settings:
+  allowed_values: {  }
+  allowed_values_function: ocha_locations_allowed_values_function
 module: ocha_locations
 locked: false
 cardinality: -1

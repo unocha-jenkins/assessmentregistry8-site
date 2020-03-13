@@ -2,9 +2,8 @@
 
 namespace Drupal\ocha_locations\Plugin\Field\FieldType;
 
-use Drupal\Core\Field\FieldItemBase;
-use Drupal\Core\Field\FieldStorageDefinitionInterface;
-use Drupal\Core\TypedData\DataDefinition;
+use Drupal\Core\Field\FieldDefinitionInterface;
+use Drupal\options\Plugin\Field\FieldType\ListIntegerItem;
 
 /**
  * Plugin implementation of the 'ocha_locations' field type.
@@ -18,62 +17,24 @@ use Drupal\Core\TypedData\DataDefinition;
  *   default_formatter = "ocha_locations_default"
  * )
  */
-class OchaLocations extends FieldItemBase {
+class OchaLocations extends ListIntegerItem {
 
-  /**
+    /**
    * {@inheritdoc}
    */
-  public static function mainPropertyName() {
-    return 'level0';
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function schema(FieldStorageDefinitionInterface $field_definition) {
+  public static function defaultStorageSettings() {
     return [
-      'columns' => [
-        'level0' => [
-          'type' => 'int',
-        ],
-        'level1' => [
-          'type' => 'int',
-        ],
-        'level2' => [
-          'type' => 'int',
-        ],
-      ],
-    ];
+      'allowed_values_function' => 'ocha_locations_allowed_values_function',
+    ] + parent::defaultStorageSettings();
   }
 
   /**
    * {@inheritdoc}
    */
-  public function isEmpty() {
-    $level0 = $this->get('level0')->getValue();
-    return empty($level0);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition) {
-    $properties['level0'] = DataDefinition::create('integer')
-      ->setLabel(t('Level 0'))
-      ->setRequired(FALSE)
-      ->setDescription(t('Level 0'));
-
-    $properties['level1'] = DataDefinition::create('integer')
-      ->setLabel(t('Level 1'))
-      ->setRequired(FALSE)
-      ->setDescription(t('Level 1'));
-
-    $properties['level2'] = DataDefinition::create('integer')
-      ->setLabel(t('Level 2'))
-      ->setRequired(FALSE)
-      ->setDescription(t('Level 2'));
-
-    return $properties;
+  public static function generateSampleValue(FieldDefinitionInterface $field_definition) {
+    $allowed_options = ocha_locations_allowed_values_by_parent();
+    $values['value'] = array_rand($allowed_options);
+    return $values;
   }
 
 }

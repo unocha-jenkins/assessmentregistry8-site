@@ -10,7 +10,7 @@ dependencies:
     - search_api
 third_party_settings:
   facets_pretty_paths:
-    coder: node_title_coder
+    coder: ocha_integer_list_coder
 id: themes
 name: Theme(s)
 url_alias: themes
@@ -30,8 +30,11 @@ widget:
     show_reset_link: false
     reset_text: 'Show all'
     hide_reset_when_no_selection: false
-query_operator: or
+query_operator: and
 use_hierarchy: false
+hierarchy:
+  type: taxonomy
+  config: {  }
 expand_hierarchy: false
 enable_parent_when_child_gets_disabled: true
 hard_limit: 0

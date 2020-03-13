@@ -5,13 +5,14 @@ dependencies:
   module:
     - node
     - search_api
+    - ocha_locations
   config:
-    - field.storage.node.field_local_groups
+    - field.storage.node.field_asst_organizations
     - field.storage.node.field_countries
     - field.storage.node.field_disasters
+    - field.storage.node.field_local_groups
     - field.storage.node.field_locations
     - field.storage.node.field_organizations
-    - field.storage.node.field_asst_organizations
     - field.storage.node.field_themes
     - search_api.server.db
 id: assessments
@@ -121,6 +122,15 @@ processor_settings:
       preprocess_index: -20
       preprocess_query: -20
   language_with_fallback: {  }
+  location_hierarchy:
+    fields:
+      field_locations:
+        status: 1
+        property:
+          status: 1
+          property: ocha_locations-hierarchy
+    weights:
+      preprocess_index: -45
   rendered_item: {  }
   transliteration:
     all_fields: true

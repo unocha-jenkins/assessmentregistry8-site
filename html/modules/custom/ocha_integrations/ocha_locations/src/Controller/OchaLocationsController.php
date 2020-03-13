@@ -124,6 +124,7 @@ class OchaLocationsController extends OchaIntegrationsController {
 
     foreach ($data as $row) {
       $keyed_data[$row->id] = (object) [
+        'id' => $row->id,
         'name' => trim($row->label),
         'admin_level' => $row->admin_level,
         'pcode' => trim($row->pcode),
@@ -186,6 +187,7 @@ class OchaLocationsController extends OchaIntegrationsController {
 
       if (isset($row->parent[0]->id)) {
         $my_parent->children[$row->id] = (object) [
+          'id' => $row->id,
           'name' => trim($row->label),
           'admin_level' => $row->admin_level,
           'pcode' => trim($row->pcode),
@@ -211,7 +213,7 @@ class OchaLocationsController extends OchaIntegrationsController {
   }
 
   /**
-   * Get allowed values.
+   * Get allowed values by parent.
    */
   public function getAllowedValuesByParent($parent = 0, $grand_parent = 0) {
     $data = $this->getApiData();
@@ -226,12 +228,83 @@ class OchaLocationsController extends OchaIntegrationsController {
     }
 
     foreach ($data as $key => $value) {
-      $options[$key] = $value->name;
+      if (isset($value->name)) {
+        $options[$key] = $value->name;
+      }
     }
 
     uasort($options, [$this, 'orderOptions']);
 
     return $options;
+  }
+
+  /**
+   * Get allowed values.
+   */
+  public function getAllowedValues() {
+    $data = $this->getApiData();
+    $options = [];
+
+    // TODO: Make dynamic.
+    foreach ($data as $key0 => $level0) {
+      if (isset($level0->name)) {
+        $options[$key0] = $level0->name;
+      }
+      foreach ($level0->children as $key1 => $level1) {
+        if (isset($level1->name)) {
+          $options[$key1] = $level1->name;
+        }
+        foreach ($level1->children as $key2 => $level2) {
+          if (isset($level2->name)) {
+            $options[$key2] = $level2->name;
+          }
+        }
+      }
+    }
+
+    uasort($options, [$this, 'orderOptions']);
+
+    return $options;
+  }
+
+  /**
+   * Get children as options.
+   */
+  public function getChildrenAsOptions($location) {
+    $options = [];
+    foreach ($location->children as $child) {
+      $options[$child->id] = $child->name;
+    }
+
+    uasort($options, [$this, 'orderOptions']);
+
+    return $options;
+  }
+
+  /**
+   * Get item.
+   */
+  public function getItem($id) {
+    $data = $this->getApiData();
+
+    // TODO: Make dynamic.
+    foreach ($data as $key0 => $level0) {
+      if ($key0 == $id) {
+        return $level0;
+      }
+      foreach ($level0->children as $key1 => $level1) {
+        if ($key1 == $id) {
+          return $level1;
+        }
+        foreach ($level1->children as $key2 => $level2) {
+          if ($key2 == $id) {
+            return $level2;
+          }
+        }
+      }
+    }
+
+    return FALSE;
   }
 
 }
