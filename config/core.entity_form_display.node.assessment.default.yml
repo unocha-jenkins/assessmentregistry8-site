@@ -10,7 +10,6 @@ dependencies:
     - field.field.node.assessment.field_locations
     - field.field.node.assessment.field_organizations
     - field.field.node.assessment.field_themes
-    - field.field.node.assessment.field_ttt
     - node.type.assessment
   module:
     - ocha_integrations
@@ -68,16 +67,6 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: ocha_integrations_select
-    region: content
-  field_ttt:
-    weight: 30
-    settings:
-      match_operator: CONTAINS
-      match_limit: 10
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: entity_reference_autocomplete
     region: content
   langcode:
     type: language_select

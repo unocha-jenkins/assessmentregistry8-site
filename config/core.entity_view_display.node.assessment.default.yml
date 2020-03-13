@@ -10,7 +10,6 @@ dependencies:
     - field.field.node.assessment.field_locations
     - field.field.node.assessment.field_organizations
     - field.field.node.assessment.field_themes
-    - field.field.node.assessment.field_ttt
     - node.type.assessment
   module:
     - ocha_countries
@@ -81,14 +80,6 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: ocha_integrations_default
-    region: content
-  field_ttt:
-    weight: 8
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    type: entity_reference_label
     region: content
   links:
     weight: 2
