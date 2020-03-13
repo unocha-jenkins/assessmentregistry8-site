@@ -2,6 +2,7 @@
 
 namespace Drupal\ocha_locations\Plugin\Field\FieldType;
 
+use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\options\Plugin\Field\FieldType\ListIntegerItem;
 
 /**
@@ -25,6 +26,15 @@ class OchaLocations extends ListIntegerItem {
     return [
       'allowed_values_function' => 'ocha_locations_allowed_values_function',
     ] + parent::defaultStorageSettings();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function generateSampleValue(FieldDefinitionInterface $field_definition) {
+    $allowed_options = ocha_locations_allowed_values_by_parent();
+    $values['value'] = array_rand($allowed_options);
+    return $values;
   }
 
 }

@@ -245,6 +245,7 @@ class OchaLocationsController extends OchaIntegrationsController {
     $data = $this->getApiData();
     $options = [];
 
+    // TODO: Make dynamic.
     foreach ($data as $key0 => $level0) {
       if (isset($level0->name)) {
         $options[$key0] = $level0->name;
@@ -286,6 +287,7 @@ class OchaLocationsController extends OchaIntegrationsController {
   public function getItem($id) {
     $data = $this->getApiData();
 
+    // TODO: Make dynamic.
     foreach ($data as $key0 => $level0) {
       if ($key0 == $id) {
         return $level0;
