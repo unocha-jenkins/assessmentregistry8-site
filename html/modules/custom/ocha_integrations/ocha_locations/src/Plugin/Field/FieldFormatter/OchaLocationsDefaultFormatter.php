@@ -53,18 +53,19 @@ class OchaLocationsDefaultFormatter extends FormatterBase {
 
     if ($items->count()) {
       foreach ($items as $delta => $item) {
-        $data = ocha_locations_get_item($item->level0);
-        $output = $data->name;
+        $parents = [];
+        $location_value = $item->value;
 
-        if (isset($item->level1)) {
-          $data = $data->children[$item->level1];
-          $output .= ' - ' . $data->name;
-
-          if (isset($item->level2)) {
-            $data = $data->children[$item->level2];
-            $output .= ' - ' . $data->name;
-          }
+        if (!empty($location_value)) {
+          $location = ocha_locations_get_item($location_value);
+          do {
+            $parents[] = $location->name;
+            $location = ocha_locations_get_item($location->parent);
+          } while ($location);
         }
+
+        $parents = array_reverse($parents);
+        $output = implode(' - ', $parents);
 
         $elements[$delta] = [
           '#markup' => $output,

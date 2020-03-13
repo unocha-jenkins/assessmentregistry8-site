@@ -124,6 +124,7 @@ class OchaLocationsController extends OchaIntegrationsController {
 
     foreach ($data as $row) {
       $keyed_data[$row->id] = (object) [
+        'id' => $row->id,
         'name' => trim($row->label),
         'admin_level' => $row->admin_level,
         'pcode' => trim($row->pcode),
@@ -186,6 +187,7 @@ class OchaLocationsController extends OchaIntegrationsController {
 
       if (isset($row->parent[0]->id)) {
         $my_parent->children[$row->id] = (object) [
+          'id' => $row->id,
           'name' => trim($row->label),
           'admin_level' => $row->admin_level,
           'pcode' => trim($row->pcode),
@@ -262,6 +264,45 @@ class OchaLocationsController extends OchaIntegrationsController {
     uasort($options, [$this, 'orderOptions']);
 
     return $options;
+  }
+
+  /**
+   * Get children as options.
+   */
+  public function getChildrenAsOptions($location) {
+    $options = [];
+    foreach ($location->children as $child) {
+      $options[$child->id] = $child->name;
+    }
+
+    uasort($options, [$this, 'orderOptions']);
+
+    return $options;
+  }
+
+  /**
+   * Get item.
+   */
+  public function getItem($id) {
+    $data = $this->getApiData();
+
+    foreach ($data as $key0 => $level0) {
+      if ($key0 == $id) {
+        return $level0;
+      }
+      foreach ($level0->children as $key1 => $level1) {
+        if ($key1 == $id) {
+          return $level1;
+        }
+        foreach ($level1->children as $key2 => $level2) {
+          if ($key2 == $id) {
+            return $level2;
+          }
+        }
+      }
+    }
+
+    return FALSE;
   }
 
 }

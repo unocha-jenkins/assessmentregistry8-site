@@ -114,9 +114,6 @@ class AddLocationHierarchy extends AddHierarchy {
         if ($definition->getDataType() == 'field_item:ocha_locations') {
           $field_options[$field_id] = [
             'ocha_locations-hierarchy' => 'OCHA locations » Hierarchy',
-            'ocha_locations-level0' => 'OCHA locations » Level 0',
-            'ocha_locations-level1' => 'OCHA locations » Level 1',
-            'ocha_locations-level2' => 'OCHA locations » Level 2',
           ];
         }
       }
@@ -203,9 +200,11 @@ class AddLocationHierarchy extends AddHierarchy {
         // Convert to a processor that adds the field.
         $field = $item->getField($field_id . '_hierarchy');
         $field_values = $field->getValues();
-
+        \Drupal::logger('my_module')->notice(print_r($field_values, TRUE));
         // Fetch correct field.
         $field = $item->getField($field_id);
+        $field_values = $field->getValues();
+        \Drupal::logger('my_module2')->notice(print_r($field_values, TRUE));
 
         if (!$field) {
           continue;

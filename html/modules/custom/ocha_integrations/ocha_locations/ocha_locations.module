@@ -52,6 +52,14 @@ function ocha_locations_allowed_values_by_parent($parent = 0, $grand_parent = 0)
 }
 
 /**
+ * Convert children to options.
+ */
+function ocha_locations_children_to_options($location) {
+  $controller = ocha_locations_get_controller();
+  return $controller->getChildrenAsOptions($location);
+}
+
+/**
  * Get one item().
  */
 function ocha_locations_get_item($id, $langcode = NULL) {
