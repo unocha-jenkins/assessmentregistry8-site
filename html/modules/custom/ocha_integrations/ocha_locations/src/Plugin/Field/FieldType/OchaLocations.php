@@ -19,7 +19,7 @@ use Drupal\options\Plugin\Field\FieldType\ListIntegerItem;
  */
 class OchaLocations extends ListIntegerItem {
 
-    /**
+  /**
    * {@inheritdoc}
    */
   public static function defaultStorageSettings() {

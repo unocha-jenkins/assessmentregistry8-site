@@ -66,4 +66,3 @@ function ocha_organizations_import_json() {
   $controller = ocha_organizations_get_controller();
   $controller->getApiDataFromJson();
 }
-

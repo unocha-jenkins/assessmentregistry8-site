@@ -2,16 +2,7 @@
 
 namespace Drupal\ocha_locations\Plugin\search_api\processor;
 
-use Drupal\Core\Entity\ContentEntityInterface;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Entity\TypedData\EntityDataDefinitionInterface;
-use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\TypedData\ComplexDataDefinitionInterface;
-use Drupal\search_api\IndexInterface;
-use Drupal\search_api\Item\FieldInterface;
 use Drupal\search_api\Plugin\PluginFormTrait;
-use Drupal\search_api\Plugin\search_api\data_type\value\TextValue;
-use Drupal\search_api\Utility\Utility;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\search_api\Plugin\search_api\processor\AddHierarchy;
 
@@ -58,8 +49,6 @@ class AddLocationHierarchy extends AddHierarchy {
 
     return $processor;
   }
-
-
 
   /**
    * Finds all (potentially) hierarchical fields for this processor's index.
@@ -111,7 +100,7 @@ class AddLocationHierarchy extends AddHierarchy {
         }
 
         foreach ($field_values as $id) {
-          // Get all parent ids;
+          // Get all parent ids.
           $location = ocha_locations_get_item($id);
           do {
             if (!in_array($location->id, $field->getValues())) {

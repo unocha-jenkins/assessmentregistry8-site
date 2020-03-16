@@ -82,4 +82,3 @@ function ocha_locations_import_json() {
   $controller = ocha_locations_get_controller();
   $controller->getApiDataFromJson();
 }
-

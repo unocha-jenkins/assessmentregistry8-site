@@ -1,8 +1,4 @@
 <?php
-/**
- * @file
- * Contains \Drupal\ocha_locations\OchaLocationsHierachy.
- */
 
 namespace Drupal\ocha_locations;
 
@@ -51,4 +47,5 @@ class OchaLocationsHierachy extends TypedData {
       $this->parent->onChange($this->name);
     }
   }
+
 }

@@ -4,7 +4,6 @@ namespace Drupal\ocha_organizations\Controller;
 
 use Drupal\ocha_integrations\Controller\OchaIntegrationsController;
 use GuzzleHttp\Exception\RequestException;
-use stdClass;
 
 /**
  * Class OchaOrganizationsController.
