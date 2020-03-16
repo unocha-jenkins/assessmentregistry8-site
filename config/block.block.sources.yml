@@ -1,0 +1,29 @@
+uuid: 371f6ace-e72d-47bb-b289-516621f57d35
+langcode: en
+status: true
+dependencies:
+  config:
+    - facets.facet.sources
+  module:
+    - facets
+    - system
+  theme:
+    - common_design_subtheme
+id: sources
+theme: common_design_subtheme
+region: sidebar_first
+weight: 0
+provider: null
+plugin: 'facet_block:sources'
+settings:
+  id: 'facet_block:sources'
+  label: Source(s)
+  provider: facets
+  label_display: visible
+  block_id: sources
+visibility:
+  request_path:
+    id: request_path
+    pages: "/assessments\r\n/assessments/*"
+    negate: false
+    context_mapping: {  }

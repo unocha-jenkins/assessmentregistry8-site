@@ -4,13 +4,17 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.teaser
+    - field.field.node.assessment.field_ass_date
     - field.field.node.assessment.field_asst_organizations
     - field.field.node.assessment.field_countries
     - field.field.node.assessment.field_disasters
     - field.field.node.assessment.field_local_groups
     - field.field.node.assessment.field_locations
     - field.field.node.assessment.field_organizations
+    - field.field.node.assessment.field_other_location
+    - field.field.node.assessment.field_population_types
     - field.field.node.assessment.field_sources
+    - field.field.node.assessment.field_status
     - field.field.node.assessment.field_themes
     - node.type.assessment
   module:
@@ -26,13 +30,17 @@ content:
     third_party_settings: {  }
     region: content
 hidden:
+  field_ass_date: true
   field_asst_organizations: true
   field_countries: true
   field_disasters: true
   field_local_groups: true
   field_locations: true
   field_organizations: true
+  field_other_location: true
+  field_population_types: true
   field_sources: true
+  field_status: true
   field_themes: true
   langcode: true
   search_api_excerpt: true

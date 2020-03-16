@@ -3,16 +3,21 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.assessment.field_ass_date
     - field.field.node.assessment.field_asst_organizations
     - field.field.node.assessment.field_countries
     - field.field.node.assessment.field_disasters
     - field.field.node.assessment.field_local_groups
     - field.field.node.assessment.field_locations
     - field.field.node.assessment.field_organizations
+    - field.field.node.assessment.field_other_location
+    - field.field.node.assessment.field_population_types
     - field.field.node.assessment.field_sources
+    - field.field.node.assessment.field_status
     - field.field.node.assessment.field_themes
     - node.type.assessment
   module:
+    - datetime_range
     - ocha_integrations
     - ocha_locations
     - path
@@ -27,6 +32,12 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_ass_date:
+    weight: 34
+    settings: {  }
+    third_party_settings: {  }
+    type: daterange_default
+    region: content
   field_asst_organizations:
     weight: 28
     settings: {  }
@@ -63,11 +74,31 @@ content:
     third_party_settings: {  }
     type: ocha_integrations_select
     region: content
+  field_other_location:
+    weight: 35
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_population_types:
+    weight: 36
+    settings: {  }
+    third_party_settings: {  }
+    type: ocha_integrations_select
+    region: content
   field_sources:
     weight: 32
     settings: {  }
     third_party_settings: {  }
     type: ocha_integrations_select
+    region: content
+  field_status:
+    weight: 33
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
     region: content
   field_themes:
     weight: 29

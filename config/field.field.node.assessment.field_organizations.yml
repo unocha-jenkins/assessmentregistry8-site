@@ -11,7 +11,7 @@ id: node.assessment.field_organizations
 field_name: field_organizations
 entity_type: node
 bundle: assessment
-label: Organization(s)
+label: 'Leading/Coordinating Organization(s)'
 description: ''
 required: false
 translatable: false

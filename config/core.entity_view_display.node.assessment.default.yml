@@ -3,27 +3,43 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.assessment.field_ass_date
     - field.field.node.assessment.field_asst_organizations
     - field.field.node.assessment.field_countries
     - field.field.node.assessment.field_disasters
     - field.field.node.assessment.field_local_groups
     - field.field.node.assessment.field_locations
     - field.field.node.assessment.field_organizations
+    - field.field.node.assessment.field_other_location
+    - field.field.node.assessment.field_population_types
     - field.field.node.assessment.field_sources
+    - field.field.node.assessment.field_status
     - field.field.node.assessment.field_themes
     - node.type.assessment
   module:
+    - datetime_range
     - ocha_countries
     - ocha_disasters
     - ocha_integrations
     - ocha_local_groups
     - ocha_locations
+    - options
     - user
 id: node.assessment.default
 targetEntityType: node
 bundle: assessment
 mode: default
 content:
+  field_ass_date:
+    weight: 12
+    label: above
+    settings:
+      separator: '-'
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: daterange_default
+    region: content
   field_asst_organizations:
     weight: 6
     label: above
@@ -75,12 +91,34 @@ content:
     third_party_settings: {  }
     type: ocha_integrations_default
     region: content
+  field_other_location:
+    weight: 13
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_population_types:
+    weight: 14
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: ocha_integrations_default
+    region: content
   field_sources:
     weight: 10
     label: above
     settings: {  }
     third_party_settings: {  }
     type: ocha_integrations_default
+    region: content
+  field_status:
+    weight: 11
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
     region: content
   field_themes:
     weight: 7

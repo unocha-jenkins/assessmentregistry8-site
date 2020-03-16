@@ -13,6 +13,7 @@ dependencies:
     - field.storage.node.field_locations
     - field.storage.node.field_organizations
     - field.storage.node.field_asst_organizations
+    - field.storage.node.field_population_types
     - field.storage.node.field_sources
     - field.storage.node.field_themes
     - search_api.server.db
@@ -77,6 +78,14 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_organizations
+  field_population_types:
+    label: 'Population Type(s)'
+    datasource_id: 'entity:node'
+    property_path: field_population_types
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_population_types
   field_sources:
     label: Source(s)
     datasource_id: 'entity:node'
