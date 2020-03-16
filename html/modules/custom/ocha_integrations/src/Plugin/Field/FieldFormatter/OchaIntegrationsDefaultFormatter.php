@@ -15,7 +15,8 @@ use Drupal\options\Plugin\Field\FieldFormatter\OptionsDefaultFormatter;
  *     "ocha_disasters",
  *     "ocha_local_groups",
  *     "ocha_organizations",
- *     "ocha_themes"
+ *     "ocha_themes",
+ *     "ocha_population_type"
  *   }
  * )
  */
