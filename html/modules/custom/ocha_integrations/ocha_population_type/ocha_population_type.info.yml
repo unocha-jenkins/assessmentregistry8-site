@@ -1,0 +1,8 @@
+name: OCHA population type
+description: List of OCHA population type
+package: OCHA Integrations
+type: module
+core: 8.x
+dependencies:
+  - drupal:ocha_integrations
+  - drupal:pcb

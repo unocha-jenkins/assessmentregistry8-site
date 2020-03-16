@@ -1,0 +1,68 @@
+<?php
+
+/**
+ * @file
+ * OCHA population type logic.
+ */
+
+use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\ocha_population_type\Controller\OchaPopulationTypeController;
+
+/**
+ * Returns a controller.
+ */
+function ocha_population_type_get_controller() {
+  return new OchaPopulationTypeController(
+    \Drupal::service('http_client'),
+    \Drupal::service('config.factory'),
+    \Drupal::service('cache.ocha_population_type'),
+    \Drupal::service('logger.factory'),
+    \Drupal::service('state'),
+    \Drupal::service('file_system')
+  );
+}
+
+/**
+ * Allowed values callback.
+ *
+ * @param \Drupal\field\Entity\FieldStorageConfig $definition
+ *   The field definition.
+ * @param \Drupal\Core\Entity\ContentEntityInterface|null $entity
+ *   The entity being created if applicable.
+ * @param bool $cacheable
+ *   Boolean indicating if the results are cacheable.
+ *
+ * @return array
+ *   An array of possible key and value options.
+ *
+ * @see options_allowed_values()
+ */
+function ocha_population_type_allowed_values_function(FieldStorageConfig $definition, ContentEntityInterface $entity = NULL, $cacheable) {
+  $controller = ocha_population_type_get_controller();
+  return $controller->getAllowedValues();
+}
+
+/**
+ * Get one item().
+ */
+function ocha_population_type_get_item($id, $langcode = NULL) {
+  $controller = ocha_population_type_get_controller();
+  return $controller->getItem($id);
+}
+
+/**
+ * Implements hook_cron().
+ */
+function ocha_population_type_cron() {
+  $controller = ocha_population_type_get_controller();
+  $controller->getApiData(TRUE);
+}
+
+/**
+ * Load from JSON.
+ */
+function ocha_population_type_import_json() {
+  $controller = ocha_population_type_get_controller();
+  $controller->getApiDataFromJson();
+}

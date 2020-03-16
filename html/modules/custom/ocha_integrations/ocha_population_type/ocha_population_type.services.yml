@@ -1,0 +1,16 @@
+services:
+  ocha_population_type_controller:
+    class: \Drupal\ocha_population_type\Controller\Ochapopulation typeController
+    arguments: ['@http_client', '@config.factory', '@cache.ocha_population_type', '@logger.factory', '@state', '@file_system']
+  cache.ocha_population_type:
+    class: Drupal\Core\Cache\CacheBackendInterface
+    tags:
+      - { name: cache.bin, default_backend: cache.backend.permanent_database }
+    factory: cache_factory:get
+    arguments: [ocha_population_type]
+  cache.population type:
+    class: Drupal\Core\Cache\CacheBackendInterface
+    tags:
+      - { name: cache.bin, default_backend: cache.backend.permanent_database }
+    factory: cache_factory:get
+    arguments: [population type]
