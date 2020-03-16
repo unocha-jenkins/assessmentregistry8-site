@@ -5,19 +5,29 @@ dependencies:
   config:
     - field.field.node.assessment.field_ass_date
     - field.field.node.assessment.field_asst_organizations
+    - field.field.node.assessment.field_collection_methods
     - field.field.node.assessment.field_countries
     - field.field.node.assessment.field_disasters
+    - field.field.node.assessment.field_frequency
+    - field.field.node.assessment.field_key_findings
+    - field.field.node.assessment.field_level_of_representation
     - field.field.node.assessment.field_local_groups
     - field.field.node.assessment.field_locations
+    - field.field.node.assessment.field_methodology
     - field.field.node.assessment.field_organizations
     - field.field.node.assessment.field_other_location
     - field.field.node.assessment.field_population_types
+    - field.field.node.assessment.field_related_content
+    - field.field.node.assessment.field_sample_size
     - field.field.node.assessment.field_sources
     - field.field.node.assessment.field_status
+    - field.field.node.assessment.field_subject_objective
     - field.field.node.assessment.field_themes
+    - field.field.node.assessment.field_units_of_measurement
     - node.type.assessment
   module:
     - datetime_range
+    - link
     - ocha_countries
     - ocha_disasters
     - ocha_integrations
@@ -47,6 +57,13 @@ content:
     third_party_settings: {  }
     type: ocha_integrations_default
     region: content
+  field_collection_methods:
+    weight: 18
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
   field_countries:
     weight: 1
     label: above
@@ -62,6 +79,27 @@ content:
       output: glide
     third_party_settings: {  }
     type: ocha_disasters_default
+    region: content
+  field_frequency:
+    weight: 22
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_key_findings:
+    weight: 17
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  field_level_of_representation:
+    weight: 21
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
     region: content
   field_local_groups:
     weight: 3
@@ -83,6 +121,13 @@ content:
       output: label
     third_party_settings: {  }
     type: ocha_locations_default
+    region: content
+  field_methodology:
+    weight: 16
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
     region: content
   field_organizations:
     weight: 5
@@ -106,6 +151,26 @@ content:
     third_party_settings: {  }
     type: ocha_integrations_default
     region: content
+  field_related_content:
+    weight: 23
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    type: link
+    region: content
+  field_sample_size:
+    weight: 20
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
   field_sources:
     weight: 10
     label: above
@@ -120,12 +185,26 @@ content:
     third_party_settings: {  }
     type: list_default
     region: content
+  field_subject_objective:
+    weight: 15
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
   field_themes:
     weight: 7
     label: above
     settings: {  }
     third_party_settings: {  }
     type: ocha_integrations_default
+    region: content
+  field_units_of_measurement:
+    weight: 19
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
     region: content
   links:
     weight: 2
