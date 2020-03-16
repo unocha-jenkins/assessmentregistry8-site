@@ -5,6 +5,9 @@ dependencies:
   config:
     - core.entity_view_mode.node.teaser
     - field.field.node.assessment.field_ass_date
+    - field.field.node.assessment.field_assessment_data
+    - field.field.node.assessment.field_assessment_questionnaire
+    - field.field.node.assessment.field_assessment_report
     - field.field.node.assessment.field_asst_organizations
     - field.field.node.assessment.field_collection_methods
     - field.field.node.assessment.field_countries
@@ -40,6 +43,9 @@ content:
     region: content
 hidden:
   field_ass_date: true
+  field_assessment_data: true
+  field_assessment_questionnaire: true
+  field_assessment_report: true
   field_asst_organizations: true
   field_collection_methods: true
   field_countries: true

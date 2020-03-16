@@ -1,0 +1,29 @@
+uuid: f1ad703e-18ca-4487-a091-59ce6711668c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_assessment_questionnaire
+    - node.type.assessment
+  module:
+    - ocha_assessment_document
+id: node.assessment.field_assessment_questionnaire
+field_name: field_assessment_questionnaire
+entity_type: node
+bundle: assessment
+label: 'Assessment Questionnaire'
+description: 'Upload the assessment questionnaire file, stored on your computer or on your Dropbox account, and indicate its level of accessibility. If the file is “Available on request”, write the instructions in the related space. To see File Standards and Naming Conventions <a href="https://drive.google.com/open?id=1TxOek13c4uoYAQWqsYBhjppeYUwHZK7nhx5qgm1FALA">click here</a>.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  file_directory: 'assessments/[date:custom:Y]-[date:custom:m]'
+  file_extensions: 'txt pdf doc docx xls xlsx zip rar csv'
+  max_filesize: ''
+  description_field: 1
+  title: 1
+  link_type: 17
+  handler: 'default:file'
+  handler_settings: {  }
+field_type: ocha_assessment_document

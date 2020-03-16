@@ -1,0 +1,29 @@
+uuid: 81e481f4-71f5-476e-bd48-40738379704a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_assessment_data
+    - node.type.assessment
+  module:
+    - ocha_assessment_document
+id: node.assessment.field_assessment_data
+field_name: field_assessment_data
+entity_type: node
+bundle: assessment
+label: 'Assessment Data'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  file_directory: 'assessments/[date:custom:Y]-[date:custom:m]'
+  file_extensions: 'txt pdf doc docx xls xlsx zip rar csv'
+  max_filesize: ''
+  description_field: 1
+  title: 1
+  link_type: 17
+  handler: 'default:file'
+  handler_settings: {  }
+field_type: ocha_assessment_document

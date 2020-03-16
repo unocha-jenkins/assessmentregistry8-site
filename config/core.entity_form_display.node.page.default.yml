@@ -4,8 +4,10 @@ status: true
 dependencies:
   config:
     - field.field.node.page.body
+    - field.field.node.page.field_test
     - node.type.page
   module:
+    - link
     - path
     - text
 _core:
@@ -31,6 +33,14 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_test:
+    weight: 121
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+    type: link_default
+    region: content
   langcode:
     type: language_select
     weight: 2

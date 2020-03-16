@@ -1,0 +1,27 @@
+uuid: 923f3448-85d7-4d16-b8e2-187c8936cea7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_assessment_report
+    - node.type.assessment
+  module:
+    - ocha_assessment_document
+id: node.assessment.field_assessment_report
+field_name: field_assessment_report
+entity_type: node
+bundle: assessment
+label: 'Assessment Report'
+description: 'Upload the assessment report file, stored on your computer or on your Dropbox account, and indicate its level of accessibility. If the file is “Available on request”, write the instructions in the related space. To see File Standards and Naming Conventions <a href="https://drive.google.com/open?id=1TxOek13c4uoYAQWqsYBhjppeYUwHZK7nhx5qgm1FALA">click here</a>.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  file_directory: 'assessments/[date:custom:Y]-[date:custom:m]'
+  file_extensions: 'txt pdf doc docx xls xlsx zip rar csv'
+  max_filesize: ''
+  description_field: 1
+  handler: 'default:file'
+  handler_settings: {  }
+field_type: ocha_assessment_document

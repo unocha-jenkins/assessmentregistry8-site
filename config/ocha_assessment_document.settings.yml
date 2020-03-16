@@ -1,0 +1,4 @@
+api:
+  endpoint: 'https://www.humanitarianresponse.info/en/api/v1.0/population_types'
+_core:
+  default_config_hash: S8ou_I-z7xigoESl3wIgluLtuKrEoWtb6S2Tc7rtczs
