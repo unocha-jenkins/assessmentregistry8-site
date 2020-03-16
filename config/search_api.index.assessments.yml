@@ -7,12 +7,13 @@ dependencies:
     - search_api
     - ocha_locations
   config:
-    - field.storage.node.field_asst_organizations
+    - field.storage.node.field_local_groups
     - field.storage.node.field_countries
     - field.storage.node.field_disasters
-    - field.storage.node.field_local_groups
     - field.storage.node.field_locations
     - field.storage.node.field_organizations
+    - field.storage.node.field_asst_organizations
+    - field.storage.node.field_sources
     - field.storage.node.field_themes
     - search_api.server.db
 id: assessments
@@ -76,6 +77,14 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_organizations
+  field_sources:
+    label: Source(s)
+    datasource_id: 'entity:node'
+    property_path: field_sources
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_sources
   field_themes:
     label: Theme(s)
     datasource_id: 'entity:node'
