@@ -24,4 +24,6 @@ settings:
   description_field: 1
   handler: 'default:file'
   handler_settings: {  }
+  title: 1
+  link_type: 17
 field_type: ocha_assessment_document
