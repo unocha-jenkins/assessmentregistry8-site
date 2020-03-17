@@ -44,7 +44,7 @@ function ocha_local_groups_allowed_values_function(FieldStorageConfig $definitio
 }
 
 /**
- * Get one item().
+ * Get one item by id.
  */
 function ocha_local_groups_get_item($id, $langcode = NULL) {
   $controller = ocha_local_groups_get_controller();
