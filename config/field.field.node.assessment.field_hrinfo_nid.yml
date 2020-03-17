@@ -1,0 +1,23 @@
+uuid: 68ceb6dd-d14d-40d4-8147-39d080436dea
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_hrinfo_nid
+    - node.type.assessment
+id: node.assessment.field_hrinfo_nid
+field_name: field_hrinfo_nid
+entity_type: node
+bundle: assessment
+label: 'HRINFO nid'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

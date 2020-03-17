@@ -50,9 +50,8 @@ class OchaAssessmentDocument extends FileItem {
     }
 
     if ($this->accessibility == 'Available on Request') {
-      if ($this->instructions !== NULL) {
-        return FALSE;
-      }
+      // Instructions is optional.
+      return FALSE;
     }
 
     if ($this->accessibility == 'Not Available') {

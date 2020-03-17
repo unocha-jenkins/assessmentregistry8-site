@@ -105,3 +105,12 @@ function ocha_countries_import_json() {
   $controller = ocha_countries_get_controller();
   $controller->getApiDataFromJson();
 }
+
+/**
+ * Get one item by label.
+ */
+function ocha_countries_get_item_by_label($label) {
+  $controller = ocha_countries_get_controller();
+
+  return $controller->getItemByLabel($label);
+}

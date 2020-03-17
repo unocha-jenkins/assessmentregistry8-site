@@ -103,6 +103,7 @@ class OchaDisastersController extends OchaIntegrationsController {
     $keyed_data = [];
     foreach ($data as $row) {
       $keyed_data[$row->id] = (object) [
+        'id' => $row->id,
         'name' => trim($row->fields->name),
         'glide' => isset($row->fields->glide) ? trim($row->fields->glide) : '',
         'status' => trim($row->fields->status),
@@ -147,6 +148,21 @@ class OchaDisastersController extends OchaIntegrationsController {
     uasort($options, [$this, 'orderOptions']);
 
     return $options;
+  }
+
+  /**
+   * Get item by glide.
+   */
+  public function getItemByGlide($glide) {
+    $data = $this->getApiData();
+
+    foreach ($data as $key => $value) {
+      if ($value->glide == $glide) {
+        return $value;
+      }
+    }
+
+    return FALSE;
   }
 
 }

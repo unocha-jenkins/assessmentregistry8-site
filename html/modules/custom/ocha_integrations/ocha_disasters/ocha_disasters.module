@@ -44,12 +44,21 @@ function ocha_disasters_allowed_values_function(FieldStorageConfig $definition, 
 }
 
 /**
- * Get one item().
+ * Get one item.
  */
 function ocha_disasters_get_item($id, $langcode = NULL) {
   $controller = ocha_disasters_get_controller();
 
   return $controller->getItem($id);
+}
+
+/**
+ * Get one item by glide.
+ */
+function ocha_disasters_get_item_by_glide($glide) {
+  $controller = ocha_disasters_get_controller();
+
+  return $controller->getItemByGlide($glide);
 }
 
 /**

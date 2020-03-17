@@ -12,6 +12,7 @@ dependencies:
     - field.field.node.assessment.field_countries
     - field.field.node.assessment.field_disasters
     - field.field.node.assessment.field_frequency
+    - field.field.node.assessment.field_hrinfo_nid
     - field.field.node.assessment.field_key_findings
     - field.field.node.assessment.field_level_of_representation
     - field.field.node.assessment.field_local_groups
@@ -59,6 +60,9 @@ content:
     label: above
     settings:
       use_description_as_link_text: true
+      display_accessibility: false
+      display_file: true
+      display_link: true
     third_party_settings: {  }
     type: ocha_assessment_document_default
     region: content
@@ -67,6 +71,9 @@ content:
     label: above
     settings:
       use_description_as_link_text: true
+      display_accessibility: false
+      display_file: true
+      display_link: true
     third_party_settings: {  }
     type: ocha_assessment_document_default
     region: content
@@ -77,6 +84,9 @@ content:
     label: above
     settings:
       use_description_as_link_text: true
+      display_accessibility: false
+      display_file: true
+      display_link: true
     third_party_settings: {  }
   field_asst_organizations:
     weight: 5
@@ -96,7 +106,7 @@ content:
     weight: 1
     label: above
     settings:
-      output: iso2
+      output: label
     third_party_settings: {  }
     type: ocha_countries_default
     region: content
@@ -114,6 +124,15 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: list_default
+    region: content
+  field_hrinfo_nid:
+    weight: 25
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_integer
     region: content
   field_key_findings:
     weight: 14
@@ -145,8 +164,7 @@ content:
   field_locations:
     weight: 7
     label: above
-    settings:
-      output: label
+    settings: {  }
     third_party_settings: {  }
     type: ocha_locations_default
     region: content

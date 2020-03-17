@@ -119,4 +119,19 @@ class OchaCountriesController extends OchaIntegrationsController {
     return $options;
   }
 
+  /**
+   * Get item by label.
+   */
+  public function getItemByLabel($label) {
+    $data = $this->getApiData();
+
+    foreach ($data as $key => $value) {
+      if ($value->label->default == $label) {
+        return $value;
+      }
+    }
+
+    return FALSE;
+  }
+
 }

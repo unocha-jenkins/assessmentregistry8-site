@@ -1,0 +1,20 @@
+uuid: dff3d1c8-6d90-4bf6-b200-5172ee9c0f61
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_hrinfo_nid
+field_name: field_hrinfo_nid
+entity_type: node
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

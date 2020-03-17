@@ -12,6 +12,7 @@ dependencies:
     - field.field.node.assessment.field_countries
     - field.field.node.assessment.field_disasters
     - field.field.node.assessment.field_frequency
+    - field.field.node.assessment.field_hrinfo_nid
     - field.field.node.assessment.field_key_findings
     - field.field.node.assessment.field_level_of_representation
     - field.field.node.assessment.field_local_groups
@@ -102,6 +103,13 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: options_select
+    region: content
+  field_hrinfo_nid:
+    weight: 32
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
     region: content
   field_key_findings:
     weight: 22
