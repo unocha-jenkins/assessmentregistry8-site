@@ -6,6 +6,7 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\file\Plugin\Field\FieldFormatter\GenericFileFormatter;
+
 /**
  * Plugin implementation of the 'ocha_assessment_document' formatter.
  *

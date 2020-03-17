@@ -2,14 +2,11 @@
 
 namespace Drupal\ocha_assessment_document\Plugin\Field\FieldWidget;
 
-use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Render\Element;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\file\Plugin\Field\FieldWidget\FileWidget;
-
 
 /**
  * Plugin implementation of the 'ocha_assessment_document' widget.
@@ -42,7 +39,7 @@ class OchaAssessmentDocumentWidget extends FileWidget {
     ];
 
     $element['document'] = $document_widget;
-    $element['document']['#title'] = t('Document');
+    $element['document']['#title'] = $this->t('Document');
     $element['document']['#process'] = array_merge($element_info['#process'], [[get_class($this), 'process']]);
 
     $element['accessibility'] = [
@@ -228,7 +225,7 @@ class OchaAssessmentDocumentWidget extends FileWidget {
           // defined by widget.
           $element['_weight'] = [
             '#type' => 'weight',
-            '#title' => t('Weight for row @number', ['@number' => $delta + 1]),
+            '#title' => $this->t('Weight for row @number', ['@number' => $delta + 1]),
             '#title_display' => 'invisible',
             // Note: this 'delta' is the FAPI #type 'weight' element's property.
             '#delta' => $max,
@@ -284,7 +281,7 @@ class OchaAssessmentDocumentWidget extends FileWidget {
       // Add some properties that will eventually be added to the file upload
       // field. These are added here so that they may be referenced easily
       // through a hook_form_alter().
-      $elements['#file_upload_title'] = t('Add a new file');
+      $elements['#file_upload_title'] = $this->t('Add a new file');
       $elements['#file_upload_description'] = [
         '#theme' => 'file_upload_help',
         '#description' => '',
@@ -295,4 +292,5 @@ class OchaAssessmentDocumentWidget extends FileWidget {
 
     return $elements;
   }
+
 }
