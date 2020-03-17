@@ -3,9 +3,9 @@
 namespace Drupal\ocha_assessment_document\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\file\Plugin\Field\FieldFormatter\GenericFileFormatter;
-
 /**
  * Plugin implementation of the 'ocha_assessment_document' formatter.
  *
@@ -18,6 +18,44 @@ use Drupal\file\Plugin\Field\FieldFormatter\GenericFileFormatter;
  * )
  */
 class OchaAssessmentDocumentDefaultFormatter extends GenericFileFormatter {
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function defaultSettings() {
+    return [
+      'display_accessibility' => FALSE,
+      'display_file' => TRUE,
+      'display_link' => TRUE,
+    ] + parent::defaultSettings();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function settingsForm(array $form, FormStateInterface $form_state) {
+    $form = parent::settingsForm($form, $form_state);
+
+    $form['display_accessibility'] = [
+      '#title' => $this->t('Display accessibility'),
+      '#type' => 'checkbox',
+      '#default_value' => $this->getSetting('display_accessibility'),
+    ];
+
+    $form['display_file'] = [
+      '#title' => $this->t('Display file link'),
+      '#type' => 'checkbox',
+      '#default_value' => $this->getSetting('display_file'),
+    ];
+
+    $form['display_link'] = [
+      '#title' => $this->t('Display link'),
+      '#type' => 'checkbox',
+      '#default_value' => $this->getSetting('display_link'),
+    ];
+
+    return $form;
+  }
 
   /**
    * {@inheritdoc}
@@ -39,19 +77,28 @@ class OchaAssessmentDocumentDefaultFormatter extends GenericFileFormatter {
         $file_url = file_create_url($file->getFileUri());
 
         // TODO: Check accessibility?
-        $output = '';
-        $output .= $item->accessibility;
+        $output = [];
 
-        $output .= ' - ' . \Drupal::l($item->description, Url::fromUri($file_url, []));
-
-        if (!empty($item->uri)) {
-          $link_text = !empty($item->title) ? $item->title : $item->uri;
-          $output .= ' - ' . \Drupal::l($link_text, Url::fromUri($item->uri, []));
+        if ($this->getSetting('display_accessibility')) {
+          $output[] = $item->accessibility;
         }
 
-        $elements[$delta] = [
-          '#markup' => $output,
-        ];
+        if ($this->getSetting('display_file')) {
+          $output[] = \Drupal::l($item->description, Url::fromUri($file_url, []));
+        }
+
+        if ($this->getSetting('display_link')) {
+          if (!empty($item->uri)) {
+            $link_text = !empty($item->title) ? $item->title : $item->uri;
+            $output[] = \Drupal::l($link_text, Url::fromUri($item->uri, []));
+          }
+        }
+
+        if (!empty($output)) {
+          $elements[$delta] = [
+            '#markup' => implode(' - ', $output),
+          ];
+        }
       }
     }
 

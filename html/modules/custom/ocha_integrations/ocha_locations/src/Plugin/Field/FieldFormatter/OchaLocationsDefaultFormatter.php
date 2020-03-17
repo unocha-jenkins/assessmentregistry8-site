@@ -22,32 +22,6 @@ class OchaLocationsDefaultFormatter extends FormatterBase {
   /**
    * {@inheritdoc}
    */
-  public static function defaultSettings() {
-    return [
-      'output' => 'label',
-    ] + parent::defaultSettings();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function settingsForm(array $form, FormStateInterface $form_state) {
-    $form['output'] = [
-      '#title' => $this->t('Output'),
-      '#type' => 'select',
-      '#options' => [
-        'label' => $this->t('Label'),
-        'glide' => $this->t('Glide'),
-      ],
-      '#default_value' => $this->getSetting('output'),
-    ];
-
-    return $form;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $elements = [];
 
