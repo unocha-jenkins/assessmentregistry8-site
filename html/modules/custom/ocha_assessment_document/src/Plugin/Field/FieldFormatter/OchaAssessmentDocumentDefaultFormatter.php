@@ -67,36 +67,44 @@ class OchaAssessmentDocumentDefaultFormatter extends GenericFileFormatter {
       $files = $this->getEntitiesToView($items, $langcode);
 
       foreach ($items as $delta => $item) {
-        // Skip missing files.
-        if (!isset($files[$delta])) {
-          continue;
-        }
-
-        // Build file URL.
-        $file = $files[$delta];
-        $file_url = file_create_url($file->getFileUri());
-
-        // TODO: Check accessibility?
         $output = [];
 
         if ($this->getSetting('display_accessibility')) {
           $output[] = $item->accessibility;
         }
 
-        if ($this->getSetting('display_file')) {
-          $output[] = \Drupal::l($item->description, Url::fromUri($file_url, []));
+        // Publicly Available.
+        if ($item->accessibility == 'Publicly Available') {
+          // Skip missing files.
+          if (isset($files[$delta]) && $this->getSetting('display_file')) {
+            // Build file URL.
+            $file = $files[$delta];
+            $file_url = file_create_url($file->getFileUri());
+
+            $link_text = $item->description;
+            if (empty($link_text)) {
+              $link_text = $file->getFilename();
+            }
+
+            $output[] = \Drupal::l($link_text, Url::fromUri($file_url, []));
+          }
+
+          if ($this->getSetting('display_link')) {
+            if (!empty($item->uri)) {
+              $link_text = !empty($item->title) ? $item->title : $item->uri;
+              $output[] = \Drupal::l($link_text, Url::fromUri($item->uri, []));
+            }
+          }
         }
 
-        if ($this->getSetting('display_link')) {
-          if (!empty($item->uri)) {
-            $link_text = !empty($item->title) ? $item->title : $item->uri;
-            $output[] = \Drupal::l($link_text, Url::fromUri($item->uri, []));
-          }
+        // Available on Request.
+        if ($item->accessibility == 'Available on Request') {
+          $output[] = $item->instructions;
         }
 
         if (!empty($output)) {
           $elements[$delta] = [
-            '#markup' => implode(' - ', $output),
+            '#markup' => implode('<br>', $output),
           ];
         }
       }
