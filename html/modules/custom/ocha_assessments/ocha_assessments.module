@@ -1,0 +1,358 @@
+<?php
+
+use \Drupal\node\Entity\Node;
+use \Drupal\file\Entity\File;
+
+function ocha_assessments_variable_get($key, $default) {
+  if (Drupal::state()->get($key)) {
+    return Drupal::state()->get($key);
+  }
+
+  return $default;
+}
+
+function ocha_assessments_variable_set($key, $value) {
+  Drupal::state()->set($key, $value);
+}
+
+/**
+ * Wrapper around log function.
+ */
+function ocha_assessments_log($message) {
+  if (function_exists('drush_log')) {
+    drush_log($message);
+  }
+  else {
+    \Drupal::logger('ocha_assessments')->notice($message);;
+  }
+}
+
+/**
+ * Migrate assessments.
+ */
+function ocha_assessments_from_hrinfo() {
+  if (ocha_assessments_variable_get('ocha_assessments_stop_processing_hrinfo', FALSE)) {
+    ocha_assessments_log('Kill switch is enabled!');
+    //return;
+  }
+
+  ocha_assessments_log('Getting page ' . ocha_assessments_variable_get('ocha_assessments_page_hrinfo', 1));
+
+  $page = ocha_assessments_variable_get('ocha_assessments_page_hrinfo', 1);
+  $api_url = ocha_assessments_variable_get('ocha_assessments_api_url_hrinfo', 'https://www.humanitarianresponse.info/api/v1.0/assessments');
+
+  // Build URL;
+  $ts = ocha_assessments_variable_get('ocha_assessments_most_recent_hrinfo', 1);
+
+  // Debug
+  $page = 1;
+  $ts = 0;
+
+
+  $url = $api_url;
+  $url .= '?page[number]=' . $page;
+  $url .= '&filter[changed][value]=' . $ts . '&filter[changed][operator]=>';
+  $url .= '&sort=changed,id';
+  ocha_assessments_log('URL: ' . $url);
+
+  // Get data.
+  $response = \Drupal::httpClient()->get($url);
+  if ($response->getStatusCode() === 200) {
+    $raw = $response->getBody()->getContents();
+    $data = json_decode($raw);
+    //dpm($data);
+    if (isset($data->data) && count($data->data)) {
+      foreach ($data->data as $row) {
+        ocha_assessments_process_row_from_hrinfo($row, 'hrinfo-');
+        return;
+      }
+
+      // Increment page.
+      ocha_assessments_variable_set('ocha_assessments_page_hrinfo', $page + 1);
+
+      return;
+    }
+  }
+
+  ocha_assessments_variable_set('ocha_assessments_stop_processing_hrinfo', TRUE);
+  ocha_assessments_variable_set('ocha_assessments_most_recent_hrinfo', REQUEST_TIME);
+};
+
+/**
+ * Process assessment data.
+ *
+ * @SuppressWarnings(PHPMD)
+ */
+function ocha_assessments_process_row_from_hrinfo($item, $prefix = '') {
+  $needs_update = FALSE;
+
+  // Assume English for all content.
+  $language = 'en';
+
+  ocha_assessments_log('Migrating ' . $item->url);
+
+  if (isset($item->label) && $item->label && isset($item->id) && $item->id) {
+    $label = trim($item->label);
+
+    // Create node object.
+    $data = [
+      'type' => 'assessment',
+      'title' => $label,
+      'field_hrinfo_id' => [
+        'value' => $item->id,
+      ],
+      'field_local_groups' => [],
+    ];
+
+    // Local group aka Cluster(s)/Sector(s).
+    if (isset($item->bundles) && count($item->bundles)) {
+      // Uses the same Ids.
+      foreach ($item->bundles as $row) {
+        $data['field_local_groups'][] = [
+          'value' => $row->id,
+        ];
+      }
+    }
+
+    // Leading/Coordinating Organization(s).
+    if (isset($item->organizations) && count($item->organizations)) {
+      // Uses the same Ids.
+      foreach ($item->organizations as $row) {
+        $data['field_organizations'][] = [
+          'value' => $row->id,
+        ];
+      }
+    }
+
+    // Participating Organization(s).
+    if (isset($item->participating_organizations) && count($item->participating_organizations)) {
+      // Uses the same Ids.
+      foreach ($item->participating_organizations as $row) {
+        $data['field_asst_organizations'][] = [
+          'value' => $row->id,
+        ];
+      }
+    }
+
+    // Location(s).
+    if (isset($item->locations) && count($item->locations)) {
+      // Uses the same Ids.
+      foreach ($item->locations as $row) {
+        $data['field_locations'][] = [
+          'value' => $row->id,
+        ];
+      }
+    }
+
+    // Population Type(s).
+    if (isset($item->population_types) && count($item->population_types)) {
+      // Uses the same Ids.
+      foreach ($item->population_types as $row) {
+        $data['field_population_types'][] = [
+          'value' => $row->id,
+        ];
+      }
+    }
+
+    // Theme(s).
+    if (isset($item->themes) && count($item->themes)) {
+      // Uses the same Ids.
+      foreach ($item->themes as $row) {
+        $data['field_themes'][] = [
+          'value' => $row->id,
+        ];
+      }
+    }
+
+    $node = Node::create($data);
+    $node->save();
+    return;
+
+    // Create file object from remote URL.
+    $data = file_get_contents('https://www.drupal.org/files/druplicon.small_.png');
+    $file = file_save_data($data, 'public://druplicon.png', FILE_EXISTS_REPLACE);
+
+    if (isset($item->other_location) && $item->other_location) {
+      if (!isset($node->field_asst_other_location[LANGUAGE_NONE][0]) || $node->field_asst_other_location[LANGUAGE_NONE][0]['value'] != $item->other_location) {
+        $node->field_asst_other_location[LANGUAGE_NONE][0]['value'] = $item->other_location;
+        $needs_update = TRUE;
+      }
+    }
+
+    if (isset($item->subject) && $item->subject) {
+      if (!isset($node->field_asst_subject[LANGUAGE_NONE][0]) || $node->field_asst_subject[LANGUAGE_NONE][0]['value'] != $item->subject) {
+        $node->field_asst_subject[LANGUAGE_NONE][0]['value'] = $item->subject;
+        $needs_update = TRUE;
+      }
+    }
+
+    if (isset($item->methodology) && $item->methodology) {
+      if (!isset($node->field_asst_methodology[LANGUAGE_NONE][0]) || $node->field_asst_methodology[LANGUAGE_NONE][0]['value'] != $item->methodology) {
+        $node->field_asst_methodology[LANGUAGE_NONE][0]['value'] = $item->methodology;
+        $needs_update = TRUE;
+      }
+    }
+
+    if (isset($item->key_findings) && $item->key_findings) {
+      if (!isset($node->field_asst_key_findings[LANGUAGE_NONE][0]) || $node->field_asst_key_findings[LANGUAGE_NONE][0]['value'] != $item->key_findings) {
+        $node->field_asst_key_findings[LANGUAGE_NONE][0]['value'] = $item->key_findings;
+        $needs_update = TRUE;
+      }
+    }
+
+    if (isset($item->unit_measurement) && count($item->unit_measurement)) {
+      $i = 0;
+      foreach ($item->unit_measurement as $unit) {
+        if (!isset($node->field_asst_unit[LANGUAGE_NONE][$i]) || $node->field_asst_unit[LANGUAGE_NONE][$i]['value'] != $unit) {
+          $node->field_asst_unit[LANGUAGE_NONE][$i]['value'] = $unit;
+          $needs_update = TRUE;
+        }
+        $i++;
+      }
+    }
+
+    if (isset($item->collection_method) && count($item->collection_method)) {
+      $i = 0;
+      foreach ($item->collection_method as $method) {
+        if (!isset($node->field_asst_collection_method[LANGUAGE_NONE][$i]) || $node->field_asst_collection_method[LANGUAGE_NONE][$i]['value'] != $method) {
+          $node->field_asst_collection_method[LANGUAGE_NONE][$i]['value'] = $method;
+          $needs_update = TRUE;
+        }
+        $i++;
+      }
+    }
+
+    if (isset($item->sample_size) && $item->sample_size) {
+      if (!isset($node->field_asst_sample_size[LANGUAGE_NONE][0]) || $node->field_asst_sample_size[LANGUAGE_NONE][0]['value'] != $item->sample_size) {
+        $node->field_asst_sample_size[LANGUAGE_NONE][0]['value'] = $item->sample_size;
+        $needs_update = TRUE;
+      }
+    }
+
+    if (isset($item->geographic_level) && $item->geographic_level) {
+      if (!isset($node->field_asst_geographic_level[LANGUAGE_NONE][0]) || $node->field_asst_geographic_level[LANGUAGE_NONE][0]['value'] != $item->geographic_level) {
+        $node->field_asst_geographic_level[LANGUAGE_NONE][0]['value'] = $item->geographic_level;
+        $needs_update = TRUE;
+      }
+    }
+
+    if (isset($item->date) && $item->date) {
+      if (!isset($node->field_asst_date[LANGUAGE_NONE][0]) || ($node->field_asst_date[LANGUAGE_NONE][0]['value'] != $item->date['value'] && $node->field_asst_date[LANGUAGE_NONE][0]['value2'] != $item->date['value2'])) {
+        $node->field_asst_date[LANGUAGE_NONE][0]['value'] = $item->date['value'];
+        $node->field_asst_date[LANGUAGE_NONE][0]['value2'] = $item->date['value2'];
+        $needs_update = TRUE;
+      }
+    }
+
+    if (isset($item->frequency) && $item->frequency) {
+      if (!isset($node->field_asst_freq[LANGUAGE_NONE][0]) || $node->field_asst_freq[LANGUAGE_NONE][0]['value'] != $item->frequency) {
+        $node->field_asst_freq[LANGUAGE_NONE][0]['value'] = $item->frequency;
+        $needs_update = TRUE;
+      }
+    }
+
+    if (isset($item->status) && $item->status) {
+      if (!isset($node->field_asst_status[LANGUAGE_NONE][0]) || $node->field_asst_status[LANGUAGE_NONE][0]['value'] != $item->status) {
+        $node->field_asst_status[LANGUAGE_NONE][0]['value'] = $item->status;
+        $needs_update = TRUE;
+      }
+    }
+
+    if (isset($item->themes) && count($item->themes)) {
+      $i = 0;
+      foreach ($item->themes as $theme) {
+        $bid = ocha_assessments_get_id_by_label('ms_themes', $theme['id']);
+        if ($bid) {
+          if (!isset($node->field_ms_themes[LANGUAGE_NONE][$i]['target_id']) || $node->field_ms_themes[LANGUAGE_NONE][$i]['target_id'] != $bid) {
+            $node->field_ms_themes[LANGUAGE_NONE][$i]['target_id'] = $bid;
+            $needs_update = TRUE;
+          }
+          $i++;
+        }
+      }
+    }
+
+    if (isset($item->disasters) && count($item->disasters)) {
+      $i = 0;
+      foreach ($item->disasters as $disaster) {
+        if (isset($disaster['glide'])) {
+          $bid = ocha_assessments_get_term_by_refeence_id('ms_disaster', 'field_ms_glide', $disaster['glide']);
+          if ($bid) {
+            if (!isset($node->field_ms_disasters[LANGUAGE_NONE][$i]['target_id']) || $node->field_ms_disasters[LANGUAGE_NONE][$i]['target_id'] != $bid) {
+              $node->field_ms_disasters[LANGUAGE_NONE][$i]['target_id'] = $bid;
+              $needs_update = TRUE;
+            }
+            $i++;
+          }
+        }
+      }
+    }
+
+    if (isset($item->operation) && count($item->operation)) {
+      $i = 0;
+      foreach ($item->operation as $operation) {
+        $bid = ocha_assessments_get_id_by_label('ms_country', $operation['id']);
+        if ($bid) {
+          if (!isset($node->field_ms_countries[LANGUAGE_NONE][$i]) || $node->field_ms_countries[LANGUAGE_NONE][$i]['target_id'] != $bid) {
+            $node->field_ms_countries[LANGUAGE_NONE][$i]['target_id'] = $bid;
+            $needs_update = TRUE;
+          }
+          $i++;
+        }
+        else {
+          echo "Could not find country " . $operation['id'] . "\n";
+        }
+      }
+    }
+    if (isset($item->created) && $item->created) {
+      $node->created = $item->created;
+    }
+
+    if (isset($item->changed) && $item->changed) {
+      $node->changed = $item->changed;
+    }
+
+    if ($needs_update) {
+      node_save($node);
+    }
+
+    if (isset($item->report) && $item->report && (!isset($node->field_asst_report) || !count($node->field_asst_report))) {
+      $report = ocha_assessments_fetch_field_collection($node, $item, 'report');
+      if (!isset($node->field_asst_report[LANGUAGE_NONE][0]['value']) || $node->field_asst_report[LANGUAGE_NONE][0]['value'] != $report->item_id) {
+        $node->field_asst_report[LANGUAGE_NONE][0]['value'] = $report->item_id;
+        $needs_update = TRUE;
+      }
+    }
+
+    if (isset($item->questionnaire) && $item->questionnaire && (!isset($node->field_asst_questionnaire) || !count($node->field_asst_questionnaire))) {
+      $quest = ocha_assessments_fetch_field_collection($node, $item, 'questionnaire');
+      if (!isset($node->field_asst_questionnaire[LANGUAGE_NONE][0]['value']) || $node->field_asst_questionnaire[LANGUAGE_NONE][0]['value'] != $quest->item_id) {
+        $node->field_asst_questionnaire[LANGUAGE_NONE][0]['value'] = $quest->item_id;
+        $needs_update = TRUE;
+      }
+    }
+
+    if (isset($item->data) && $item->data && (!isset($node->field_asst_data) || !count($node->field_asst_data))) {
+      $quest = ocha_assessments_fetch_field_collection($node, $item, 'data');
+      if (!isset($node->field_asst_data[LANGUAGE_NONE][0]['value']) || $node->field_asst_data[LANGUAGE_NONE][0]['value'] != $quest->item_id) {
+        $node->field_asst_data[LANGUAGE_NONE][0]['value'] = $quest->item_id;
+        $needs_update = TRUE;
+      }
+    }
+
+    if ($needs_update) {
+      node_save($node);
+      ocha_assessments_log('Assessment saved with id ' . $node->nid);
+    }
+    else {
+      ocha_assessments_log('No need to save assessment with id ' . $node->nid);
+    }
+  }
+}
+
+function ocha_assessments_get_id_by_label($source, $label) {
+  switch($source) {
+    case 'ms_local_group':
+    break;
+  }
+}
