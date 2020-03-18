@@ -54,9 +54,17 @@ select * from node__field_themes limit 10; # wrong mapping
 ### Missing data
 
 ```sql
-select * from node__field_hrinfo_nid limit 10;
 select * from node__field_level_of_representation limit 10;
 select * from node__field_related_content limit 10;
 select * from node__field_sample_size limit 10;
 select * from node__field_sources limit 10;
+```
+
+Quick check using
+
+```sql
+select table_schema as database_name, table_name
+   from information_schema.tables
+where table_type = 'BASE TABLE' and table_rows = 0 and table_schema = 'default' and table_name like 'node__field%'
+order by table_name;
 ```
