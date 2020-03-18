@@ -144,8 +144,6 @@ class OchaPopulationTypeController extends OchaIntegrationsController {
       }
     }
 
-    uasort($options, [$this, 'orderOptions']);
-
     return $options;
   }
 

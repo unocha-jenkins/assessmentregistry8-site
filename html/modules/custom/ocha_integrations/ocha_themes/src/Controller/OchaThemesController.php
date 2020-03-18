@@ -104,6 +104,7 @@ class OchaThemesController extends OchaIntegrationsController {
     $keyed_data = [];
     foreach ($data as $row) {
       $keyed_data[$row->id] = (object) [
+        'id' => $row->id,
         'name' => trim($row->fields->name),
         'glide' => isset($row->fields->glide) ? trim($row->fields->glide) : '',
         'status' => isset($row->fields->status) ? trim($row->fields->status) : '',
@@ -145,9 +146,22 @@ class OchaThemesController extends OchaIntegrationsController {
       }
     }
 
-    uasort($options, [$this, 'orderOptions']);
-
     return $options;
+  }
+
+  /**
+   * Get item by name.
+   */
+  public function getItemByName($name) {
+    $data = $this->getApiData();
+
+    foreach ($data as $key => $value) {
+      if ($value->name = $name) {
+        return $value;
+      }
+    }
+
+    return FALSE;
   }
 
 }

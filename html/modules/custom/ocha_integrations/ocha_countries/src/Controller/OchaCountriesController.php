@@ -114,8 +114,6 @@ class OchaCountriesController extends OchaIntegrationsController {
       $options[$key] = $value->label->default;
     }
 
-    uasort($options, [$this, 'orderOptions']);
-
     return $options;
   }
 

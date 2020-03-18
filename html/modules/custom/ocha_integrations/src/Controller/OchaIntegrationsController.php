@@ -103,6 +103,11 @@ class OchaIntegrationsController extends ControllerBase {
   /**
    * {@inheritdoc}
    */
+  protected static $static_cache;
+
+  /**
+   * {@inheritdoc}
+   */
   public function __construct(ClientInterface $httpClient, ConfigFactoryInterface $config, CacheBackendInterface $cache, LoggerChannelFactoryInterface $logger_factory, State $state, FileSystemInterface $file) {
     $this->httpClient = $httpClient;
     $this->config = $config->get($this->settingsName);
@@ -145,14 +150,22 @@ class OchaIntegrationsController extends ControllerBase {
 
     // Invalidate cache.
     Cache::invalidateTags([$this->cacheTag]);
+
+    // Set static cache.
+    $this::$static_cache = $data;
   }
 
   /**
    * Get cached data.
    */
   public function getCache() {
+    if (isset($this::$static_cache)) {
+      return $this::$static_cache;
+    }
+
     if ($cache = $this->cacheBackend->get($this->cacheId)) {
-      return $cache->data;
+      $this::$static_cache = $cache->data;
+      return $this::$static_cache;
     }
 
     return [];

@@ -145,8 +145,6 @@ class OchaDisastersController extends OchaIntegrationsController {
       }
     }
 
-    uasort($options, [$this, 'orderOptions']);
-
     return $options;
   }
 
