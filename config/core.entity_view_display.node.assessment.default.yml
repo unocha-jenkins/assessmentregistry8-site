@@ -59,6 +59,9 @@ content:
     label: above
     settings:
       use_description_as_link_text: true
+      display_accessibility: false
+      display_file: true
+      display_link: true
     third_party_settings: {  }
     type: ocha_assessment_document_default
     region: content
@@ -67,6 +70,9 @@ content:
     label: above
     settings:
       use_description_as_link_text: true
+      display_accessibility: false
+      display_file: true
+      display_link: true
     third_party_settings: {  }
     type: ocha_assessment_document_default
     region: content
@@ -77,6 +83,9 @@ content:
     label: above
     settings:
       use_description_as_link_text: true
+      display_accessibility: false
+      display_file: true
+      display_link: true
     third_party_settings: {  }
   field_asst_organizations:
     weight: 5
@@ -96,7 +105,7 @@ content:
     weight: 1
     label: above
     settings:
-      output: iso2
+      output: label
     third_party_settings: {  }
     type: ocha_countries_default
     region: content
@@ -145,8 +154,7 @@ content:
   field_locations:
     weight: 7
     label: above
-    settings:
-      output: label
+    settings: {  }
     third_party_settings: {  }
     type: ocha_locations_default
     region: content

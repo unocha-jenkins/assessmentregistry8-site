@@ -33,7 +33,13 @@ class OchaLocationsDefaultFormatter extends FormatterBase {
           $location = ocha_locations_get_item($location_value);
           do {
             $parents[] = $location->name;
-            $location = ocha_locations_get_item($location->parent);
+
+            if (!empty($location->parent)) {
+              $location = ocha_locations_get_item($location->parent);
+            }
+            else {
+              $location = FALSE;
+            }
           } while ($location);
         }
 

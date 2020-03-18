@@ -46,7 +46,7 @@ class OchaLocationsHierarchy extends HierarchyPluginBase {
    */
   public function getParentIds($id) {
     $location = ocha_locations_get_item($id);
-    while ($location = ocha_locations_get_item($location->parent)) {
+    while (isset($location->parent) && $location = ocha_locations_get_item($location->parent)) {
       $parents[$id][] = $location->id;
     }
 
@@ -68,6 +68,7 @@ class OchaLocationsHierarchy extends HierarchyPluginBase {
     foreach ($children as $child) {
       $subchilds = array_merge($subchilds, $this->getNestedChildIds($child));
     }
+
     return $this->nestedChildren[$id] = array_merge($children, $subchilds);
   }
 
@@ -81,6 +82,7 @@ class OchaLocationsHierarchy extends HierarchyPluginBase {
       $parents[$id] = array_keys($location->children);
     }
     $parents = array_filter($parents);
+
     return $parents;
   }
 

@@ -106,7 +106,13 @@ class AddLocationHierarchy extends AddHierarchy {
             if (!in_array($location->id, $field->getValues())) {
               $field->addValue($location->id);
             }
-            $location = ocha_locations_get_item($location->parent);
+
+            if (!empty($location->parent)) {
+              $location = ocha_locations_get_item($location->parent);
+            }
+            else {
+              $location = FALSE;
+            }
           } while ($location);
         }
       }

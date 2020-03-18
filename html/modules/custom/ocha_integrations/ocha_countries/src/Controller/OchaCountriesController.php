@@ -114,9 +114,22 @@ class OchaCountriesController extends OchaIntegrationsController {
       $options[$key] = $value->label->default;
     }
 
-    uasort($options, [$this, 'orderOptions']);
-
     return $options;
+  }
+
+  /**
+   * Get item by label.
+   */
+  public function getItemByLabel($label) {
+    $data = $this->getApiData();
+
+    foreach ($data as $key => $value) {
+      if ($value->label->default == $label) {
+        return $value;
+      }
+    }
+
+    return FALSE;
   }
 
 }

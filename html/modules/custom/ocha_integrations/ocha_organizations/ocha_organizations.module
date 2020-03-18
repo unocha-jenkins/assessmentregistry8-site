@@ -39,8 +39,16 @@ function ocha_organizations_get_controller() {
  * @see options_allowed_values()
  */
 function ocha_organizations_allowed_values_function(FieldStorageConfig $definition, ContentEntityInterface $entity = NULL, $cacheable) {
+  static $options;
+
+  if (isset($options)) {
+    return $options;
+  }
+
   $controller = ocha_organizations_get_controller();
-  return $controller->getAllowedValues();
+  $options = $controller->getAllowedValues();
+
+  return $options;
 }
 
 /**

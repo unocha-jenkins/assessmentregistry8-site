@@ -2,7 +2,9 @@
 
 namespace Drupal\ocha_integrations\Plugin\Field\FieldWidget;
 
+use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\Plugin\Field\FieldWidget\OptionsSelectWidget;
+use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Plugin implementation of the 'ocha_integrations' widget.
@@ -23,4 +25,16 @@ use Drupal\Core\Field\Plugin\Field\FieldWidget\OptionsSelectWidget;
  */
 class OchaIntegrationsOptionsSelectWidget extends OptionsSelectWidget {
 
+  /**
+   * {@inheritdoc}
+   */
+  public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
+    $element = parent::formElement($items, $delta, $element, $form, $form_state);
+
+    $options = $element['#options'];
+    uasort($options, 'ocha_integrations_order_options');
+    $element['#options'] = $options;
+
+    return $element;
+  }
 }

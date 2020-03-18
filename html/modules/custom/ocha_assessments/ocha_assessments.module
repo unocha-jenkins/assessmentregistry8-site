@@ -1,0 +1,351 @@
+<?php
+
+use \Drupal\node\Entity\Node;
+use \Drupal\file\Entity\File;
+use Drupal\Core\Entity\EntityInterface\NodeInterface;
+
+function ocha_assessments_variable_get($key, $default) {
+  if (Drupal::state()->get($key)) {
+    return Drupal::state()->get($key);
+  }
+
+  return $default;
+}
+
+function ocha_assessments_variable_set($key, $value) {
+  Drupal::state()->set($key, $value);
+}
+
+/**
+ * Wrapper around log function.
+ */
+function ocha_assessments_log($message) {
+  if (function_exists('drush_log')) {
+    drush_log($message);
+  }
+  else {
+    \Drupal::logger('ocha_assessments')->notice($message);
+  }
+}
+
+/**
+ * Migrate assessments.
+ */
+function ocha_assessments_from_hrinfo() {
+  if (ocha_assessments_variable_get('ocha_assessments_stop_processing_hrinfo', FALSE)) {
+    ocha_assessments_log('Kill switch is enabled!');
+    //return;
+  }
+
+  ocha_assessments_log('Getting page ' . ocha_assessments_variable_get('ocha_assessments_page_hrinfo', 1));
+
+  $page = ocha_assessments_variable_get('ocha_assessments_page_hrinfo', 1);
+  $api_url = ocha_assessments_variable_get('ocha_assessments_api_url_hrinfo', 'https://www.humanitarianresponse.info/api/v1.0/assessments');
+
+  // Build URL;
+  $ts = ocha_assessments_variable_get('ocha_assessments_most_recent_hrinfo', 1);
+$ts=0;
+  $url = $api_url;
+  $url .= '?page[number]=' . $page;
+  $url .= '&filter[changed][value]=' . $ts . '&filter[changed][operator]=>';
+  $url .= '&sort=changed,id';
+  ocha_assessments_log('URL: ' . $url);
+
+  // Get data.
+  $response = \Drupal::httpClient()->get($url);
+  if ($response->getStatusCode() === 200) {
+    $raw = $response->getBody()->getContents();
+    $data = json_decode($raw);
+
+    if (isset($data->data) && count($data->data)) {
+      foreach ($data->data as $row) {
+        ocha_assessments_process_row_from_hrinfo($row);
+      }
+
+      // Increment page.
+      ocha_assessments_variable_set('ocha_assessments_page_hrinfo', $page + 1);
+
+      return;
+    }
+  }
+
+  ocha_assessments_variable_set('ocha_assessments_stop_processing_hrinfo', TRUE);
+  ocha_assessments_variable_set('ocha_assessments_most_recent_hrinfo', REQUEST_TIME);
+};
+
+/**
+ * Process assessment data.
+ *
+ * @SuppressWarnings(PHPMD)
+ */
+function ocha_assessments_process_row_from_hrinfo($item) {
+  ocha_assessments_log('Migrating ' . $item->url);
+
+  if (isset($item->label) && $item->label && isset($item->id) && $item->id) {
+    $label = trim($item->label);
+
+    // Create node object.
+    $data = [
+      'type' => 'assessment',
+      'title' => $label,
+      'nid' => $item->id,
+      'field_local_groups' => [],
+      'field_organizations' => [],
+      'field_asst_organizations' => [],
+      'field_locations' => [],
+      'field_population_types' => [],
+      'field_themes' => [],
+      'field_units_of_measurement' => [],
+      'field_disasters' => [],
+      'field_assessment_data' => [],
+      'field_assessment_report' => [],
+      'field_assessment_questionnaire' => [],
+    ];
+
+    // Local group aka Cluster(s)/Sector(s).
+    if (isset($item->bundles) && count($item->bundles)) {
+      // Uses the same Ids.
+      foreach ($item->bundles as $row) {
+        if (isset($row->id)) {
+          $data['field_local_groups'][] = [
+            'value' => $row->id,
+          ];
+        }
+      }
+    }
+
+    // Leading/Coordinating Organization(s).
+    if (isset($item->organizations) && count($item->organizations)) {
+      // Uses the same Ids.
+      foreach ($item->organizations as $row) {
+        $data['field_organizations'][] = [
+          'value' => $row->id,
+        ];
+      }
+    }
+
+    // Participating Organization(s).
+    if (isset($item->participating_organizations) && count($item->participating_organizations)) {
+      // Uses the same Ids.
+      foreach ($item->participating_organizations as $row) {
+        if ($row && isset($row->id)) {
+          $data['field_asst_organizations'][] = [
+            'value' => $row->id,
+          ];
+        }
+      }
+    }
+
+    // Location(s).
+    if (isset($item->locations) && count($item->locations)) {
+      // Uses the same Ids.
+      foreach ($item->locations as $row) {
+        $data['field_locations'][] = [
+          'value' => $row->id,
+        ];
+      }
+    }
+
+    // Population Type(s).
+    if (isset($item->population_types) && count($item->population_types)) {
+      // Uses the same Ids.
+      foreach ($item->population_types as $row) {
+        $data['field_population_types'][] = [
+          'value' => $row->id,
+        ];
+      }
+    }
+
+    // Theme(s).
+    if (isset($item->themes) && count($item->themes)) {
+      // Uses different Ids.
+      foreach ($item->themes as $row) {
+        $theme = ocha_themes_get_item_by_name($row->label);
+        if ($theme) {
+          $data['field_themes'][] = [
+            'value' => $theme->id,
+          ];
+        }
+      }
+    }
+
+    // Unit(s) of Measurement.
+    if (isset($item->unit_measurement) && $item->unit_measurement) {
+      foreach ($item->unit_measurement as $row) {
+        $data['field_units_of_measurement'][] = [
+          'value' => $row,
+        ];
+      }
+    }
+
+    // Collection Method(s).
+    if (isset($item->collection_method) && $item->collection_method) {
+      foreach ($item->collection_method as $row) {
+        $data['field_collection_methods'][] = [
+          'value' => $row,
+        ];
+      }
+    }
+
+    // Disasters.
+    if (isset($item->disasters) && $item->disasters) {
+      foreach ($item->disasters as $row) {
+        if ($disaster = ocha_disasters_get_item_by_glide($row->glide)) {
+          $data['field_disasters'][] = [
+            'value' => $disaster->id,
+          ];
+        }
+      }
+    }
+
+    // Operation/Country.
+    if (isset($item->operation) && $item->operation) {
+      foreach ($item->operation as $row) {
+        if ($country = ocha_countries_get_item_by_label($row->label)) {
+          $data['field_countries'][] = [
+            'value' => $country->id,
+          ];
+        }
+      }
+    }
+
+    // Other location.
+    if (isset($item->other_location) && $item->other_location) {
+      $data['field_other_location'] = $item->other_location;
+    }
+
+    // Subject/Objective.
+    if (isset($item->subject) && $item->subject) {
+      $data['field_subject_objective'][] = [
+        'value' => $item->subject,
+      ];
+    }
+
+    // Methodology.
+    if (isset($item->methodology) && $item->methodology) {
+      $data['field_methodology'][] = [
+        'value' => $item->methodology,
+      ];
+    }
+
+    // Key findings.
+    if (isset($item->key_findings) && $item->key_findings) {
+      $data['field_key_findings'][] = [
+        'value' => $item->key_findings,
+      ];
+    }
+
+    // Sample size.
+    if (isset($item->sample_size) && $item->sample_size) {
+      $data['field_sample_size'] = $item->sample_size;
+    }
+
+    // Frequency.
+    if (isset($item->frequency) && $item->frequency) {
+      $data['field_frequency'] = $item->frequency;
+    }
+
+    // Status.
+    if (isset($item->status) && $item->status) {
+      $data['field_status'] = $item->status;
+    }
+
+    // Geographic level.
+    /*
+    if (isset($item->geographic_level) && $item->geographic_level) {
+      $data['field_geographic_level'] = $item->geographic_level;
+    }
+    */
+
+    // Assessment Date(s).
+    if (isset($item->date) && $item->date) {
+      $data['field_ass_date'][] = [
+        'value' => substr($item->date->value, 0, 10),
+        'end_value' => substr($item->date->value2, 0, 10),
+      ];
+    }
+
+    // Create date.
+    $created = REQUEST_TIME;
+    if (isset($item->created) && $item->created) {
+      $data['created'] = $item->created;
+      $created = $item->created;
+    }
+
+    // Changed date.
+    if (isset($item->changed) && $item->changed) {
+      $data['changed_override'] = $item->changed;
+    }
+
+    if (isset($item->data) && $item->data) {
+      $document = $item->data;
+      $data['field_assessment_data'][] = ocha_assessments_parse_document($document, $created);
+    }
+
+    if (isset($item->report) && $item->report) {
+      $document = $item->report;
+      $data['field_assessment_report'][] = ocha_assessments_parse_document($document, $created);
+    }
+
+    if (isset($item->questionnaire) && $item->questionnaire) {
+      $document = $item->questionnaire;
+      $data['field_assessment_questionnaire'][] = ocha_assessments_parse_document($document, $created);
+    }
+
+    $node = Node::create($data);
+    $node->save();
+  }
+}
+
+function ocha_assessments_get_id_by_label($source, $label) {
+  switch($source) {
+    case 'ms_local_group':
+    break;
+  }
+}
+
+function ocha_assessments_parse_document($document, $created) {
+  $data = [
+    'accessibility' => $document->accessibility,
+    'uri' => '',
+    'title' => '',
+    'instructions' => '',
+    'target_id' => 0,
+    'display' => 1,
+    'description' => '',
+  ];
+
+  if (isset($document->file)) {
+    $trans = \Drupal::transliteration();
+
+    $filename = $trans->transliterate($document->file->filename, 'en');
+    $filename_save = preg_replace('/\-+/', '-', strtolower(preg_replace('/[^a-zA-Z0-9_\-\.]+/', '', str_replace(' ', '-', $filename))));
+
+    $url = $document->file->url;
+
+    // Copy file.
+    $file_content = file_get_contents($url);
+    if ($file_content) {
+      $directory = 'public://assessments/' . date('Y-m', $created) . '/';
+      file_prepare_directory($directory, FILE_CREATE_DIRECTORY);
+      $file = file_save_data($file_content, $directory . $filename_save, FILE_EXISTS_REPLACE);
+
+      $data['target_id'] = $file->id();
+      $data['description'] = $filename;
+    }
+    else {
+      ocha_assessments_log('Unable to fetch ' . $url);
+    }
+  }
+
+  return $data;
+}
+
+function ocha_assessments_node_presave($node) {
+  if ($node->bundle() == 'assessment') {
+    $changed = $node->changed_override;
+    if ($changed) {
+      $node->set('changed', $changed);
+    }
+  }
+}
