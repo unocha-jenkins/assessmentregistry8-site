@@ -44,12 +44,7 @@ function ocha_assessments_from_hrinfo() {
 
   // Build URL;
   $ts = ocha_assessments_variable_get('ocha_assessments_most_recent_hrinfo', 1);
-
-  // Debug
-  $page = 1;
-  $ts = 0;
-
-
+$ts=0;
   $url = $api_url;
   $url .= '?page[number]=' . $page;
   $url .= '&filter[changed][value]=' . $ts . '&filter[changed][operator]=>';
@@ -64,7 +59,7 @@ function ocha_assessments_from_hrinfo() {
 
     if (isset($data->data) && count($data->data)) {
       foreach ($data->data as $row) {
-        ocha_assessments_process_row_from_hrinfo($row, 'hrinfo-');
+        ocha_assessments_process_row_from_hrinfo($row);
       }
 
       // Increment page.
@@ -83,7 +78,7 @@ function ocha_assessments_from_hrinfo() {
  *
  * @SuppressWarnings(PHPMD)
  */
-function ocha_assessments_process_row_from_hrinfo($item, $prefix = '') {
+function ocha_assessments_process_row_from_hrinfo($item) {
   ocha_assessments_log('Migrating ' . $item->url);
 
   if (isset($item->label) && $item->label && isset($item->id) && $item->id) {
@@ -105,10 +100,6 @@ function ocha_assessments_process_row_from_hrinfo($item, $prefix = '') {
       'field_assessment_data' => [],
       'field_assessment_report' => [],
       'field_assessment_questionnaire' => [],
-    ];
-
-    $data['field_hrinfo_id'][] = [
-      'value' => $item->id,
     ];
 
     // Local group aka Cluster(s)/Sector(s).
@@ -137,9 +128,11 @@ function ocha_assessments_process_row_from_hrinfo($item, $prefix = '') {
     if (isset($item->participating_organizations) && count($item->participating_organizations)) {
       // Uses the same Ids.
       foreach ($item->participating_organizations as $row) {
-        $data['field_asst_organizations'][] = [
-          'value' => $row->id,
-        ];
+        if ($row && isset($row->id)) {
+          $data['field_asst_organizations'][] = [
+            'value' => $row->id,
+          ];
+        }
       }
     }
 
@@ -165,11 +158,14 @@ function ocha_assessments_process_row_from_hrinfo($item, $prefix = '') {
 
     // Theme(s).
     if (isset($item->themes) && count($item->themes)) {
-      // Uses the same Ids.
+      // Uses different Ids.
       foreach ($item->themes as $row) {
-        $data['field_themes'][] = [
-          'value' => $row->id,
-        ];
+        $theme = ocha_themes_get_item_by_name($row->label);
+        if ($theme) {
+          $data['field_themes'][] = [
+            'value' => $theme->id,
+          ];
+        }
       }
     }
 
