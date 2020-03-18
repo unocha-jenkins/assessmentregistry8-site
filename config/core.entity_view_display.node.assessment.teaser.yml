@@ -13,7 +13,6 @@ dependencies:
     - field.field.node.assessment.field_countries
     - field.field.node.assessment.field_disasters
     - field.field.node.assessment.field_frequency
-    - field.field.node.assessment.field_hrinfo_nid
     - field.field.node.assessment.field_key_findings
     - field.field.node.assessment.field_level_of_representation
     - field.field.node.assessment.field_local_groups
@@ -52,7 +51,6 @@ hidden:
   field_countries: true
   field_disasters: true
   field_frequency: true
-  field_hrinfo_nid: true
   field_key_findings: true
   field_level_of_representation: true
   field_local_groups: true
