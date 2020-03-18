@@ -24,7 +24,7 @@ function ocha_assessments_log($message) {
     drush_log($message);
   }
   else {
-    \Drupal::logger('ocha_assessments')->notice($message);;
+    \Drupal::logger('ocha_assessments')->notice($message);
   }
 }
 
@@ -327,17 +327,19 @@ function ocha_assessments_parse_document($document, $created) {
 
     $url = $document->file->url;
 
-    ocha_assessments_log('Filename:' . $filename);
-    ocha_assessments_log('URL:' . $url);
-
     // Copy file.
     $file_content = file_get_contents($url);
-    $directory = 'public://assessments/' . date('Y-m', $created) . '/';
-    file_prepare_directory($directory, FILE_CREATE_DIRECTORY);
-    $file = file_save_data($file_content, $directory . $filename_save, FILE_EXISTS_REPLACE);
+    if ($file_content) {
+      $directory = 'public://assessments/' . date('Y-m', $created) . '/';
+      file_prepare_directory($directory, FILE_CREATE_DIRECTORY);
+      $file = file_save_data($file_content, $directory . $filename_save, FILE_EXISTS_REPLACE);
 
-    $data['target_id'] = $file->id();
-    $data['description'] = $filename;
+      $data['target_id'] = $file->id();
+      $data['description'] = $filename;
+    }
+    else {
+      ocha_assessments_log('Unable to fetch ' . $url);
+    }
   }
 
   return $data;

@@ -2,6 +2,7 @@
 
 namespace Drupal\ocha_locations\Controller;
 
+use Drupal\Core\Cache\Cache;
 use Drupal\ocha_integrations\Controller\OchaIntegrationsController;
 use GuzzleHttp\Exception\RequestException;
 
@@ -36,24 +37,49 @@ class OchaLocationsController extends OchaIntegrationsController {
   protected $loggerId = 'ocha_locations';
 
   /**
+   * Get flat cached data.
+   */
+  public function getFlatCache() {
+    if ($cache = $this->cacheBackend->get('ocha_locations:apiFlatData')) {
+      return $cache->data;
+    }
+
+    return [];
+  }
+
+  /**
+   * Set flat cached data.
+   */
+  public function setFlatCache($data) {
+    // Cache forever.
+    $this->cacheBackend->set('ocha_locations:apiFlatData', $data, Cache::PERMANENT);
+
+    // Invalidate cache.
+    Cache::invalidateTags([$this->cacheTag]);
+  }
+
+  /**
    * Get API data.
    */
   public function getApiDataFromEndpoint() {
     $data = [];
     $api_endpoint = $this->config->get('api.endpoint');
-    $admin_levels = [0, 1, 2];
+    $admin_levels = [0, 1, 2, 3];
 
     try {
+      // Reset ts if cache is empty.
+      if (empty($this->getCache())) {
+        $this->loggerFactory->get($this->loggerId)->notice('Resetting ts');
+        foreach ($admin_levels as $admin_level) {
+          $this->state->set('ocha_locations_fetch_and_sync_ts_' . $admin_level, 0);
+        }
+      }
+
       foreach ($admin_levels as $admin_level) {
         // Combined data.
         $combined_data = [];
 
         $ts = $this->state->get('ocha_locations_fetch_and_sync_ts_' . $admin_level);
-
-        // Reset ts if cache is empty.
-        if (empty($this->getCache())) {
-          $ts = 0;
-        }
 
         $url = $api_endpoint . '?filter[admin_level]=' . $admin_level;
         $url .= '&filter[changed][value]=' . $ts . '&filter[changed][operator]=>';
@@ -121,6 +147,7 @@ class OchaLocationsController extends OchaIntegrationsController {
   private function fillCache($data) {
     // Allow updating the cache.
     $keyed_data = $this->getCache();
+    $flat_data = $this->getFlatCache();
 
     foreach ($data as $row) {
       $keyed_data[$row->id] = (object) [
@@ -132,11 +159,11 @@ class OchaLocationsController extends OchaIntegrationsController {
         'lat' => trim($row->geolocation->lat),
         'lon' => trim($row->geolocation->lon),
         'parent' => NULL,
-        'parents' => [],
         'children' => [],
       ];
 
-      $keyed_data[$row->id]->parents[] = $row->id;
+      // Add to flat cache.
+      $flat_data[$row->id] = $keyed_data[$row->id];
     }
 
     $this->loggerFactory->get($this->loggerId)->notice('OCHA locations imported, got @num locations', [
@@ -154,6 +181,7 @@ class OchaLocationsController extends OchaIntegrationsController {
 
     if (!empty($keyed_data)) {
       $this->populateCache($keyed_data);
+      $this->setFlatCache($flat_data);
     }
 
     return $keyed_data;
@@ -165,6 +193,7 @@ class OchaLocationsController extends OchaIntegrationsController {
   private function appendToCache($data) {
     // Allow updating the cache.
     $keyed_data = $this->getCache();
+    $flat_data = $this->getFlatCache();
 
     // Key data by id.
     foreach ($data as $row) {
@@ -197,6 +226,10 @@ class OchaLocationsController extends OchaIntegrationsController {
           'parent' => $row->parent[0]->id,
           'children' => [],
         ];
+
+        // Add to flat cache and add parent as well.
+        $flat_data[$row->id] = $my_parent->children[$row->id];
+        $flat_data[$my_parent->id] = $my_parent;
       }
       else {
         $this->loggerFactory->get($this->loggerId)->notice('Missing parent @num', [
@@ -207,25 +240,18 @@ class OchaLocationsController extends OchaIntegrationsController {
 
     if (!empty($keyed_data)) {
       $this->populateCache($keyed_data);
+      $this->setFlatCache($flat_data);
     }
 
     return $keyed_data;
   }
 
   /**
-   * Get allowed values by parent.
+   * Get top level values.
    */
-  public function getAllowedValuesByParent($parent = 0, $grand_parent = 0) {
+  public function getAllowedValuesTopLevel() {
     $data = $this->getApiData();
     $options = [];
-
-    if ($grand_parent) {
-      $data = $data[$grand_parent]->children;
-    }
-
-    if ($parent) {
-      $data = $data[$parent]->children;
-    }
 
     foreach ($data as $key => $value) {
       if (isset($value->name)) {
@@ -242,23 +268,12 @@ class OchaLocationsController extends OchaIntegrationsController {
    * Get allowed values.
    */
   public function getAllowedValues() {
-    $data = $this->getApiData();
+    $data = $this->getFlatCache();
     $options = [];
 
-    // TODO: Make dynamic.
-    foreach ($data as $key0 => $level0) {
-      if (isset($level0->name)) {
-        $options[$key0] = $level0->name;
-      }
-      foreach ($level0->children as $key1 => $level1) {
-        if (isset($level1->name)) {
-          $options[$key1] = $level1->name;
-        }
-        foreach ($level1->children as $key2 => $level2) {
-          if (isset($level2->name)) {
-            $options[$key2] = $level2->name;
-          }
-        }
+    foreach ($data as $key => $level) {
+      if (isset($level->name)) {
+        $options[$key] = $level->name;
       }
     }
 
@@ -285,23 +300,10 @@ class OchaLocationsController extends OchaIntegrationsController {
    * Get item.
    */
   public function getItem($id) {
-    $data = $this->getApiData();
+    $data = $this->getFlatCache();
 
-    // TODO: Make dynamic.
-    foreach ($data as $key0 => $level0) {
-      if ($key0 == $id) {
-        return $level0;
-      }
-      foreach ($level0->children as $key1 => $level1) {
-        if ($key1 == $id) {
-          return $level1;
-        }
-        foreach ($level1->children as $key2 => $level2) {
-          if ($key2 == $id) {
-            return $level2;
-          }
-        }
-      }
+    if (isset($data[$id])) {
+      return $data[$id];
     }
 
     return FALSE;

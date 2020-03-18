@@ -32,7 +32,7 @@ class OchaLocations extends ListIntegerItem {
    * {@inheritdoc}
    */
   public static function generateSampleValue(FieldDefinitionInterface $field_definition) {
-    $allowed_options = ocha_locations_allowed_values_by_parent();
+    $allowed_options = ocha_locations_allowed_values();
     $values['value'] = array_rand($allowed_options);
     return $values;
   }

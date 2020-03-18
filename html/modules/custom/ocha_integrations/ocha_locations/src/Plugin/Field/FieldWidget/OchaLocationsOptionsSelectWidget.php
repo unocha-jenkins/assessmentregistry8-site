@@ -41,7 +41,13 @@ class OchaLocationsOptionsSelectWidget extends OptionsSelectWidget {
       $location = ocha_locations_get_item($location_value);
       do {
         $parents[] = $location;
-        $location = ocha_locations_get_item($location->parent);
+
+        if (!empty($location->parent)) {
+          $location = ocha_locations_get_item($location->parent);
+        }
+        else {
+          $location = FALSE;
+        }
       } while ($location);
     }
 
@@ -72,7 +78,7 @@ class OchaLocationsOptionsSelectWidget extends OptionsSelectWidget {
 
       // Set options.
       if ($level_counter == 0) {
-        $element['level' . $level_counter]['#options'] = ocha_locations_allowed_values_by_parent();
+        $element['level' . $level_counter]['#options'] = ocha_locations_allowed_values_top_level();
       }
       else {
         $element['level' . $level_counter]['#options'] = ocha_locations_children_to_options($parents[$level_counter - 1]);
@@ -115,7 +121,7 @@ class OchaLocationsOptionsSelectWidget extends OptionsSelectWidget {
     else {
       $element['level' . $level_counter] = [
         '#type' => 'select',
-        '#options' => ocha_locations_allowed_values_by_parent(),
+        '#options' => ocha_locations_allowed_values_top_level(),
         '#title' => $this->t('Level @level', ['@level' => $level_counter]),
         '#default_value' => '',
         '#empty_option' => $this->t('- Select admin level @level -', ['@level' => $level_counter]),

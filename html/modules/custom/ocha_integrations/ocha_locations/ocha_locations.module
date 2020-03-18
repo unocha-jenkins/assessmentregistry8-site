@@ -39,16 +39,39 @@ function ocha_locations_get_controller() {
  * @see options_allowed_values()
  */
 function ocha_locations_allowed_values_function(FieldStorageConfig $definition, ContentEntityInterface $entity = NULL, $cacheable) {
-  $controller = ocha_locations_get_controller();
-  return $controller->getAllowedValues();
+  return ocha_locations_allowed_values();
 }
 
 /**
  * Allowed values callback.
  */
-function ocha_locations_allowed_values_by_parent($parent = 0, $grand_parent = 0) {
+function ocha_locations_allowed_values() {
+  static $options;
+
+  if (isset($options)) {
+    return $options;
+  }
+
   $controller = ocha_locations_get_controller();
-  return $controller->getAllowedValuesByParent($parent, $grand_parent);
+  $options = $controller->getAllowedValues();
+
+  return $options;
+}
+
+/**
+ * Allowed top level values callback.
+ */
+function ocha_locations_allowed_values_top_level() {
+  static $options;
+
+  if (isset($options)) {
+    return $options;
+  }
+
+  $controller = ocha_locations_get_controller();
+  $options = $controller->getAllowedValuesTopLevel();
+
+  return $options;
 }
 
 /**
@@ -63,8 +86,16 @@ function ocha_locations_children_to_options($location) {
  * Get one item().
  */
 function ocha_locations_get_item($id, $langcode = NULL) {
+  static $items;
+
+  if (isset($items) && isset($items[$id])) {
+    return $items[$id];
+  }
+
   $controller = ocha_locations_get_controller();
-  return $controller->getItem($id);
+  $items[$id] = $controller->getItem($id);
+
+  return $items[$id];
 }
 
 /**
