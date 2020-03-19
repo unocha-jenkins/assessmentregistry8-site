@@ -3,6 +3,8 @@
 namespace Drupal\ocha_locations\Plugin\Field\FieldType;
 
 use Drupal\Core\Field\FieldDefinitionInterface;
+use Drupal\Core\Field\FieldStorageDefinitionInterface;
+use Drupal\Core\TypedData\DataDefinition;
 use Drupal\options\Plugin\Field\FieldType\ListIntegerItem;
 
 /**
@@ -18,6 +20,21 @@ use Drupal\options\Plugin\Field\FieldType\ListIntegerItem;
  * )
  */
 class OchaLocations extends ListIntegerItem {
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition) {
+    $properties = parent::propertyDefinitions($field_definition);
+
+    $properties['lat_lon'] = DataDefinition::create('string')
+      ->setLabel(t('Lat, lon pair'))
+      ->setSetting('case_sensitive', FALSE)
+      ->setComputed(TRUE)
+      ->setClass('\Drupal\ocha_locations\GetLocationLatLon');
+
+    return $properties;
+  }
 
   /**
    * {@inheritdoc}

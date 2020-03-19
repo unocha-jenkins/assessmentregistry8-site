@@ -7,7 +7,6 @@ dependencies:
     - field.storage.node.field_countries
     - field.storage.node.field_disasters
     - field.storage.node.field_local_groups
-    - field.storage.node.field_locations
     - field.storage.node.field_organizations
     - field.storage.node.field_themes
     - search_api.index.assessments
@@ -16,7 +15,7 @@ dependencies:
     - ocha_disasters
     - ocha_integrations
     - ocha_local_groups
-    - ocha_locations
+    - ocha_map
     - search_api
 id: assessments
 label: Assessments
@@ -74,9 +73,147 @@ display:
             next: ››
       style:
         type: table
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: true
+          override: true
+          sticky: false
+          caption: ''
+          summary: ''
+          description: ''
+          columns:
+            field_locations_lat_lon: field_locations_lat_lon
+            title: title
+            created: created
+            field_local_groups: field_local_groups
+            field_countries: field_countries
+            field_disasters: field_disasters
+            field_organizations: field_organizations
+            field_asst_organizations: field_asst_organizations
+            field_themes: field_themes
+          info:
+            field_locations_lat_lon:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            title:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            created:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_local_groups:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_countries:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_disasters:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_organizations:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_asst_organizations:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_themes:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+          default: '-1'
+          empty_table: false
       row:
         type: fields
       fields:
+        field_locations_lat_lon:
+          id: field_locations_lat_lon
+          table: search_api_index_assessments
+          field: field_locations_lat_lon
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: 'Location(s) » Lat, lon pair'
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          link_to_item: false
+          use_highlighting: false
+          multi_type: separator
+          multi_separator: ', '
+          plugin_id: search_api
         title:
           id: title
           table: search_api_index_assessments
@@ -84,7 +221,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: 'Title (indexed field)'
+          label: Title
           exclude: false
           alter:
             alter_text: false
@@ -139,7 +276,7 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          field_rendering: true
+          field_rendering: false
           fallback_handler: search_api
           fallback_options:
             link_to_item: false
@@ -628,139 +765,6 @@ display:
             multi_type: separator
             multi_separator: ', '
           plugin_id: search_api_field
-        field_locations_1:
-          id: field_locations_1
-          table: search_api_index_assessments
-          field: field_locations
-          relationship: none
-          group_type: group
-          admin_label: ''
-          label: Location(s)
-          exclude: false
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: true
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: ocha_locations_default
-          settings:
-            relationship: none
-            field_rendering: 1
-            fieldsets:
-              - more
-              - admin_label
-            custom_label: 1
-            label: 'Location(s) (indexed field)'
-            element_label_colon: 1
-            exclude: 0
-            element_type_enable: 0
-            element_type: ''
-            element_class_enable: 0
-            element_class: ''
-            element_label_type_enable: 0
-            element_label_type: ''
-            element_label_class_enable: 0
-            element_label_class: ''
-            element_wrapper_type_enable: 0
-            element_wrapper_type: ''
-            element_wrapper_class_enable: 0
-            element_wrapper_class: ''
-            element_default_classes: 1
-            alter:
-              alter_text: 0
-              text: ''
-              make_link: 0
-              path: ''
-              absolute: 0
-              replace_spaces: 0
-              external: 0
-              path_case: none
-              link_class: ''
-              alt: ''
-              rel: ''
-              prefix: ''
-              suffix: ''
-              target: ''
-              trim: 0
-              max_length: '0'
-              word_boundary: 1
-              ellipsis: 1
-              more_link: 0
-              more_link_text: ''
-              more_link_path: ''
-              html: 0
-              strip_tags: 0
-              preserve_tags: ''
-              trim_whitespace: 0
-              nl2br: 0
-            empty: ''
-            empty_zero: 0
-            hide_empty: 0
-            hide_alter_empty: 1
-            group_rows: 1
-            multi_type: separator
-            separator: ', '
-            delta_limit: '0'
-            delta_offset: '0'
-            delta_reversed: 0
-            delta_first_last: 0
-            click_sort_column: value
-            type: ocha_locations_default
-            field_api_classes: 0
-            output: label
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-          field_rendering: true
-          fallback_handler: search_api
-          fallback_options:
-            link_to_item: false
-            use_highlighting: false
-            multi_type: separator
-            multi_separator: ', '
-          plugin_id: search_api_field
         field_organizations:
           id: field_organizations
           table: search_api_index_assessments
@@ -988,21 +992,143 @@ display:
         - 'config:field.storage.node.field_countries'
         - 'config:field.storage.node.field_disasters'
         - 'config:field.storage.node.field_local_groups'
-        - 'config:field.storage.node.field_locations'
         - 'config:field.storage.node.field_organizations'
         - 'config:field.storage.node.field_themes'
   page_1:
     display_plugin: page
     id: page_1
-    display_title: Page
+    display_title: Table
     position: 1
     display_options:
       display_extenders: {  }
-      path: assessments
+      path: assessments/table
       cache:
         type: none
       defaults:
         cache: false
+        style: false
+        row: false
+        pager: false
+      style:
+        type: table
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: true
+          override: true
+          sticky: false
+          caption: ''
+          summary: ''
+          description: ''
+          columns:
+            title: title
+            created: created
+            field_local_groups: field_local_groups
+            field_countries: field_countries
+            field_disasters: field_disasters
+            field_locations_1: field_locations_1
+            field_organizations: field_organizations
+            field_asst_organizations: field_asst_organizations
+            field_themes: field_themes
+            field_locations_lat_lon: field_locations_lat_lon
+          info:
+            title:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            created:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_local_groups:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_countries:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_disasters:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_locations_1:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_organizations:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_asst_organizations:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_themes:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_locations_lat_lon:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+          default: '-1'
+          empty_table: false
+      row:
+        type: fields
+        options: {  }
+      display_description: ''
+      pager:
+        type: full
+        options:
+          items_per_page: 25
+          offset: 0
+          id: 0
+          total_pages: null
+          tags:
+            previous: ‹‹
+            next: ››
+            first: '« First'
+            last: 'Last »'
+          expose:
+            items_per_page: false
+            items_per_page_label: 'Items per page'
+            items_per_page_options: '5, 10, 25, 50'
+            items_per_page_options_all: false
+            items_per_page_options_all_label: '- All -'
+            offset: false
+            offset_label: Offset
+          quantity: 9
     cache_metadata:
       max-age: -1
       contexts:
@@ -1014,6 +1140,228 @@ display:
         - 'config:field.storage.node.field_countries'
         - 'config:field.storage.node.field_disasters'
         - 'config:field.storage.node.field_local_groups'
-        - 'config:field.storage.node.field_locations'
         - 'config:field.storage.node.field_organizations'
         - 'config:field.storage.node.field_themes'
+  page_2:
+    display_plugin: page
+    id: page_2
+    display_title: Map
+    position: 1
+    display_options:
+      display_extenders: {  }
+      path: assessments/map
+      cache:
+        type: none
+      defaults:
+        cache: false
+        pager: false
+        style: false
+        row: false
+        header: false
+        fields: false
+      pager:
+        type: some
+        options:
+          items_per_page: 5000
+          offset: 0
+      style:
+        type: ocha_leaflet_map
+        options:
+          grouping: {  }
+          data_source: field_locations_lat_lon
+          entity_source: __base_table
+          name_field: title
+          description_field: title
+          view_mode: full
+          leaflet_map: 'OSM Mapnik'
+          height: '600'
+          height_unit: px
+          hide_empty_map: 0
+          disable_wheel: 0
+          fullscreen_control: 1
+          gesture_handling: 0
+          reset_map:
+            control: 0
+            position: topright
+          map_position:
+            force: 0
+            center:
+              lat: '0'
+              lon: '0'
+            zoom: '12'
+            minZoom: '1'
+            maxZoom: '18'
+            zoomFiner: '0'
+          icon:
+            iconType: marker
+            iconUrl: ''
+            shadowUrl: ''
+            html: '<div></div>'
+            html_class: leaflet-map-divicon
+            iconSize:
+              x: ''
+              'y': ''
+            iconAnchor:
+              x: ''
+              'y': ''
+            shadowSize:
+              x: ''
+              'y': ''
+            shadowAnchor:
+              x: ''
+              'y': ''
+            popupAnchor:
+              x: ''
+              'y': ''
+          leaflet_markercluster:
+            control: 1
+            options: '{"spiderfyOnMaxZoom":true,"showCoverageOnHover":true,"removeOutsideVisibleBounds":false}'
+          path: '{"color":"#3388ff","opacity":"1.0","stroke":true,"weight":3,"fill":"depends","fillColor":"*","fillOpacity":"0.2"}'
+      row:
+        type: fields
+        options: {  }
+      display_description: ''
+      header:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          empty: false
+          tokenize: false
+          content:
+            value: 'For performance reasons only the first 5000 matches are displayed.'
+            format: basic_html
+          plugin_id: text
+      fields:
+        field_locations_lat_lon:
+          id: field_locations_lat_lon
+          table: search_api_index_assessments
+          field: field_locations_lat_lon
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: 'Location(s) » Lat, lon pair'
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          link_to_item: false
+          use_highlighting: false
+          multi_type: separator
+          multi_separator: ', '
+          plugin_id: search_api
+        title:
+          id: title
+          table: search_api_index_assessments
+          field: title
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: Title
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: true
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          field_rendering: false
+          fallback_handler: search_api
+          fallback_options:
+            link_to_item: false
+            use_highlighting: false
+            multi_type: separator
+            multi_separator: ', '
+          plugin_id: search_api_field
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+      tags: {  }
