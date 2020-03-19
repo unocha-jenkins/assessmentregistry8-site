@@ -1,0 +1,29 @@
+uuid: efe81f51-f93b-45d2-a802-af13894c8158
+langcode: en
+status: true
+dependencies:
+  config:
+    - facets.facet.authored_on_month
+  module:
+    - facets
+    - system
+  theme:
+    - common_design_subtheme
+id: authored_on_month
+theme: common_design_subtheme
+region: sidebar_first
+weight: -15
+provider: null
+plugin: 'facet_block:authored_on_month'
+settings:
+  id: 'facet_block:authored_on_month'
+  label: 'Authored on monthe'
+  provider: facets
+  label_display: '0'
+  block_id: authored_on_month
+visibility:
+  request_path:
+    id: request_path
+    pages: "/assessments/table\r\n/assessments/table/*"
+    negate: false
+    context_mapping: {  }

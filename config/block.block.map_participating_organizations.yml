@@ -12,7 +12,7 @@ dependencies:
 id: map_participating_organizations
 theme: common_design_subtheme
 region: sidebar_first
-weight: 0
+weight: -1
 provider: null
 plugin: 'facet_block:map_participating_organizations'
 settings:

@@ -12,7 +12,7 @@ dependencies:
 id: map_sources
 theme: common_design_subtheme
 region: sidebar_first
-weight: 0
+weight: 2
 provider: null
 plugin: 'facet_block:map_sources'
 settings:
