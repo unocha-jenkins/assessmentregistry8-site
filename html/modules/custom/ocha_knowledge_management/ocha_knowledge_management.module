@@ -1,0 +1,266 @@
+<?php
+
+use Drupal\node\Entity\Node;
+use Drupal\taxonomy\Entity\Term;
+use Drupal\file\Entity\File;
+use Drupal\Core\Entity\EntityInterface\NodeInterface;
+
+function ocha_knowledge_management_variable_get($key, $default) {
+  if (Drupal::state()->get($key)) {
+    return Drupal::state()->get($key);
+  }
+
+  return $default;
+}
+
+function ocha_knowledge_management_variable_set($key, $value) {
+  Drupal::state()->set($key, $value);
+}
+
+/**
+ * Wrapper around log function.
+ */
+function ocha_knowledge_management_log($message) {
+  if (function_exists('drush_log')) {
+    drush_log($message);
+  }
+  else {
+    \Drupal::logger('ocha_knowledge_management')->notice($message);
+  }
+}
+
+/**
+ * Migrate assessments.
+ */
+function ocha_knowledge_management_from_csv() {
+  $src = drupal_get_path('module', 'ocha_knowledge_management') . '/reg_km.csv';
+
+  if (($handle = fopen($src, "r")) !== FALSE) {
+    // Skip header.
+    fgetcsv($handle, 1000, ",");
+
+    while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+      ocha_knowledge_management_process_row_from_hrinfo($data);
+    }
+  }
+};
+
+/**
+ * Process assessment data.
+ *
+ * @SuppressWarnings(PHPMD)
+ */
+function ocha_knowledge_management_process_row_from_hrinfo($data) {
+  $item = (object) [
+    'title' => $data[0],
+    'context' => $data[1],
+    'country' => $data[2],
+    'document' => $data[3],
+    'document_type' => $data[4],
+    'global_cluster' => $data[5],
+    'hpc_document_repository' => $data[6],
+    'life_cycle_steps' => $data[7],
+    'media' => $data[8],
+    'original_publication_date' => $data[9],
+    'population_types' => $data[10],
+    'post_date' => $data[11],
+    'published' => $data[12],
+    'updated_date' => $data[13],
+    'description' => $data[14],
+    'path' => $data[15],
+    'nid' => $data[16],
+  ];
+
+  ocha_knowledge_management_log('Migrating ' . $item->title);
+
+  if (isset($item->title) && $item->title) {
+    // Skip existing nodes.
+    if ($node = \Drupal::entityTypeManager()->getStorage('node')->load($item->nid)) {
+      // TODO: Handle this.
+      ocha_knowledge_management_log('Skipping ' . $item->nid . ' -- ' . $item->title);
+      return;
+    }
+
+    $title = trim($item->title);
+
+    // Create node object.
+    $data = [
+      'type' => 'knowledge_management',
+      'title' => $title,
+      'nid' => $item->nid,
+    ];
+
+    // Context.
+    if (isset($item->context) && !empty($item->context)) {
+      // Split on ','.
+      $terms = explode(',', $item->context);
+      foreach ($terms as $term) {
+        $term = trim($term);
+        $data['field_km_context'][] = [
+          'target_id' => ocha_knowledge_management_get_tid($term, 'context'),
+        ];
+      }
+    }
+
+    // Country.
+    if (isset($item->country) && !empty($item->country)) {
+      $term = trim($item->country);
+      if ($country = ocha_countries_get_item_by_label($term)) {
+        $data['field_countries'][] = [
+          'value' => $country->id,
+        ];
+      }
+    }
+
+    // Population Type(s).
+    if (isset($item->population_types) && !empty($item->population_types)) {
+      $term = trim($item->population_types);
+      if ($population_type = ocha_population_type_get_item_by_label($term)) {
+        $data['field_countries'][] = [
+          'value' => $population_type->id,
+        ];
+      }
+    }
+
+    // Document type.
+    if (isset($item->document_type) && !empty($item->document_type)) {
+      // Split on ','.
+      $terms = explode(',', $item->document_type);
+      foreach ($terms as $term) {
+        $term = trim($term);
+        $data['field_km_document_type'][] = [
+          'target_id' => ocha_knowledge_management_get_tid($term, 'km_document_type'),
+        ];
+      }
+    }
+
+    // HPC Document Repository.
+    if (isset($item->hpc_document_repository) && !empty($item->hpc_document_repository)) {
+      // Split on ','.
+      $terms = explode(',', $item->hpc_document_repository);
+      foreach ($terms as $term) {
+        $term = trim($term);
+        $data['field_km_hpc_document_repository'][] = [
+          'target_id' => ocha_knowledge_management_get_tid($term, 'hpc_document_repository'),
+        ];
+      }
+    }
+
+    // Life cycle steps.
+    if (isset($item->life_cycle_steps) && !empty($item->life_cycle_steps)) {
+      // Split on ','.
+      $terms = explode(',', $item->life_cycle_steps);
+      foreach ($terms as $term) {
+        $term = trim($term);
+        $data['field_km_life_cycle_steps'][] = [
+          'target_id' => ocha_knowledge_management_get_tid($term, 'life_cycle_steps'),
+        ];
+      }
+    }
+
+    // Original publication date.
+    if (isset($item->original_publication_date) && $item->original_publication_date) {
+      $data['field_km_original_publication_date'][] = [
+        'value' => substr($item->original_publication_date, 0, 10),
+      ];
+    }
+
+    // Post date.
+    $created = REQUEST_TIME;
+    if (isset($item->post_date) && $item->post_date) {
+      $created = $item->post_date;
+      $data['created'] = strtotime($created);
+    }
+
+    // Updated date.
+    if (isset($item->updated_date) && $item->updated_date) {
+      $data['changed_override'] = strtotime($item->updated_date);
+    }
+
+    // Published.
+    if (isset($item->published) && $item->published) {
+      if ($item->published !== 'Yes') {
+        $data['status'] = 0;
+      }
+    }
+
+    // Description.
+    if (isset($item->description) && $item->description) {
+      $data['field_description'][] = [
+        'value' => $item->description,
+        'format' => 'full_html',
+      ];
+    }
+
+    $node = Node::create($data);
+    $node->save();
+  }
+}
+
+function ocha_knowledge_management_get_id_by_label($source, $label) {
+  switch($source) {
+    case 'ms_local_group':
+    break;
+  }
+}
+
+function ocha_knowledge_management_parse_document($document, $created) {
+  $data = [
+    'accessibility' => $document->accessibility,
+    'uri' => '',
+    'title' => '',
+    'instructions' => '',
+    'target_id' => 0,
+    'display' => 1,
+    'description' => '',
+  ];
+
+  if (isset($document->file)) {
+    $trans = \Drupal::transliteration();
+
+    $filename = $trans->transliterate($document->file->filename, 'en');
+    $filename_save = preg_replace('/\-+/', '-', strtolower(preg_replace('/[^a-zA-Z0-9_\-\.]+/', '', str_replace(' ', '-', $filename))));
+
+    $url = $document->file->url;
+
+    // Copy file.
+    $file_content = file_get_contents($url);
+    if ($file_content) {
+      $directory = 'public://assessments/' . date('Y-m', $created) . '/';
+      file_prepare_directory($directory, FILE_CREATE_DIRECTORY);
+      $file = file_save_data($file_content, $directory . $filename_save, FILE_EXISTS_REPLACE);
+
+      $data['target_id'] = $file->id();
+      $data['description'] = $filename;
+    }
+    else {
+      ocha_knowledge_management_log('Unable to fetch ' . $url);
+    }
+  }
+
+  return $data;
+}
+
+function ocha_knowledge_management_node_presave($node) {
+  if ($node->bundle() == 'knowledge_management') {
+    $changed = $node->changed_override;
+    if ($changed) {
+      $node->set('changed', $changed);
+    }
+  }
+}
+
+function ocha_knowledge_management_get_tid($label, $vocabulary) {
+  if ($terms = taxonomy_term_load_multiple_by_name($label, $vocabulary)) {
+    $term = reset($terms);
+  } else {
+    $term = Term::create([
+      'name' => $label,
+      'vid' => $vocabulary,
+      'parent' => [],
+    ]);
+    $term->save();
+  }
+
+  return $term->id();
+}

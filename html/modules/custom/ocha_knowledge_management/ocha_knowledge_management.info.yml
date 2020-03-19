@@ -1,0 +1,5 @@
+name: OCHA Knowledge Management
+description: OCHA Knowledge Management
+package: OCHA
+type: module
+core: 8.x
