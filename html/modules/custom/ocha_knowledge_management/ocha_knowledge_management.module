@@ -1,9 +1,9 @@
 <?php
 
+use Drupal\media\Entity\Media;
 use Drupal\node\Entity\Node;
+use Drupal\pathauto\PathautoState;
 use Drupal\taxonomy\Entity\Term;
-use Drupal\file\Entity\File;
-use Drupal\Core\Entity\EntityInterface\NodeInterface;
 
 function ocha_knowledge_management_variable_get($key, $default) {
   if (Drupal::state()->get($key)) {
@@ -192,6 +192,42 @@ function ocha_knowledge_management_process_row_from_hrinfo($data) {
       ];
     }
 
+    // Path.
+    if (isset($item->path) && $item->path) {
+      $data['path'] = [
+      'alias' => $item->path,
+      'pathauto' => PathautoState::SKIP,
+      ];
+    }
+
+    // Media.
+    if (isset($item->media) && $item->media) {
+      // Split on ','.
+      $files = explode(',', $item->media);
+      foreach ($files as $url) {
+        $media_item = ocha_knowledge_management_add_media_entity($url, 'document', $created);
+        if ($media_item) {
+          $data['field_km_media'][] = [
+            'target_id' => $media_item->id(),
+          ];
+        }
+      }
+    }
+
+    // Document.
+    if (isset($item->document) && $item->document) {
+      // Split on ','.
+      $files = explode(',', $item->document);
+      foreach ($files as $url) {
+        $media_item = ocha_knowledge_management_add_media_entity($url, 'document', $created);
+        if ($media_item) {
+          $data['field_km_document'][] = [
+            'target_id' => $media_item->id(),
+          ];
+        }
+      }
+    }
+
     $node = Node::create($data);
     $node->save();
   }
@@ -263,4 +299,41 @@ function ocha_knowledge_management_get_tid($label, $vocabulary) {
   }
 
   return $term->id();
+}
+
+function ocha_knowledge_management_add_media_entity($url, $bundle, $created) {
+  // Get filename from URL.
+  $filename = basename($url);
+
+  // Clean filename
+  $trans = \Drupal::transliteration();
+
+  $filename = $trans->transliterate($filename, 'en');
+  $filename_save = preg_replace('/\-+/', '-', strtolower(preg_replace('/[^a-zA-Z0-9_\-\.]+/', '', str_replace(' ', '-', $filename))));
+
+  // Copy file.
+  $file_content = file_get_contents($url);
+  if ($file_content) {
+    $directory = 'public://knowledge_management/' . date('Y-m', strtotime($created)) . '/';
+    file_prepare_directory($directory, FILE_CREATE_DIRECTORY);
+    $file = file_save_data($file_content, $directory . $filename_save, FILE_EXISTS_REPLACE);
+
+    $media_entity = Media::create([
+      'bundle' => $bundle,
+      'uid' => '1',
+      'name' => $filename,
+      'status' => TRUE,
+      'field_media_' . $bundle => [
+        'target_id' => $file->id(),
+        'alt' => $filename,
+      ],
+    ]);
+    $media_entity->save();
+    return $media_entity;
+  }
+  else {
+    ocha_assessments_log('Unable to fetch ' . $url);
+  }
+
+  return FALSE;
 }
