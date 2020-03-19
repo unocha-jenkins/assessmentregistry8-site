@@ -1,0 +1,4 @@
+api:
+  endpoint: 'http://vocabulary.unocha.org/json/beta-v1/global_coordination_groups.json'
+_core:
+  default_config_hash: vQ4q6XXSmM7Dk_uBBvVF1S1XpYxhFbuG-oJ0s-YWt88

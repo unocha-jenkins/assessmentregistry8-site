@@ -71,3 +71,218 @@ select table_schema as database_name, table_name
 where table_type = 'BASE TABLE' and table_rows = 0 and table_schema = 'default' and table_name like 'node__field%'
 order by table_name;
 ```
+
+### KM view (D7)
+
+```php
+$view = new view();
+$view->name = 'km';
+$view->description = '';
+$view->tag = 'default';
+$view->base_table = 'node';
+$view->human_name = 'KM';
+$view->core = 7;
+$view->api_version = '3.0';
+$view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+/* Display: Master */
+$handler = $view->new_display('default', 'Master', 'default');
+$handler->display->display_options['title'] = 'KM';
+$handler->display->display_options['use_more_always'] = FALSE;
+$handler->display->display_options['access']['type'] = 'perm';
+$handler->display->display_options['cache']['type'] = 'none';
+$handler->display->display_options['query']['type'] = 'views_query';
+$handler->display->display_options['exposed_form']['type'] = 'basic';
+$handler->display->display_options['pager']['type'] = 'full';
+$handler->display->display_options['pager']['options']['items_per_page'] = '10';
+$handler->display->display_options['style_plugin'] = 'table';
+/* Field: Content: Title */
+$handler->display->display_options['fields']['title']['id'] = 'title';
+$handler->display->display_options['fields']['title']['table'] = 'node';
+$handler->display->display_options['fields']['title']['field'] = 'title';
+$handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
+$handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+/* Field: Content: Context */
+$handler->display->display_options['fields']['field_km_context']['id'] = 'field_km_context';
+$handler->display->display_options['fields']['field_km_context']['table'] = 'field_data_field_km_context';
+$handler->display->display_options['fields']['field_km_context']['field'] = 'field_km_context';
+$handler->display->display_options['fields']['field_km_context']['settings'] = array(
+  'bypass_access' => 0,
+  'link' => 0,
+);
+$handler->display->display_options['fields']['field_km_context']['delta_offset'] = '0';
+/* Field: Content: Country */
+$handler->display->display_options['fields']['field_km_country']['id'] = 'field_km_country';
+$handler->display->display_options['fields']['field_km_country']['table'] = 'field_data_field_km_country';
+$handler->display->display_options['fields']['field_km_country']['field'] = 'field_km_country';
+$handler->display->display_options['fields']['field_km_country']['settings'] = array(
+  'bypass_access' => 0,
+  'link' => 0,
+);
+/* Field: Content: Document */
+$handler->display->display_options['fields']['field_km_document']['id'] = 'field_km_document';
+$handler->display->display_options['fields']['field_km_document']['table'] = 'field_data_field_km_document';
+$handler->display->display_options['fields']['field_km_document']['field'] = 'field_km_document';
+$handler->display->display_options['fields']['field_km_document']['click_sort_column'] = 'fid';
+$handler->display->display_options['fields']['field_km_document']['type'] = 'file_url_plain';
+$handler->display->display_options['fields']['field_km_document']['delta_offset'] = '0';
+/* Field: Content: Document type */
+$handler->display->display_options['fields']['field_km_document_type']['id'] = 'field_km_document_type';
+$handler->display->display_options['fields']['field_km_document_type']['table'] = 'field_data_field_km_document_type';
+$handler->display->display_options['fields']['field_km_document_type']['field'] = 'field_km_document_type';
+$handler->display->display_options['fields']['field_km_document_type']['settings'] = array(
+  'bypass_access' => 0,
+  'link' => 0,
+);
+/* Field: Content: Global cluster */
+$handler->display->display_options['fields']['field_km_global_cluster']['id'] = 'field_km_global_cluster';
+$handler->display->display_options['fields']['field_km_global_cluster']['table'] = 'field_data_field_km_global_cluster';
+$handler->display->display_options['fields']['field_km_global_cluster']['field'] = 'field_km_global_cluster';
+$handler->display->display_options['fields']['field_km_global_cluster']['type'] = 'list_key';
+$handler->display->display_options['fields']['field_km_global_cluster']['delta_offset'] = '0';
+/* Field: Content: HPC Document Repository */
+$handler->display->display_options['fields']['field_km_hpc_repository']['id'] = 'field_km_hpc_repository';
+$handler->display->display_options['fields']['field_km_hpc_repository']['table'] = 'field_data_field_km_hpc_repository';
+$handler->display->display_options['fields']['field_km_hpc_repository']['field'] = 'field_km_hpc_repository';
+$handler->display->display_options['fields']['field_km_hpc_repository']['settings'] = array(
+  'bypass_access' => 0,
+  'link' => 0,
+);
+$handler->display->display_options['fields']['field_km_hpc_repository']['delta_offset'] = '0';
+/* Field: Content: Life cycle steps */
+$handler->display->display_options['fields']['field_km_life_cycle_steps']['id'] = 'field_km_life_cycle_steps';
+$handler->display->display_options['fields']['field_km_life_cycle_steps']['table'] = 'field_data_field_km_life_cycle_steps';
+$handler->display->display_options['fields']['field_km_life_cycle_steps']['field'] = 'field_km_life_cycle_steps';
+$handler->display->display_options['fields']['field_km_life_cycle_steps']['settings'] = array(
+  'bypass_access' => 0,
+  'link' => 0,
+);
+$handler->display->display_options['fields']['field_km_life_cycle_steps']['delta_offset'] = '0';
+/* Field: Content: Media */
+$handler->display->display_options['fields']['field_km_media']['id'] = 'field_km_media';
+$handler->display->display_options['fields']['field_km_media']['table'] = 'field_data_field_km_media';
+$handler->display->display_options['fields']['field_km_media']['field'] = 'field_km_media';
+$handler->display->display_options['fields']['field_km_media']['click_sort_column'] = 'fid';
+$handler->display->display_options['fields']['field_km_media']['type'] = 'file_url_plain';
+$handler->display->display_options['fields']['field_km_media']['delta_offset'] = '0';
+/* Field: Content: Original publication date */
+$handler->display->display_options['fields']['field_km_publication_date']['id'] = 'field_km_publication_date';
+$handler->display->display_options['fields']['field_km_publication_date']['table'] = 'field_data_field_km_publication_date';
+$handler->display->display_options['fields']['field_km_publication_date']['field'] = 'field_km_publication_date';
+$handler->display->display_options['fields']['field_km_publication_date']['type'] = 'date_plain';
+$handler->display->display_options['fields']['field_km_publication_date']['settings'] = array(
+  'format_type' => 'custom',
+  'custom_date_format' => 'Y-m-d',
+  'fromto' => 'both',
+  'multiple_number' => '',
+  'multiple_from' => '',
+  'multiple_to' => '',
+  'show_remaining_days' => 0,
+);
+/* Field: Content: Population Type(s) */
+$handler->display->display_options['fields']['field_population_types']['id'] = 'field_population_types';
+$handler->display->display_options['fields']['field_population_types']['table'] = 'field_data_field_population_types';
+$handler->display->display_options['fields']['field_population_types']['field'] = 'field_population_types';
+$handler->display->display_options['fields']['field_population_types']['settings'] = array(
+  'bypass_access' => 0,
+  'link' => 0,
+);
+$handler->display->display_options['fields']['field_population_types']['delta_offset'] = '0';
+/* Field: Content: Post date */
+$handler->display->display_options['fields']['created']['id'] = 'created';
+$handler->display->display_options['fields']['created']['table'] = 'node';
+$handler->display->display_options['fields']['created']['field'] = 'created';
+$handler->display->display_options['fields']['created']['date_format'] = 'custom';
+$handler->display->display_options['fields']['created']['custom_date_format'] = 'Y-m-d';
+$handler->display->display_options['fields']['created']['second_date_format'] = 'search_api_facetapi_YEAR';
+$handler->display->display_options['fields']['created']['timezone'] = 'UTC';
+/* Field: Content: Published */
+$handler->display->display_options['fields']['status']['id'] = 'status';
+$handler->display->display_options['fields']['status']['table'] = 'node';
+$handler->display->display_options['fields']['status']['field'] = 'status';
+$handler->display->display_options['fields']['status']['not'] = 0;
+/* Field: Content: Updated date */
+$handler->display->display_options['fields']['changed']['id'] = 'changed';
+$handler->display->display_options['fields']['changed']['table'] = 'node';
+$handler->display->display_options['fields']['changed']['field'] = 'changed';
+$handler->display->display_options['fields']['changed']['date_format'] = 'custom';
+$handler->display->display_options['fields']['changed']['custom_date_format'] = 'Y-m-d';
+$handler->display->display_options['fields']['changed']['second_date_format'] = 'search_api_facetapi_YEAR';
+$handler->display->display_options['fields']['changed']['timezone'] = 'UTC';
+/* Field: Field: Description */
+$handler->display->display_options['fields']['description_field']['id'] = 'description_field';
+$handler->display->display_options['fields']['description_field']['table'] = 'field_data_description_field';
+$handler->display->display_options['fields']['description_field']['field'] = 'description_field';
+$handler->display->display_options['fields']['description_field']['link_to_entity'] = 0;
+/* Sort criterion: Content: Post date */
+$handler->display->display_options['sorts']['created']['id'] = 'created';
+$handler->display->display_options['sorts']['created']['table'] = 'node';
+$handler->display->display_options['sorts']['created']['field'] = 'created';
+$handler->display->display_options['sorts']['created']['order'] = 'DESC';
+/* Filter criterion: Content: Published */
+$handler->display->display_options['filters']['status']['id'] = 'status';
+$handler->display->display_options['filters']['status']['table'] = 'node';
+$handler->display->display_options['filters']['status']['field'] = 'status';
+$handler->display->display_options['filters']['status']['value'] = 1;
+$handler->display->display_options['filters']['status']['group'] = 1;
+$handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+/* Filter criterion: Content: Type */
+$handler->display->display_options['filters']['type']['id'] = 'type';
+$handler->display->display_options['filters']['type']['table'] = 'node';
+$handler->display->display_options['filters']['type']['field'] = 'type';
+$handler->display->display_options['filters']['type']['value'] = array(
+  'reg_knowledge_management' => 'reg_knowledge_management',
+);
+
+/* Display: Page */
+$handler = $view->new_display('page', 'Page', 'page');
+$handler->display->display_options['path'] = 'admin/migrate/km';
+
+/* Display: Data export */
+$handler = $view->new_display('views_data_export', 'Data export', 'views_data_export_1');
+$handler->display->display_options['pager']['type'] = 'none';
+$handler->display->display_options['pager']['options']['offset'] = '0';
+$handler->display->display_options['style_plugin'] = 'views_data_export_csv';
+$handler->display->display_options['path'] = 'admin/migrate/km/reg_km.csv';
+$handler->display->display_options['displays'] = array(
+  'page' => 'page',
+  'default' => 0,
+);
+$handler->display->display_options['use_batch'] = 'batch';
+$handler->display->display_options['return_path'] = 'admin/migrate/km';
+$handler->display->display_options['segment_size'] = '100';
+$translatables['km'] = array(
+  t('Master'),
+  t('KM'),
+  t('more'),
+  t('Apply'),
+  t('Reset'),
+  t('Sort by'),
+  t('Asc'),
+  t('Desc'),
+  t('Items per page'),
+  t('- All -'),
+  t('Offset'),
+  t('« first'),
+  t('‹ previous'),
+  t('next ›'),
+  t('last »'),
+  t('Title'),
+  t('Context'),
+  t('Country'),
+  t('Document'),
+  t('Document type'),
+  t('Global cluster'),
+  t('HPC Document Repository'),
+  t('Life cycle steps'),
+  t('Media'),
+  t('Original publication date'),
+  t('Population Type(s)'),
+  t('Post date'),
+  t('Published'),
+  t('Updated date'),
+  t('Description'),
+  t('Page'),
+  t('Data export'),
+);
+```

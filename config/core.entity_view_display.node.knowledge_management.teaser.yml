@@ -1,0 +1,44 @@
+uuid: 6d264f07-6d97-48f4-9c94-e456d5b7e7dd
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.knowledge_management.field_countries
+    - field.field.node.knowledge_management.field_description
+    - field.field.node.knowledge_management.field_km_context
+    - field.field.node.knowledge_management.field_km_document
+    - field.field.node.knowledge_management.field_km_document_type
+    - field.field.node.knowledge_management.field_km_global_cluster
+    - field.field.node.knowledge_management.field_km_hpc_document_repository
+    - field.field.node.knowledge_management.field_km_life_cycle_steps
+    - field.field.node.knowledge_management.field_km_media
+    - field.field.node.knowledge_management.field_km_publication_date
+    - field.field.node.knowledge_management.field_population_types
+    - node.type.knowledge_management
+  module:
+    - user
+id: node.knowledge_management.teaser
+targetEntityType: node
+bundle: knowledge_management
+mode: teaser
+content:
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_countries: true
+  field_description: true
+  field_km_context: true
+  field_km_document: true
+  field_km_document_type: true
+  field_km_global_cluster: true
+  field_km_hpc_document_repository: true
+  field_km_life_cycle_steps: true
+  field_km_media: true
+  field_km_publication_date: true
+  field_population_types: true
+  langcode: true
+  search_api_excerpt: true
