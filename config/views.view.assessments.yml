@@ -1162,7 +1162,7 @@ display:
       pager:
         type: some
         options:
-          items_per_page: 1000
+          items_per_page: 5000
           offset: 0
       style:
         type: ocha_leaflet_map
@@ -1232,7 +1232,7 @@ display:
           empty: false
           tokenize: false
           content:
-            value: 'For performance reasons only the first 1000 matches are displayed.'
+            value: 'For performance reasons only the first 5000 matches are displayed.'
             format: basic_html
           plugin_id: text
       fields:
