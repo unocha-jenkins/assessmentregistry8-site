@@ -1,0 +1,2 @@
+api:
+  endpoint: 'http://vocabulary.unocha.org/json/beta-v1/global_coordination_groups.json'

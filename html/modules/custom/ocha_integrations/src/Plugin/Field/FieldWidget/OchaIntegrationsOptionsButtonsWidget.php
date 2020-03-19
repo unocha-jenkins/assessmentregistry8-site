@@ -18,7 +18,8 @@ use Drupal\Core\Form\FormStateInterface;
  *     "ocha_local_groups",
  *     "ocha_organizations",
  *     "ocha_themes",
- *     "ocha_population_type"
+ *     "ocha_population_type",
+ *     "ocha_global_coordination_groups"
  *   },
  *   multiple_values = TRUE
  * )

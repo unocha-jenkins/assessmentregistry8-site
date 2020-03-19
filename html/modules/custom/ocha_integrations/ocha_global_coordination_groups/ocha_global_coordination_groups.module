@@ -1,0 +1,124 @@
+<?php
+
+/**
+ * @file
+ * OCHA countries logic.
+ */
+
+use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\ocha_global_coordination_groups\Controller\OchaGlobalCoordinationGroupsController;
+
+/**
+ * Returns a controller.
+ */
+function ocha_global_coordination_groups_get_controller() {
+  return new OchaGlobalCoordinationGroupsController(
+    \Drupal::service('http_client'),
+    \Drupal::service('config.factory'),
+    \Drupal::service('cache.ocha_global_coordination_groups'),
+    \Drupal::service('logger.factory'),
+    \Drupal::service('state'),
+    \Drupal::service('file_system')
+  );
+}
+
+/**
+ * Allowed values callback.
+ *
+ * @param \Drupal\field\Entity\FieldStorageConfig $definition
+ *   The field definition.
+ * @param \Drupal\Core\Entity\ContentEntityInterface|null $entity
+ *   The entity being created if applicable.
+ * @param bool $cacheable
+ *   Boolean indicating if the results are cacheable.
+ *
+ * @return array
+ *   An array of possible key and value options.
+ *
+ * @see options_allowed_values()
+ */
+function ocha_global_coordination_groups_allowed_values_function(FieldStorageConfig $definition, ContentEntityInterface $entity = NULL, $cacheable) {
+  static $options;
+
+  if (isset($options)) {
+    return $options;
+  }
+
+  $controller = ocha_global_coordination_groups_get_controller();
+  $options = $controller->getAllowedValues();
+
+  return $options;
+}
+
+/**
+ * Get one item().
+ */
+function ocha_global_coordination_groups_get_item($id, $langcode = NULL) {
+  $controller = ocha_global_coordination_groups_get_controller();
+
+  $item = $controller->getItem($id);
+  $item->label->translated = $item->label->default;
+
+  if ($langcode) {
+    switch ($langcode) {
+      case 'ar':
+        if (isset($item->label->{'arabic-short'})) {
+          $item->label->translated = $item->label->{'arabic-short'};
+        }
+        break;
+
+      case 'cn':
+        if (isset($item->label->{'chinese-short'})) {
+          $item->label->translated = $item->label->{'chinese-short'};
+        }
+        break;
+
+      case 'fr':
+        if (isset($item->label->{'french-short'})) {
+          $item->label->translated = $item->label->{'french-short'};
+        }
+        break;
+
+      case 'ru':
+        if (isset($item->label->{'russian-short'})) {
+          $item->label->translated = $item->label->{'russian-short'};
+        }
+        break;
+
+      case 'es':
+        if (isset($item->label->{'spanish-short'})) {
+          $item->label->translated = $item->label->{'spanish-short'};
+        }
+        break;
+
+    }
+  }
+
+  return $item;
+}
+
+/**
+ * Implements hook_cron().
+ */
+function ocha_global_coordination_groups_cron() {
+  $controller = ocha_global_coordination_groups_get_controller();
+  $controller->getApiData(TRUE);
+}
+
+/**
+ * Load from JSON.
+ */
+function ocha_global_coordination_groups_import_json() {
+  $controller = ocha_global_coordination_groups_get_controller();
+  $controller->getApiDataFromJson();
+}
+
+/**
+ * Get one item by label.
+ */
+function ocha_global_coordination_groups_get_item_by_label($label) {
+  $controller = ocha_global_coordination_groups_get_controller();
+
+  return $controller->getItemByLabel($label);
+}

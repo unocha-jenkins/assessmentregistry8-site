@@ -1,0 +1,14 @@
+api:
+  type: config_object
+  label: 'OCHA countries API settings'
+  mapping:
+    endpoint:
+      type: string
+      label: 'API endpoint'
+field.formatter.settings.ocha_global_coordination_groups_default:
+  type: mapping
+  label: 'Default formatter settings'
+  mapping:
+    output:
+      type: string
+      label: 'Output'
