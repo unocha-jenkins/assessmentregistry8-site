@@ -1,0 +1,7 @@
+name: OCHA Map
+description: OCHA Map
+package: OCHA
+type: module
+core: 8.x
+dependencies:
+  - leaflet:leaflet_views
