@@ -147,4 +147,18 @@ class OchaPopulationTypeController extends OchaIntegrationsController {
     return $options;
   }
 
+  /**
+   * Get item by label.
+   */
+  public function getItemByLabel($label) {
+    $data = $this->getApiData();
+
+    foreach ($data as $key => $value) {
+      if ($value->name == $label) {
+        return $value;
+      }
+    }
+
+    return FALSE;
+  }
 }

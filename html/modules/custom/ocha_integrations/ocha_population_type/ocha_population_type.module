@@ -74,3 +74,12 @@ function ocha_population_type_import_json() {
   $controller = ocha_population_type_get_controller();
   $controller->getApiDataFromJson();
 }
+
+/**
+ * Get one item by label.
+ */
+function ocha_population_type_get_item_by_label($label) {
+  $controller = ocha_population_type_get_controller();
+
+  return $controller->getItemByLabel($label);
+}
