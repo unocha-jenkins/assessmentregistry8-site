@@ -1,0 +1,127 @@
+uuid: 1afe1984-963f-421b-9c65-6e38a93f73a4
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - search_api
+  config:
+    - field.storage.node.field_countries
+    - field.storage.node.field_km_document
+    - field.storage.node.field_km_document_type
+    - field.storage.node.field_km_hpc_document_repository
+    - field.storage.node.field_km_publication_date
+    - field.storage.node.field_population_types
+    - search_api.server.db
+    - core.entity_view_mode.node.teaser
+id: knowledge_management
+name: 'Knowledge Management'
+description: ''
+read_only: false
+field_settings:
+  created:
+    label: 'Authored on'
+    datasource_id: 'entity:node'
+    property_path: created
+    type: date
+    dependencies:
+      module:
+        - node
+  field_countries:
+    label: Countries
+    datasource_id: 'entity:node'
+    property_path: field_countries
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_countries
+  field_km_document:
+    label: Document
+    datasource_id: 'entity:node'
+    property_path: field_km_document
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_km_document
+  field_km_document_type:
+    label: 'Document type'
+    datasource_id: 'entity:node'
+    property_path: field_km_document_type
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_km_document_type
+  field_km_hpc_document_repository:
+    label: 'HPC Document Repository'
+    datasource_id: 'entity:node'
+    property_path: field_km_hpc_document_repository
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_km_hpc_document_repository
+  field_km_publication_date:
+    label: 'Original publication date'
+    datasource_id: 'entity:node'
+    property_path: field_km_publication_date
+    type: date
+    dependencies:
+      config:
+        - field.storage.node.field_km_publication_date
+  field_population_types:
+    label: 'Population Type(s)'
+    datasource_id: 'entity:node'
+    property_path: field_population_types
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_population_types
+  rendered_item:
+    label: 'Rendered HTML output'
+    property_path: rendered_item
+    type: text
+    configuration:
+      roles:
+        anonymous: anonymous
+      view_mode:
+        'entity:node':
+          knowledge_management: teaser
+datasource_settings:
+  'entity:node':
+    bundles:
+      default: false
+      selected:
+        - knowledge_management
+    languages:
+      default: true
+      selected: {  }
+processor_settings:
+  add_url: {  }
+  aggregated_field: {  }
+  hierarchy:
+    fields:
+      field_km_hpc_document_repository: taxonomy_term-parent
+    weights:
+      preprocess_index: -45
+  ignorecase:
+    all_fields: true
+    fields:
+      - rendered_item
+    weights:
+      preprocess_index: -20
+      preprocess_query: -20
+  language_with_fallback: {  }
+  rendered_item: {  }
+  transliteration:
+    all_fields: true
+    fields:
+      - rendered_item
+    weights:
+      preprocess_index: -20
+      preprocess_query: -20
+tracker_settings:
+  default:
+    indexing_order: fifo
+options:
+  index_directly: true
+  cron_limit: 50
+server: db
