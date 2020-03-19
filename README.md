@@ -11,6 +11,9 @@ Has a problem outputting the label of a select list
 3. ~~Do full sync if cache is empty~~
 4. ~~Create base class~~
 5. ~~Move helpers to ocha_integrations~~
+6. Update existing assessments
+7. Use JSON callback for map
+8. Sidebar has max width for map filters
 
 ## Cron jobs
 

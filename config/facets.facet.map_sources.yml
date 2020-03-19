@@ -1,4 +1,4 @@
-uuid: 41ffe431-6af1-4e70-af80-0507f544a03a
+uuid: cd4bc07e-adb8-4280-9239-60dbe978e7e6
 langcode: en
 status: true
 dependencies:
@@ -11,48 +11,30 @@ dependencies:
 third_party_settings:
   facets_pretty_paths:
     coder: ocha_integer_list_coder
-id: locations
-name: Location(s)
-url_alias: locations
+id: map_sources
+name: Source(s)
+url_alias: sources
 weight: 0
 min_count: 1
-show_only_one_result: false
-field_identifier: field_locations
-facet_source_id: 'search_api:views_page__assessments__page_1'
+show_only_one_result: true
+field_identifier: field_sources
+facet_source_id: 'search_api:views_page__assessments__page_2'
 widget:
-  type: links
+  type: dropdown
   config:
     show_numbers: false
-    soft_limit: 0
-    soft_limit_settings:
-      show_less_label: 'Show less'
-      show_more_label: 'Show more'
-    show_reset_link: false
-    reset_text: 'Show all'
-    hide_reset_when_no_selection: false
-query_operator: and
-use_hierarchy: true
+    default_option_label: Choose
+query_operator: or
+use_hierarchy: false
 hierarchy:
-  type: ocha_locations_hierarchy
+  type: taxonomy
   config: {  }
 expand_hierarchy: false
-enable_parent_when_child_gets_disabled: false
+enable_parent_when_child_gets_disabled: true
 hard_limit: 0
 exclude: false
 only_visible_when_facet_source_is_visible: true
 processor_configs:
-  active_widget_order:
-    processor_id: active_widget_order
-    weights:
-      sort: 20
-    settings:
-      sort: DESC
-  count_widget_order:
-    processor_id: count_widget_order
-    weights:
-      sort: 30
-    settings:
-      sort: DESC
   display_value_widget_order:
     processor_id: display_value_widget_order
     weights:
