@@ -116,7 +116,7 @@ function ocha_knowledge_management_process_row_from_hrinfo($data) {
     if (isset($item->population_types) && !empty($item->population_types)) {
       $term = trim($item->population_types);
       if ($population_type = ocha_population_type_get_item_by_label($term)) {
-        $data['field_countries'][] = [
+        $data['field_population_types'][] = [
           'value' => $population_type->id,
         ];
       }
