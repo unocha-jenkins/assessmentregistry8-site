@@ -1,10 +1,10 @@
 <?php
 /**
  * @file
- * Contains \Drupal\ocha_countries\GetLabel.
+ * Contains \Drupal\ocha_disasters\GetLabel.
  */
 
-namespace Drupal\ocha_countries;
+namespace Drupal\ocha_disasters;
 
 use Drupal\Core\TypedData\TypedData;
 
@@ -31,9 +31,9 @@ class GetLabel extends TypedData {
     $this->processed = '';
 
     $item = $this->getParent();
-    $term = ocha_countries_get_item($item->value);
-    if ($term) {
-      $this->processed = $term->label->default;
+    $country = ocha_disasters_get_item($item->value);
+    if ($country) {
+      $this->processed = $country->name;
     }
 
     return $this->processed;

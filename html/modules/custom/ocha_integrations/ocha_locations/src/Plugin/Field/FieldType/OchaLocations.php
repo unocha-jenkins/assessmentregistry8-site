@@ -33,6 +33,12 @@ class OchaLocations extends ListIntegerItem {
       ->setComputed(TRUE)
       ->setClass('\Drupal\ocha_locations\GetLocationLatLon');
 
+    $properties['label'] = DataDefinition::create('string')
+      ->setLabel(t('Label'))
+      ->setSetting('case_sensitive', FALSE)
+      ->setComputed(TRUE)
+      ->setClass('\Drupal\ocha_locations\GetLabel');
+
     return $properties;
   }
 

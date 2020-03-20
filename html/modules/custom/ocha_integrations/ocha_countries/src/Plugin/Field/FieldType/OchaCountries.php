@@ -2,7 +2,6 @@
 
 namespace Drupal\ocha_countries\Plugin\Field\FieldType;
 
-use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\TypedData\DataDefinition;
 use Drupal\options\Plugin\Field\FieldType\ListIntegerItem;
@@ -21,7 +20,7 @@ use Drupal\options\Plugin\Field\FieldType\ListIntegerItem;
  */
 class OchaCountries extends ListIntegerItem {
 
- /**
+  /**
    * {@inheritdoc}
    */
   public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition) {
