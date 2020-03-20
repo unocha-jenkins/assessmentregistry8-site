@@ -1,0 +1,12 @@
+uuid: 3c2e6473-e5b2-4084-bb36-0f6f7e943cb1
+langcode: en
+status: true
+dependencies: {  }
+id: search_api__views_rest__knowledge_management__rest_export_1
+name: 'search_api:views_rest__knowledge_management__rest_export_1'
+filter_key: ''
+url_processor: query_string
+breadcrumb:
+  active: false
+  before: true
+  group: false

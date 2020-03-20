@@ -34,6 +34,14 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_countries
+  field_countries_label:
+    label: 'Countries » Label'
+    datasource_id: 'entity:node'
+    property_path: 'field_countries:label'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_countries
   field_km_document:
     label: Document
     datasource_id: 'entity:node'
@@ -93,7 +101,8 @@ processor_settings:
       preprocess_index: -45
   ignorecase:
     all_fields: true
-    fields: {  }
+    fields:
+      - field_countries_label
     weights:
       preprocess_index: -20
       preprocess_query: -20
@@ -101,7 +110,8 @@ processor_settings:
   rendered_item: {  }
   transliteration:
     all_fields: true
-    fields: {  }
+    fields:
+      - field_countries_label
     weights:
       preprocess_index: -20
       preprocess_query: -20

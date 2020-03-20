@@ -2,6 +2,9 @@
 
 namespace Drupal\ocha_countries\Plugin\Field\FieldType;
 
+use Drupal\Core\Field\FieldDefinitionInterface;
+use Drupal\Core\Field\FieldStorageDefinitionInterface;
+use Drupal\Core\TypedData\DataDefinition;
 use Drupal\options\Plugin\Field\FieldType\ListIntegerItem;
 
 /**
@@ -17,6 +20,21 @@ use Drupal\options\Plugin\Field\FieldType\ListIntegerItem;
  * )
  */
 class OchaCountries extends ListIntegerItem {
+
+ /**
+   * {@inheritdoc}
+   */
+  public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition) {
+    $properties = parent::propertyDefinitions($field_definition);
+
+    $properties['label'] = DataDefinition::create('string')
+      ->setLabel(t('Label'))
+      ->setSetting('case_sensitive', FALSE)
+      ->setComputed(TRUE)
+      ->setClass('\Drupal\ocha_countries\GetLabel');
+
+    return $properties;
+  }
 
   /**
    * {@inheritdoc}

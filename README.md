@@ -2,7 +2,16 @@
 
 ## JSON API
 
-Has a problem outputting the label of a select list
+Has a problem outputting the label of a select list.
+
+Test link: `http://site-assessments8.docksal/jsonapi/index/knowledge_management?filter[field_countries]=210`
+
+## REST + json
+
+Works:
+
+- http://site-assessments8.docksal/rest/knowledge-management
+- http://site-assessments8.docksal/rest/knowledge-management?x=&f[0]=country%3A106
 
 ## Todo
 
