@@ -4,11 +4,14 @@ status: true
 dependencies:
   module:
     - node
+    - media
+    - file
     - search_api
   config:
     - field.storage.node.field_countries
-    - field.storage.node.field_km_document
     - field.storage.node.field_km_document_type
+    - field.storage.node.field_km_document
+    - field.storage.media.field_media_document
     - field.storage.node.field_km_hpc_document_repository
     - field.storage.node.field_km_publication_date
     - field.storage.node.field_population_types
@@ -42,14 +45,6 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_countries
-  field_km_document:
-    label: Document
-    datasource_id: 'entity:node'
-    property_path: field_km_document
-    type: integer
-    dependencies:
-      config:
-        - field.storage.node.field_km_document
   field_km_document_type:
     label: 'Document type'
     datasource_id: 'entity:node'
@@ -58,6 +53,19 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_km_document_type
+  field_km_document_url:
+    label: 'Document » Media » Document » File » URI » Root-relative file URL'
+    datasource_id: 'entity:node'
+    property_path: 'field_km_document:entity:field_media_document:entity:uri:url'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_km_document
+        - field.storage.media.field_media_document
+      module:
+        - media
+        - file
+        - file
   field_km_hpc_document_repository:
     label: 'HPC Document Repository'
     datasource_id: 'entity:node'
@@ -82,6 +90,14 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_population_types
+  field_population_types_label:
+    label: 'Population Type(s) » Label'
+    datasource_id: 'entity:node'
+    property_path: 'field_population_types:label'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_population_types
 datasource_settings:
   'entity:node':
     bundles:
@@ -103,6 +119,8 @@ processor_settings:
     all_fields: true
     fields:
       - field_countries_label
+      - field_km_document_url
+      - field_population_types_label
     weights:
       preprocess_index: -20
       preprocess_query: -20
@@ -112,6 +130,8 @@ processor_settings:
     all_fields: true
     fields:
       - field_countries_label
+      - field_km_document_url
+      - field_population_types_label
     weights:
       preprocess_index: -20
       preprocess_query: -20

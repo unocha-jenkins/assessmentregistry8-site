@@ -10,8 +10,8 @@ dependencies:
     - field.storage.node.field_local_groups
     - field.storage.node.field_countries
     - field.storage.node.field_disasters
-    - field.storage.node.field_locations
     - field.storage.node.field_organizations
+    - field.storage.node.field_locations
     - field.storage.node.field_asst_organizations
     - field.storage.node.field_population_types
     - field.storage.node.field_sources
@@ -38,6 +38,14 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_asst_organizations
+  field_asst_organizations_label:
+    label: 'Participating Organization(s) » Label'
+    datasource_id: 'entity:node'
+    property_path: 'field_asst_organizations:label'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_asst_organizations
   field_countries:
     label: Countries
     datasource_id: 'entity:node'
@@ -46,11 +54,27 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_countries
+  field_countries_label:
+    label: 'Countries » Label'
+    datasource_id: 'entity:node'
+    property_path: 'field_countries:label'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_countries
   field_disasters:
     label: Disaster(s)/Emergencies
     datasource_id: 'entity:node'
     property_path: field_disasters
     type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_disasters
+  field_disasters_label:
+    label: 'Disaster(s)/Emergencies » Label'
+    datasource_id: 'entity:node'
+    property_path: 'field_disasters:label'
+    type: string
     dependencies:
       config:
         - field.storage.node.field_disasters
@@ -70,6 +94,14 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_locations
+  field_locations_label:
+    label: 'Location(s) » Label'
+    datasource_id: 'entity:node'
+    property_path: 'field_locations:label'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_locations
   field_locations_lat_lon:
     label: 'Location(s) » Lat, lon pair'
     datasource_id: 'entity:node'
@@ -86,11 +118,27 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_organizations
+  field_organizations_label:
+    label: 'Leading/Coordinating Organization(s) » Label'
+    datasource_id: 'entity:node'
+    property_path: 'field_organizations:label'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_organizations
   field_population_types:
     label: 'Population Type(s)'
     datasource_id: 'entity:node'
     property_path: field_population_types
     type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_population_types
+  field_population_types_label:
+    label: 'Population Type(s) » Label'
+    datasource_id: 'entity:node'
+    property_path: 'field_population_types:label'
+    type: string
     dependencies:
       config:
         - field.storage.node.field_population_types
@@ -102,6 +150,14 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_sources
+  field_sources_label:
+    label: 'Source(s) » Label'
+    datasource_id: 'entity:node'
+    property_path: 'field_sources:label'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_sources
   field_themes:
     label: Theme(s)
     datasource_id: 'entity:node'
@@ -110,6 +166,22 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_themes
+  field_themes_label:
+    label: 'Theme(s) » Label'
+    datasource_id: 'entity:node'
+    property_path: 'field_themes:label'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_themes
+  label:
+    label: 'Cluster(s)/Sector(s) » Label'
+    datasource_id: 'entity:node'
+    property_path: 'field_local_groups:label'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_local_groups
   langcode:
     label: Language
     datasource_id: 'entity:node'
@@ -142,7 +214,16 @@ processor_settings:
   ignorecase:
     all_fields: true
     fields:
+      - field_asst_organizations_label
+      - field_countries_label
+      - field_disasters_label
+      - field_locations_label
       - field_locations_lat_lon
+      - field_organizations_label
+      - field_population_types_label
+      - field_sources_label
+      - field_themes_label
+      - label
       - langcode
       - title
     weights:
@@ -162,7 +243,16 @@ processor_settings:
   transliteration:
     all_fields: true
     fields:
+      - field_asst_organizations_label
+      - field_countries_label
+      - field_disasters_label
+      - field_locations_label
       - field_locations_lat_lon
+      - field_organizations_label
+      - field_population_types_label
+      - field_sources_label
+      - field_themes_label
+      - label
       - langcode
       - title
     weights:

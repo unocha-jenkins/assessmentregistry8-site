@@ -4,10 +4,18 @@ status: true
 dependencies:
   config:
     - field.storage.node.field_countries
+    - field.storage.node.field_km_document_type
+    - field.storage.node.field_km_hpc_document_repository
+    - field.storage.node.field_km_publication_date
+    - field.storage.node.field_population_types
     - search_api.index.knowledge_management
+    - taxonomy.vocabulary.hpc_document_repository
+    - taxonomy.vocabulary.km_document_type
   module:
+    - datetime
     - facets_rest
     - ocha_countries
+    - ocha_integrations
     - rest
     - search_api
     - serialization
@@ -327,6 +335,493 @@ display:
             multi_separator: ', '
           entity_type: node
           plugin_id: search_api_field
+        created:
+          id: created
+          table: search_api_index_knowledge_management
+          field: created
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: timestamp
+          settings:
+            date_format: medium
+            custom_date_format: ''
+            timezone: ''
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          field_rendering: false
+          fallback_handler: search_api_date
+          fallback_options:
+            date_format: html_date
+            custom_date_format: ''
+            timezone: ''
+            link_to_item: false
+            use_highlighting: false
+            multi_type: separator
+            multi_separator: ', '
+          plugin_id: search_api_field
+        field_km_document_type:
+          id: field_km_document_type
+          table: search_api_index_knowledge_management
+          field: field_km_document_type
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: target_id
+          type: entity_reference_label
+          settings:
+            link: true
+          group_column: target_id
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          field_rendering: false
+          fallback_handler: search_api_entity
+          fallback_options:
+            link_to_item: false
+            use_highlighting: false
+            multi_type: separator
+            multi_separator: ', '
+            display_methods:
+              context:
+                display_method: label
+              hpc_document_repository:
+                display_method: label
+              km_document_type:
+                display_method: label
+              life_cycle_steps:
+                display_method: label
+              tags:
+                display_method: label
+              test:
+                display_method: label
+          plugin_id: search_api_field
+        field_km_hpc_document_repository:
+          id: field_km_hpc_document_repository
+          table: search_api_index_knowledge_management
+          field: field_km_hpc_document_repository
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: target_id
+          type: entity_reference_label
+          settings:
+            link: true
+          group_column: target_id
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          field_rendering: false
+          fallback_handler: search_api_entity
+          fallback_options:
+            link_to_item: false
+            use_highlighting: false
+            multi_type: separator
+            multi_separator: ', '
+            display_methods:
+              context:
+                display_method: label
+              hpc_document_repository:
+                display_method: label
+              km_document_type:
+                display_method: label
+              life_cycle_steps:
+                display_method: label
+              tags:
+                display_method: label
+              test:
+                display_method: label
+          plugin_id: search_api_field
+        field_km_publication_date:
+          id: field_km_publication_date
+          table: search_api_index_knowledge_management
+          field: field_km_publication_date
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: datetime_default
+          settings:
+            timezone_override: ''
+            format_type: medium
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          field_rendering: false
+          fallback_handler: search_api
+          fallback_options:
+            link_to_item: false
+            use_highlighting: false
+            multi_type: separator
+            multi_separator: ', '
+          plugin_id: search_api_field
+        field_population_types:
+          id: field_population_types
+          table: search_api_index_knowledge_management
+          field: field_population_types
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: ocha_integrations_default
+          settings: {  }
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          field_rendering: false
+          fallback_handler: search_api
+          fallback_options:
+            link_to_item: false
+            use_highlighting: false
+            multi_type: separator
+            multi_separator: ', '
+          plugin_id: search_api_field
+        field_km_document_url:
+          id: field_km_document_url
+          table: search_api_index_knowledge_management
+          field: field_km_document_url
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          link_to_item: false
+          use_highlighting: false
+          multi_type: separator
+          multi_separator: ', '
+          plugin_id: search_api
+        field_population_types_label:
+          id: field_population_types_label
+          table: search_api_index_knowledge_management
+          field: field_population_types_label
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          link_to_item: false
+          use_highlighting: false
+          multi_type: separator
+          multi_separator: ', '
+          plugin_id: search_api
       filters:
         field_countries:
           id: field_countries
@@ -398,6 +893,10 @@ display:
         - url.query_args
       tags:
         - 'config:field.storage.node.field_countries'
+        - 'config:field.storage.node.field_km_document_type'
+        - 'config:field.storage.node.field_km_hpc_document_repository'
+        - 'config:field.storage.node.field_km_publication_date'
+        - 'config:field.storage.node.field_population_types'
   page_1:
     display_plugin: page
     id: page_1
@@ -410,15 +909,25 @@ display:
         type: none
       defaults:
         cache: false
+        filters: false
+        filter_groups: false
+      filters: {  }
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
     cache_metadata:
       max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
-        - url
         - url.query_args
       tags:
         - 'config:field.storage.node.field_countries'
+        - 'config:field.storage.node.field_km_document_type'
+        - 'config:field.storage.node.field_km_hpc_document_repository'
+        - 'config:field.storage.node.field_km_publication_date'
+        - 'config:field.storage.node.field_population_types'
   rest_export_1:
     display_plugin: rest_export
     id: rest_export_1
@@ -438,7 +947,34 @@ display:
         type: data_field
         options:
           field_options:
-            search_api_rendered_item:
+            field_countries:
+              alias: ''
+              raw_output: false
+            field_countries_label:
+              alias: ''
+              raw_output: false
+            title:
+              alias: ''
+              raw_output: false
+            created:
+              alias: ''
+              raw_output: false
+            field_km_document_type:
+              alias: ''
+              raw_output: false
+            field_km_hpc_document_repository:
+              alias: ''
+              raw_output: false
+            field_km_publication_date:
+              alias: ''
+              raw_output: false
+            field_population_types:
+              alias: ''
+              raw_output: true
+            field_km_document_url:
+              alias: ''
+              raw_output: true
+            field_population_types_label:
               alias: ''
               raw_output: true
       pager:
@@ -492,6 +1028,100 @@ display:
             default_group_multiple: {  }
             group_items: {  }
           plugin_id: search_api_numeric
+        field_km_document_type:
+          id: field_km_document_type
+          table: search_api_index_knowledge_management
+          field: field_km_document_type
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_km_document_type_op
+            label: 'Document type'
+            description: ''
+            use_operator: false
+            operator: field_km_document_type_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_km_document_type
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              administrator: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          type: select
+          limit: true
+          vid: km_document_type
+          hierarchy: false
+          error_message: true
+          plugin_id: search_api_term
+        field_km_hpc_document_repository:
+          id: field_km_hpc_document_repository
+          table: search_api_index_knowledge_management
+          field: field_km_hpc_document_repository
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_km_hpc_document_repository_op
+            label: 'HPC Document Repository'
+            description: ''
+            use_operator: false
+            operator: field_km_hpc_document_repository_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_km_hpc_document_repository
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              administrator: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          type: select
+          limit: true
+          vid: hpc_document_repository
+          hierarchy: false
+          error_message: true
+          plugin_id: search_api_term
       defaults:
         filters: false
         filter_groups: false
@@ -506,5 +1136,10 @@ display:
         - 'languages:language_interface'
         - request_format
         - url
+        - user
       tags:
         - 'config:field.storage.node.field_countries'
+        - 'config:field.storage.node.field_km_document_type'
+        - 'config:field.storage.node.field_km_hpc_document_repository'
+        - 'config:field.storage.node.field_km_publication_date'
+        - 'config:field.storage.node.field_population_types'
