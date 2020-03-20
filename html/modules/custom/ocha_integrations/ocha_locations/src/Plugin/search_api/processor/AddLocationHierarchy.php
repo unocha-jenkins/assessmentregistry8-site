@@ -102,18 +102,20 @@ class AddLocationHierarchy extends AddHierarchy {
         foreach ($field_values as $id) {
           // Get all parent ids.
           $location = ocha_locations_get_item($id);
-          do {
-            if (!in_array($location->id, $field->getValues())) {
-              $field->addValue($location->id);
-            }
+          if ($location) {
+            do {
+              if (!in_array($location->id, $field->getValues())) {
+                $field->addValue($location->id);
+              }
 
-            if (!empty($location->parent)) {
-              $location = ocha_locations_get_item($location->parent);
-            }
-            else {
-              $location = FALSE;
-            }
-          } while ($location);
+              if (!empty($location->parent)) {
+                $location = ocha_locations_get_item($location->parent);
+              }
+              else {
+                $location = FALSE;
+              }
+            } while ($location);
+          }
         }
       }
     }
