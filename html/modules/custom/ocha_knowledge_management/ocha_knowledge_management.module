@@ -200,11 +200,12 @@ function ocha_knowledge_management_process_row_from_hrinfo($data) {
       ];
     }
 
-    // Media.
-    if (isset($item->media) && $item->media) {
+    // Media (not present).
+    if (FALSE && isset($item->media) && $item->media) {
       // Split on ','.
       $files = explode(',', $item->media);
       foreach ($files as $url) {
+        $url = trim($url);
         $media_item = ocha_knowledge_management_add_media_entity($url, 'document', $created);
         if ($media_item) {
           $data['field_km_media'][] = [
@@ -219,6 +220,7 @@ function ocha_knowledge_management_process_row_from_hrinfo($data) {
       // Split on ','.
       $files = explode(',', $item->document);
       foreach ($files as $url) {
+        $url = trim($url);
         $media_item = ocha_knowledge_management_add_media_entity($url, 'document', $created);
         if ($media_item) {
           $data['field_km_document'][] = [

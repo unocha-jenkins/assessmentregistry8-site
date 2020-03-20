@@ -7,7 +7,7 @@ dependencies:
   module:
     - search_api
 id: knowledge_management
-label: knowledge_management
+label: 'Knowledge Management'
 module: views
 description: ''
 tag: ''
@@ -65,10 +65,10 @@ display:
       row:
         type: fields
       fields:
-        rendered_item:
-          id: rendered_item
+        search_api_rendered_item:
+          id: search_api_rendered_item
           table: search_api_index_knowledge_management
-          field: rendered_item
+          field: search_api_rendered_item
           relationship: none
           group_type: group
           admin_label: ''
@@ -113,11 +113,10 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          link_to_item: false
-          use_highlighting: false
-          multi_type: separator
-          multi_separator: ', '
-          plugin_id: search_api
+          view_modes:
+            'entity:node':
+              knowledge_management: teaser
+          plugin_id: search_api_rendered_item
       filters: {  }
       sorts:
         search_api_relevance:
@@ -132,7 +131,7 @@ display:
           expose:
             label: ''
           plugin_id: search_api
-      title: knowledge_management
+      title: 'Knowledge Management'
       header: {  }
       footer: {  }
       empty: {  }

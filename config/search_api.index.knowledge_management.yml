@@ -13,7 +13,6 @@ dependencies:
     - field.storage.node.field_km_publication_date
     - field.storage.node.field_population_types
     - search_api.server.db
-    - core.entity_view_mode.node.teaser
 id: knowledge_management
 name: 'Knowledge Management'
 description: ''
@@ -75,16 +74,6 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_population_types
-  rendered_item:
-    label: 'Rendered HTML output'
-    property_path: rendered_item
-    type: text
-    configuration:
-      roles:
-        anonymous: anonymous
-      view_mode:
-        'entity:node':
-          knowledge_management: teaser
 datasource_settings:
   'entity:node':
     bundles:
@@ -104,8 +93,7 @@ processor_settings:
       preprocess_index: -45
   ignorecase:
     all_fields: true
-    fields:
-      - rendered_item
+    fields: {  }
     weights:
       preprocess_index: -20
       preprocess_query: -20
@@ -113,8 +101,7 @@ processor_settings:
   rendered_item: {  }
   transliteration:
     all_fields: true
-    fields:
-      - rendered_item
+    fields: {  }
     weights:
       preprocess_index: -20
       preprocess_query: -20
