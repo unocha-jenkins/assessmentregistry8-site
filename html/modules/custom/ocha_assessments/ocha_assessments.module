@@ -1,8 +1,6 @@
 <?php
 
 use Drupal\node\Entity\Node;
-use Drupal\file\Entity\File;
-use Drupal\Core\Entity\EntityInterface\NodeInterface;
 
 function ocha_assessments_variable_get($key, $default) {
   if (Drupal::state()->get($key)) {
