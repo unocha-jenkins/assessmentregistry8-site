@@ -100,6 +100,7 @@ class OchaLocalGroupsController extends OchaIntegrationsController {
     $keyed_data = [];
     foreach ($data as $row) {
       $keyed_data[$row->id] = (object) [
+        'id' => $row->id,
         'name' => trim($row->label),
         'href' => $row->self,
         'global_cluster' => isset($row->global_cluster) ? $row->global_cluster : [],

@@ -121,7 +121,7 @@ class OchaGlobalCoordinationGroupsController extends OchaIntegrationsController 
    * Get item by label.
    */
   public function getItemByLabel($label) {
-    $data = $this->getApiData();
+    $data = $this->getCache();
 
     foreach ($data as $key => $value) {
       if ($value->label == $label) {

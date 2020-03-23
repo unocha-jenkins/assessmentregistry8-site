@@ -153,7 +153,7 @@ class OchaThemesController extends OchaIntegrationsController {
    * Get item by name.
    */
   public function getItemByName($name) {
-    $data = $this->getApiData();
+    $data = $this->getCache();
 
     foreach ($data as $key => $value) {
       if ($value->name = $name) {

@@ -202,7 +202,7 @@ class OchaIntegrationsController extends ControllerBase {
    * Get item.
    */
   public function getItem($id) {
-    $data = $this->getApiData();
+    $data = $this->getCache();
 
     if (isset($data[$id])) {
       return $data[$id];

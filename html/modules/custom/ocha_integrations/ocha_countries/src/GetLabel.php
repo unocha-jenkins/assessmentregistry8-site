@@ -28,12 +28,14 @@ class GetLabel extends TypedData {
       return $this->processed;
     }
 
-    $this->processed = '';
-
     $item = $this->getParent();
+    $this->processed = $item->value;
+
     $term = ocha_countries_get_item($item->value);
     if ($term) {
-      $this->processed = $term->label->default;
+      if (isset($term->label->default)) {
+        $this->processed = $term->label->default;
+      }
     }
 
     return $this->processed;

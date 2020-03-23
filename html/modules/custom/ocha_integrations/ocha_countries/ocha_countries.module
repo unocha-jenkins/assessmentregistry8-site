@@ -58,6 +58,10 @@ function ocha_countries_get_item($id, $langcode = NULL) {
   $controller = ocha_countries_get_controller();
 
   $item = $controller->getItem($id);
+  if (!$item) {
+    return $id;
+  }
+
   $item->label->translated = $item->label->default;
 
   if ($langcode) {

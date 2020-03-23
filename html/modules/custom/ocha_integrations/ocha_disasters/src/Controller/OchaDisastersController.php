@@ -152,7 +152,7 @@ class OchaDisastersController extends OchaIntegrationsController {
    * Get item by glide.
    */
   public function getItemByGlide($glide) {
-    $data = $this->getApiData();
+    $data = $this->getCache();
 
     foreach ($data as $key => $value) {
       if ($value->glide == $glide) {

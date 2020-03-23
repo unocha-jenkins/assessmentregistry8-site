@@ -312,7 +312,7 @@ function ocha_assessments_get_id_by_label($source, $label) {
 
 function ocha_assessments_parse_document($document, $created) {
   $data = [
-    'accessibility' => $document->accessibility,
+    'accessibility' => isset($document->accessibility) ? $document->accessibility : 'Publicly Available',
     'uri' => '',
     'title' => '',
     'instructions' => '',

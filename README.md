@@ -12,6 +12,11 @@ Works:
 
 - http://site-assessments8.docksal/rest/knowledge-management
 - http://site-assessments8.docksal/rest/knowledge-management?x=&f[0]=country%3A106
+- http://site-assessments8.docksal/rest/assessments?items_per_page=All
+
+### JSON map
+
+Add new endpoint, change existing for the map and return all data.
 
 ## Todo
 

@@ -62,7 +62,11 @@ class OchaLocationsHierarchy extends HierarchyPluginBase {
     }
 
     $location = ocha_locations_get_item($id);
-    $children = array_keys($location->children);
+
+    $children = [];
+    if (isset($location->children)) {
+      $children = array_keys($location->children);
+    }
 
     $subchilds = [];
     foreach ($children as $child) {
@@ -79,7 +83,10 @@ class OchaLocationsHierarchy extends HierarchyPluginBase {
     $parents = [];
     foreach ($ids as $id) {
       $location = ocha_locations_get_item($id);
-      $parents[$id] = array_keys($location->children);
+      $parents[$id] = [];
+      if (isset($location->children)) {
+        $parents[$id] = array_keys($location->children);
+      }
     }
     $parents = array_filter($parents);
 
