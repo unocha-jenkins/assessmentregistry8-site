@@ -39,12 +39,14 @@ Add new endpoint, change existing for the map and return all data.
 
 ## Cron jobs
 
+```bash
 fin drush eval --verbose "ocha_countries_cron()"
 fin drush eval --verbose "ocha_disasters_cron()"
 fin drush eval --verbose "ocha_local_groups_cron()"
 fin drush eval --verbose "ocha_locations_cron()"
 fin drush eval --verbose "ocha_organizations_cron()"
 fin drush eval --verbose "ocha_themes_cron()"
+```
 
 ## Migrate
 
