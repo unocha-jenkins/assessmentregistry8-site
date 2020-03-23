@@ -1,5 +1,12 @@
 # Assessment Registry
 
+## Pages
+
+- https://site-assessments8.docksal/assessments/table
+- https://site-assessments8.docksal/assessments/list
+- https://site-assessments8.docksal/assessments/map
+- https://site-assessments8.docksal/knowledge-management
+
 ## JSON API
 
 Has a problem outputting the label of a select list.
@@ -28,6 +35,7 @@ Add new endpoint, change existing for the map and return all data.
 6. Update existing assessments
 7. Use JSON callback for map
 8. Sidebar has max width for map filters
+9. Add content pages
 
 ## Cron jobs
 
