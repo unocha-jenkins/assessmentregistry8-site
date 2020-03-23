@@ -3,26 +3,85 @@ import { LitElement, html } from 'lit-element';
 
 // Extend the LitElement base class
 class OchaAssessmentsTable extends LitElement {
+  constructor() {
+    super();
+    this.data = void 0;
+  }
 
-  /**
-   * Implement `render` to define a template for your element.
-   *
-   * You must provide an implementation of `render` for any element
-   * that uses LitElement as a base class.
-   */
-  render(){
-    /**
-     * `render` must return a lit-html `TemplateResult`.
-     *
-     * To create a `TemplateResult`, tag a JavaScript template literal
-     * with the `html` helper function:
-     */
+  static get properties() {
+    return {
+      src: {
+        type: String
+      },
+      data: {
+        type: Array
+      }
+    };
+  }
+
+  render() {
+    if (!this.data) {
+      return html`
+        <div>Loading...</div>
+      `;
+    }
+
     return html`
-      <!-- template content -->
-      <p>A tabel with data from json</p>
+      <p>${this.src}</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Location(s)</th>
+            <th>Managed by</th>
+            <th>Participating Organization(s)</th>
+            <th>Clusters/Sectors</th>
+            <th>Status</th>
+            <th>Assessment Date(s)</th>
+            <th>Data</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${
+            this.data.map(
+              r =>
+                html`
+                  <tr>
+                    <td>${r.title}</td>
+                    <td>${r.field_locations_label}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  `
+          )}
+        </tbody>
+      </table>
     `;
   }
+
+  connectedCallback() {
+    super.connectedCallback();
+    if (this.src) {
+      this.fetchData();
+    }
+    else {
+      console.error('src attribute is required.')
+    }
+  }
+
+  fetchData() {
+    fetch(this.src)
+      .then(res => res.json())
+      .then(response => {
+        this.data = response.search_results;
+      })
+      .catch(error => console.error("Error fetching data:", error));
+  }
 }
-// Register the new element with the browser.
+
 customElements.define('ocha-assessments-table', OchaAssessmentsTable);
 
