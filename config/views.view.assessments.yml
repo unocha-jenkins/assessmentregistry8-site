@@ -2534,7 +2534,7 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          field_rendering: true
+          field_rendering: false
           fallback_handler: search_api_date
           fallback_options:
             date_format: fallback
@@ -2604,7 +2604,7 @@ display:
               - more
               - admin_label
             custom_label: 1
-            label: 'Countries (indexed field)'
+            label: Countries
             element_label_colon: 1
             exclude: 0
             element_type_enable: 0
@@ -2672,7 +2672,7 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          field_rendering: true
+          field_rendering: false
           fallback_handler: search_api
           fallback_options:
             link_to_item: false
@@ -3914,7 +3914,7 @@ display:
           expose:
             items_per_page: true
             items_per_page_label: 'Items per page'
-            items_per_page_options: '5, 10, 25, 50, 100, 500, 1000, 2000, 4000, 8000'
+            items_per_page_options: '5, 10, 25, 50, 100, 500, 1000, 2000, 3000, 4000, 8000'
             items_per_page_options_all: true
             items_per_page_options_all_label: '- All -'
             offset: false
