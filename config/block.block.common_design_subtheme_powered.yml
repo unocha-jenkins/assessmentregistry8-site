@@ -10,8 +10,8 @@ _core:
   default_config_hash: jQQUUWN2Uxr5qZtc9zcJKBCxpKY8orN1u2HPqYYRQDI
 id: common_design_subtheme_powered
 theme: common_design_subtheme
-region: header_top
-weight: 10
+region: footer_soft
+weight: -18
 provider: null
 plugin: system_powered_by_block
 settings:

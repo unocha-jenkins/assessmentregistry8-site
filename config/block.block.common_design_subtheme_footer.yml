@@ -12,8 +12,8 @@ _core:
   default_config_hash: 8zRjTNbfNAJ94lQpZDu6MkyD87GYJ2zpH9VQPVmRbcM
 id: common_design_subtheme_footer
 theme: common_design_subtheme
-region: header_top
-weight: 0
+region: footer_navigation
+weight: -18
 provider: null
 plugin: 'system_menu_block:footer'
 settings:
