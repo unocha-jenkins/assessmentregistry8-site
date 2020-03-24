@@ -2,12 +2,15 @@
   <script type="module" src="./ocha-assessments-table.js"></script>
 </head>
 <body>
-  Testing
+  <h2>Testing URLs</h2>
   <ul>
     <li>http://site-assessments8.docksal/rest/assessments-map?items_per_page=1000&f%5B0%5D=clusters_sectors%3A109042&f%5B1%5D=countries%3A106</li>
     <li>http://site-assessments8.docksal/rest/assessments?items_per_page=1000&f%5B0%5D=clusters_sectors%3A109042&f%5B1%5D=countries%3A106</li>
+    <li>http://site-assessments8.docksal/rest/assessments?f[0]=countries%3A152</li>
   </ul>
+
+  <h2>Mozambique</h2>
   <ocha-assessments-table
-    src="http://site-assessments8.docksal/rest/assessments?items_per_page=1000&f%5B0%5D=clusters_sectors%3A109042&f%5B1%5D=countries%3A106"
+    src="http://site-assessments8.docksal/rest/assessments?f[0]=countries%3A152"
   ></ocha-assessments-table>
 </body>

@@ -36,6 +36,11 @@ class OchaGlobalCoordinationGroupsController extends OchaIntegrationsController 
   protected $loggerId = 'ocha_global_coordination_groups';
 
   /**
+   * {@inheritdoc}
+   */
+  protected static $static_cache;
+
+  /**
    * Get API data.
    */
   public function getApiDataFromEndpoint() {

@@ -49,12 +49,12 @@ class OchaAssessmentsTable extends LitElement {
                   <tr>
                     <td>${r.title}</td>
                     <td>${r.field_locations_label}</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>${r.field_organizations_label}</td>
+                    <td>${r.field_asst_organizations_label}</td>
+                    <td>${r.field_local_groups_label}</td>
+                    <td>${r.field_status}</td>
+                    <td>${r.field_ass_date} - ${r.field_ass_date_end_date}</td>
+                    <td>${r.field_locations_label}</td>
                   </tr>
                   `
           )}

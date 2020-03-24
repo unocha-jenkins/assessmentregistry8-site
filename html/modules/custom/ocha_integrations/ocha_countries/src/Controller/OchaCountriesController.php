@@ -36,6 +36,11 @@ class OchaCountriesController extends OchaIntegrationsController {
   protected $loggerId = 'ocha_countries';
 
   /**
+   * {@inheritdoc}
+   */
+  protected static $static_cache;
+
+  /**
    * Get API data.
    */
   public function getApiDataFromEndpoint() {

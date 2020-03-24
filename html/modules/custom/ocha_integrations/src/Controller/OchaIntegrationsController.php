@@ -152,20 +152,20 @@ class OchaIntegrationsController extends ControllerBase {
     Cache::invalidateTags([$this->cacheTag]);
 
     // Set static cache.
-    $this::$static_cache = $data;
+    static::$static_cache = $data;
   }
 
   /**
    * Get cached data.
    */
   public function getCache() {
-    if (isset($this::$static_cache)) {
-      return $this::$static_cache;
+    if (isset(static::$static_cache)) {
+      return static::$static_cache;
     }
 
     if ($cache = $this->cacheBackend->get($this->cacheId)) {
-      $this::$static_cache = $cache->data;
-      return $this::$static_cache;
+      static::$static_cache = $cache->data;
+      return static::$static_cache;
     }
 
     return [];
