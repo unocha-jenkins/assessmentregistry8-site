@@ -29,6 +29,7 @@
         "drupal/facets": "^1.4",
         "drupal/facets_pretty_paths": "^1.0",
         "drupal/leaflet": "^1.27",
+        "drupal/pager_serializer": "^1.0",
         "drupal/pcb": "^2.0",
         "drupal/search_api": "^1.15",
         "drupal/social_auth_hid": "^2.2",

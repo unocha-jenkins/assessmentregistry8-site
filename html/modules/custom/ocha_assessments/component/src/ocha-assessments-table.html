@@ -3,14 +3,26 @@
 </head>
 <body>
   <h2>Testing URLs</h2>
-  <ul>
-    <li>http://site-assessments8.docksal/rest/assessments-map?items_per_page=1000&f%5B0%5D=clusters_sectors%3A109042&f%5B1%5D=countries%3A106</li>
+  <ul id="test-links">
     <li>http://site-assessments8.docksal/rest/assessments?items_per_page=1000&f%5B0%5D=clusters_sectors%3A109042&f%5B1%5D=countries%3A106</li>
     <li>http://site-assessments8.docksal/rest/assessments?f[0]=countries%3A152</li>
+    <li>http://site-assessments8.docksal/rest/assessments?items_per_page=1000</li>
   </ul>
 
   <h2>Kenya</h2>
   <ocha-assessments-table
+    id="ocha-table"
     src="http://site-assessments8.docksal/rest/assessments?f[0]=countries%3A116"
   ></ocha-assessments-table>
+
+  <script>
+    let testLinks = document.getElementById('test-links');
+    let ochaTable = document.getElementById('ocha-table');
+
+    testLinks.addEventListener('click', function(event) {
+      console.log(event.toElement.innerText);
+      ochaTable.src = event.toElement.innerText;
+    });
+  </script>
+
 </body>

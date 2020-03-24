@@ -7,6 +7,8 @@ class OchaAssessmentsTable extends LitElement {
     super();
     this.data = void 0;
     this.facets = void 0;
+    this.pager = void 0;
+    this.hasMultiplePages = false;
     this.resetUrl = null;
   }
 
@@ -21,14 +23,20 @@ class OchaAssessmentsTable extends LitElement {
     };
   }
 
+  updated(changedProperties) {
+    changedProperties.forEach((oldValue, propName) => {
+      if (propName == 'src' && typeof oldValue != 'undefined') {
+        this.fetchData();
+      }
+    });
+  }
+
   resetData() {
     this.src = this.resetUrl;
-    this.fetchData();
   }
 
   changeSrc(event) {
     this.src = event.currentTarget.options[event.currentTarget.selectedIndex].value;
-    this.fetchData();
   }
 
   buildFacets() {
@@ -43,7 +51,6 @@ class OchaAssessmentsTable extends LitElement {
         if (typeof child[0][0] == 'undefined') {
           let dropdown = {};
           for (const id in child[0]) {
-            console.log(id);
             dropdown = {
               label: id,
               selected: null,
@@ -110,7 +117,11 @@ class OchaAssessmentsTable extends LitElement {
     let dropdowns = this.buildFacets();
 
     return html`
-      <p>${this.src}</p>
+      <p>Source (debug): ${this.src}</p>
+
+      <div class="pager">
+        ${this.pager.current_page + 1} / ${this.pager.total_pages}
+      </div>
 
       <div class="filters">
         ${
@@ -172,10 +183,10 @@ class OchaAssessmentsTable extends LitElement {
       .then(res => res.json())
       .then(response => {
         this.data = response.search_results;
-        // Only fill facets on initial load.
-        if (!this.facets) {
-          this.facets = response.facets;
-        }
+        this.facets = response.facets;
+
+        this.pager = response.pager;
+        this.hasMultiplePages = this.pager.total_pages > 1;
       })
       .catch(error => console.error("Error fetching data:", error));
   }
