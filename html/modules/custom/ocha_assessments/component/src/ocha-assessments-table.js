@@ -55,12 +55,14 @@ class OchaAssessmentsTable extends LitElement {
             dropdown = {
               label: id,
               selected: null,
+              selected_url: null,
               options: []
             };
 
             child[0][id].forEach(function (option) {
               if (typeof option.values.active != 'undefined') {
                 dropdown.selected = option.values.value;
+                dropdown.selected_url = option.url;
               }
 
               dropdown.options.push({
@@ -78,22 +80,34 @@ class OchaAssessmentsTable extends LitElement {
     return dropdowns;
   }
 
-  renderDropdown(data) {
-    if (data.options.length <= 1) {
+  renderDropdown(dropdown) {
+    if (dropdown.options.length <= 1) {
       return;
     }
 
     // Sort by label.
-    data.options.sort((a, b) => (a.label > b.label ? 1 : b.label > a.label ? -1 : 0));
+    dropdown.options.sort((a, b) => (a.label > b.label ? 1 : b.label > a.label ? -1 : 0));
+
+    // Empty option.
+    let emptytOption = {
+      label: '- Select -',
+      value: ''
+    };
+
+    if (dropdown.selected_url) {
+      emptytOption.label = '- Remove filter -';
+      emptytOption.value = dropdown.selected_url;
+    }
 
     return html`
-      <label for="${data.label}">${data.label}</label>
-      <select @change="${this.changeSrc}" id="${data.label}">
+      <label for="${dropdown.label}">${dropdown.label}</label>
+      <select @change="${this.changeSrc}" id="${dropdown.label}">
+        <option value="${emptytOption.value}" ?selected=${dropdown.selected === null}>${emptytOption.label}</option>
         ${
-          data.options.map(function (o) {
-            if (o.label == data.selected) {
+          dropdown.options.map(function (o) {
+            if (o.label == dropdown.selected) {
               return html`
-                <option selected="selected" value="${o.key}">${o.label}</option>
+                <option value="" selected>${o.label}</option>
               `
             }
             else {
