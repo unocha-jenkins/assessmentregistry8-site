@@ -26,6 +26,7 @@ class OchaAssessmentsTable extends LitElement {
   updated(changedProperties) {
     changedProperties.forEach((oldValue, propName) => {
       if (propName == 'src' && typeof oldValue != 'undefined') {
+        this.data = void 0;
         this.fetchData();
       }
     });

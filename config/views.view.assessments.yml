@@ -2348,7 +2348,7 @@ display:
       display_extenders: {  }
       path: rest/assessments
       style:
-        type: facets_serializer
+        type: ocha_integrations_views_serializer
         options:
           formats:
             json: json

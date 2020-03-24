@@ -2,11 +2,8 @@ uuid: 25047385-0e66-44bc-85c3-48153b4d6916
 langcode: ru
 status: true
 dependencies:
-  module:
-    - node
-    - search_api
-    - ocha_locations
   config:
+    - field.storage.node.field_ass_date
     - field.storage.node.field_local_groups
     - field.storage.node.field_countries
     - field.storage.node.field_disasters
@@ -15,8 +12,13 @@ dependencies:
     - field.storage.node.field_asst_organizations
     - field.storage.node.field_population_types
     - field.storage.node.field_sources
+    - field.storage.node.field_status
     - field.storage.node.field_themes
     - search_api.server.db
+  module:
+    - node
+    - search_api
+    - ocha_locations
 id: assessments
 name: Assessments
 description: ''
@@ -30,6 +32,22 @@ field_settings:
     dependencies:
       module:
         - node
+  field_ass_date:
+    label: 'Assessment Date(s)'
+    datasource_id: 'entity:node'
+    property_path: field_ass_date
+    type: date
+    dependencies:
+      config:
+        - field.storage.node.field_ass_date
+  field_ass_date_end_value:
+    label: 'Assessment Date(s) » End date value'
+    datasource_id: 'entity:node'
+    property_path: 'field_ass_date:end_value'
+    type: date
+    dependencies:
+      config:
+        - field.storage.node.field_ass_date
   field_asst_organizations:
     label: 'Participating Organization(s)'
     datasource_id: 'entity:node'
@@ -83,6 +101,14 @@ field_settings:
     datasource_id: 'entity:node'
     property_path: field_local_groups
     type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_local_groups
+  field_local_groups_label:
+    label: 'Cluster(s)/Sector(s) » Label'
+    datasource_id: 'entity:node'
+    property_path: 'field_local_groups:label'
+    type: string
     dependencies:
       config:
         - field.storage.node.field_local_groups
@@ -158,6 +184,14 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_sources
+  field_status:
+    label: Status
+    datasource_id: 'entity:node'
+    property_path: field_status
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_status
   field_themes:
     label: Theme(s)
     datasource_id: 'entity:node'
@@ -174,14 +208,6 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_themes
-  label:
-    label: 'Cluster(s)/Sector(s) » Label'
-    datasource_id: 'entity:node'
-    property_path: 'field_local_groups:label'
-    type: string
-    dependencies:
-      config:
-        - field.storage.node.field_local_groups
   langcode:
     label: Language
     datasource_id: 'entity:node'
@@ -217,13 +243,14 @@ processor_settings:
       - field_asst_organizations_label
       - field_countries_label
       - field_disasters_label
+      - field_local_groups_label
       - field_locations_label
       - field_locations_lat_lon
       - field_organizations_label
       - field_population_types_label
       - field_sources_label
+      - field_status
       - field_themes_label
-      - label
       - langcode
       - title
     weights:
@@ -246,13 +273,14 @@ processor_settings:
       - field_asst_organizations_label
       - field_countries_label
       - field_disasters_label
+      - field_local_groups_label
       - field_locations_label
       - field_locations_lat_lon
       - field_organizations_label
       - field_population_types_label
       - field_sources_label
+      - field_status
       - field_themes_label
-      - label
       - langcode
       - title
     weights:

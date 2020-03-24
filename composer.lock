@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c312018ff8779f5b28c7e66068d4b397",
+    "content-hash": "de6ed251957aae46c65d8ce9bdb620e7",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1699,52 +1699,6 @@
                 "source": "https://git.drupalcode.org/project/leaflet",
                 "issues": "https://www.drupal.org/project/issues/leaflet"
             }
-        },
-        {
-            "name": "drupal/pager_serializer",
-            "version": "dev-1.x",
-            "source": {
-                "type": "git",
-                "url": "https://git.drupalcode.org/project/pager_serializer.git",
-                "reference": "94bc04a2abb96656abdb278f22cccde315657cbf"
-            },
-            "require": {
-                "drupal/core": "^8.7.7 || ^9"
-            },
-            "type": "drupal-module",
-            "extra": {
-                "branch-alias": {
-                    "dev-1.x": "1.x-dev"
-                },
-                "drupal": {
-                    "version": "8.x-1.0-rc3+6-dev",
-                    "datestamp": "1584145869",
-                    "security-coverage": {
-                        "status": "not-covered",
-                        "message": "Dev releases are not covered by Drupal security advisories."
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/8/downloads",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "authors": [
-                {
-                    "name": "bluegeek9",
-                    "homepage": "https://www.drupal.org/user/1286304"
-                }
-            ],
-            "description": "This module is intended to be used with rest and the Rest export View with a decoupled UI.",
-            "homepage": "https://www.drupal.org/project/pager_serializer",
-            "keywords": [
-                "Drupal"
-            ],
-            "support": {
-                "source": "https://git.drupalcode.org/project/pager_serializer",
-                "issues": "https://www.drupal.org/project/issues/pager_serializer"
-            },
-            "time": "2020-03-21T02:12:17+00:00"
         },
         {
             "name": "drupal/pathauto",
