@@ -17,9 +17,11 @@
     "lit-element": "^2.3.1"
   },
   "scripts": {
-    "copyindex": "cp src/ocha-assessments-table.html build",
     "copywc": "cp -r node_modules/@webcomponents/webcomponentsjs/bundles build && cp node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js build",
-    "build": "rm -rf build && mkdir build && npm run copyindex && npm run copywc && rollup -c",
+    "table_copyindex": "cp src/ocha-assessments-table.html build",
+    "map_copyindex": "cp src/ocha-assessments-map.html build",
+    "map_copyleaflet": "cp node_modules/leaflet/dist/leaflet.css build",
+    "build": "rm -rf build && mkdir build && npm run table_copyindex && npm run copywc && npm run map_copyindex && npm run map_copyleaflet && rollup -c",
     "start": "serve build"
   }
 }
