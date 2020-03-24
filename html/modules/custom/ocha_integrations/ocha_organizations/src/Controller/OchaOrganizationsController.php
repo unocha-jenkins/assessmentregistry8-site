@@ -36,6 +36,11 @@ class OchaOrganizationsController extends OchaIntegrationsController {
   protected $loggerId = 'ocha_organizations';
 
   /**
+   * {@inheritdoc}
+   */
+  protected static $static_cache;
+
+  /**
    * Get API data.
    */
   public function getApiDataFromEndpoint() {

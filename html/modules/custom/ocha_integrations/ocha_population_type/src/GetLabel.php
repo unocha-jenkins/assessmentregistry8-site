@@ -28,9 +28,9 @@ class GetLabel extends TypedData {
       return $this->processed;
     }
 
-    $this->processed = '';
-
     $item = $this->getParent();
+    $this->processed = $item->value;
+
     $term = ocha_population_type_get_item($item->value);
     if ($term) {
       $this->processed = $term->name;

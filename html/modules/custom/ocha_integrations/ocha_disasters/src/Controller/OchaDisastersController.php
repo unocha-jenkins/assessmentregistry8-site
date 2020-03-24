@@ -36,6 +36,11 @@ class OchaDisastersController extends OchaIntegrationsController {
   protected $loggerId = 'ocha_disasters';
 
   /**
+   * {@inheritdoc}
+   */
+  protected static $static_cache;
+
+  /**
    * Get API data.
    */
   public function getApiDataFromEndpoint() {

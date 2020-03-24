@@ -39,6 +39,11 @@ class OchaLocationsController extends OchaIntegrationsController {
   /**
    * {@inheritdoc}
    */
+  protected static $static_cache;
+
+  /**
+   * {@inheritdoc}
+   */
   protected static $static_flat_cache;
 
   /**

@@ -1,0 +1,5 @@
+services:
+  ocha_integrations.typed_data:
+    class: Drupal\ocha_integrations\Normalizer\ListTextValue
+    tags:
+      - { name: normalizer, priority: 10 }

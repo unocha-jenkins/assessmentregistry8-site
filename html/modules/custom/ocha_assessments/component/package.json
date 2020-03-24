@@ -1,0 +1,25 @@
+{
+  "name": "ocha_assessments",
+  "version": "1.0.0",
+  "description": "OCHA Assessments component",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@webcomponents/webcomponentsjs": "^2.4.3",
+    "gulp": "^4.0.2",
+    "polymer-cli": "^1.9.11",
+    "rollup": "^2.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0"
+  },
+  "dependencies": {
+    "leaflet": "^1.6.0",
+    "lit-element": "^2.3.1"
+  },
+  "scripts": {
+    "copyindex": "cp src/ocha-assessments-table.html build",
+    "copywc": "cp -r node_modules/@webcomponents/webcomponentsjs/bundles build && cp node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js build",
+    "build": "rm -rf build && mkdir build && npm run copyindex && npm run copywc && rollup -c",
+    "start": "serve build"
+  }
+}
