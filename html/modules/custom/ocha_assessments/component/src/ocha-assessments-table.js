@@ -7,6 +7,7 @@ class OchaAssessmentsTable extends LitElement {
     super();
     this.data = void 0;
     this.facets = void 0;
+    this.resetUrl = null;
   }
 
   static get properties() {
@@ -20,8 +21,12 @@ class OchaAssessmentsTable extends LitElement {
     };
   }
 
+  resetData() {
+    this.src = this.resetUrl;
+    this.fetchData();
+  }
+
   changeSrc(event) {
-    console.log(event.currentTarget);
     this.src = event.currentTarget.options[event.currentTarget.selectedIndex].value;
     this.fetchData();
   }
@@ -103,7 +108,7 @@ class OchaAssessmentsTable extends LitElement {
 
     // Build facets.
     let dropdowns = this.buildFacets();
-console.log(dropdowns);
+
     return html`
       <p>${this.src}</p>
 
@@ -113,6 +118,8 @@ console.log(dropdowns);
             d => this.renderDropdown(d)
           )
         }
+
+        <button @click="${this.resetData}">Reset</button>
       </div>
       <table>
         <thead>
@@ -153,6 +160,7 @@ console.log(dropdowns);
     super.connectedCallback();
     if (this.src) {
       this.fetchData();
+      this.resetUrl = this.src;
     }
     else {
       console.error('src attribute is required.')
@@ -164,7 +172,10 @@ console.log(dropdowns);
       .then(res => res.json())
       .then(response => {
         this.data = response.search_results;
-        this.facets = response.facets;
+        // Only fill facets on initial load.
+        if (!this.facets) {
+          this.facets = response.facets;
+        }
       })
       .catch(error => console.error("Error fetching data:", error));
   }
