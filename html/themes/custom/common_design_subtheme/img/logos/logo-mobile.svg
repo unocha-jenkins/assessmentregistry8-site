@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 42 (36781) - http://www.bohemiancoding.com/sketch -->
+    <title>Artboard</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard" fill-rule="nonzero" fill="#0AC7D9">
+            <g id="AR-favicon-mobilelogo-21" transform="translate(3.000000, 0.000000)">
+                <g id="Layer_1">
+                    <g id="Group">
+                        <polygon id="Shape" points="13.7142857 24.8571429 20.5714286 24.8571429 17.1428571 16.5714286"></polygon>
+                        <path d="M24,2.28571429 L4.57142857,2.28571429 C2.85714286,2.28571429 1.71428571,3.42857143 1.71428571,5.14285714 L1.71428571,34.8571429 C1.71428571,36.5714286 2.85714286,37.7142857 4.57142857,37.7142857 L29.4285714,37.7142857 C31.1428571,37.7142857 32.2857143,36.5714286 32.2857143,34.8571429 L32.2857143,10.8571429 L24,2.28571429 Z M24.5714286,4 L30.8571429,10.2857143 L26.8571429,10.2857143 C25.7142857,10.2857143 24.5714286,9.42857143 24.5714286,8 L24.5714286,4 Z M24.8571429,35.4285714 L22.5714286,29.7142857 L11.7142857,29.7142857 L9.42857143,35.4285714 L3.71428571,35.4285714 L14.5714286,9.71428571 L19.7142857,9.71428571 L30.5714286,35.4285714 L24.8571429,35.4285714 Z" id="Shape"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
