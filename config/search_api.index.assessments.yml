@@ -44,7 +44,7 @@ field_settings:
     label: 'Assessment Date(s) » End date value'
     datasource_id: 'entity:node'
     property_path: 'field_ass_date:end_value'
-    type: date
+    type: string
     dependencies:
       config:
         - field.storage.node.field_ass_date
@@ -240,6 +240,7 @@ processor_settings:
   ignorecase:
     all_fields: true
     fields:
+      - field_ass_date_end_value
       - field_asst_organizations_label
       - field_countries_label
       - field_disasters_label
@@ -270,6 +271,7 @@ processor_settings:
   transliteration:
     all_fields: true
     fields:
+      - field_ass_date_end_value
       - field_asst_organizations_label
       - field_countries_label
       - field_disasters_label
