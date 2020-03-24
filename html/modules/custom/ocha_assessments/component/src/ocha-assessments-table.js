@@ -121,6 +121,16 @@ class OchaAssessmentsTable extends LitElement {
     `;
   }
 
+  renderDate(data) {
+    let output = data.field_ass_date;
+
+    if (typeof data.field_ass_date_end_value != 'undefined' && data.field_ass_date_end_value.length > 0) {
+      output = output + ' - ' + data.field_ass_date_end_value[0];
+    }
+
+    return output;
+  }
+
   render() {
     if (!this.data) {
       return html`
@@ -172,7 +182,7 @@ class OchaAssessmentsTable extends LitElement {
                     <td>${r.field_asst_organizations_label}</td>
                     <td>${r.field_local_groups_label}</td>
                     <td>${r.field_status}</td>
-                    <td>${r.field_ass_date} - ${r.field_ass_date_end_date}</td>
+                    <td>${this.renderDate(r)}</td>
                     <td>${r.field_locations_label}</td>
                   </tr>
                   `
