@@ -2018,14 +2018,11 @@ display:
         pager: false
         fields: false
       style:
-        type: html_list
+        type: default
         options:
-          grouping: {  }
           row_class: ''
           default_row_class: true
-          type: ul
-          wrapper_class: item-list
-          class: ''
+          uses_fields: false
       row:
         type: search_api
         options:
