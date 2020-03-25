@@ -3,8 +3,9 @@ import { OchaAssessmentsBase } from './ocha-assessments-base.js';
 import { Map } from 'leaflet/src/map';
 import { TileLayer } from 'leaflet/src/layer/tile';
 import { Marker } from 'leaflet/src/layer/marker';
-import { FeatureGroup } from 'leaflet/src/layer';
-import { MarkerClusterGroup } from 'leaflet.markercluster/src';
+import { featureGroup } from 'leaflet/src/layer';
+
+import { PruneCluster, PruneClusterForLeaflet } from 'exports-loader?PruneCluster,PruneClusterForLeaflet!prunecluster/dist/PruneCluster.js'
 
 // Extend the LitElement base class
 class OchaAssessmentsMap extends OchaAssessmentsBase {
@@ -14,8 +15,7 @@ class OchaAssessmentsMap extends OchaAssessmentsBase {
     let dropdowns = this.buildFacets();
 
     return html`
-    <link rel="stylesheet" href="./leaflet.css" />
-    <link rel="stylesheet" href="./MarkerCluster.Default.css" />
+      <link rel="stylesheet" href="./leaflet.css" />
 
       <style>
         #map {
@@ -34,29 +34,28 @@ class OchaAssessmentsMap extends OchaAssessmentsBase {
   }
 
   addMarkers() {
-    let markers = [];
 
-    if (!this.cluster) {
-      this.cluster = new MarkerClusterGroup();
-    }
-    else  {
-      this.cluster.clearLayers();
-    }
+    let pruneCluster = new PruneClusterForLeaflet();
+
+    let markers = [];
 
     this.data.forEach(row => {
       if (typeof row.field_locations_lat_lon != 'undefined' && row.field_locations_lat_lon) {
         const latlon = row.field_locations_lat_lon[0].split(',');
         // Skip empty markers.
         if (latlon[1] != '' && latlon[0] != '') {
-          const m = new Marker([latlon[1], latlon[0]]);
-          markers.push(m);
-          this.cluster.addLayer(m);
+          //const m = new Marker([latlon[1], latlon[0]]);
+          //markers.push(m);
+          var marker = new PruneCluster.Marker(latlon[1], latlon[0]);
+          pruneCluster.RegisterMarker(marker);
         }
       }
     });
 
-    this.map.addLayer(this.cluster);
-    this.map.fitBounds(this.cluster.getBounds());
+    this.map.addLayer(pruneCluster);
+
+    //var fg = new featureGroup(markers).addTo(this.map);
+    //this.map.fitBounds(fg.getBounds());
   }
 
   connectedCallback() {
