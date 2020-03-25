@@ -29,7 +29,7 @@
     "table_copyindex": "cp src/ocha-assessments-table.html build",
     "build_map": "npm run map_copyindex && npm run map_copyleaflet && rollup -c rollup.map.config.js",
     "map_copyindex": "cp src/ocha-assessments-map.html build",
-    "map_copyleaflet": "cp node_modules/leaflet/dist/leaflet.css build && cp node_modules/leaflet/dist/images/* build && cp node_modules/leaflet/dist/leaflet-src.js build",
+    "map_copyleaflet": "cp node_modules/leaflet/dist/leaflet.css build && cp node_modules/leaflet/dist/images/* build",
     "build": "npm run clean && npm run copywc && npm run build_table && npm run build_map",
     "start": "serve build"
   }
