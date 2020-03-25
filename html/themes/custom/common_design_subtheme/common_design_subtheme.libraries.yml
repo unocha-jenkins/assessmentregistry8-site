@@ -3,3 +3,11 @@ global-styling:
     theme:
       css/styles.css: {}
       ../../contrib/common_design/components/cd-grid/cd-grid.css: {}
+
+# CD Components.
+cd-table:
+  css:
+    theme:
+      components/cd-table/cd-table.css: {}
+  js:
+    js/cd-responsive-tables.js: {}

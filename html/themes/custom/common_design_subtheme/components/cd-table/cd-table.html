@@ -1,0 +1,50 @@
+<link rel=stylesheet href="../cd-base.css" type="text/css" media=screen>
+<link rel=stylesheet href="cd-table.css" type="text/css" media=screen>
+
+<div class="cd-layout-container">
+  <div class="cd-container with-grid">
+
+    <h1>Example table</h1>
+    <table class="cd-table row-numbers cd-table--responsive cd-table--striped">
+      <thead>
+        <tr>
+          <th data-sort-type="disabled" class="cd-table--row-num"></th>
+          <th data-sort-type="alfa" data-sort-order="ASC" class="cd-table--name">Donor</th>
+          <th data-sort-type="alfa" data-sort-order="" class="cd-table--type">Donor type</th>
+          <th data-sort-type="numeric" data-sort-order="" class="cd-table--amount">Paid</th>
+          <th data-sort-type="numeric" data-sort-order="" class="cd-table--amount">Pledged</th>
+          <th data-sort-type="numeric" data-sort-order="" class="cd-table--amount">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="cd-table--row-num"></td>
+          <td data-content="Donor" class="cd-table--name">Sweden</td>
+          <td data-content="Donor type" class="cd-table--type">Member State</td>
+          <td data-content="Paid" class="cd-table--amount">8,208,955</td>
+          <td data-content="Pledged" class="cd-table--amount">0</td>
+          <td data-content="Total" class="cd-table--amount-total">8,208,955</td>
+        </tr>
+        <tr>
+          <td class="cd-table--row-num"></td>
+          <td data-content="Donor" class="cd-table--name">Catalan Agency for Development Cooperation</td>
+          <td data-content="Donor type" class="cd-table--type">Regional Local Authority</td>
+          <td data-content="Paid" class="cd-table--amount">325,477</td>
+          <td data-content="Pledged" class="cd-table--amount">2,500</td>
+          <td data-content="Total" class="cd-table--amount-total">327,977</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="3">Total</td>
+          <td data-content="Paid" class="cd-table--amount-total">8,534,432</td>
+          <td data-content="Pledged" class="cd-table--amount-total">0</td>
+          <td data-content="Total" class="cd-table--amount-total">8,536,932</td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <p>This is here to clear the table but also to say that Javascript can be used to add the data-content attribute to the td element, using the content of the th element.</p>
+
+    </div>
+  </div>
