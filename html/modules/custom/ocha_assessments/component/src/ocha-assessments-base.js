@@ -156,8 +156,14 @@ export class OchaAssessmentsBase extends LitElement {
         this.data = response.search_results;
         this.facets = response.facets;
 
-        this.pager = response.pager;
-        this.hasMultiplePages = this.pager.total_pages > 1;
+        if (response.pager) {
+          this.pager = response.pager;
+          this.hasMultiplePages = this.pager.total_pages > 1;
+        }
+
+        if (this.fetchCb) {
+          this.fetchCb();
+        }
       })
       .catch(error => console.error("Error fetching data:", error));
   }

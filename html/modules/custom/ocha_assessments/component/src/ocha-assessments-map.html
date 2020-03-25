@@ -4,15 +4,19 @@
 <body>
   <h2>Testing URLs (click to change)</h2>
   <ul id="test-links">
-    <li>http://site-assessments8.docksal/rest/assessments?items_per_page=1000&f%5B0%5D=clusters_sectors%3A109042&f%5B1%5D=countries%3A106</li>
-    <li>http://site-assessments8.docksal/rest/assessments?f[0]=countries%3A152</li>
-    <li>http://site-assessments8.docksal/rest/assessments?items_per_page=1000</li>
+    <li>http://site-assessments8.docksal/rest/assessments-map?items_per_page=1000&f%5B0%5D=clusters_sectors%3A109042&f%5B1%5D=countries%3A106</li>
+    <li>http://site-assessments8.docksal/rest/assessments-map?f[0]=countries%3A152</li>
+    <li>http://site-assessments8.docksal/rest/assessments-map?f[0]=countries%3A1</li>
+    <li>http://site-assessments8.docksal/rest/assessments-map</li>
+    <li>http://site-assessments8.docksal/rest/assessments-map?items_per_page=2000</li>
+    <li>http://site-assessments8.docksal/rest/assessments-map?items_per_page=4000</li>
+    <li>http://site-assessments8.docksal/rest/assessments-map?items_per_page=8000</li>
   </ul>
 
   <h2>Kenya</h2>
   <ocha-assessments-map
     id="ocha-map"
-    src="http://site-assessments8.docksal/rest/assessments?f[0]=countries%3A116"
+    src="http://site-assessments8.docksal/rest/assessments-map?f[0]=countries%3A116"
     latitude="51"
     longitude="4"
     zoom="13"

@@ -3,13 +3,12 @@ import { LitElement, html } from 'lit-element';
 import { OchaAssessmentsBase } from './ocha-assessments-base.js';
 import { Map } from '../node_modules/leaflet/src/map';
 import { TileLayer } from '../node_modules/leaflet/src/layer/tile';
-
-// Need these side effects
-import '../node_modules/leaflet/src/control';
-import '../node_modules/leaflet/src/layer';
+import { Marker } from '../node_modules/leaflet/src/layer/marker';
+import { featureGroup } from '../node_modules/leaflet/src/layer';
 
 // Extend the LitElement base class
 class OchaAssessmentsMap extends OchaAssessmentsBase {
+
   render() {
     // Build facets.
     let dropdowns = this.buildFacets();
@@ -33,7 +32,26 @@ class OchaAssessmentsMap extends OchaAssessmentsBase {
     `;
   }
 
+  addMarkers() {
+    let markers = [];
+
+    this.data.forEach(row => {
+      if (typeof row.field_locations_lat_lon != 'undefined' && row.field_locations_lat_lon) {
+        const latlon = row.field_locations_lat_lon[0].split(',');
+        // Skip empty markers.
+        if (latlon[1] != '' && latlon[0] != '') {
+          const m = new Marker([latlon[1], latlon[0]]);
+          markers.push(m);
+        }
+      }
+    });
+
+    var fg = new featureGroup(markers).addTo(this.map);
+    this.map.fitBounds(fg.getBounds());
+  }
+
   connectedCallback() {
+    this.fetchCb = this.addMarkers;
     super.connectedCallback();
   }
 
