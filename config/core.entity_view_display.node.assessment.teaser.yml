@@ -30,6 +30,7 @@ dependencies:
     - field.field.node.assessment.field_units_of_measurement
     - node.type.assessment
   module:
+    - datetime_range
     - ocha_integrations
     - options
     - user
@@ -38,26 +39,41 @@ targetEntityType: node
 bundle: assessment
 mode: teaser
 content:
-  field_organizations:
+  field_ass_date:
+    type: daterange_default
+    weight: 3
+    region: content
+    label: inline
+    settings:
+      timezone_override: ''
+      format_type: teaser_date
+      separator: to
+    third_party_settings: {  }
+  field_asst_organizations:
     type: ocha_integrations_default
     weight: 1
     region: content
     label: inline
     settings: {  }
     third_party_settings: {  }
-  field_status:
-    type: list_default
+  field_organizations:
+    type: ocha_integrations_default
     weight: 0
     region: content
     label: inline
     settings: {  }
     third_party_settings: {  }
+  field_status:
+    type: list_default
+    weight: 2
+    region: content
+    label: inline
+    settings: {  }
+    third_party_settings: {  }
 hidden:
-  field_ass_date: true
   field_assessment_data: true
   field_assessment_questionnaire: true
   field_assessment_report: true
-  field_asst_organizations: true
   field_collection_methods: true
   field_countries: true
   field_disasters: true
