@@ -1,5 +1,4 @@
-// Import the LitElement base class and html helper function
-import { LitElement, html } from 'lit-element';
+import { html } from 'lit-element';
 import { OchaAssessmentsBase } from './ocha-assessments-base.js';
 
 // Extend the LitElement base class

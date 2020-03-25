@@ -1,10 +1,9 @@
-// Import the LitElement base class and html helper function
-import { LitElement, html } from 'lit-element';
+import { html } from 'lit-element';
 import { OchaAssessmentsBase } from './ocha-assessments-base.js';
-import { Map } from '../node_modules/leaflet/src/map';
-import { TileLayer } from '../node_modules/leaflet/src/layer/tile';
-import { Marker } from '../node_modules/leaflet/src/layer/marker';
-import { featureGroup } from '../node_modules/leaflet/src/layer';
+import { Map } from 'leaflet/src/map';
+import { TileLayer } from 'leaflet/src/layer/tile';
+import { Marker } from 'leaflet/src/layer/marker';
+import { featureGroup } from 'leaflet/src/layer';
 
 // Extend the LitElement base class
 class OchaAssessmentsMap extends OchaAssessmentsBase {
@@ -56,7 +55,6 @@ class OchaAssessmentsMap extends OchaAssessmentsBase {
   }
 
   firstUpdated(changedProperties) {
-    console.log(this.shadowRoot.getElementById('map'));
     if (!this.map) {
       this.map = new Map(this.shadowRoot.getElementById('map'), {
         center: [this.latitude, this.longitude],
