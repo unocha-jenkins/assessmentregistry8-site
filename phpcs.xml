@@ -18,6 +18,7 @@
   <exclude-pattern>*.ds.inc</exclude-pattern>
   <exclude-pattern>*..inc</exclude-pattern>
   <exclude-pattern>*.default_environment_indicator_environments.inc</exclude-pattern>
+  <exclude-pattern>component/*</exclude-pattern>
   <exclude-pattern>node_modules/*</exclude-pattern>
   <exclude-pattern>assets/*</exclude-pattern>
   <exclude-pattern>gulpfile.js</exclude-pattern>
