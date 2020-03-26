@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html, css } from 'lit-element';
 import { OchaAssessmentsBase } from './ocha-assessments-base.js';
 import { Map } from 'leaflet/src/map';
 import { TileLayer } from 'leaflet/src/layer/tile';
@@ -8,6 +8,15 @@ import { MarkerClusterGroup } from 'leaflet.markercluster/src';
 
 // Extend the LitElement base class
 class OchaAssessmentsMap extends OchaAssessmentsBase {
+  static get styles() {
+    return [
+      super.styles,
+      css`
+        :host { display: block;
+          border: 1px solid green;
+        }`
+    ]
+  }
 
   render() {
     // Build facets.

@@ -1,5 +1,6 @@
 // Import the LitElement base class and html helper function
-import { LitElement, html } from 'lit-element';
+import { LitElement, html, css } from 'lit-element';
+import { typography, buttonStyles } from './ocha-assessments-styles.js';
 
 export class OchaAssessmentsBase extends LitElement {
   constructor() {
@@ -9,6 +10,31 @@ export class OchaAssessmentsBase extends LitElement {
     this.pager = void 0;
     this.hasMultiplePages = false;
     this.resetUrl = null;
+  }
+
+  static get styles() {
+    return [
+      css`
+        :host {
+          display: block;
+          border: 1px solid black;
+          --cd-ocha-blue:#026cb6;
+          --cd-dark-blue:#025995;
+          --cd-bright-blue:#80cbff;
+          --cd-highlight-red:#eb5c6d;
+          --cd-white:#fff;
+          --cd-light-grey:#f2f2f2;
+          --cd-mid-grey:#595959;
+          --cd-dark-grey:#4a4a4a;
+          --cd-black:#000;
+          --cd-site-bg-color:#e6ecf1;
+          --cd-site-bg-color--light:#ebf0f4;
+          --cd-font: helvetica, arial, sans-serif;
+          --cd-font-size-base: 16px;
+        }`,
+      typography,
+      buttonStyles
+    ]
   }
 
   static get properties() {

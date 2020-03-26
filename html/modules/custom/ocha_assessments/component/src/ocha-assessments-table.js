@@ -1,8 +1,20 @@
-import { html } from 'lit-element';
+import { html, css } from 'lit-element';
 import { OchaAssessmentsBase } from './ocha-assessments-base.js';
+import { tableStyles } from './ocha-assessments-styles.js';
 
 // Extend the LitElement base class
 class OchaAssessmentsTable extends OchaAssessmentsBase {
+  static get styles() {
+    return [
+      super.styles,
+      tableStyles,
+      css`
+        :host { display: block;
+          border: 1px solid red;
+        }`
+    ]
+  }
+
   render() {
     if (!this.data) {
       return html`
