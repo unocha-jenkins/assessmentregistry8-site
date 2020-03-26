@@ -1,21 +1,14 @@
 <?php
 
+/**
+ * @file
+ * OCHA Knowledge management.
+ */
+
 use Drupal\media\Entity\Media;
 use Drupal\node\Entity\Node;
 use Drupal\pathauto\PathautoState;
 use Drupal\taxonomy\Entity\Term;
-
-function ocha_knowledge_management_variable_get($key, $default) {
-  if (Drupal::state()->get($key)) {
-    return Drupal::state()->get($key);
-  }
-
-  return $default;
-}
-
-function ocha_knowledge_management_variable_set($key, $value) {
-  Drupal::state()->set($key, $value);
-}
 
 /**
  * Wrapper around log function.
@@ -195,8 +188,8 @@ function ocha_knowledge_management_process_row_from_hrinfo($data) {
     // Path.
     if (isset($item->path) && $item->path) {
       $data['path'] = [
-      'alias' => $item->path,
-      'pathauto' => PathautoState::SKIP,
+        'alias' => $item->path,
+        'pathauto' => PathautoState::SKIP,
       ];
     }
 
@@ -235,50 +228,9 @@ function ocha_knowledge_management_process_row_from_hrinfo($data) {
   }
 }
 
-function ocha_knowledge_management_get_id_by_label($source, $label) {
-  switch($source) {
-    case 'ms_local_group':
-    break;
-  }
-}
-
-function ocha_knowledge_management_parse_document($document, $created) {
-  $data = [
-    'accessibility' => $document->accessibility,
-    'uri' => '',
-    'title' => '',
-    'instructions' => '',
-    'target_id' => 0,
-    'display' => 1,
-    'description' => '',
-  ];
-
-  if (isset($document->file)) {
-    $trans = \Drupal::transliteration();
-
-    $filename = $trans->transliterate($document->file->filename, 'en');
-    $filename_save = preg_replace('/\-+/', '-', strtolower(preg_replace('/[^a-zA-Z0-9_\-\.]+/', '', str_replace(' ', '-', $filename))));
-
-    $url = $document->file->url;
-
-    // Copy file.
-    $file_content = file_get_contents($url);
-    if ($file_content) {
-      $directory = 'public://assessments/' . date('Y-m', $created) . '/';
-      file_prepare_directory($directory, FILE_CREATE_DIRECTORY);
-      $file = file_save_data($file_content, $directory . $filename_save, FILE_EXISTS_REPLACE);
-
-      $data['target_id'] = $file->id();
-      $data['description'] = $filename;
-    }
-    else {
-      ocha_knowledge_management_log('Unable to fetch ' . $url);
-    }
-  }
-
-  return $data;
-}
-
+/**
+ * Implements hook_entity_presave().
+ */
 function ocha_knowledge_management_node_presave($node) {
   if ($node->bundle() == 'knowledge_management') {
     $changed = $node->changed_override;
@@ -288,10 +240,14 @@ function ocha_knowledge_management_node_presave($node) {
   }
 }
 
+/**
+ * Get term id or create a new one.
+ */
 function ocha_knowledge_management_get_tid($label, $vocabulary) {
   if ($terms = taxonomy_term_load_multiple_by_name($label, $vocabulary)) {
     $term = reset($terms);
-  } else {
+  }
+  else {
     $term = Term::create([
       'name' => $label,
       'vid' => $vocabulary,
@@ -303,11 +259,14 @@ function ocha_knowledge_management_get_tid($label, $vocabulary) {
   return $term->id();
 }
 
+/**
+ * Add a media item.
+ */
 function ocha_knowledge_management_add_media_entity($url, $bundle, $created) {
   // Get filename from URL.
   $filename = basename($url);
 
-  // Clean filename
+  // Clean filename.
   $trans = \Drupal::transliteration();
 
   $filename = $trans->transliterate($filename, 'en');

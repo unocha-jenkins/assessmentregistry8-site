@@ -1,7 +1,15 @@
 <?php
 
+/**
+ * @file
+ * OCHA Assessments.
+ */
+
 use Drupal\node\Entity\Node;
 
+/**
+ * Get a variable.
+ */
 function ocha_assessments_variable_get($key, $default) {
   if (Drupal::state()->get($key)) {
     return Drupal::state()->get($key);
@@ -10,6 +18,9 @@ function ocha_assessments_variable_get($key, $default) {
   return $default;
 }
 
+/**
+ * Set a variable.
+ */
 function ocha_assessments_variable_set($key, $value) {
   Drupal::state()->set($key, $value);
 }
@@ -32,7 +43,7 @@ function ocha_assessments_log($message) {
 function ocha_assessments_from_hrinfo() {
   if (ocha_assessments_variable_get('ocha_assessments_stop_processing_hrinfo', FALSE)) {
     ocha_assessments_log('Kill switch is enabled!');
-    //return;
+    return;
   }
 
   ocha_assessments_log('Getting page ' . ocha_assessments_variable_get('ocha_assessments_page_hrinfo', 1));
@@ -40,9 +51,9 @@ function ocha_assessments_from_hrinfo() {
   $page = ocha_assessments_variable_get('ocha_assessments_page_hrinfo', 1);
   $api_url = ocha_assessments_variable_get('ocha_assessments_api_url_hrinfo', 'https://www.humanitarianresponse.info/api/v1.0/assessments');
 
-  // Build URL;
+  // Build URL.
   $ts = ocha_assessments_variable_get('ocha_assessments_most_recent_hrinfo', 1);
-$ts=0;
+
   $url = $api_url;
   $url .= '?page[number]=' . $page;
   $url .= '&filter[changed][value]=' . $ts . '&filter[changed][operator]=>';
@@ -254,13 +265,6 @@ function ocha_assessments_process_row_from_hrinfo($item) {
       $data['field_status'] = $item->status;
     }
 
-    // Geographic level.
-    /*
-    if (isset($item->geographic_level) && $item->geographic_level) {
-      $data['field_geographic_level'] = $item->geographic_level;
-    }
-    */
-
     // Assessment Date(s).
     if (isset($item->date) && $item->date) {
       $data['field_ass_date'][] = [
@@ -301,13 +305,9 @@ function ocha_assessments_process_row_from_hrinfo($item) {
   }
 }
 
-function ocha_assessments_get_id_by_label($source, $label) {
-  switch($source) {
-    case 'ms_local_group':
-    break;
-  }
-}
-
+/**
+ * Add a document.
+ */
 function ocha_assessments_parse_document($document, $created) {
   $data = [
     'accessibility' => isset($document->accessibility) ? $document->accessibility : 'Publicly Available',
@@ -345,6 +345,9 @@ function ocha_assessments_parse_document($document, $created) {
   return $data;
 }
 
+/**
+ * Implements hook_entity_presave().
+ */
 function ocha_assessments_node_presave($node) {
   if ($node->bundle() == 'assessment') {
     $changed = $node->changed_override;

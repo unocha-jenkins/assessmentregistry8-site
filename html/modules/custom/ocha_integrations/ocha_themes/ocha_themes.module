@@ -82,4 +82,3 @@ function ocha_themes_get_item_by_name($name) {
   $controller = ocha_themes_get_controller();
   return $controller->getItemByName($name);
 }
-

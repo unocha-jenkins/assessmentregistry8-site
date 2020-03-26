@@ -1,4 +1,3 @@
-// Import the LitElement base class and html helper function
 import { LitElement, html, css } from 'lit-element';
 import { typography, buttonStyles } from './ocha-assessments-styles.js';
 

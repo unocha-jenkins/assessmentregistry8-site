@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @file
+ * OCHA shared logic.
+ */
+
+/**
  * Order options alphabetically, ignoring accents.
  */
 function ocha_integrations_order_options($a, $b) {

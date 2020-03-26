@@ -38,7 +38,7 @@ class OchaCountriesController extends OchaIntegrationsController {
   /**
    * {@inheritdoc}
    */
-  protected static $static_cache;
+  protected static $staticCache;
 
   /**
    * Get API data.
@@ -128,7 +128,7 @@ class OchaCountriesController extends OchaIntegrationsController {
   public function getItemByLabel($label) {
     $data = $this->getCache();
 
-    foreach ($data as $key => $value) {
+    foreach ($data as $value) {
       if ($value->label->default == $label) {
         return $value;
       }

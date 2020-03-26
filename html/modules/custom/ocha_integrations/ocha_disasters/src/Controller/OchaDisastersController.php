@@ -38,7 +38,7 @@ class OchaDisastersController extends OchaIntegrationsController {
   /**
    * {@inheritdoc}
    */
-  protected static $static_cache;
+  protected static $staticCache;
 
   /**
    * Get API data.
@@ -159,7 +159,7 @@ class OchaDisastersController extends OchaIntegrationsController {
   public function getItemByGlide($glide) {
     $data = $this->getCache();
 
-    foreach ($data as $key => $value) {
+    foreach ($data as $value) {
       if ($value->glide == $glide) {
         return $value;
       }
