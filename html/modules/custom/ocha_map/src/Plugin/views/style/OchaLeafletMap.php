@@ -1,38 +1,19 @@
 <?php
 
 namespace Drupal\ocha_map\Plugin\views\style;
-use Drupal\leaflet_views\Plugin\views\style\LeafletMap;
 
-use Drupal\Component\Utility\NestedArray;
-use Drupal\Core\Field\FieldTypePluginManagerInterface;
+use Drupal\leaflet_views\Plugin\views\style\LeafletMap;
 use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\Core\Render\RenderContext;
-use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Entity\Plugin\DataType\EntityAdapter;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\leaflet_views\Controller\LeafletAjaxPopupController;
-use Drupal\search_api\Datasource\DatasourceInterface;
-use Drupal\search_api\Entity\Index;
 use Drupal\Core\Url;
-use Drupal\views\Plugin\views\display\DisplayPluginBase;
-use Drupal\views\Plugin\views\style\StylePluginBase;
-use Drupal\views\ViewExecutable;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Entity\EntityFieldManagerInterface;
-use Drupal\Core\Entity\EntityDisplayRepositoryInterface;
-use Drupal\Core\Session\AccountInterface;
-use Drupal\Core\Messenger\MessengerInterface;
-use Drupal\Core\Render\RendererInterface;
-use Drupal\Core\Extension\ModuleHandlerInterface;
-use Drupal\Leaflet\LeafletService;
 use Drupal\Component\Utility\Html;
-use Drupal\Core\Utility\LinkGeneratorInterface;
 use Drupal\leaflet\LeafletSettingsElementsTrait;
 use Drupal\views\Plugin\views\PluginBase;
-use Drupal\views\Views;
-use Drupal\Component\Serialization\Json;
 
 /**
  * Style plugin to render a View output as a Leaflet map.
@@ -243,7 +224,7 @@ class OchaLeafletMap extends LeafletMap implements ContainerFactoryPluginInterfa
       $this->renderFields($this->view->result);
 
       /* @var \Drupal\views\ResultRow $result */
-      foreach ($this->view->result as $id => $result) {
+      foreach ($this->view->result as $result) {
 
         // For proper processing make sure the geofield_value is created as
         // an array, also if single value.

@@ -1,8 +1,4 @@
 <?php
-/**
- * @file
- * Contains \Drupal\ocha_countries\GetLabel.
- */
 
 namespace Drupal\ocha_countries;
 
@@ -52,4 +48,5 @@ class GetLabel extends TypedData {
       $this->parent->onChange($this->name);
     }
   }
+
 }

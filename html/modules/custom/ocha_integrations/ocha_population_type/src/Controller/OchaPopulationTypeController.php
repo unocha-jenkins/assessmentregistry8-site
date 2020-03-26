@@ -38,7 +38,7 @@ class OchaPopulationTypeController extends OchaIntegrationsController {
   /**
    * {@inheritdoc}
    */
-  protected static $static_cache;
+  protected static $staticCache;
 
   /**
    * Get API data.
@@ -159,7 +159,7 @@ class OchaPopulationTypeController extends OchaIntegrationsController {
   public function getItemByLabel($label) {
     $data = $this->getApiData();
 
-    foreach ($data as $key => $value) {
+    foreach ($data as $value) {
       if ($value->name == $label) {
         return $value;
       }
@@ -167,4 +167,5 @@ class OchaPopulationTypeController extends OchaIntegrationsController {
 
     return FALSE;
   }
+
 }

@@ -1,8 +1,4 @@
 <?php
-/**
- * @file
- * Contains \Drupal\ocha_themes\GetLabel.
- */
 
 namespace Drupal\ocha_themes;
 
@@ -50,4 +46,5 @@ class GetLabel extends TypedData {
       $this->parent->onChange($this->name);
     }
   }
+
 }

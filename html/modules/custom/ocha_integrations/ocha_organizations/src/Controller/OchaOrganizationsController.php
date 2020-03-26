@@ -38,7 +38,7 @@ class OchaOrganizationsController extends OchaIntegrationsController {
   /**
    * {@inheritdoc}
    */
-  protected static $static_cache;
+  protected static $staticCache;
 
   /**
    * Get API data.

@@ -1,8 +1,4 @@
 <?php
-/**
- * @file
- * Contains \Drupal\ocha_local_groups\GetLabel.
- */
 
 namespace Drupal\ocha_local_groups;
 
@@ -50,4 +46,5 @@ class GetLabel extends TypedData {
       $this->parent->onChange($this->name);
     }
   }
+
 }

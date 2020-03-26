@@ -7,7 +7,6 @@ use Drupal\facets\FacetManager\DefaultFacetManager;
 use Drupal\rest\Plugin\views\style\Serializer;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
-use Drupal\facets_rest\Plugin\views\style\FacetsSerializer;
 
 /**
  * The style plugin for serialized output formats.
@@ -131,6 +130,7 @@ class OchaIntegrationsViewsSerializer extends Serializer {
    * @link https://www.drupal.org/project/drupal/issues/2982729
    *
    * @return array
+   *   Pager details.
    */
   private function getPagerDetails() {
     $details = ['active' => FALSE];
