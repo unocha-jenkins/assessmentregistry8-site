@@ -35,6 +35,15 @@ class OchaAssessmentsMap extends OchaAssessmentsBase {
       </style>
 
       <p>Source (debug): ${this.src}</p>
+      <div class="filters">
+        ${
+          dropdowns.map(
+            d => this.renderDropdown(d)
+          )
+        }
+
+        <button @click="${this.resetData}">Reset</button>
+      </div>
 
       <div id="map">
         <slot></slot>
@@ -58,6 +67,7 @@ class OchaAssessmentsMap extends OchaAssessmentsBase {
         // Skip empty markers.
         if (latlon[1] != '' && latlon[0] != '') {
           const m = new Marker([latlon[1], latlon[0]]);
+          m.bindPopup('<a href="' + this.baseurl + '/node/' + row.nid + '">' + row.title + '</a>');
           markers.push(m);
           this.cluster.addLayer(m);
         }
@@ -91,7 +101,7 @@ class OchaAssessmentsMap extends OchaAssessmentsBase {
       this.map.setView([this.latitude, this.longitude], this.zoom);
 
       const l = new TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
+        maxZoom: 17,
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       });
       l.addTo(this.map);
@@ -100,6 +110,9 @@ class OchaAssessmentsMap extends OchaAssessmentsBase {
 
   static get properties() {
     return {
+      baseurl: {
+        type: String
+      },
       src: {
         type: String
       },

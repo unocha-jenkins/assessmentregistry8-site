@@ -60,7 +60,7 @@ class OchaAssessmentsTable extends OchaAssessmentsBase {
               r =>
                 html`
                   <tr>
-                    <td>${r.title}</td>
+                    <td><a href="${this.baseurl}/node/${r.nid}">${r.title}</a></td>
                     <td>${r.field_locations_label}</td>
                     <td>${r.field_organizations_label}</td>
                     <td>${r.field_asst_organizations_label}</td>

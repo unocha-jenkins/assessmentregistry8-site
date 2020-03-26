@@ -39,6 +39,9 @@ export class OchaAssessmentsBase extends LitElement {
 
   static get properties() {
     return {
+      baseurl: {
+        type: String
+      },
       src: {
         type: String
       },
