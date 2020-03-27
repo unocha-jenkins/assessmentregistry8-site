@@ -5,6 +5,8 @@ dependencies:
   config:
     - field.storage.node.field_assessment_data
     - field.storage.node.field_ass_date
+    - field.storage.node.field_assessment_questionnaire
+    - field.storage.node.field_assessment_report
     - field.storage.node.field_local_groups
     - field.storage.node.field_countries
     - field.storage.node.field_disasters
@@ -50,17 +52,6 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_assessment_data
-  data_file_uri:
-    label: 'Assessment Data » File » URI'
-    datasource_id: 'entity:node'
-    property_path: 'field_assessment_data:entity:uri'
-    type: string
-    dependencies:
-      config:
-        - field.storage.node.field_assessment_data
-      module:
-        - file
-        - file
   data_file_url:
     label: 'Assessment Data » File » URI » Root-relative file URL'
     datasource_id: 'entity:node'
@@ -280,6 +271,108 @@ field_settings:
     dependencies:
       module:
         - node
+  questionnaire_accessibility:
+    label: 'Assessment Questionnaire » Text Value'
+    datasource_id: 'entity:node'
+    property_path: 'field_assessment_questionnaire:accessibility'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_assessment_questionnaire
+  questionnaire_description:
+    label: 'Assessment Questionnaire » Description'
+    datasource_id: 'entity:node'
+    property_path: 'field_assessment_questionnaire:description'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_assessment_questionnaire
+  questionnaire_file_url:
+    label: 'Assessment Questionnaire » File » URI » Root-relative file URL'
+    datasource_id: 'entity:node'
+    property_path: 'field_assessment_questionnaire:entity:uri:url'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_assessment_questionnaire
+      module:
+        - file
+        - file
+  questionnaire_instructions:
+    label: 'Assessment Questionnaire » Instructions'
+    datasource_id: 'entity:node'
+    property_path: 'field_assessment_questionnaire:instructions'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_assessment_questionnaire
+  questionnaire_link_title:
+    label: 'Assessment Questionnaire » Link text'
+    datasource_id: 'entity:node'
+    property_path: 'field_assessment_questionnaire:title'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_assessment_questionnaire
+  questionnaire_link_uri:
+    label: 'Assessment Questionnaire » URI'
+    datasource_id: 'entity:node'
+    property_path: 'field_assessment_questionnaire:uri'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_assessment_questionnaire
+  report_accessibility:
+    label: 'Assessment Report » Text Value'
+    datasource_id: 'entity:node'
+    property_path: 'field_assessment_report:accessibility'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_assessment_report
+  report_description:
+    label: 'Assessment Report » Description'
+    datasource_id: 'entity:node'
+    property_path: 'field_assessment_report:description'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_assessment_report
+  report_file_url:
+    label: 'Assessment Report » File » URI » Root-relative file URL'
+    datasource_id: 'entity:node'
+    property_path: 'field_assessment_report:entity:uri:url'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_assessment_report
+      module:
+        - file
+        - file
+  report_instructions:
+    label: 'Assessment Report » Instructions'
+    datasource_id: 'entity:node'
+    property_path: 'field_assessment_report:instructions'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_assessment_report
+  report_link_title:
+    label: 'Assessment Report » Link text'
+    datasource_id: 'entity:node'
+    property_path: 'field_assessment_report:title'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_assessment_report
+  report_link_uri:
+    label: 'Assessment Report » URI'
+    datasource_id: 'entity:node'
+    property_path: 'field_assessment_report:uri'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_assessment_report
   title:
     label: Title
     datasource_id: 'entity:node'
@@ -306,7 +399,6 @@ processor_settings:
     fields:
       - data_accessibility
       - data_description
-      - data_file_uri
       - data_file_url
       - data_instructions
       - data_link_title
@@ -324,6 +416,18 @@ processor_settings:
       - field_status
       - field_themes_label
       - langcode
+      - questionnaire_accessibility
+      - questionnaire_description
+      - questionnaire_file_url
+      - questionnaire_instructions
+      - questionnaire_link_title
+      - questionnaire_link_uri
+      - report_accessibility
+      - report_description
+      - report_file_url
+      - report_instructions
+      - report_link_title
+      - report_link_uri
       - title
     weights:
       preprocess_index: -20
@@ -344,7 +448,6 @@ processor_settings:
     fields:
       - data_accessibility
       - data_description
-      - data_file_uri
       - data_file_url
       - data_instructions
       - data_link_title
@@ -362,6 +465,18 @@ processor_settings:
       - field_status
       - field_themes_label
       - langcode
+      - questionnaire_accessibility
+      - questionnaire_description
+      - questionnaire_file_url
+      - questionnaire_instructions
+      - questionnaire_link_title
+      - questionnaire_link_uri
+      - report_accessibility
+      - report_description
+      - report_file_url
+      - report_instructions
+      - report_link_title
+      - report_link_uri
       - title
     weights:
       preprocess_index: -20
