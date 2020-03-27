@@ -3,6 +3,7 @@ langcode: ru
 status: true
 dependencies:
   config:
+    - field.storage.node.field_assessment_data
     - field.storage.node.field_ass_date
     - field.storage.node.field_local_groups
     - field.storage.node.field_countries
@@ -16,6 +17,7 @@ dependencies:
     - field.storage.node.field_themes
     - search_api.server.db
   module:
+    - file
     - node
     - search_api
     - ocha_locations
@@ -32,6 +34,68 @@ field_settings:
     dependencies:
       module:
         - node
+  data_accessibility:
+    label: 'Assessment Data » Text Value'
+    datasource_id: 'entity:node'
+    property_path: 'field_assessment_data:accessibility'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_assessment_data
+  data_description:
+    label: 'Assessment Data » Description'
+    datasource_id: 'entity:node'
+    property_path: 'field_assessment_data:description'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_assessment_data
+  data_file_uri:
+    label: 'Assessment Data » File » URI'
+    datasource_id: 'entity:node'
+    property_path: 'field_assessment_data:entity:uri'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_assessment_data
+      module:
+        - file
+        - file
+  data_file_url:
+    label: 'Assessment Data » File » URI » Root-relative file URL'
+    datasource_id: 'entity:node'
+    property_path: 'field_assessment_data:entity:uri:url'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_assessment_data
+      module:
+        - file
+        - file
+  data_instructions:
+    label: 'Assessment Data » Instructions'
+    datasource_id: 'entity:node'
+    property_path: 'field_assessment_data:instructions'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_assessment_data
+  data_link_title:
+    label: 'Assessment Data » Link text'
+    datasource_id: 'entity:node'
+    property_path: 'field_assessment_data:title'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_assessment_data
+  data_link_uri:
+    label: 'Assessment Data » URI'
+    datasource_id: 'entity:node'
+    property_path: 'field_assessment_data:uri'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_assessment_data
   field_ass_date:
     label: 'Assessment Date(s)'
     datasource_id: 'entity:node'
@@ -240,6 +304,13 @@ processor_settings:
   ignorecase:
     all_fields: true
     fields:
+      - data_accessibility
+      - data_description
+      - data_file_uri
+      - data_file_url
+      - data_instructions
+      - data_link_title
+      - data_link_uri
       - field_ass_date_end_value
       - field_asst_organizations_label
       - field_countries_label
@@ -271,6 +342,13 @@ processor_settings:
   transliteration:
     all_fields: true
     fields:
+      - data_accessibility
+      - data_description
+      - data_file_uri
+      - data_file_url
+      - data_instructions
+      - data_link_title
+      - data_link_uri
       - field_ass_date_end_value
       - field_asst_organizations_label
       - field_countries_label
