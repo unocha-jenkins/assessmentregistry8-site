@@ -15,6 +15,31 @@ class OchaAssessmentsTable extends OchaAssessmentsBase {
     ]
   }
 
+  buildDocument(prefix, data, title) {
+    switch (data[prefix + '_accessibility']) {
+      case 'Publicly Available':
+        if (data[prefix + '_file_url']) {
+          return html`
+            <div class="assessment-document">
+              <h2>${title}</h2>
+              <a href="${this.baseurl}/${data[prefix + '_file_url']}">${data[prefix + '_description']}</a>
+            </div>
+          `;
+        }
+        break;
+
+      case 'Available on Request':
+        return html`
+          <div class="assessment-document">
+            <h2>${title}</h2>
+            Available on Request
+            <p>${data[prefix + '_instructions']}</p>
+          </div>
+        `;
+
+    }
+  }
+
   render() {
     if (!this.data) {
       return html`
@@ -67,7 +92,7 @@ class OchaAssessmentsTable extends OchaAssessmentsBase {
                     <td>${r.field_local_groups_label}</td>
                     <td>${r.field_status}</td>
                     <td>${this.renderDate(r)}</td>
-                    <td>${r.field_locations_label}</td>
+                    <td>${this.buildDocument('data', r, 'Data')}</td>
                   </tr>
                   `
           )}
