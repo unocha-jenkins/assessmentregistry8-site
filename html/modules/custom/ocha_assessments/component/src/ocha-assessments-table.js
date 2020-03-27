@@ -21,8 +21,8 @@ class OchaAssessmentsTable extends OchaAssessmentsBase {
         if (data[prefix + '_file_url']) {
           return html`
             <div class="assessment-document">
-              <h2>${title}</h2>
-              <a href="${this.baseurl}/${data[prefix + '_file_url']}">${data[prefix + '_description']}</a>
+              <div class="assessment-document-title">${title}</div>
+              <a class="assessment-document-link" href="${this.baseurl}/${data[prefix + '_file_url']}">${data[prefix + '_description']}</a>
             </div>
           `;
         }
@@ -31,8 +31,8 @@ class OchaAssessmentsTable extends OchaAssessmentsBase {
       case 'Available on Request':
         return html`
           <div class="assessment-document">
-            <h2>${title}</h2>
-            Available on Request
+            <div class="assessment-document-title">${title}</div>
+            <p>Available on Request.</p>
             <p>${data[prefix + '_instructions']}</p>
           </div>
         `;
@@ -92,7 +92,11 @@ class OchaAssessmentsTable extends OchaAssessmentsBase {
                     <td>${r.field_local_groups_label}</td>
                     <td>${r.field_status}</td>
                     <td>${this.renderDate(r)}</td>
-                    <td>${this.buildDocument('data', r, 'Data')}</td>
+                    <td>
+                      ${this.buildDocument('report', r, 'Report')}
+                      ${this.buildDocument('questionnaire', r, 'Questionnaire')}
+                      ${this.buildDocument('data', r, 'Data')}
+                    </td>
                   </tr>
                   `
           )}
