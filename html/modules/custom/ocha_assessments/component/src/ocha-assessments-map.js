@@ -2,8 +2,7 @@ import { html, css } from 'lit-element';
 import { OchaAssessmentsBase } from './ocha-assessments-base.js';
 import { Map } from 'leaflet/src/map';
 import { TileLayer } from 'leaflet/src/layer/tile';
-import { Marker } from 'leaflet/src/layer/marker';
-import { FeatureGroup } from 'leaflet/src/layer';
+import { Marker, Icon } from 'leaflet/src/layer/marker';
 import { MarkerClusterGroup } from 'leaflet.markercluster/src';
 
 // Extend the LitElement base class
@@ -85,6 +84,8 @@ class OchaAssessmentsMap extends OchaAssessmentsBase {
 
   firstUpdated(changedProperties) {
     if (!this.map) {
+      Icon.Default.imagePath = this.componenturl;
+
       this.map = new Map(this.shadowRoot.getElementById('map'), {
         center: [this.latitude, this.longitude],
         zoom: this.zoom,
