@@ -23,6 +23,7 @@ export const tableStyles = css`
     margin: 0 auto 3rem;
     border-collapse: collapse;
     width: 100%;
+    empty-cells: hide;
   }
 
   th,
@@ -109,6 +110,11 @@ export const tableStyles = css`
       text-align: left;
     }
 
+    td:empty {
+      border-bottom: none;
+      padding: 0;
+    }
+
     td:before {
       position: absolute;
       top: 0.5rem;
@@ -121,6 +127,10 @@ export const tableStyles = css`
       color: var(--cd-ocha-blue);
       /* Label the data */
       content: attr(data-content);
+    }
+
+    td:empty:before {
+      content: "";
     }
 
     .row-numbers tbody tr td.cd-table--row-num {
