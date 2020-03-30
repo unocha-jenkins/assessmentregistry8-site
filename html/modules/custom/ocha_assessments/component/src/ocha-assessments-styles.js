@@ -23,6 +23,7 @@ export const tableStyles = css`
     margin: 0 auto 3rem;
     border-collapse: collapse;
     width: 100%;
+    empty-cells: hide;
   }
 
   th,
@@ -50,15 +51,15 @@ export const tableStyles = css`
   }
 
   /* Row numbers */
-  .row-numbers {
+  .cd-table--row-numbers {
     counter-reset: rowNumber;
   }
 
-  .row-numbers tbody tr {
+  .cd-table--row-numbers tbody tr {
     counter-increment: rowNumber;
   }
 
-  .row-numbers tbody tr td.cd-table--row-num:first-child::before {
+  .cd-table--row-numbers tbody tr td.cd-table--row-num:first-child::before {
     content: counter(rowNumber);
     min-width: 1em;
     margin-right: 0.5em;
@@ -105,8 +106,15 @@ export const tableStyles = css`
       position: relative;
       padding: 0.5rem;
       padding-left: 40% !important;
+      min-height: 2rem;
       white-space: normal !important;
       text-align: left;
+    }
+
+    td:empty {
+      border-bottom: none;
+      padding: 0;
+      min-height: unset;
     }
 
     td:before {
@@ -123,11 +131,15 @@ export const tableStyles = css`
       content: attr(data-content);
     }
 
-    .row-numbers tbody tr td.cd-table--row-num {
+    td:empty:before {
+      content: none;
+    }
+
+    .cd-table--row-numbers tbody tr td.cd-table--row-num {
       height: 3rem;
     }
 
-    .row-numbers tbody tr td.cd-table--row-num::before {
+    .cd-table--row-numbers tbody tr td.cd-table--row-num::before {
       font-weight: bold;
       font-size: 1.5rem;
     }

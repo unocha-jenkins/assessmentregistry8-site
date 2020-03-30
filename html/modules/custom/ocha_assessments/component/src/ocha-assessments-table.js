@@ -66,7 +66,7 @@ class OchaAssessmentsTable extends OchaAssessmentsBase {
 
         <button @click="${this.resetData}">Reset</button>
       </div>
-      <table>
+      <table class="cd-table cd-table--striped">
         <thead>
           <tr>
             <th>Title</th>
@@ -85,18 +85,14 @@ class OchaAssessmentsTable extends OchaAssessmentsBase {
               r =>
                 html`
                   <tr>
-                    <td><a href="${this.baseurl}/node/${r.nid}">${r.title}</a></td>
-                    <td>${r.field_locations_label}</td>
-                    <td>${r.field_organizations_label}</td>
-                    <td>${r.field_asst_organizations_label}</td>
-                    <td>${r.field_local_groups_label}</td>
-                    <td>${r.field_status}</td>
-                    <td>${this.renderDate(r)}</td>
-                    <td>
-                      ${this.buildDocument('report', r, 'Report')}
-                      ${this.buildDocument('questionnaire', r, 'Questionnaire')}
-                      ${this.buildDocument('data', r, 'Data')}
-                    </td>
+                    <td data-content="Title"><a href="${this.baseurl}/node/${r.nid}">${r.title}</a></td>
+                    <td data-content="Location(s)">${r.field_locations_label}</td>
+                    <td data-content="Managed by">${r.field_organizations_label}</td>
+                    <td data-content="Participating Organization(s)">${r.field_asst_organizations_label}</td>
+                    <td data-content="Clusters/Sectors">${r.field_local_groups_label}</td>
+                    <td data-content="Status">${r.field_status}</td>
+                    <td data-content="Assessment Date(s)">${this.renderDate(r)}</td>
+                    <td data-content="Data">${this.buildDocument('report', r, 'Report')}${this.buildDocument('questionnaire', r, 'Questionnaire')}${this.buildDocument('data', r, 'Data')}</td>
                   </tr>
                   `
           )}
