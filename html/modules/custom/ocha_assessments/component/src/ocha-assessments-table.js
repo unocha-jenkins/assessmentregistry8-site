@@ -92,11 +92,7 @@ class OchaAssessmentsTable extends OchaAssessmentsBase {
                     <td data-content="Clusters/Sectors">${r.field_local_groups_label}</td>
                     <td data-content="Status">${r.field_status}</td>
                     <td data-content="Assessment Date(s)">${this.renderDate(r)}</td>
-                    <td data-content="Data">
-                      ${this.buildDocument('report', r, 'Report')}
-                      ${this.buildDocument('questionnaire', r, 'Questionnaire')}
-                      ${this.buildDocument('data', r, 'Data')}
-                    </td>
+                    <td data-content="Data">${this.buildDocument('report', r, 'Report')}${this.buildDocument('questionnaire', r, 'Questionnaire')}${this.buildDocument('data', r, 'Data')}</td>
                   </tr>
                   `
           )}
