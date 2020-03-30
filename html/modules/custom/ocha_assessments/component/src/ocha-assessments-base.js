@@ -44,6 +44,9 @@ export class OchaAssessmentsBase extends LitElement {
       src: {
         type: String
       },
+      componenturl: {
+        type: String
+      },
       data: {
         type: Array
       }

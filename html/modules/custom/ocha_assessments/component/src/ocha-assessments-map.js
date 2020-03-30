@@ -23,8 +23,8 @@ class OchaAssessmentsMap extends OchaAssessmentsBase {
     let dropdowns = this.buildFacets();
 
     return html`
-    <link rel="stylesheet" href="./leaflet.css" />
-    <link rel="stylesheet" href="./MarkerCluster.Default.css" />
+    <link rel="stylesheet" href="${this.componenturl}leaflet.css" />
+    <link rel="stylesheet" href="${this.componenturl}MarkerCluster.Default.css" />
 
       <style>
         #map {
@@ -114,6 +114,9 @@ class OchaAssessmentsMap extends OchaAssessmentsBase {
         type: String
       },
       src: {
+        type: String
+      },
+      componenturl: {
         type: String
       },
       data: {
