@@ -7,6 +7,20 @@
   background-image: linear-gradient(-180deg, $implementation-primary 67%, $implementation-primary-dark 97%);
 }
 
+.cd-site-header__nav-holder nav > ul {
+  > li,
+  > .cd-nav__item {
+    @include desktop {
+      max-width: unset;
+    }
+
+    @include xlarge {
+      max-width: unset;
+    }
+  }
+}
+
+
 .cd-site-header__inner {
   @supports(display: grid) {
     grid-template-columns: 52px 1fr;
