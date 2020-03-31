@@ -2,15 +2,10 @@
 
 /**
  * @file
- * Template overrides, preprocess, and alter hooks for the OCHA Common Design theme.
+ * Template overrides, preprocess, and alter hooks for the Common Design theme.
  */
 
 use Drupal\Core\Form\FormStateInterface;
-
-/**
- * Implements hook_form_alter().
- */
-
 
 /**
  * Implements hook_form_alter().
@@ -19,7 +14,7 @@ function common_design_subtheme_form_alter(&$form, FormStateInterface $form_stat
   // To use this for Views exposed forms, copy the form alter hook into your
   // subtheme and add the relevant Views IDs to this array in your subtheme.
   $includeView = [
-    'views-exposed-form-assessments-assessments-list'
+    'views-exposed-form-assessments-assessments-list',
   ];
 
   // If in array above, add search--inline attributes.
