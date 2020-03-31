@@ -75,7 +75,7 @@ class OchaAssessmentsMap extends OchaAssessmentsBase {
 
     this.map.addLayer(this.cluster);
     this.map.fitBounds(this.cluster.getBounds(), {
-      maxZoom: this.maxZoom
+      maxZoom: this.maxZoom || 15
     });
   }
 
@@ -120,6 +120,9 @@ class OchaAssessmentsMap extends OchaAssessmentsBase {
         type: String
       },
       componenturl: {
+        type: String
+      },
+      basicAuth: {
         type: String
       },
       data: {

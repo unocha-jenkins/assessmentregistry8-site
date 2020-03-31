@@ -47,6 +47,9 @@ export class OchaAssessmentsBase extends LitElement {
       componenturl: {
         type: String
       },
+      basicAuth: {
+        type: String
+      },
       data: {
         type: Array
       }
@@ -182,10 +185,12 @@ export class OchaAssessmentsBase extends LitElement {
 
   fetchData() {
     var headers = new Headers();
-    headers.append('Authorization', 'Basic ' + btoa('ocha:dev'));
+    if (this.basicAuth) {
+      headers.append('Authorization', 'Basic ' + btoa(this.basicAuth));
+    }
+
     fetch(this.src, {
-      headers: headers,
-      credentials: 'include'
+      headers: headers
     })
       .then(res => res.json())
       .then(response => {
