@@ -74,7 +74,9 @@ class OchaAssessmentsMap extends OchaAssessmentsBase {
     });
 
     this.map.addLayer(this.cluster);
-    this.map.fitBounds(this.cluster.getBounds());
+    this.map.fitBounds(this.cluster.getBounds(), {
+      maxZoom: this.maxZoom
+    });
   }
 
   connectedCallback() {

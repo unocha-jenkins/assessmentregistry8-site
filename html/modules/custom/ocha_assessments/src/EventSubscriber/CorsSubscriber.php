@@ -17,7 +17,7 @@ class CorsSubscriber implements EventSubscriberInterface {
    */
   public function onKernelRequest(GetResponseEvent $event) {
     if (!$event->isMasterRequest()) {
-        return;
+      return;
     }
 
     $request = $event->getRequest();
@@ -44,10 +44,10 @@ class CorsSubscriber implements EventSubscriberInterface {
    * {@inheritdoc}
    */
   public static function getSubscribedEvents() {
-    return array(
-      KernelEvents::REQUEST  => array('onKernelRequest', -10),
-      KernelEvents::RESPONSE => array('onKernelResponse', -10),
-    );
+    return [
+      KernelEvents::REQUEST  => ['onKernelRequest', -10],
+      KernelEvents::RESPONSE => ['onKernelResponse', -10],
+    ];
   }
 
 }
