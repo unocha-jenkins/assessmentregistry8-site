@@ -1,26 +1,29 @@
 //——————————————————————————————————————————————————————————————————————————————
-// Common Design
+// Common Design: User Menu
 //
-// Imports everything in the `cd` folder and ensures that the templates provided
-// in this theme for the Header/Footer will carry Common Design branding.
-//——————————————————————————————————————————————————————————————————————————————
-@import 'cd/cd';
-
-
-//——————————————————————————————————————————————————————————————————————————————
-// Theme extras
+// Includes user-centered settings and/or actions.
 //
-// These optional Sass files can be used to start out with a more complete theme
-// if you want something to get you started quickly.
 //——————————————————————————————————————————————————————————————————————————————
 
-@import 'base/base';
-@import 'base/typography';
+.cd-user-menu {
+  &--no-language-switcher {
+    li:last-child a,
+    li:last-child button {
+      padding-right: 0;
+
+      &::after {
+        content: none;
+      }
+    }
+  }
+}
 
 //——————————————————————————————————————————————————————————————————————————————
-// Components
+// Drupal selectors
 //——————————————————————————————————————————————————————————————————————————————
-@import 'facets';
-@import 'fields';
-@import 'pagination';
-@import 'views';
+
+.cd-global-header .menu {
+  // If there's no language switcher in the Global Header, uncomment this line
+  // to apply special treatment to the last link in the list.
+  @extend .cd-user-menu--no-language-switcher;
+}
