@@ -1,4 +1,4 @@
-uuid: 7c8395a7-0678-4985-ab5c-670baa97b873
+uuid: 1b287c76-b49d-4cec-8d2d-fa8965d9adbe
 langcode: en
 status: true
 dependencies:
@@ -10,15 +10,15 @@ dependencies:
     - search_api
 third_party_settings:
   facets_pretty_paths:
-    coder: ocha_integer_list_coder
-id: clusters_sectors
-name: Cluster(s)/Sector(s)
-url_alias: clusters_sectors
+    coder: default_coder
+id: table_authored_on
+name: 'Authored on'
+url_alias: authored_on
 weight: 0
 min_count: 1
 show_only_one_result: false
-field_identifier: field_local_groups
-facet_source_id: 'search_api:views_page__assessments__page_1'
+field_identifier: created
+facet_source_id: 'search_api:views_page__assessments__assessments_table'
 widget:
   type: links
   config:
@@ -30,7 +30,7 @@ widget:
     show_reset_link: false
     reset_text: 'Show all'
     hide_reset_when_no_selection: false
-query_operator: and
+query_operator: or
 use_hierarchy: false
 hierarchy:
   type: taxonomy
@@ -41,23 +41,20 @@ hard_limit: 0
 exclude: false
 only_visible_when_facet_source_is_visible: true
 processor_configs:
-  active_widget_order:
-    processor_id: active_widget_order
+  date_item:
+    processor_id: date_item
     weights:
-      sort: 20
+      build: 35
+    settings:
+      date_display: actual_date
+      granularity: 6
+      date_format: ''
+  raw_value_widget_order:
+    processor_id: raw_value_widget_order
+    weights:
+      sort: 50
     settings:
       sort: DESC
-  display_value_widget_order:
-    processor_id: display_value_widget_order
-    weights:
-      sort: 40
-    settings:
-      sort: ASC
-  list_item:
-    processor_id: list_item
-    weights:
-      build: 5
-    settings: {  }
   url_processor_handler:
     processor_id: url_processor_handler
     weights:

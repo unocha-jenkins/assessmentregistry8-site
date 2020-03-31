@@ -18,7 +18,7 @@ weight: 0
 min_count: 1
 show_only_one_result: true
 field_identifier: field_asst_organizations
-facet_source_id: 'search_api:views_page__assessments__page_2'
+facet_source_id: 'search_api:views_page__assessments__assessments_map'
 widget:
   type: dropdown
   config:

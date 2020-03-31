@@ -1,4 +1,4 @@
-uuid: 1b4a8dc1-10fc-470b-86d2-45706dff3137
+uuid: 7a8e0c47-2d1c-4acc-9697-c1799570b196
 langcode: en
 status: true
 dependencies:
@@ -11,14 +11,14 @@ dependencies:
 third_party_settings:
   facets_pretty_paths:
     coder: default_coder
-id: map_authored_on_month
+id: table_authored_on_month
 name: 'Authored on - month'
 url_alias: authored_on_month
 weight: 0
 min_count: 1
 show_only_one_result: false
 field_identifier: created
-facet_source_id: 'search_api:views_page__assessments__assessments_map'
+facet_source_id: 'search_api:views_page__assessments__assessments_table'
 widget:
   type: links
   config:
@@ -54,52 +54,52 @@ processor_configs:
     weights:
       build: 5
     settings:
-      map_locations:
-        enable: false
-        condition: null
-        values: ''
-        negate: false
-      map_organizations:
-        enable: false
-        condition: null
-        values: ''
-        negate: false
-      map_participating_organizations:
-        enable: false
-        condition: null
-        values: ''
-        negate: false
-      map_population_types:
-        enable: false
-        condition: null
-        values: ''
-        negate: false
-      map_sources:
-        enable: false
-        condition: null
-        values: ''
-        negate: false
-      map_themes:
-        enable: false
-        condition: null
-        values: ''
-        negate: false
-      map_authored_on:
+      authored_on:
         enable: true
         condition: not_empty
         values: ''
         negate: false
-      map_clusters_sectors:
+      clusters_sectors:
         enable: false
         condition: null
         values: ''
         negate: false
-      map_countries:
+      countries:
         enable: false
         condition: null
         values: ''
         negate: false
-      map_disasters_emergencies:
+      disasters_emergencies:
+        enable: false
+        condition: null
+        values: ''
+        negate: false
+      locations:
+        enable: false
+        condition: null
+        values: ''
+        negate: false
+      organizations:
+        enable: false
+        condition: null
+        values: ''
+        negate: false
+      participating_organizations:
+        enable: false
+        condition: null
+        values: ''
+        negate: false
+      population_types:
+        enable: false
+        condition: null
+        values: ''
+        negate: false
+      sources:
+        enable: false
+        condition: null
+        values: ''
+        negate: false
+      themes:
         enable: false
         condition: null
         values: ''

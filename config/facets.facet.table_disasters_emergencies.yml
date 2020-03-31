@@ -1,4 +1,4 @@
-uuid: 20de495f-dd87-4d24-a3db-cca8cfb57603
+uuid: a9eff32c-c8ef-4993-a692-24e7ac2f3278
 langcode: en
 status: true
 dependencies:
@@ -11,14 +11,14 @@ dependencies:
 third_party_settings:
   facets_pretty_paths:
     coder: ocha_integer_list_coder
-id: countries
-name: Countries
-url_alias: countries
+id: table_disasters_emergencies
+name: Disaster(s)/Emergencies
+url_alias: disasters_emergencies
 weight: 0
 min_count: 1
 show_only_one_result: false
-field_identifier: field_countries
-facet_source_id: 'search_api:views_page__assessments__assessments_list'
+field_identifier: field_disasters
+facet_source_id: 'search_api:views_page__assessments__assessments_table'
 widget:
   type: links
   config:

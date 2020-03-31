@@ -1,4 +1,4 @@
-uuid: 20de495f-dd87-4d24-a3db-cca8cfb57603
+uuid: d9e1eeb4-fea1-4ad7-a8b7-86d7034da58b
 langcode: en
 status: true
 dependencies:
@@ -11,14 +11,14 @@ dependencies:
 third_party_settings:
   facets_pretty_paths:
     coder: ocha_integer_list_coder
-id: countries
-name: Countries
-url_alias: countries
+id: table_sources
+name: Source(s)
+url_alias: sources
 weight: 0
 min_count: 1
 show_only_one_result: false
-field_identifier: field_countries
-facet_source_id: 'search_api:views_page__assessments__assessments_list'
+field_identifier: field_sources
+facet_source_id: 'search_api:views_page__assessments__assessments_table'
 widget:
   type: links
   config:
@@ -30,7 +30,7 @@ widget:
     show_reset_link: false
     reset_text: 'Show all'
     hide_reset_when_no_selection: false
-query_operator: and
+query_operator: or
 use_hierarchy: false
 hierarchy:
   type: taxonomy
@@ -41,12 +41,6 @@ hard_limit: 0
 exclude: false
 only_visible_when_facet_source_is_visible: true
 processor_configs:
-  active_widget_order:
-    processor_id: active_widget_order
-    weights:
-      sort: 20
-    settings:
-      sort: DESC
   display_value_widget_order:
     processor_id: display_value_widget_order
     weights:

@@ -1,4 +1,4 @@
-uuid: 20de495f-dd87-4d24-a3db-cca8cfb57603
+uuid: 3a3ae407-8cad-4945-9e6a-9ce3e00a141f
 langcode: en
 status: true
 dependencies:
@@ -11,14 +11,14 @@ dependencies:
 third_party_settings:
   facets_pretty_paths:
     coder: ocha_integer_list_coder
-id: countries
-name: Countries
-url_alias: countries
+id: table_organizations
+name: Organization(s)
+url_alias: organizations
 weight: 0
 min_count: 1
 show_only_one_result: false
-field_identifier: field_countries
-facet_source_id: 'search_api:views_page__assessments__assessments_list'
+field_identifier: field_organizations
+facet_source_id: 'search_api:views_page__assessments__assessments_table'
 widget:
   type: links
   config:
