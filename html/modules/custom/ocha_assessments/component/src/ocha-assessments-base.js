@@ -181,7 +181,12 @@ export class OchaAssessmentsBase extends LitElement {
   }
 
   fetchData() {
-    fetch(this.src)
+    var headers = new Headers();
+    headers.append('Authorization', 'Basic ' + btoa('ocha:dev'));
+    fetch(this.src, {
+      headers: headers,
+      credentials: 'include'
+    })
       .then(res => res.json())
       .then(response => {
         this.data = response.search_results;
