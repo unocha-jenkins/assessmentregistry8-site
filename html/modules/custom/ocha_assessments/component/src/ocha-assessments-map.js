@@ -74,7 +74,9 @@ class OchaAssessmentsMap extends OchaAssessmentsBase {
     });
 
     this.map.addLayer(this.cluster);
-    this.map.fitBounds(this.cluster.getBounds());
+    this.map.fitBounds(this.cluster.getBounds(), {
+      maxZoom: this.maxZoom
+    });
   }
 
   connectedCallback() {
@@ -92,9 +94,9 @@ class OchaAssessmentsMap extends OchaAssessmentsBase {
         zoomControl: this.zoomControl,
         inertiaDeceleration: 3000,
         inertiaMaxSpeed: 3000,
-        attributionControl: false,
-        minZoom: this.minZoom,
-        maxZoom: this.maxZoom,
+        attributionControl: true,
+        minZoom: this.minZoom || 2,
+        maxZoom: this.maxZoom || 15,
         tapTolerance: 40,
         tap: false
       });
