@@ -10,6 +10,7 @@ dependencies:
     - field.storage.node.field_local_groups
     - field.storage.node.field_countries
     - field.storage.node.field_disasters
+    - field.storage.node.field_key_findings
     - field.storage.node.field_organizations
     - field.storage.node.field_locations
     - field.storage.node.field_asst_organizations
@@ -151,6 +152,14 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_disasters
+  field_key_findings:
+    label: 'Key findings'
+    datasource_id: 'entity:node'
+    property_path: field_key_findings
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_key_findings
   field_local_groups:
     label: Cluster(s)/Sector(s)
     datasource_id: 'entity:node'
@@ -407,6 +416,7 @@ processor_settings:
       - field_asst_organizations_label
       - field_countries_label
       - field_disasters_label
+      - field_key_findings
       - field_local_groups_label
       - field_locations_label
       - field_locations_lat_lon
@@ -456,6 +466,7 @@ processor_settings:
       - field_asst_organizations_label
       - field_countries_label
       - field_disasters_label
+      - field_key_findings
       - field_local_groups_label
       - field_locations_label
       - field_locations_lat_lon
