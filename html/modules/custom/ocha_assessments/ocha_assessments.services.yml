@@ -1,0 +1,6 @@
+services:
+  ocha_assessments.subscriber:
+    class: Drupal\ocha_assessments\EventSubscriber\CorsSubscriber
+    arguments: []
+    tags:
+      - { name: event_subscriber }
