@@ -164,6 +164,45 @@ export class OchaAssessmentsBase extends LitElement {
     return output;
   }
 
+  prevPage() {
+    if (this.pager.current_page > 0) {
+      const url = new URL(this.src);
+      if (this.pager.current_page - 1 == 0) {
+        url.searchParams.delete('page');
+      }
+      else {
+        url.searchParams.set('page', this.pager.current_page - 1);
+      }
+      this.src = url.toString();
+    }
+  }
+
+  nextPage() {
+    if (this.pager.current_page < this.pager.total_pages) {
+      const url = new URL(this.src);
+      url.searchParams.set('page', this.pager.current_page + 1);
+      this.src = url.toString();
+    }
+  }
+
+  renderPager() {
+    if (this.pager.total_pages <= 1) {
+      return;
+    }
+
+    return html`
+      <div class="pager">
+        ${this.pager.current_page > 0?
+          html`<button class="pager-prev" @click="${this.prevPage}">Previous</button>`: html``
+        }
+        <span><span class="page-num">${this.pager.current_page + 1}</span> / <span class="page-total">${this.pager.total_pages}</span></span>
+        ${this.pager.current_page < this.pager.total_pages - 1?
+          html`<button class="pager-next" @click="${this.nextPage}">Next</button>`: html``
+        }
+      </div>
+    `;
+  }
+
   render() {
     if (!this.data) {
       return html`

@@ -1,16 +1,17 @@
 import { html, css } from 'lit-element';
+import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
 import { OchaAssessmentsBase } from './ocha-assessments-base.js';
 import { tableStyles } from './ocha-assessments-styles.js';
 
 // Extend the LitElement base class
-class OchaAssessmentsTable extends OchaAssessmentsBase {
+class OchaAssessmentsList extends OchaAssessmentsBase {
   static get styles() {
     return [
       super.styles,
       tableStyles,
       css`
         :host { display: block;
-          border: 1px solid red;
+          border: 1px solid purple;
         }`
     ]
   }
@@ -64,38 +65,32 @@ class OchaAssessmentsTable extends OchaAssessmentsBase {
 
         <button @click="${this.resetData}">Reset</button>
       </div>
-      <table class="cd-table cd-table--striped">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Location(s)</th>
-            <th>Managed by</th>
-            <th>Participating Organization(s)</th>
-            <th>Clusters/Sectors</th>
-            <th>Status</th>
-            <th>Assessment Date(s)</th>
-            <th>Data</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${
-            this.data.map(
-              r =>
-                html`
-                  <tr>
-                    <td data-content="Title"><a href="${this.baseurl}/node/${r.nid}">${r.title}</a></td>
-                    <td data-content="Location(s)">${r.field_locations_label}</td>
-                    <td data-content="Managed by">${r.field_organizations_label}</td>
-                    <td data-content="Participating Organization(s)">${r.field_asst_organizations_label}</td>
-                    <td data-content="Clusters/Sectors">${r.field_local_groups_label}</td>
-                    <td data-content="Status">${r.field_status}</td>
-                    <td data-content="Assessment Date(s)">${this.renderDate(r)}</td>
-                    <td data-content="Data">${this.buildDocument('report', r, 'Report')}${this.buildDocument('questionnaire', r, 'Questionnaire')}${this.buildDocument('data', r, 'Data')}</td>
-                  </tr>
-                  `
-          )}
-        </tbody>
-      </table>
+
+      <ul class="cd-list">
+        ${
+          this.data.map(
+            r =>
+              html`
+                <li>
+                  <h2><a href="${this.baseurl}/node/${r.nid}">${r.title}</a></h2>
+                  <div>
+                    <p>
+                      <span class="label">Leading/Coordinating Organization(s): </span>
+                      <span class="values">${unsafeHTML(r.field_asst_organizations_label)}</span>
+                    </p>
+                    <p>
+                      <span class="label">Status: </span>
+                      <span class="values">${r.field_status}</span>
+                    </p>
+                    <p>
+                      <span class="label">Assessment Date(s): </span>
+                      <span class="values">${this.renderDate(r)}</span>
+                    </p>
+                  </div>
+                </li>
+                `
+        )}
+      </ul>
     `;
   }
 
@@ -105,5 +100,5 @@ class OchaAssessmentsTable extends OchaAssessmentsBase {
 
 }
 
-customElements.define('ocha-assessments-table', OchaAssessmentsTable);
+customElements.define('ocha-assessments-list', OchaAssessmentsList);
 
