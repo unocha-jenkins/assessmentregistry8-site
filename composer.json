@@ -33,6 +33,7 @@
         "drupal/leaflet": "^1.27",
         "drupal/pcb": "^2.0",
         "drupal/search_api": "^1.15",
+        "drupal/select2": "^1.7",
         "drupal/social_auth_hid": "^2.2",
         "unocha/common_design": "^2.6.0",
         "webflo/drupal-finder": "^1.0.0",
