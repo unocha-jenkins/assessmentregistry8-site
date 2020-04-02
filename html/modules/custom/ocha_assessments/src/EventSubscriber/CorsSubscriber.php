@@ -27,7 +27,7 @@ class CorsSubscriber implements EventSubscriberInterface {
       return;
     }
 
-    $method  = $request->getRealMethod();
+    $method = $request->getRealMethod();
     if (strtoupper($method) === 'OPTIONS') {
       $response = new Response();
       $event->setResponse($response);
