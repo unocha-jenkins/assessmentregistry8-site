@@ -50,6 +50,9 @@ export class OchaAssessmentsBase extends LitElement {
       basicAuth: {
         type: String
       },
+      errorMessage: {
+        type: String
+      },
       data: {
         type: Array
       }
@@ -186,6 +189,10 @@ export class OchaAssessmentsBase extends LitElement {
   }
 
   renderPager() {
+    if (!this.pager) {
+      return;
+    }
+
     if (this.pager.total_pages <= 1) {
       return;
     }
@@ -199,6 +206,18 @@ export class OchaAssessmentsBase extends LitElement {
         ${this.pager.current_page < this.pager.total_pages - 1?
           html`<button class="pager-next" @click="${this.nextPage}">Next</button>`: html``
         }
+      </div>
+    `;
+  }
+
+  renderErrorMessage() {
+    if (this.errorMessage == '') {
+      return;
+    }
+
+    return html`
+      <div class="error">
+        ${this.errorMessage}
       </div>
     `;
   }
@@ -231,14 +250,27 @@ export class OchaAssessmentsBase extends LitElement {
     fetch(this.src, {
       headers: headers
     })
-      .then(res => res.json())
       .then(response => {
-        this.data = response.search_results;
-        this.facets = response.facets;
+        if (response.ok) {
+          return response.json();
+        }
 
-        if (response.pager) {
-          this.pager = response.pager;
-          this.hasMultiplePages = this.pager.total_pages > 1;
+        this.errorMessage = 'Unable to load data.';
+        throw new Error('Unable to load data.');
+      })
+      .then(json => {
+        if (typeof json != 'undefined' && typeof json.search_results != 'undefined') {
+          this.errorMessage = '';
+          this.data = json.search_results;
+          this.facets = json.facets;
+
+          if (json.pager) {
+            this.pager = json.pager;
+            this.hasMultiplePages = this.pager.total_pages > 1;
+          }
+        }
+        else {
+          throw new Error('No data found.');
         }
 
         if (this.fetchCb) {
@@ -246,9 +278,10 @@ export class OchaAssessmentsBase extends LitElement {
         }
       })
       .catch(error => {
-        console.error("Error fetching data:", error);
-        // TODO: Output message.
-        this.data = null;
+        this.data = [];
+        this.facets = [];
+        this.pager = null;
+        this.errorMessage = error;
       });
   }
 }
