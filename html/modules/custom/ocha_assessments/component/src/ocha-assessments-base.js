@@ -245,7 +245,11 @@ export class OchaAssessmentsBase extends LitElement {
           this.fetchCb();
         }
       })
-      .catch(error => console.error("Error fetching data:", error));
+      .catch(error => {
+        console.error("Error fetching data:", error);
+        // TODO: Output message.
+        this.data = null;
+      });
   }
 }
 
