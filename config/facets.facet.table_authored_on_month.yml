@@ -20,16 +20,10 @@ show_only_one_result: false
 field_identifier: created
 facet_source_id: 'search_api:views_page__assessments__assessments_table'
 widget:
-  type: links
+  type: dropdown
   config:
-    show_numbers: false
-    soft_limit: 0
-    soft_limit_settings:
-      show_less_label: 'Show less'
-      show_more_label: 'Show more'
-    show_reset_link: false
-    reset_text: 'Show all'
-    hide_reset_when_no_selection: false
+    show_numbers: true
+    default_option_label: Choose
 query_operator: and
 use_hierarchy: false
 hierarchy:
@@ -54,56 +48,51 @@ processor_configs:
     weights:
       build: 5
     settings:
-      authored_on:
+      table_authored_on:
         enable: true
         condition: not_empty
         values: ''
         negate: false
-      clusters_sectors:
+      table_countries:
         enable: false
         condition: null
         values: ''
         negate: false
-      countries:
+      table_disasters_emergencies:
         enable: false
         condition: null
         values: ''
         negate: false
-      disasters_emergencies:
+      table_locations:
         enable: false
         condition: null
         values: ''
         negate: false
-      locations:
+      table_organizations:
         enable: false
         condition: null
         values: ''
         negate: false
-      organizations:
+      table_population_types:
         enable: false
         condition: null
         values: ''
         negate: false
-      participating_organizations:
+      table_sources:
         enable: false
         condition: null
         values: ''
         negate: false
-      population_types:
+      table_themes:
         enable: false
         condition: null
         values: ''
         negate: false
-      sources:
-        enable: false
-        condition: null
-        values: ''
-        negate: false
-      themes:
-        enable: false
-        condition: null
-        values: ''
-        negate: false
+  hide_1_result_facet:
+    processor_id: hide_1_result_facet
+    weights:
+      build: 50
+    settings: {  }
   hide_non_narrowing_result_processor:
     processor_id: hide_non_narrowing_result_processor
     weights:
@@ -114,7 +103,7 @@ processor_configs:
     weights:
       sort: 50
     settings:
-      sort: DESC
+      sort: ASC
   url_processor_handler:
     processor_id: url_processor_handler
     weights:
@@ -123,4 +112,4 @@ processor_configs:
     settings: {  }
 empty_behavior:
   behavior: none
-show_title: true
+show_title: false
