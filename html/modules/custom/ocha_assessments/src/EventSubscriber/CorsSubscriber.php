@@ -21,6 +21,12 @@ class CorsSubscriber implements EventSubscriberInterface {
     }
 
     $request = $event->getRequest();
+
+    // Only act on rest requests.
+    if (strpos($request->getRequestURI(), '/rest/') === FALSE) {
+      return;
+    }
+
     $method  = $request->getRealMethod();
     if (strtoupper($method) === 'OPTIONS') {
       $response = new Response();
@@ -32,6 +38,16 @@ class CorsSubscriber implements EventSubscriberInterface {
    * Executes actions on the response event.
    */
   public function onKernelResponse(FilterResponseEvent $event) {
+    if (!$event->isMasterRequest()) {
+      return;
+    }
+
+    // Only act on rest requests.
+    $request = $event->getRequest();
+    if (strpos($request->getRequestURI(), '/rest/') === FALSE) {
+      return;
+    }
+
     $response = $event->getResponse();
     $host = '*';
 
@@ -42,16 +58,16 @@ class CorsSubscriber implements EventSubscriberInterface {
         $host = $parts['scheme'] . '://' . $parts['host'];
         if (isset($parts['port'])) {
           $host .= ':' . $parts['port'];
-          $response->headers->set('Vary', 'Origin');
         }
       }
     }
 
+    $response->headers->set('Vary', 'Referer');
     $response->headers->set('Access-Control-Allow-Origin', $host);
     $response->headers->set('Access-Control-Allow-Headers', 'Authorization, Accept, Accept-Language, Content-Language, Content-Type, Origin, X-Requested-With');
     $response->headers->set('Access-Control-Allow-Credentials', 'true');
     $response->headers->set('Access-Control-Expose-Headers', '');
-    $response->headers->set('Access-Control-Allow-Methods', 'GET');
+    $response->headers->set('Access-Control-Allow-Methods', 'OPTIONS, GET');
     $response->headers->set('Access-Control-Max-Age', '3600');
   }
 
