@@ -45,6 +45,7 @@ class OchaAssessmentsList extends OchaAssessmentsBase {
     if (!this.data) {
       return html`
         <div>Loading...</div>
+        ${this.renderErrorMessage()}
       `;
     }
 
@@ -53,6 +54,8 @@ class OchaAssessmentsList extends OchaAssessmentsBase {
 
     return html`
       <p>Source (debug): ${this.src}</p>
+
+      ${this.renderErrorMessage()}
 
       ${this.renderPager()}
 

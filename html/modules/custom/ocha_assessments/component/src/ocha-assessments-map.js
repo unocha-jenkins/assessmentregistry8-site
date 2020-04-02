@@ -34,6 +34,9 @@ class OchaAssessmentsMap extends OchaAssessmentsBase {
       </style>
 
       <p>Source (debug): ${this.src}</p>
+
+      ${this.renderErrorMessage()}
+
       <div class="filters">
         ${
           dropdowns.map(
@@ -58,6 +61,10 @@ class OchaAssessmentsMap extends OchaAssessmentsBase {
     }
     else  {
       this.cluster.clearLayers();
+    }
+
+    if (this.data.length == 0) {
+      return;
     }
 
     this.data.forEach(row => {
@@ -123,6 +130,9 @@ class OchaAssessmentsMap extends OchaAssessmentsBase {
         type: String
       },
       basicAuth: {
+        type: String
+      },
+      errorMessage: {
         type: String
       },
       data: {
