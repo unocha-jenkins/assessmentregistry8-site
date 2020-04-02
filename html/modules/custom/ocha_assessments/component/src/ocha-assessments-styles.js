@@ -38,6 +38,10 @@ export const tableStyles = css`
     background: var(--cd-site-bg-color);
   }
 
+  .cd-table a {
+    word-break: break-word;
+  }
+
   @media (min-width: 576px) {
     th[data-sort-type="numeric"],
     .cd-table--amount,
