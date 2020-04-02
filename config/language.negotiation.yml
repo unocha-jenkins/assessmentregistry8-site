@@ -8,6 +8,7 @@ url:
     ru: ru
     es: es
     ar: ar
+    '': null
   domains:
     en: ''
     fr: ''
