@@ -18,12 +18,9 @@ class OchaAssessmentsMap extends OchaAssessmentsBase {
   }
 
   render() {
-    // Build facets.
-    let dropdowns = this.buildFacets();
-
     return html`
-    <link rel="stylesheet" href="${this.componenturl}leaflet.css" />
-    <link rel="stylesheet" href="${this.componenturl}MarkerCluster.Default.css" />
+      <link rel="stylesheet" href="${this.componenturl}leaflet.css" />
+      <link rel="stylesheet" href="${this.componenturl}MarkerCluster.Default.css" />
 
       <style>
         #map {
@@ -37,15 +34,7 @@ class OchaAssessmentsMap extends OchaAssessmentsBase {
 
       ${this.renderErrorMessage()}
 
-      <div class="filters">
-        ${
-          dropdowns.map(
-            d => this.renderDropdown(d)
-          )
-        }
-
-        <button @click="${this.resetData}">Reset</button>
-      </div>
+      ${this.renderDropdowns()}
 
       <div id="map">
         <slot></slot>

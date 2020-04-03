@@ -18,6 +18,12 @@ export const buttonStyles = css`
   }
 `;
 
+export const dropdownStyles = css`
+  .dropdown {
+    min-width: 10em;
+  }
+`;
+
 export const tableStyles = css`
   .cd-table {
     margin: 0 auto 3rem;

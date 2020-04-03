@@ -48,9 +48,6 @@ class OchaAssessmentsTable extends OchaAssessmentsBase {
       `;
     }
 
-    // Build facets.
-    let dropdowns = this.buildFacets();
-
     return html`
       <p>Source (debug): ${this.src}</p>
 
@@ -58,15 +55,8 @@ class OchaAssessmentsTable extends OchaAssessmentsBase {
 
       ${this.renderPager()}
 
-      <div class="filters">
-        ${
-          dropdowns.map(
-            d => this.renderDropdown(d)
-          )
-        }
+      ${this.renderDropdowns()}
 
-        <button @click="${this.resetData}">Reset</button>
-      </div>
       <table class="cd-table cd-table--striped">
         <thead>
           <tr>

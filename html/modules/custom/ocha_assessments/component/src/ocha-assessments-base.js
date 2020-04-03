@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit-element';
-import { typography, buttonStyles } from './ocha-assessments-styles.js';
+import './high-select.js';
+import { typography, buttonStyles, dropdownStyles } from './ocha-assessments-styles.js';
 
 export class OchaAssessmentsBase extends LitElement {
   constructor() {
@@ -32,7 +33,8 @@ export class OchaAssessmentsBase extends LitElement {
           --cd-font-size-base: 16px;
         }`,
       typography,
-      buttonStyles
+      buttonStyles,
+      dropdownStyles
     ]
   }
 
@@ -73,7 +75,27 @@ export class OchaAssessmentsBase extends LitElement {
   }
 
   changeSrc(event) {
-    this.src = event.currentTarget.options[event.currentTarget.selectedIndex].value;
+    this.src = event.currentTarget.value;
+  }
+
+  getDropdownLabel(id) {
+    const labels = {
+      created: 'Date',
+      field_local_groups: 'Local group',
+      field_countries: 'Country',
+      field_disasters: 'Disaster',
+      field_locations: 'Location',
+      field_organizations: 'Organization',
+      field_asst_organizations: 'Participating organization',
+      field_population_types: 'Population type',
+      field_themes: 'Theme',
+    };
+
+    if (labels[id]) {
+      return labels[id];
+    }
+
+    return id;
   }
 
   buildFacets() {
@@ -89,7 +111,8 @@ export class OchaAssessmentsBase extends LitElement {
           let dropdown = {};
           for (const id in child[0]) {
             dropdown = {
-              label: id,
+              id: id,
+              label: this.getDropdownLabel(id),
               selected: null,
               selected_url: null,
               options: []
@@ -111,9 +134,25 @@ export class OchaAssessmentsBase extends LitElement {
           dropdowns.push(dropdown);
         }
       }
-    });
+    }, this);
 
     return dropdowns;
+  }
+
+  renderDropdowns() {
+    // Build facets.
+    let dropdowns = this.buildFacets();
+
+    return html`
+      <div class="filters">
+        ${
+          dropdowns.map(
+            d => this.renderDropdown(d)
+          )
+        }
+        <button @click="${this.resetData}">Reset</button>
+      </div>
+    `;
   }
 
   renderDropdown(dropdown) {
@@ -136,31 +175,33 @@ export class OchaAssessmentsBase extends LitElement {
     }
 
     return html`
-      <label for="${dropdown.label}">${dropdown.label}</label>
-      <select @change="${this.changeSrc}" id="${dropdown.label}">
-        <option value="${emptytOption.value}" ?selected=${dropdown.selected === null}>${emptytOption.label}</option>
-        ${
-          dropdown.options.map(function (o) {
-            if (o.label == dropdown.selected) {
-              return html`
-                <option value="" selected>${o.label}</option>
-              `
-            }
-            else {
-              return html`
-                <option value="${o.key}">${o.label}</option>
-              `
-            }
-          })
-        }
-      </select>
+      <div class="filter">
+        <label for="${dropdown.label}">${dropdown.label}</label>
+        <high-select class="dropdown" search arrow animated @change="${this.changeSrc}" id="${dropdown.id}">
+          <high-option value="${emptytOption.value}">${emptytOption.label}</high-option>
+          ${
+            dropdown.options.map(function (o) {
+              if (o.label == dropdown.selected) {
+                return html`
+                  <high-option value="" selected>${o.label}</high-option>
+                `
+              }
+              else {
+                return html`
+                  <high-option value="${o.key}">${o.label}</high-option>
+                `
+              }
+            })
+          }
+        </high-select>
+      </div>
     `;
   }
 
   renderDate(data) {
     let output = data.field_ass_date;
 
-    if (typeof data.field_ass_date_end_value != 'undefined' && data.field_ass_date_end_value.length > 0) {
+    if (typeof data.field_ass_date_end_value != 'undefined' && data.field_ass_date_end_value && data.field_ass_date_end_value.length > 0) {
       output = output + ' - ' + data.field_ass_date_end_value[0];
     }
 
