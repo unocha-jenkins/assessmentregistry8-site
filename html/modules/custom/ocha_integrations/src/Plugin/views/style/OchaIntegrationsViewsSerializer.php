@@ -110,10 +110,16 @@ class OchaIntegrationsViewsSerializer extends Serializer {
 
     $processed_facets = [];
     foreach ($facets as $facet) {
-      $processed_facets[] = $this->facetsManager->build($facet);
+      // Skip empty facets.
+      $this->facetsManager->processFacets($facet->getFacetSourceId());
+      if ($facet->getResults()) {
+        // Key by facet_settings[url_alias].
+        $build = $this->facetsManager->build($facet);
+        $processed_facets[$facet->getUrlAlias()] = reset($build[0]);
+      }
     }
 
-    $rows['facets'] = array_values($processed_facets);
+    $rows['facets'] = $processed_facets;
     if (!$this->options['show_facets']) {
       $rows = $rows['search_results'];
     }
