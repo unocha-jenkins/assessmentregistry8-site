@@ -55,10 +55,26 @@ export class OchaAssessmentsBase extends LitElement {
       errorMessage: {
         type: String
       },
+      // @var Array
+      disabledFilters: {
+        type: Array
+      },
       data: {
         type: Array
       }
     };
+  }
+
+  setDisabledFilters() {
+    this.disabledFilters = [];
+
+    const url = new URL(this.src);
+    url.searchParams.forEach((value, name) => {
+      if (name.indexOf('f[') === 0) {
+        const parts = value.split(':');
+        this.disabledFilters.push(parts[0]);
+      }
+    });
   }
 
   updated(changedProperties) {
@@ -80,15 +96,16 @@ export class OchaAssessmentsBase extends LitElement {
 
   getDropdownLabel(id) {
     const labels = {
-      created: 'Date',
-      field_local_groups: 'Local group',
-      field_countries: 'Country',
-      field_disasters: 'Disaster',
-      field_locations: 'Location',
-      field_organizations: 'Organization',
-      field_asst_organizations: 'Participating organization',
-      field_population_types: 'Population type',
-      field_themes: 'Theme',
+      authored_on: 'Date',
+      local_groups: 'Local group',
+      clusters_sectors: 'Cluster/sector',
+      countries: 'Country',
+      disasters: 'Disaster',
+      locations: 'Location',
+      organizations: 'Organization',
+      participating_organizations: 'Participating organization',
+      population_types: 'Population type',
+      themes: 'Theme',
     };
 
     if (labels[id]) {
@@ -105,36 +122,37 @@ export class OchaAssessmentsBase extends LitElement {
 
     let dropdowns = [];
 
-    this.facets.forEach(function (child) {
-      if (child.length > 0) {
-        if (typeof child[0][0] == 'undefined') {
-          let dropdown = {};
-          for (const id in child[0]) {
-            dropdown = {
-              id: id,
-              label: this.getDropdownLabel(id),
-              selected: null,
-              selected_url: null,
-              options: []
-            };
-
-            child[0][id].forEach(function (option) {
-              if (typeof option.values.active != 'undefined') {
-                dropdown.selected = option.values.value;
-                dropdown.selected_url = option.url;
-              }
-
-              dropdown.options.push({
-                key: option.url,
-                label: option.values.value
-              });
-            });
-          }
-
-          dropdowns.push(dropdown);
-        }
+    for (const child_id in this.facets) {
+      // Skip disabled filters.
+      if (this.disabledFilters.includes(child_id)) {
+        continue;
       }
-    }, this);
+
+      const child = this.facets[child_id];
+      let dropdown = {};
+
+      dropdown = {
+        id: child_id,
+        label: this.getDropdownLabel(child_id),
+        selected: null,
+        selected_url: null,
+        options: []
+      };
+
+      child.forEach(function (option) {
+        if (typeof option.values.active != 'undefined') {
+          dropdown.selected = option.values.value;
+          dropdown.selected_url = option.url;
+        }
+
+        dropdown.options.push({
+          key: option.url,
+          label: option.values.value
+        });
+      });
+
+      dropdowns.push(dropdown);
+    }
 
     return dropdowns;
   }
@@ -276,6 +294,7 @@ export class OchaAssessmentsBase extends LitElement {
     if (this.src) {
       this.fetchData();
       this.resetUrl = this.src;
+      this.setDisabledFilters();
     }
     else {
       console.error('src attribute is required.')
