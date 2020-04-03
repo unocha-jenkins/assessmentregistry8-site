@@ -421,8 +421,6 @@
 
     _initializing() {
       const allOptions = this._allOptions();
-      console.log('init');
-      console.log(this._selectedOption);
       if (!this._selectedOption && allOptions.length && !this._hasSelected()) this._firstOption().selected = true;
       if (!this.hasAttribute('tabindex')) this.setAttribute('tabindex', '0');
       //this.options = allOptions;
@@ -724,7 +722,6 @@
     }
 
     _haveValidParent() {
-      console.log(this.parentNode);
       if (this.parentNode && this.parentNode.tagName)
         return this.parentNode.tagName.toLowerCase() === 'high-select';
       else
