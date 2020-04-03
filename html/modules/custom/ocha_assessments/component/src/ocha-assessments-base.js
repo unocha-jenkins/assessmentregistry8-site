@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit-element';
-import { typography, buttonStyles } from './ocha-assessments-styles.js';
+import './high-select.js';
+import { typography, buttonStyles, dropdownStyles } from './ocha-assessments-styles.js';
 
 export class OchaAssessmentsBase extends LitElement {
   constructor() {
@@ -32,7 +33,8 @@ export class OchaAssessmentsBase extends LitElement {
           --cd-font-size-base: 16px;
         }`,
       typography,
-      buttonStyles
+      buttonStyles,
+      dropdownStyles
     ]
   }
 
@@ -53,10 +55,26 @@ export class OchaAssessmentsBase extends LitElement {
       errorMessage: {
         type: String
       },
+      // @var Array
+      disabledFilters: {
+        type: Array
+      },
       data: {
         type: Array
       }
     };
+  }
+
+  setDisabledFilters() {
+    this.disabledFilters = [];
+
+    const url = new URL(this.src);
+    url.searchParams.forEach((value, name) => {
+      if (name.indexOf('f[') === 0) {
+        const parts = value.split(':');
+        this.disabledFilters.push(parts[0]);
+      }
+    });
   }
 
   updated(changedProperties) {
@@ -73,7 +91,28 @@ export class OchaAssessmentsBase extends LitElement {
   }
 
   changeSrc(event) {
-    this.src = event.currentTarget.options[event.currentTarget.selectedIndex].value;
+    this.src = event.currentTarget.value;
+  }
+
+  getDropdownLabel(id) {
+    const labels = {
+      authored_on: 'Date',
+      local_groups: 'Local group',
+      clusters_sectors: 'Cluster/sector',
+      countries: 'Country',
+      disasters: 'Disaster',
+      locations: 'Location',
+      organizations: 'Organization',
+      participating_organizations: 'Participating organization',
+      population_types: 'Population type',
+      themes: 'Theme',
+    };
+
+    if (labels[id]) {
+      return labels[id];
+    }
+
+    return id;
   }
 
   buildFacets() {
@@ -83,37 +122,55 @@ export class OchaAssessmentsBase extends LitElement {
 
     let dropdowns = [];
 
-    this.facets.forEach(function (child) {
-      if (child.length > 0) {
-        if (typeof child[0][0] == 'undefined') {
-          let dropdown = {};
-          for (const id in child[0]) {
-            dropdown = {
-              label: id,
-              selected: null,
-              selected_url: null,
-              options: []
-            };
-
-            child[0][id].forEach(function (option) {
-              if (typeof option.values.active != 'undefined') {
-                dropdown.selected = option.values.value;
-                dropdown.selected_url = option.url;
-              }
-
-              dropdown.options.push({
-                key: option.url,
-                label: option.values.value
-              });
-            });
-          }
-
-          dropdowns.push(dropdown);
-        }
+    for (const child_id in this.facets) {
+      // Skip disabled filters.
+      if (this.disabledFilters.includes(child_id)) {
+        continue;
       }
-    });
+
+      const child = this.facets[child_id];
+      let dropdown = {};
+
+      dropdown = {
+        id: child_id,
+        label: this.getDropdownLabel(child_id),
+        selected: null,
+        selected_url: null,
+        options: []
+      };
+
+      child.forEach(function (option) {
+        if (typeof option.values.active != 'undefined') {
+          dropdown.selected = option.values.value;
+          dropdown.selected_url = option.url;
+        }
+
+        dropdown.options.push({
+          key: option.url,
+          label: option.values.value
+        });
+      });
+
+      dropdowns.push(dropdown);
+    }
 
     return dropdowns;
+  }
+
+  renderDropdowns() {
+    // Build facets.
+    let dropdowns = this.buildFacets();
+
+    return html`
+      <div class="filters">
+        ${
+          dropdowns.map(
+            d => this.renderDropdown(d)
+          )
+        }
+        <button @click="${this.resetData}">Reset</button>
+      </div>
+    `;
   }
 
   renderDropdown(dropdown) {
@@ -136,31 +193,33 @@ export class OchaAssessmentsBase extends LitElement {
     }
 
     return html`
-      <label for="${dropdown.label}">${dropdown.label}</label>
-      <select @change="${this.changeSrc}" id="${dropdown.label}">
-        <option value="${emptytOption.value}" ?selected=${dropdown.selected === null}>${emptytOption.label}</option>
-        ${
-          dropdown.options.map(function (o) {
-            if (o.label == dropdown.selected) {
-              return html`
-                <option value="" selected>${o.label}</option>
-              `
-            }
-            else {
-              return html`
-                <option value="${o.key}">${o.label}</option>
-              `
-            }
-          })
-        }
-      </select>
+      <div class="filter">
+        <label for="${dropdown.label}">${dropdown.label}</label>
+        <high-select class="dropdown" search arrow animated @change="${this.changeSrc}" id="${dropdown.id}">
+          <high-option value="${emptytOption.value}">${emptytOption.label}</high-option>
+          ${
+            dropdown.options.map(function (o) {
+              if (o.label == dropdown.selected) {
+                return html`
+                  <high-option value="" selected>${o.label}</high-option>
+                `
+              }
+              else {
+                return html`
+                  <high-option value="${o.key}">${o.label}</high-option>
+                `
+              }
+            })
+          }
+        </high-select>
+      </div>
     `;
   }
 
   renderDate(data) {
     let output = data.field_ass_date;
 
-    if (typeof data.field_ass_date_end_value != 'undefined' && data.field_ass_date_end_value.length > 0) {
+    if (typeof data.field_ass_date_end_value != 'undefined' && data.field_ass_date_end_value && data.field_ass_date_end_value.length > 0) {
       output = output + ' - ' + data.field_ass_date_end_value[0];
     }
 
@@ -235,6 +294,7 @@ export class OchaAssessmentsBase extends LitElement {
     if (this.src) {
       this.fetchData();
       this.resetUrl = this.src;
+      this.setDisabledFilters();
     }
     else {
       console.error('src attribute is required.')
