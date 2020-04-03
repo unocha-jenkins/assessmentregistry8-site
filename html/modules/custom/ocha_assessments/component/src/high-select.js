@@ -1,3 +1,5 @@
+// From https://github.com/hivabkbk/high-select
+
 (function () {
   const KEYCODES = {
     ENTER: 13,
@@ -423,7 +425,7 @@
       const allOptions = this._allOptions();
       if (!this._selectedOption && allOptions.length && !this._hasSelected()) this._firstOption().selected = true;
       if (!this.hasAttribute('tabindex')) this.setAttribute('tabindex', '0');
-      //this.options = allOptions;
+      this.options = allOptions;
     }
 
     _expand() {
