@@ -18,7 +18,6 @@ dependencies:
     - search_api.index.assessments
   module:
     - datetime_range
-    - facets_rest
     - ocha_assessment_document
     - ocha_countries
     - ocha_disasters
@@ -2425,7 +2424,7 @@ display:
               alias: ''
               raw_output: true
             field_countries:
-              alias: ''
+              alias: countries
               raw_output: true
             field_local_groups:
               alias: ''
@@ -2454,9 +2453,6 @@ display:
             field_themes:
               alias: ''
               raw_output: true
-            label:
-              alias: ''
-              raw_output: false
             field_countries_label:
               alias: ''
               raw_output: false
@@ -2490,6 +2486,69 @@ display:
             field_status:
               alias: ''
               raw_output: true
+            field_local_groups_label:
+              alias: ''
+              raw_output: false
+            nid:
+              alias: ''
+              raw_output: false
+            field_assessment_data:
+              alias: ''
+              raw_output: false
+            data_description:
+              alias: ''
+              raw_output: false
+            data_instructions:
+              alias: ''
+              raw_output: false
+            data_link_title:
+              alias: ''
+              raw_output: false
+            data_accessibility:
+              alias: ''
+              raw_output: false
+            data_link_uri:
+              alias: ''
+              raw_output: false
+            data_file_url:
+              alias: ''
+              raw_output: false
+            questionnaire_description:
+              alias: ''
+              raw_output: false
+            questionnaire_file_url:
+              alias: ''
+              raw_output: false
+            questionnaire_instructions:
+              alias: ''
+              raw_output: false
+            questionnaire_link_title:
+              alias: ''
+              raw_output: false
+            questionnaire_accessibility:
+              alias: ''
+              raw_output: false
+            questionnaire_link_uri:
+              alias: ''
+              raw_output: false
+            report_description:
+              alias: ''
+              raw_output: false
+            report_file_url:
+              alias: ''
+              raw_output: false
+            report_instructions:
+              alias: ''
+              raw_output: false
+            report_link_title:
+              alias: ''
+              raw_output: false
+            report_accessibility:
+              alias: ''
+              raw_output: false
+            report_link_uri:
+              alias: ''
+              raw_output: false
       fields:
         title:
           id: title
@@ -5768,7 +5827,7 @@ display:
       display_extenders: {  }
       path: rest/assessments-map
       style:
-        type: facets_serializer
+        type: ocha_integrations_views_serializer
         options:
           formats:
             json: json
