@@ -162,13 +162,17 @@ export class OchaAssessmentsBase extends LitElement {
     let dropdowns = this.buildFacets();
 
     return html`
-      <div class="filters">
-        ${
-          dropdowns.map(
-            d => this.renderDropdown(d)
-          )
-        }
-        <button @click="${this.resetData}">Reset</button>
+      <div class="cd-filters">
+        <div class="cd-filters__form">
+          <form>
+            ${
+              dropdowns.map(
+                d => this.renderDropdown(d)
+              )
+            }
+            <button @click="${this.resetData}">Reset</button>
+          </form>
+        </div>
       </div>
     `;
   }
@@ -193,7 +197,7 @@ export class OchaAssessmentsBase extends LitElement {
     }
 
     return html`
-      <div class="filter">
+      <div class="cd-filters__group">
         <label for="${dropdown.label}">${dropdown.label}</label>
         <high-select class="dropdown" search arrow animated @change="${this.changeSrc}" id="${dropdown.id}">
           <high-option value="${emptytOption.value}">${emptytOption.label}</high-option>
