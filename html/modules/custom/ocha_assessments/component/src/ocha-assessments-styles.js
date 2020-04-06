@@ -16,11 +16,164 @@ export const buttonStyles = css`
   .blue-button:disabled {
     background-color: grey;
   }
+  .cd-button {
+    -webkit-appearance: none;
+    border-radius: 0;
+    box-shadow: none;
+    border: 0;
+    padding: 1rem;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background 0.3s ease;
+    width: auto;
+  }
+
+  .cd-button--icon {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .cd-button:hover,
+  .cd-button:focus {
+    background-color: rbga(0, 0 ,0, 0.1);
+  }
+
+  .cd-button:focus {
+    outline: 3px solid var(--cd-ocha-blue);
+  }
+
+  .cd-button--style {
+    text-transform: uppercase;
+    background: var(--cd-ocha-blue);
+    color: var(--cd-white);
+  }
+
+  .cd-button--style:hover,
+  .cd-button--style:focus {
+    background: var(--cd-dark-blue);
+    color: var(--cd-white);
+  }
+
+  /* Some buttons have SVG icons */
+  .cd-button--icon svg {
+    fill: var(--cd-white);
+    width: 2rem;
+    height: 2rem;
+    /* Icon before */
+    padding: 0 0.5rem 0 0;
+  }
+
+  .cd-button--icon span + svg {
+  /* Icon after */
+    padding: 0 0 0 0.5rem;
+  }
+
+  .cd-button--icon:hover svg,
+  .cd-button--icon:focus svg {
+    fill: var(--cd-white);
+  }
+
+  .cd-button--export {
+    background: var(--cd-mid-grey);
+    color: var(--cd-white);
+  }
+
+  .cd-button--export:hover,
+  .cd-button--export:focus {
+    background: var(--cd-dark-grey);
+  }
 `;
 
 export const dropdownStyles = css`
   .dropdown {
     min-width: 10em;
+  }
+
+  .cd-filters {
+    margin-bottom: 1rem;
+  }
+
+  .cd-filters__form {
+    display: block;
+    background: var(--cd-light-grey);
+    padding: 1rem;
+  }
+
+  .cd-filters__form label {
+    display: block;
+    margin: 0 0 0.5rem;
+  }
+
+  .cd-filters__group {
+    margin: 0 0 1rem;
+  }
+
+  .cd-filters__form select {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    .cd-filters {
+      margin-bottom: 2rem;
+    }
+
+    .cd-filters__form form {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+    }
+
+    .cd-filters__group {
+      padding-right: 1rem;
+    }
+
+    /* Quantity queries */
+    /* https://alistapart.com/article/quantity-queries-for-css */
+
+    /* If one element */
+    .cd-filters__group:only-of-type,
+    /* If two elements */
+    .cd-filters__group:nth-last-child(2):first-child,
+    .cd-filters__group:nth-last-child(2):first-child ~ .cd-filters__group,
+    .cd-filters__group:nth-last-child(2):first-child ~ .cd-export,
+    /* If three elements */
+    .cd-filters__group:nth-last-child(3):first-child,
+    .cd-filters__group:nth-last-child(3):first-child ~ .cd-filters__group,
+    .cd-filters__group:nth-last-child(3):first-child ~ .cd-export {
+      flex: 1 0 33%;
+      max-width: 33%;
+    }
+
+    .cd-filters__group:nth-last-child(2):first-child ~ .cd-filters__group:last-child,
+    .cd-filters__group:nth-last-child(3):first-child ~ .cd-filters__group:last-child {
+      padding-right: 0;
+    }
+
+    /* If four elements */
+    .cd-filters__group:nth-last-child(4):first-child,
+    .cd-filters__group:nth-last-child(4):first-child ~ .cd-filters__group,
+    .cd-filters__group:nth-last-child(4):first-child ~ .cd-export {
+      flex: 1 0 25%;
+      max-width: 25%;
+    }
+
+    .cd-filters__group:nth-last-child(4):first-child ~ .cd-filters__group:last-child {
+      padding-right: 0;
+    }
+
+    /* If five elements */
+    .cd-filters__group:nth-last-child(5):first-child,
+    .cd-filters__group:nth-last-child(5):first-child ~ .cd-filters__group,
+    .cd-filters__group:nth-last-child(5):first-child ~ .cd-export {
+      flex: 1 0 20%;
+      max-width: 20%;
+    }
+
+    .cd-filters__group:nth-last-child(5):first-child ~ .cd-filters__group:last-child {
+      padding-right: 0;
+    }
   }
 `;
 
