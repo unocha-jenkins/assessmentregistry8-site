@@ -2,28 +2,28 @@ uuid: 25047385-0e66-44bc-85c3-48153b4d6916
 langcode: ru
 status: true
 dependencies:
+  module:
+    - node
+    - file
+    - search_api
+    - ocha_locations
   config:
     - field.storage.node.field_assessment_data
     - field.storage.node.field_ass_date
-    - field.storage.node.field_assessment_questionnaire
-    - field.storage.node.field_assessment_report
-    - field.storage.node.field_local_groups
+    - field.storage.node.field_asst_organizations
     - field.storage.node.field_countries
     - field.storage.node.field_disasters
     - field.storage.node.field_key_findings
-    - field.storage.node.field_organizations
+    - field.storage.node.field_local_groups
     - field.storage.node.field_locations
-    - field.storage.node.field_asst_organizations
+    - field.storage.node.field_organizations
     - field.storage.node.field_population_types
     - field.storage.node.field_sources
     - field.storage.node.field_status
     - field.storage.node.field_themes
+    - field.storage.node.field_assessment_questionnaire
+    - field.storage.node.field_assessment_report
     - search_api.server.db
-  module:
-    - file
-    - node
-    - search_api
-    - ocha_locations
 id: assessments
 name: Assessments
 description: ''
@@ -62,7 +62,6 @@ field_settings:
       config:
         - field.storage.node.field_assessment_data
       module:
-        - file
         - file
   data_instructions:
     label: 'Assessment Data » Instructions'
@@ -306,7 +305,6 @@ field_settings:
         - field.storage.node.field_assessment_questionnaire
       module:
         - file
-        - file
   questionnaire_instructions:
     label: 'Assessment Questionnaire » Instructions'
     datasource_id: 'entity:node'
@@ -357,7 +355,6 @@ field_settings:
         - field.storage.node.field_assessment_report
       module:
         - file
-        - file
   report_instructions:
     label: 'Assessment Report » Instructions'
     datasource_id: 'entity:node'
@@ -400,9 +397,56 @@ datasource_settings:
       default: true
       selected: {  }
 processor_settings:
-  add_url: {  }
+  location_hierarchy:
+    fields:
+      field_locations:
+        status: 1
+        property:
+          status: 1
+          property: ocha_locations-hierarchy
+    weights:
+      preprocess_index: -45
+  transliteration:
+    all_fields: true
+    fields:
+      - data_accessibility
+      - data_description
+      - data_file_url
+      - data_instructions
+      - data_link_title
+      - data_link_uri
+      - field_ass_date_end_value
+      - field_asst_organizations_label
+      - field_countries_label
+      - field_disasters_label
+      - field_key_findings
+      - field_local_groups_label
+      - field_locations_label
+      - field_locations_lat_lon
+      - field_organizations_label
+      - field_population_types_label
+      - field_sources_label
+      - field_status
+      - field_themes_label
+      - langcode
+      - questionnaire_accessibility
+      - questionnaire_description
+      - questionnaire_file_url
+      - questionnaire_instructions
+      - questionnaire_link_title
+      - questionnaire_link_uri
+      - report_accessibility
+      - report_description
+      - report_file_url
+      - report_instructions
+      - report_link_title
+      - report_link_uri
+      - title
+    weights:
+      preprocess_index: -20
+      preprocess_query: -20
+  rendered_item: {  }
   aggregated_field: {  }
-  entity_status: {  }
   ignorecase:
     all_fields: true
     fields:
@@ -443,55 +487,8 @@ processor_settings:
       preprocess_index: -20
       preprocess_query: -20
   language_with_fallback: {  }
-  location_hierarchy:
-    fields:
-      field_locations:
-        status: 1
-        property:
-          status: 1
-          property: ocha_locations-hierarchy
-    weights:
-      preprocess_index: -45
-  rendered_item: {  }
-  transliteration:
-    all_fields: true
-    fields:
-      - data_accessibility
-      - data_description
-      - data_file_url
-      - data_instructions
-      - data_link_title
-      - data_link_uri
-      - field_ass_date_end_value
-      - field_asst_organizations_label
-      - field_countries_label
-      - field_disasters_label
-      - field_key_findings
-      - field_local_groups_label
-      - field_locations_label
-      - field_locations_lat_lon
-      - field_organizations_label
-      - field_population_types_label
-      - field_sources_label
-      - field_status
-      - field_themes_label
-      - langcode
-      - questionnaire_accessibility
-      - questionnaire_description
-      - questionnaire_file_url
-      - questionnaire_instructions
-      - questionnaire_link_title
-      - questionnaire_link_uri
-      - report_accessibility
-      - report_description
-      - report_file_url
-      - report_instructions
-      - report_link_title
-      - report_link_uri
-      - title
-    weights:
-      preprocess_index: -20
-      preprocess_query: -20
+  add_url: {  }
+  entity_status: {  }
 tracker_settings:
   default:
     indexing_order: fifo
