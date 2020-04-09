@@ -356,3 +356,42 @@ function ocha_assessments_node_presave($node) {
     }
   }
 }
+
+/**
+ * Add a document.
+ */
+function ocha_assessments_create_document($accessibility, $document_url) {
+  $data = [
+    'accessibility' => isset($accessibility) ? $accessibility : 'Publicly Available',
+    'uri' => '',
+    'title' => '',
+    'instructions' => '',
+    'target_id' => 0,
+    'display' => 1,
+    'description' => '',
+  ];
+
+  if (isset($document_url)) {
+    $trans = \Drupal::transliteration();
+
+    // TODO: Get filename from document.
+    $filename = $trans->transliterate($document_url, 'en');
+    $filename_save = preg_replace('/\-+/', '-', strtolower(preg_replace('/[^a-zA-Z0-9_\-\.]+/', '', str_replace(' ', '-', $filename))));
+
+    // Copy file.
+    $file_content = file_get_contents($document_url);
+    if ($file_content) {
+      $directory = 'public://assessments/' . date('Y-m') . '/';
+      file_prepare_directory($directory, FILE_CREATE_DIRECTORY);
+      $file = file_save_data($file_content, $directory . $filename_save, FILE_EXISTS_REPLACE);
+
+      $data['target_id'] = $file->id();
+      $data['description'] = $filename;
+    }
+    else {
+      ocha_assessments_log('Unable to fetch ' . $document_url);
+    }
+  }
+
+  return $data;
+}
