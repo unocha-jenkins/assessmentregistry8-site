@@ -1,0 +1,72 @@
+/**
+ * Common Design Search form in header.
+ */
+
+.cd-search--inline__btn {
+  svg {
+    fill: $implementation-primary;
+  }
+
+  &:hover,
+  &:focus {
+    color: $implementation-primary-dark;
+
+    svg {
+      fill: $implementation-primary-dark;
+    }
+  }
+
+  &:focus {
+    color: $implementation-highlight;
+
+    svg {
+      fill: $implementation-primary-dark;
+    }
+  }
+
+  &[aria-expanded='true'] {
+    color: $implementation-highlight;
+
+    svg {
+      fill: $implementation-highlight;
+    }
+  }
+}
+
+.cd-search--inline__submit {
+  &:hover,
+  &:focus {
+    background: $implementation-highlight;
+
+    svg {
+      fill: $cd-white;
+    }
+  }
+}
+
+// Start inline search for desktop only.
+@include desktop {
+  .cd-search--inline {
+    flex: 0 1 340px;
+  }
+
+  .cd-search--inline__input {
+    min-width: 160px;
+    width: 100%;
+
+    &:focus {
+      border-bottom: 3px solid $implementation-highlight;
+    }
+  }
+
+  .cd-search--inline__submit {
+    &:hover,
+    &:focus {
+      background-color: $cd-mid-bluey-grey;
+
+      svg {
+        fill: $implementation-highlight;
+      }
+    }
+  }
+}
