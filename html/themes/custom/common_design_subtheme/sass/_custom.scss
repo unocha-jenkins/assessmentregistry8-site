@@ -1,0 +1,29 @@
+.path-frontpage {
+  .cd-grid-2-col {
+    grid-gap: 2rem;
+  }
+
+  .cd-grid-2-col .cd-grid-item {
+    margin-bottom: 1rem;
+    padding: 2rem;
+
+    @include tablet {
+      margin-bottom: 0;
+    }
+
+    > h2,
+    > h3 {
+      margin-top: 0;
+    }
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+
+    &:nth-child(1),
+    &:nth-child(2) {
+      background-color: $cd-light-grey;
+      border-bottom: 3px solid $implementation-highlight;
+    }
+  }
+}

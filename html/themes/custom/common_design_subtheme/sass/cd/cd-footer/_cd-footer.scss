@@ -4,4 +4,10 @@
 
 .cd-footer {
   background: $implementation-primary;
+
+  a {
+    &:focus {
+      outline: 3px solid $implementation-highlight;
+    }
+  }
 }

@@ -1,6 +1,9 @@
 //——————————————————————————————————————————————————————————————————————————————
 // Common Design: Header
 //——————————————————————————————————————————————————————————————————————————————
+.cd-header button:focus {
+  outline: 3px solid $implementation-highlight;
+}
 
 .cd-global-header {
   background: $implementation-primary;
