@@ -1,11 +1,20 @@
 //——————————————————————————————————————————————————————————————————————————————
-// Common Design: Footer
+// Common Design: Language Switcher
 //——————————————————————————————————————————————————————————————————————————————
 
-.cd-footer {
-  background: $implementation-primary;
+.cd-language-switcher__btn {
+  &:focus {
+    outline: 3px solid $implementation-highlight;
+  }
+}
 
-  a {
+.cd-user-menu__dropdown {
+  li a {
+    &:hover,
+    &:focus {
+      color: $implementation-highlight;
+    }
+
     &:focus {
       outline: 3px solid $implementation-highlight;
     }

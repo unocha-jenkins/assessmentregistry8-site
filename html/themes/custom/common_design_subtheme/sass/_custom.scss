@@ -23,8 +23,7 @@
     &:nth-child(1),
     &:nth-child(2) {
       background-color: $cd-light-grey;
-      //border-top: 3px solid $implementation-primary;
-      border-bottom: 3px solid $implementation-secondary;
+      border-bottom: 3px solid $implementation-highlight;
     }
   }
 }

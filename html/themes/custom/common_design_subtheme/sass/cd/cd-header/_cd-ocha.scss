@@ -5,6 +5,14 @@
   color: $cd-white;
 }
 
+.cd-ocha-dropdown__link {
+  a {
+    &:focus {
+      outline: 3px solid $implementation-highlight;
+    }
+  }
+}
+
 .cd-ocha-dropdown__see-all {
   background: $implementation-highlight;
   color: $cd-default-text-color;

@@ -18,6 +18,12 @@
   }
 }
 
+.cd-user-menu__item {
+  &:focus {
+    outline: 3px solid $implementation-highlight;
+  }
+}
+
 //——————————————————————————————————————————————————————————————————————————————
 // Drupal selectors
 //——————————————————————————————————————————————————————————————————————————————
@@ -26,4 +32,9 @@
   // If there's no language switcher in the Global Header, uncomment this line
   // to apply special treatment to the last link in the list.
   @extend .cd-user-menu--no-language-switcher;
+}
+
+.cd-global-header .menu > li a,
+.cd-global-header .menu > li button {
+  @extend .cd-user-menu__item;
 }
