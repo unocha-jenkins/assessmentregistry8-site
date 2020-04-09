@@ -1,0 +1,7 @@
+ocha_assessments.ocha_assessments_bulk_import:
+  path: '/admin/content/bulk-import-assessments'
+  defaults:
+    _form: '\Drupal\ocha_assessments\Form\OchaAssessmentsBulkImport'
+    _title: 'OchaAssessmentsBulkImport'
+  requirements:
+    _permission: 'ocha assessments bulk import'

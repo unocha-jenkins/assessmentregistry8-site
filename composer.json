@@ -37,6 +37,7 @@
         "drupal/social_auth_hid": "^2.2",
         "npm-asset/select2": "^4.0",
         "oomphinc/composer-installers-extender": "^1.1",
+        "phpoffice/phpspreadsheet": "^1.11",
         "unocha/common_design": "^2.7.0",
         "webflo/drupal-finder": "^1.0.0",
         "zaporylie/composer-drupal-optimizations": "^1.0"
