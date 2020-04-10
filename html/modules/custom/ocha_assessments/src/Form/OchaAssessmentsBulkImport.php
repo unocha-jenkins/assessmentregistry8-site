@@ -76,9 +76,6 @@ class OchaAssessmentsBulkImport extends FormBase {
     }
 
     $filename = drupal_realpath($file->destination);
-    $reader = IOFactory::createReaderForFile($filename);
-    $reader->setReadDataOnly(TRUE);
-    $reader->load($filename);
 
     $reader = new Xlsx();
     $reader->setReadDataOnly(TRUE);

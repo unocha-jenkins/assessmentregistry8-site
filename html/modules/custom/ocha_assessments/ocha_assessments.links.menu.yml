@@ -4,3 +4,9 @@ ocha_assessments.ocha_assessments_bulk_import:
   route_name: ocha_assessments.ocha_assessments_bulk_import
   parent: system.admin_content
   weight: 10
+ocha_assessments.ocha_assessments_create_template:
+  title: Create Template
+  description: Create Template xlsx file
+  route_name: ocha_assessments.ocha_assessments_create_template
+  parent: system.admin_content
+  weight: 10

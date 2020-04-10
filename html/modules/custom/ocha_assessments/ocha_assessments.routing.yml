@@ -2,6 +2,13 @@ ocha_assessments.ocha_assessments_bulk_import:
   path: '/admin/content/bulk-import-assessments'
   defaults:
     _form: '\Drupal\ocha_assessments\Form\OchaAssessmentsBulkImport'
-    _title: 'OchaAssessmentsBulkImport'
+    _title: 'Ocha Assessments Bulk Import'
+  requirements:
+    _permission: 'ocha assessments bulk import'
+ocha_assessments.ocha_assessments_create_template:
+  path: '/admin/content/bulk-import-assessments/create-template'
+  defaults:
+    _form: '\Drupal\ocha_assessments\Form\OchaAssessmentsCreateTemplate'
+    _title: 'Ocha Assessments Create Template'
   requirements:
     _permission: 'ocha assessments bulk import'
