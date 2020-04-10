@@ -66,7 +66,7 @@ class OchaAssessmentsCreateTemplate extends FormBase {
     $spreadsheet = $reader->load($filename);
 
     // Add population type.
-    $worksheet = $spreadsheet->getSheetByName('Population Types');
+    $worksheet = $spreadsheet->getSheetByName('PopulationTypes');
     $controller = ocha_population_type_get_controller();
     $options = $controller->getAllowedValues();
     $options = array_chunk($options, 1);
@@ -74,13 +74,26 @@ class OchaAssessmentsCreateTemplate extends FormBase {
     // $worksheet->setSheetState(\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet::SHEETSTATE_HIDDEN);
 
     // Set validators, they tend to disappear.
+    $worksheet = $spreadsheet->getSheetByName('Assessments');
+    $validation = $worksheet->getCell('L9')->getDataValidation();
+    $validation->setType( \PhpOffice\PhpSpreadsheet\Cell\DataValidation::TYPE_LIST );
+    $validation->setErrorStyle( \PhpOffice\PhpSpreadsheet\Cell\DataValidation::STYLE_INFORMATION );
+    $validation->setAllowBlank(TRUE);
+    $validation->setShowInputMessage(TRUE);
+    $validation->setShowErrorMessage(TRUE);
+    $validation->setShowDropDown(TRUE);
+    $validation->setErrorTitle('Input error');
+    $validation->setError('Value is not in list.');
+    $validation->setPromptTitle('Pick from list');
+    $validation->setPrompt('Please pick a value from the drop-down list.');
+    $validation->setFormula1('PopulationTypes!$A$1:$A$99');
 
     // Protect headers.
 
     // Hide reference data sheets.
 
     // Set focus to main sheet.
-    $worksheet = $spreadsheet->getSheetByName('Assessments');
+    $spreadsheet->setActiveSheetIndexByName('Assessments');
 
     // Save
     $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
