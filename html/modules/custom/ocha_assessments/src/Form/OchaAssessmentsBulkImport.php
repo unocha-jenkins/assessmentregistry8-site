@@ -4,8 +4,10 @@ namespace Drupal\ocha_assessments\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\node\Entity\Node;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
 
 /**
  * Class OchaAssessmentsBulkImport.
@@ -27,8 +29,18 @@ class OchaAssessmentsBulkImport extends FormBase {
       '#type' => 'file',
       '#title' => $this->t('Xlsx file'),
       '#description' => $this->t('Excel file containing assessments to import'),
-      '#weight' => '0',
     ];
+
+    $controller = ocha_countries_get_controller();
+    $countries = $controller->getAllowedValues();
+    $form['country'] = [
+      '#type' => 'select',
+      '#options' => $countries,
+      '#title' => $this->t('Country'),
+      '#description' => $this->t('Country'),
+      '#required' => TRUE,
+    ];
+
     $form['submit'] = [
       '#type' => 'submit',
       '#value' => $this->t('Submit'),
@@ -98,6 +110,7 @@ class OchaAssessmentsBulkImport extends FormBase {
 
       $data = [
         '_row' => $row->getRowIndex(),
+        'country' => $form_state->getValue('country'),
       ];
 
       $cellIterator = $row->getCellIterator();
@@ -137,8 +150,8 @@ class OchaAssessmentsBulkImport extends FormBase {
     // Local group aka Cluster(s)/Sector(s).
     if (isset($item['clusters']) && !empty($item['clusters'])) {
       // Split and trim.
-      $data = array_map('trim', explode(',', $item['clusters']));
-      foreach ($data as $input) {
+      $values = array_map('trim', explode(',', $item['clusters']));
+      foreach ($values as $input) {
         // TODO: Limit cluster to country or location.
       }
     }
@@ -146,50 +159,100 @@ class OchaAssessmentsBulkImport extends FormBase {
     // Leading/Coordinating Organization(s).
     if (isset($item['agency']) && !empty($item['agency'])) {
       // Split and trim.
-      $data = array_map('trim', explode(',', $item['agency']));
-      foreach ($data as $input) {
-        // TODO: Limit cluster to country or location.
+      $values = array_map('trim', explode(',', $item['agency']));
+      foreach ($values as $input) {
+        // TODO: This needs cell validation.
       }
     }
 
     // Participating Organization(s).
     if (isset($item['partners']) && !empty($item['partners'])) {
       // Split and trim.
-      $data = array_map('trim', explode(',', $item['partners']));
-      foreach ($data as $input) {
+      $values = array_map('trim', explode(',', $item['partners']));
+      foreach ($values as $input) {
+        // TODO: This needs cell validation.
       }
     }
 
     // Location(s).
-    if (isset($item['admin 1']) && !empty($item['admin 1'])) {
+    $location_found = FALSE;
+    if (isset($item['admin 3']) && !empty($item['admin 3'])) {
       // Split and trim.
-      $data = array_map('trim', explode(',', $item['partners']));
-      foreach ($data as $input) {
-        // Reverse lookup from admin 4 to admin 1.
+      $values = array_map('trim', explode(',', $item['admin 3']));
+      foreach ($values as $input) {
+        if ($location = ocha_locations_get_item_by_label($input)) {
+          $location_found = TRUE;
+          $data['field_locations'][] = [
+            'value' => $location->id,
+          ];
+        }
       }
+    }
+
+    if (!$location_found && isset($item['admin 2']) && !empty($item['admin 2'])) {
+      // Split and trim.
+      $values = array_map('trim', explode(',', $item['admin 2']));
+      foreach ($values as $input) {
+        if ($location = ocha_locations_get_item_by_label($input)) {
+          $location_found = TRUE;
+          $data['field_locations'][] = [
+            'value' => $location->id,
+          ];
+        }
+      }
+    }
+
+    if (!$location_found && isset($item['admin 1']) && !empty($item['admin 1'])) {
+      // Split and trim.
+      $values = array_map('trim', explode(',', $item['admin 1']));
+      foreach ($values as $input) {
+        if ($location = ocha_locations_get_item_by_label($input)) {
+          $location_found = TRUE;
+          $data['field_locations'][] = [
+            'value' => $location->id,
+          ];
+        }
+      }
+    }
+
+    // Other location.
+    if (isset($item['admin 4']) && !empty($item['admin 4'])) {
+      // TODO: Check length.
+      $data['field_other_location'] = substr($item['admin 4'], 0, 255);
     }
 
     // Population Type(s).
     if (isset($item['types']) && !empty($item['types'])) {
       // Split and trim.
-      $data = array_map('trim', explode(',', $item['types']));
-      foreach ($data as $input) {
+      $values = array_map('trim', explode(',', $item['types']));
+      foreach ($values as $input) {
+        if ($population_type = ocha_population_type_get_item_by_label($input)) {
+          $data['field_population_types'][] = [
+            'value' => $population_type->id,
+          ];
+        }
       }
     }
 
     // Unit(s) of Measurement.
     if (isset($item['units']) && !empty($item['units'])) {
-      // Single value.
+      $data['field_units_of_measurement'][] = [
+        'value' => $item['units'],
+      ];
+    }
+
+    // Collection Method(s).
+    if (isset($item['type']) && !empty($item['type'])) {
+      $data['field_collection_methods'][] = [
+        'value' => $item['type'],
+      ];
     }
 
     // Operation/Country.
     if (isset($item['country']) && !empty($item['country'])) {
-      // TODO: Read from form input.
-    }
-
-    // Other location.
-    if (isset($item['other_location']) && !empty($item['other_location'])) {
-      $data['field_other_location'] = $item['other_location'];
+      $data['field_countries'][] = [
+        'value' => $item['country'],
+      ];
     }
 
     // Status.
@@ -200,25 +263,26 @@ class OchaAssessmentsBulkImport extends FormBase {
     // Assessment Date(s).
     if (isset($item['start']) && !empty($item['start'])) {
       $data['field_ass_date'][0] = [
-        'value' => substr($item['start']->value, 0, 10),
+        'value' => date('Y-m-d', Date::excelToTimestamp($item['start'])),
       ];
 
       // End date.
       if (isset($item['end']) && !empty($item['end'])) {
-        $data['field_ass_date'][0]['end_value'] = substr($item['end']->value2, 0, 10);
+        $data['field_ass_date'][0]['end_value'] = date('Y-m-d', Date::excelToTimestamp($item['end']));
       }
     }
 
+    $instructions = isset($item['instructions']) ? $item['instructions'] : '';
     if (isset($item['data availability']) && !empty($item['data availability'])) {
-      $data['field_assessment_data'][] = ocha_assessments_create_document($item['data availability'], $item['data url']);
+      $data['field_assessment_data'][] = ocha_assessments_create_document($item['data availability'], $item['data url'], $instructions);
     }
 
     if (isset($item['report availability']) && !empty($item['report availability'])) {
-      $data['field_assessment_report'][] = ocha_assessments_create_document($item['report availability'], $item['report url']);
+      $data['field_assessment_report'][] = ocha_assessments_create_document($item['report availability'], $item['report url'], $instructions);
     }
 
     if (isset($item['questionnaire availability']) && !empty($item['questionnaire availability'])) {
-      $data['field_assessment_questionnaire'][] = ocha_assessments_create_document($item['questionnaire availability'], $item['questionnaire url']);
+      $data['field_assessment_questionnaire'][] = ocha_assessments_create_document($item['questionnaire availability'], $item['questionnaire url'], $instructions);
     }
 
     $node = Node::create($data);

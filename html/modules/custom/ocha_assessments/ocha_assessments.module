@@ -360,21 +360,22 @@ function ocha_assessments_node_presave($node) {
 /**
  * Add a document.
  */
-function ocha_assessments_create_document($accessibility, $document_url) {
+function ocha_assessments_create_document($accessibility, $document_url, $instructions = '') {
   $data = [
     'accessibility' => isset($accessibility) ? $accessibility : 'Publicly Available',
     'uri' => '',
     'title' => '',
-    'instructions' => '',
+    'instructions' => $instructions,
     'target_id' => 0,
     'display' => 1,
     'description' => '',
   ];
 
-  if (isset($document_url)) {
+  if (!empty($document_url)) {
     $trans = \Drupal::transliteration();
 
-    // TODO: Get filename from document.
+    $url_parts = explode('/', $document_url);
+    $filename = end($url_parts);
     $filename = $trans->transliterate($document_url, 'en');
     $filename_save = preg_replace('/\-+/', '-', strtolower(preg_replace('/[^a-zA-Z0-9_\-\.]+/', '', str_replace(' ', '-', $filename))));
 
