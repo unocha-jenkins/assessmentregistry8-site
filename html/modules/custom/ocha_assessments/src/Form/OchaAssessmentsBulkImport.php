@@ -287,13 +287,13 @@ class OchaAssessmentsBulkImport extends FormBase {
       $data['field_assessment_questionnaire'][] = ocha_assessments_create_document($item['questionnaire availability'], $item['questionnaire url'], $instructions);
     }
 
-dpm($item);
-    dpm($data);
-
     $node = Node::create($data);
     $node->save();
   }
 
+  /**
+   * Extract Id from input string.
+   */
   protected function extractIdFromInput($input) {
     $pos = strrpos($input, '[');
     return substr($input, $pos + 1, -1);

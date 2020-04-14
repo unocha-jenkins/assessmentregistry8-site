@@ -128,10 +128,17 @@ class OchaAssessmentsCreateTemplate extends FormBase {
       $admin_levels1[] = [$this->makeLabel($l1->name, $l1->id)];
       if (!empty($l1->children)) {
         foreach ($l1->children as $l2) {
-          $admin_levels2[] = [$this->makeLabel($l1->name, $l1->id), $this->makeLabel($l2->name, $l2->id)];
+          $admin_levels2[] = [
+            $this->makeLabel($l1->name, $l1->id),
+            $this->makeLabel($l2->name, $l2->id),
+          ];
           if (!empty($l2->children)) {
             foreach ($l2->children as $l3) {
-              $admin_levels3[] = [$this->makeLabel($l1->name, $l1->id), $this->makeLabel($l2->name, $l2->id), $this->makeLabel($l3->name, $l3->id)];
+              $admin_levels3[] = [
+                $this->makeLabel($l1->name, $l1->id),
+                $this->makeLabel($l2->name, $l2->id),
+                $this->makeLabel($l3->name, $l3->id),
+              ];
             }
           }
         }
@@ -345,10 +352,16 @@ class OchaAssessmentsCreateTemplate extends FormBase {
     ]), 'succes');
   }
 
+  /**
+   * Make label containing Id.
+   */
   protected function makeLabel($label, $id) {
     return $label . ' [' . $id . ']';
   }
 
+  /**
+   * Convert options to array for xlsx.
+   */
   protected function optionsToXlsArray($options) {
     $results = [];
 
