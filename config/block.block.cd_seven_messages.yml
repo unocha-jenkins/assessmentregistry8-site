@@ -1,0 +1,22 @@
+uuid: 837981da-f5f0-4649-bca2-2c574b081814
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - cd_seven
+_core:
+  default_config_hash: KHQIJ7Vfl25lTjzIc7qIvnuistt-Mw2O0kG4jCofmkI
+id: cd_seven_messages
+theme: cd_seven
+region: highlighted
+weight: -3
+provider: null
+plugin: system_messages_block
+settings:
+  id: system_messages_block
+  label: 'Status messages'
+  provider: system
+  label_display: '0'
+visibility: {  }
