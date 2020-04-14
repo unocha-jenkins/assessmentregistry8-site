@@ -30,11 +30,72 @@ dependencies:
     - node.type.assessment
   module:
     - datetime_range
+    - field_group
     - link
     - ocha_assessment_document
     - ocha_integrations
     - ocha_locations
     - path
+third_party_settings:
+  field_group:
+    group_main_inputs:
+      children:
+        - field_status
+        - field_ass_date
+        - field_countries
+        - field_locations
+        - field_other_location
+        - field_assessment_report
+        - field_assessment_questionnaire
+        - field_assessment_data
+      parent_name: ''
+      weight: 8
+      format_type: fieldset
+      region: content
+      format_settings:
+        id: ''
+        classes: main-inputs
+        description: ''
+        required_fields: true
+      label: main-inputs
+    group_details:
+      children:
+        - field_organizations
+        - field_asst_organizations
+        - field_population_types
+        - field_disasters
+      parent_name: ''
+      weight: 9
+      format_type: fieldset
+      region: content
+      format_settings:
+        id: ''
+        classes: details
+        description: ''
+        required_fields: true
+      label: details
+    group_hr_additional:
+      children:
+        - field_subject_objective
+        - field_sample_size
+        - field_methodology
+        - field_level_of_representation
+        - field_key_findings
+        - field_frequency
+        - field_related_content
+        - field_units_of_measurement
+        - field_collection_methods
+        - field_themes
+      parent_name: ''
+      weight: 10
+      format_type: fieldset
+      region: content
+      format_settings:
+        id: ''
+        classes: hr-additional
+        description: ''
+        required_fields: true
+      label: hr-additional
 id: node.assessment.default
 targetEntityType: node
 bundle: assessment
@@ -47,20 +108,20 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_ass_date:
-    weight: 9
+    weight: 10
     settings: {  }
     third_party_settings: {  }
     type: daterange_default
     region: content
   field_assessment_data:
-    weight: 15
+    weight: 16
     settings:
       progress_indicator: throbber
     third_party_settings: {  }
     type: ocha_assessment_document_widget
     region: content
   field_assessment_questionnaire:
-    weight: 14
+    weight: 15
     settings:
       progress_indicator: throbber
     third_party_settings: {  }
@@ -68,43 +129,43 @@ content:
     region: content
   field_assessment_report:
     type: ocha_assessment_document_widget
-    weight: 13
+    weight: 14
     region: content
     settings:
       progress_indicator: throbber
     third_party_settings: {  }
   field_asst_organizations:
-    weight: 17
+    weight: 19
     settings: {  }
     third_party_settings: {  }
     type: ocha_integrations_select
     region: content
   field_collection_methods:
-    weight: 27
+    weight: 31
     settings: {  }
     third_party_settings: {  }
     type: options_select
     region: content
   field_countries:
     type: ocha_integrations_select
-    weight: 10
+    weight: 11
     region: content
     settings: {  }
     third_party_settings: {  }
   field_disasters:
     type: ocha_integrations_select
-    weight: 30
+    weight: 21
     region: content
     settings: {  }
     third_party_settings: {  }
   field_frequency:
-    weight: 24
+    weight: 28
     settings: {  }
     third_party_settings: {  }
     type: options_select
     region: content
   field_key_findings:
-    weight: 23
+    weight: 27
     settings:
       rows: 5
       placeholder: ''
@@ -112,25 +173,25 @@ content:
     type: string_textarea
     region: content
   field_level_of_representation:
-    weight: 22
+    weight: 26
     settings: {  }
     third_party_settings: {  }
     type: options_select
     region: content
   field_local_groups:
     type: ocha_integrations_select
-    weight: 29
+    weight: 13
     region: content
     settings: {  }
     third_party_settings: {  }
   field_locations:
-    weight: 11
+    weight: 12
     settings: {  }
     third_party_settings: {  }
     type: ocha_locations_select
     region: content
   field_methodology:
-    weight: 21
+    weight: 25
     settings:
       rows: 5
       placeholder: ''
@@ -138,13 +199,13 @@ content:
     type: string_textarea
     region: content
   field_organizations:
-    weight: 16
+    weight: 18
     settings: {  }
     third_party_settings: {  }
     type: ocha_integrations_select
     region: content
   field_other_location:
-    weight: 12
+    weight: 13
     settings:
       size: 60
       placeholder: ''
@@ -153,12 +214,12 @@ content:
     region: content
   field_population_types:
     type: ocha_integrations_select
-    weight: 18
+    weight: 20
     region: content
     settings: {  }
     third_party_settings: {  }
   field_related_content:
-    weight: 25
+    weight: 29
     settings:
       placeholder_url: ''
       placeholder_title: ''
@@ -166,7 +227,7 @@ content:
     type: link_default
     region: content
   field_sample_size:
-    weight: 20
+    weight: 24
     settings:
       size: 60
       placeholder: ''
@@ -174,19 +235,19 @@ content:
     type: string_textfield
     region: content
   field_sources:
-    weight: 31
+    weight: 14
     settings: {  }
     third_party_settings: {  }
     type: ocha_integrations_select
     region: content
   field_status:
-    weight: 8
+    weight: 9
     settings: {  }
     third_party_settings: {  }
     type: options_select
     region: content
   field_subject_objective:
-    weight: 19
+    weight: 23
     settings:
       rows: 5
       placeholder: ''
@@ -194,13 +255,13 @@ content:
     type: string_textarea
     region: content
   field_themes:
-    weight: 28
+    weight: 32
     settings: {  }
     third_party_settings: {  }
     type: ocha_integrations_select
     region: content
   field_units_of_measurement:
-    weight: 26
+    weight: 30
     settings: {  }
     third_party_settings: {  }
     type: options_select
