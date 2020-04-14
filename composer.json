@@ -30,6 +30,7 @@
         "drupal/core": "^8.8.0",
         "drupal/facets": "^1.4",
         "drupal/facets_pretty_paths": "^1.0",
+        "drupal/field_group": "^3.0",
         "drupal/leaflet": "^1.27",
         "drupal/pcb": "^2.0",
         "drupal/search_api": "^1.15",
