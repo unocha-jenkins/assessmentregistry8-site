@@ -78,6 +78,7 @@ theme:
   seven: 0
   common_design: 0
   common_design_subtheme: 0
+  cd_seven: 0
 profile: standard
 _core:
   default_config_hash: R4IF-ClDHXxblLcG0L7MgsLvfBIMAvi_skumNFQwkDc
