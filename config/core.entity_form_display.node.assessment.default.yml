@@ -60,6 +60,8 @@ third_party_settings:
       label: main-inputs
     group_details:
       children:
+        - field_sources
+        - field_local_groups
         - field_organizations
         - field_asst_organizations
         - field_population_types
@@ -69,11 +71,23 @@ third_party_settings:
       format_type: fieldset
       region: content
       format_settings:
-        id: ''
-        classes: details
         description: ''
         required_fields: true
+        id: ''
+        classes: details
       label: details
+    group_show_more:
+      children:
+        - group_hr_additional
+      parent_name: ''
+      weight: 10
+      format_type: accordion
+      region: content
+      format_settings:
+        effect: none
+        id: ''
+        classes: hr-additional
+      label: hr-additional
     group_hr_additional:
       children:
         - field_subject_objective
@@ -86,16 +100,16 @@ third_party_settings:
         - field_units_of_measurement
         - field_collection_methods
         - field_themes
-      parent_name: ''
-      weight: 10
-      format_type: fieldset
+      parent_name: group_show_more
+      weight: 20
+      format_type: accordion_item
       region: content
       format_settings:
-        id: ''
-        classes: hr-additional
-        description: ''
+        formatter: closed
         required_fields: true
-      label: hr-additional
+        id: ''
+        classes: toggle
+      label: 'Show more'
 id: node.assessment.default
 targetEntityType: node
 bundle: assessment
@@ -135,13 +149,13 @@ content:
       progress_indicator: throbber
     third_party_settings: {  }
   field_asst_organizations:
-    weight: 19
+    weight: 17
     settings: {  }
     third_party_settings: {  }
     type: ocha_integrations_select
     region: content
   field_collection_methods:
-    weight: 31
+    weight: 29
     settings: {  }
     third_party_settings: {  }
     type: options_select
@@ -154,18 +168,18 @@ content:
     third_party_settings: {  }
   field_disasters:
     type: ocha_integrations_select
-    weight: 21
+    weight: 19
     region: content
     settings: {  }
     third_party_settings: {  }
   field_frequency:
-    weight: 28
+    weight: 26
     settings: {  }
     third_party_settings: {  }
     type: options_select
     region: content
   field_key_findings:
-    weight: 27
+    weight: 25
     settings:
       rows: 5
       placeholder: ''
@@ -173,14 +187,14 @@ content:
     type: string_textarea
     region: content
   field_level_of_representation:
-    weight: 26
+    weight: 24
     settings: {  }
     third_party_settings: {  }
     type: options_select
     region: content
   field_local_groups:
     type: ocha_integrations_select
-    weight: 13
+    weight: 15
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -191,7 +205,7 @@ content:
     type: ocha_locations_select
     region: content
   field_methodology:
-    weight: 25
+    weight: 23
     settings:
       rows: 5
       placeholder: ''
@@ -199,7 +213,7 @@ content:
     type: string_textarea
     region: content
   field_organizations:
-    weight: 18
+    weight: 16
     settings: {  }
     third_party_settings: {  }
     type: ocha_integrations_select
@@ -214,12 +228,12 @@ content:
     region: content
   field_population_types:
     type: ocha_integrations_select
-    weight: 20
+    weight: 18
     region: content
     settings: {  }
     third_party_settings: {  }
   field_related_content:
-    weight: 29
+    weight: 27
     settings:
       placeholder_url: ''
       placeholder_title: ''
@@ -227,7 +241,7 @@ content:
     type: link_default
     region: content
   field_sample_size:
-    weight: 24
+    weight: 22
     settings:
       size: 60
       placeholder: ''
@@ -247,7 +261,7 @@ content:
     type: options_select
     region: content
   field_subject_objective:
-    weight: 23
+    weight: 21
     settings:
       rows: 5
       placeholder: ''
@@ -255,13 +269,13 @@ content:
     type: string_textarea
     region: content
   field_themes:
-    weight: 32
+    weight: 30
     settings: {  }
     third_party_settings: {  }
     type: ocha_integrations_select
     region: content
   field_units_of_measurement:
-    weight: 30
+    weight: 28
     settings: {  }
     third_party_settings: {  }
     type: options_select
