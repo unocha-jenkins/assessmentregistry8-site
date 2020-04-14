@@ -29,13 +29,20 @@ class OchaAssessmentsCreateTemplate extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $countries = ocha_locations_allowed_values_top_level();
     $form['country'] = [
       '#type' => 'select',
-      '#options' => $countries,
+      '#options' => ocha_locations_allowed_values_top_level(),
       '#title' => $this->t('Country'),
       '#description' => $this->t('Country'),
       '#required' => TRUE,
+    ];
+
+    $form['operation'] = [
+      '#type' => 'select',
+      '#options' => ocha_local_groups_get_operations(),
+      '#title' => $this->t('Limit local cluster by operation'),
+      '#required' => FALSE,
+      '#empty_option' => $this->t('- None -'),
     ];
 
     $form['submit'] = [
@@ -57,6 +64,7 @@ class OchaAssessmentsCreateTemplate extends FormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $country = ocha_locations_get_item($form_state->getValue('country'));
+    $operation = $form_state->getValue('operation');
 
     // Set paths.
     $destination = 'public://template_' . $country->iso3 . '_' . date('Ymdhni') . '.xlsx';
@@ -87,12 +95,20 @@ class OchaAssessmentsCreateTemplate extends FormBase {
     $worksheet->setSheetState(Worksheet::SHEETSTATE_HIDDEN);
     $worksheet->getProtection()->setSheet(TRUE);
 
-    // Add global clusters.
+    // Add local clusters.
     $worksheet = $spreadsheet->getSheetByName('Clusters');
-    $controller = ocha_global_coordination_groups_get_controller();
+    $controller = ocha_local_groups_get_controller();
     $options = $controller->getAllowedValues();
-    $options = array_chunk($options, 1);
-    $worksheet->fromArray($options, NULL, 'A1');
+
+    // Limit by operation.
+    if (!empty($operation)) {
+      foreach ($options as $key => $value) {
+        if (!strpos($value, '(' . $operation . ')')) {
+          unset($options[$key]);
+        }
+      }
+    }
+    $worksheet->fromArray($this->optionsToXlsArray($options), NULL, 'A1');
     $worksheet->setSheetState(Worksheet::SHEETSTATE_HIDDEN);
     $worksheet->getProtection()->setSheet(TRUE);
 
@@ -100,8 +116,7 @@ class OchaAssessmentsCreateTemplate extends FormBase {
     $worksheet = $spreadsheet->getSheetByName('Organizations');
     $controller = ocha_organizations_get_controller();
     $options = $controller->getAllowedValues();
-    $options = array_chunk($options, 1);
-    $worksheet->fromArray($options, NULL, 'A1');
+    $worksheet->fromArray($this->optionsToXlsArray($options), NULL, 'A1');
     $worksheet->setSheetState(Worksheet::SHEETSTATE_HIDDEN);
     $worksheet->getProtection()->setSheet(TRUE);
 
@@ -110,13 +125,13 @@ class OchaAssessmentsCreateTemplate extends FormBase {
     $admin_levels2 = [];
     $admin_levels3 = [];
     foreach ($country->children as $l1) {
-      $admin_levels1[] = [$l1->name];
+      $admin_levels1[] = [$this->makeLabel($l1->name, $l1->id)];
       if (!empty($l1->children)) {
         foreach ($l1->children as $l2) {
-          $admin_levels2[] = [$l1->name, $l2->name];
+          $admin_levels2[] = [$this->makeLabel($l1->name, $l1->id), $this->makeLabel($l2->name, $l2->id)];
           if (!empty($l2->children)) {
             foreach ($l2->children as $l3) {
-              $admin_levels3[] = [$l1->name, $l2->name, $l3->name];
+              $admin_levels3[] = [$this->makeLabel($l1->name, $l1->id), $this->makeLabel($l2->name, $l2->id), $this->makeLabel($l3->name, $l3->id)];
             }
           }
         }
@@ -141,8 +156,7 @@ class OchaAssessmentsCreateTemplate extends FormBase {
     $worksheet = $spreadsheet->getSheetByName('PopulationTypes');
     $controller = ocha_population_type_get_controller();
     $options = $controller->getAllowedValues();
-    $options = array_chunk($options, 1);
-    $worksheet->fromArray($options, NULL, 'A1');
+    $worksheet->fromArray($this->optionsToXlsArray($options), NULL, 'A1');
     $worksheet->setSheetState(Worksheet::SHEETSTATE_HIDDEN);
     $worksheet->getProtection()->setSheet(TRUE);
 
@@ -329,6 +343,20 @@ class OchaAssessmentsCreateTemplate extends FormBase {
     drupal_set_message($this->t('<a href="@url">Download template</a>.', [
       '@url' => file_create_url($destination),
     ]), 'succes');
+  }
+
+  protected function makeLabel($label, $id) {
+    return $label . ' [' . $id . ']';
+  }
+
+  protected function optionsToXlsArray($options) {
+    $results = [];
+
+    foreach ($options as $id => $label) {
+      $results[] = [$label . ' [' . $id . ']'];
+    }
+
+    return $results;
   }
 
 }

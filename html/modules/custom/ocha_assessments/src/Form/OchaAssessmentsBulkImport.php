@@ -115,7 +115,9 @@ class OchaAssessmentsBulkImport extends FormBase {
         $data[$header_lowercase[$cell->getColumn()]] = $cell->getValue();
       }
 
-      $this->createDocument($data);
+      if (isset($data['title']) && !empty($data['title'])) {
+        $this->createDocument($data);
+      }
     }
   }
 
@@ -148,7 +150,9 @@ class OchaAssessmentsBulkImport extends FormBase {
       // Split and trim.
       $values = array_map('trim', explode(',', $item['clusters']));
       foreach ($values as $input) {
-        // TODO: Limit cluster to country or location.
+        $data['field_local_groups'][] = [
+          'value' => $this->extractIdFromInput($input),
+        ];
       }
     }
 
@@ -157,7 +161,9 @@ class OchaAssessmentsBulkImport extends FormBase {
       // Split and trim.
       $values = array_map('trim', explode(',', $item['agency']));
       foreach ($values as $input) {
-        // TODO: This needs cell validation.
+        $data['field_organizations'][] = [
+          'value' => $this->extractIdFromInput($input),
+        ];
       }
     }
 
@@ -166,48 +172,38 @@ class OchaAssessmentsBulkImport extends FormBase {
       // Split and trim.
       $values = array_map('trim', explode(',', $item['partners']));
       foreach ($values as $input) {
-        // TODO: This needs cell validation.
+        $data['field_asst_organizations'][] = [
+          'value' => $this->extractIdFromInput($input),
+        ];
       }
     }
 
     // Location(s).
-    $location_found = FALSE;
     if (isset($item['admin 3']) && !empty($item['admin 3'])) {
       // Split and trim.
       $values = array_map('trim', explode(',', $item['admin 3']));
       foreach ($values as $input) {
-        if ($location = ocha_locations_get_item_by_label($input)) {
-          $location_found = TRUE;
-          $data['field_locations'][] = [
-            'value' => $location->id,
-          ];
-        }
+        $data['field_locations'][] = [
+          'value' => $this->extractIdFromInput($input),
+        ];
       }
     }
-
-    if (!$location_found && isset($item['admin 2']) && !empty($item['admin 2'])) {
+    elseif (isset($item['admin 2']) && !empty($item['admin 2'])) {
       // Split and trim.
       $values = array_map('trim', explode(',', $item['admin 2']));
       foreach ($values as $input) {
-        if ($location = ocha_locations_get_item_by_label($input)) {
-          $location_found = TRUE;
-          $data['field_locations'][] = [
-            'value' => $location->id,
-          ];
-        }
+        $data['field_locations'][] = [
+          'value' => $this->extractIdFromInput($input),
+        ];
       }
     }
-
-    if (!$location_found && isset($item['admin 1']) && !empty($item['admin 1'])) {
+    elseif (isset($item['admin 1']) && !empty($item['admin 1'])) {
       // Split and trim.
       $values = array_map('trim', explode(',', $item['admin 1']));
       foreach ($values as $input) {
-        if ($location = ocha_locations_get_item_by_label($input)) {
-          $location_found = TRUE;
-          $data['field_locations'][] = [
-            'value' => $location->id,
-          ];
-        }
+        $data['field_locations'][] = [
+          'value' => $this->extractIdFromInput($input),
+        ];
       }
     }
 
@@ -222,11 +218,9 @@ class OchaAssessmentsBulkImport extends FormBase {
       // Split and trim.
       $values = array_map('trim', explode(',', $item['types']));
       foreach ($values as $input) {
-        if ($population_type = ocha_population_type_get_item_by_label($input)) {
-          $data['field_population_types'][] = [
-            'value' => $population_type->id,
-          ];
-        }
+        $data['field_population_types'][] = [
+          'value' => $this->extractIdFromInput($input),
+        ];
       }
     }
 
@@ -258,13 +252,25 @@ class OchaAssessmentsBulkImport extends FormBase {
 
     // Assessment Date(s).
     if (isset($item['start']) && !empty($item['start'])) {
-      $data['field_ass_date'][0] = [
-        'value' => date('Y-m-d', Date::excelToTimestamp($item['start'])),
-      ];
+      if (strpos($item['start'], '-')) {
+        $data['field_ass_date'][0] = [
+          'value' => $item['start'],
+        ];
+      }
+      else {
+        $data['field_ass_date'][0] = [
+          'value' => date('Y-m-d', Date::excelToTimestamp($item['start'])),
+        ];
+      }
 
       // End date.
       if (isset($item['end']) && !empty($item['end'])) {
-        $data['field_ass_date'][0]['end_value'] = date('Y-m-d', Date::excelToTimestamp($item['end']));
+        if (strpos($item['end'], '-')) {
+          $data['field_ass_date'][0]['end_value'] = $item['end'];
+        }
+        else {
+          $data['field_ass_date'][0]['end_value'] = date('Y-m-d', Date::excelToTimestamp($item['end']));
+        }
       }
     }
 
@@ -281,8 +287,16 @@ class OchaAssessmentsBulkImport extends FormBase {
       $data['field_assessment_questionnaire'][] = ocha_assessments_create_document($item['questionnaire availability'], $item['questionnaire url'], $instructions);
     }
 
+dpm($item);
+    dpm($data);
+
     $node = Node::create($data);
     $node->save();
+  }
+
+  protected function extractIdFromInput($input) {
+    $pos = strrpos($input, '[');
+    return substr($input, $pos + 1, -1);
   }
 
 }
