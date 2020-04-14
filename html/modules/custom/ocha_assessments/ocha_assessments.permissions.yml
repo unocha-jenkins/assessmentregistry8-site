@@ -1,0 +1,3 @@
+ocha assessments bulk import:
+  title: 'Bulk create assessments'
+  description: 'Allows user to create assessments by importing xlsx file'
