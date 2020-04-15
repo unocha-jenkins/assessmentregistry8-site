@@ -1,0 +1,7 @@
+ocha_assessments.ocha_assessments_create_template:
+  title: Create Template
+  description: Create Template xlsx file
+  route_name: ocha_assessments.ocha_assessments_create_template
+  appears_on:
+    - ocha_assessments.ocha_assessments_bulk_import
+  weight: 15
