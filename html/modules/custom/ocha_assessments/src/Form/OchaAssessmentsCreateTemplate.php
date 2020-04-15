@@ -10,6 +10,7 @@ use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use PhpOffice\PhpSpreadsheet\Style\Protection;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx as XlsxWriter;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class OchaAssessmentsCreateTemplate.
@@ -67,7 +68,7 @@ class OchaAssessmentsCreateTemplate extends FormBase {
     $operation = $form_state->getValue('operation');
 
     // Set paths.
-    $destination = 'public://template_' . $country->iso3 . '_' . date('Ymdhni') . '.xlsx';
+    $destination_name = 'template_' . $country->iso3 . '_' . date('Ymdhni') . '.xlsx';
     $source = drupal_get_path('module', 'ocha_assessments') . '/bulk_template.xlsx';
     $filename = drupal_realpath($source);
 
@@ -359,29 +360,51 @@ class OchaAssessmentsCreateTemplate extends FormBase {
 
     // Protect headers.
     $worksheet = $spreadsheet->getSheetByName('Assessments');
-    $worksheet->getProtection()->setSheet(TRUE);
+    $worksheet->getProtection()
+      ->setSheet(TRUE)
+      ->setInsertColumns(TRUE)
+      ->setInsertRows(TRUE)
+      ->setFormatColumns(FALSE);
+
     $spreadsheet->getDefaultStyle()->getProtection()->setLocked(TRUE);
     $worksheet->getStyle('A9:X999')->getProtection()->setLocked(Protection::PROTECTION_UNPROTECTED);
+
+    // Freeze.
+    $worksheet = $spreadsheet->getSheetByName('Assessments');
+    $worksheet->freezePane('A9');
 
     // Set focus to main sheet.
     $spreadsheet->setActiveSheetIndexByName('Assessments');
 
-    // Set meta data
+    // Set metadata.
     $spreadsheet->getProperties()
       ->setCreator('OCHA')
       ->setLastModifiedBy('OCHA')
       ->setTitle('Assessment Registry – ' . $country->name)
       ->setSubject('Assessment Registry – ' . $country->name)
-      ->setKeywords('OCHA AR ' . $country->iso3);
+      ->setKeywords('OCHA AR ' . $country->iso3)
+      ->setCustomProperty('Country', $country->name)
+      ->setCustomProperty('CountryId', $country->id);
 
-    // Save.
+    // Stream to browser.
+    ob_start();
     $writer = new XlsxWriter($spreadsheet);
-    $writer->save(drupal_realpath($destination));
+    $writer->save('php://output');
+    $content = ob_get_clean();
 
-    // Stream to browser?
-    drupal_set_message($this->t('<a href="@url">Download template</a>.', [
-      '@url' => file_create_url($destination),
-    ]), 'succes');
+    $response = new Response();
+    $response->headers->set('Pragma', 'no-cache');
+    $response->headers->set('Expires', '0');
+    $response->headers->set('Content-Type', 'application/vnd.ms-excel');
+    $response->headers->set('Content-Transfer-Encoding', 'binary');
+    $response->headers->set('Content-Disposition', 'attachment; filename=' . $destination_name);
+    $response->setContent($content);
+
+    $form_state->setResponse($response);
+
+    // Clean up.
+    $spreadsheet->disconnectWorksheets();
+    unset($spreadsheet);
   }
 
   /**
