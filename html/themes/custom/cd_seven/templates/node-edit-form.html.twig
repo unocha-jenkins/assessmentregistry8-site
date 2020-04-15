@@ -37,8 +37,8 @@
     </fieldset>
     <fieldset class="details">
 
-      {{ form.field_source }} {# check this one #}
-      {{ form.field_bundles }} {# Clusters #}
+      {{ form.field_source }}  check this one
+      {{ form.field_bundles }}  Clusters
       {{ form.field_organizations }}
       {{ form.field_organizations2 }}
       {{ form.field_population_types }}
@@ -69,13 +69,13 @@
 
     {{ form|without('advanced', 'footer', 'actions') }}
 
-{#    {{ dpm(form) }}#}
+    {{ dpm(form) }}
   </div>
   <div class="layout-region layout-region-node-secondary">
+    {{ form.advanced }}
   </div>
   <div class="layout-region layout-region-node-footer">
     <div class="layout-region-node-footer__content">
-      {{ form.advanced }}
       {{ form.footer }}
       {{ form.actions }}
     </div>
