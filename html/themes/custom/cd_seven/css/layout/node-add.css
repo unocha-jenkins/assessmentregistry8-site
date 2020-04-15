@@ -1,3 +1,7 @@
+/* Layout */
+
+
+/* Reset layout from seven */
 .layout-region-node-main,
 .layout-region-node-secondary,
 .layout-region-node-footer {
@@ -6,15 +10,92 @@
   padding-right: 0;
 }
 
-.node-assessment-edit-form fieldset:not(.fieldgroup) {
+
+@media (min-width: 1024px) {
+  .node-assessment-edit-form .field--name-title,
+  .node-assessment-edit-form fieldset:not(.fieldgroup).main-inputs,
+  .node-assessment-edit-form .hr-additional,
+  .layout-region-node-secondary,
+  .layout-region-node-footer {
+    max-width: 52%;
+    float: left;
+    padding-right: 20px;
+  }
+
+  .node-assessment-edit-form .field--name-title {
+    display: block;
+    width: 100%;
+  }
+
+  .node-assessment-edit-form .main-inputs {
+    clear: left;
+  }
+
+  .node-assessment-edit-form fieldset:not(.fieldgroup).details {
+    float: right;
+    max-width: 45%;
+  }
+
+  .node-assessment-edit-form .hr-additional,
+  .layout-region-node-secondary,
+  .layout-region-node-footer {
+    clear: both;
+    float: none;
+  }
+
+  /*.link-field-subrow {*/
+  /*  display: flex;*/
+  /*  flex-direction: column;*/
+  /*}*/
+
+  /*.link-field-subrow > .link-field-column {*/
+  /*  width: 100%;*/
+  /*}*/
+
+  /*.node-assessment-edit-form #edit-actions {*/
+  /*  width: 100%;*/
+  /*}*/
+}
+
+.node-assessment-edit-form .field-name-field-locations {
+  width: 100%;
+}
+
+
+
+/* Fieldset reset */
+.node-assessment-edit-form fieldset {
   margin: 0;
   padding: 0;
-  border: 0 none;
   min-width: unset;
   border-radius: 0;
+  border: 0 none;
   background-color: transparent;
 }
 
+/* Fieldset with border */
+.node-assessment-edit-form fieldset:not(.fieldgroup),
+.node-assessment-edit-form fieldset.main-inputs {
+  margin: 0;
+  padding: 10px 0 0;
+  min-width: unset;
+  border-radius: 0;
+  border: 0 none;
+  background-color: transparent;
+}
+
+/* Fieldset with border */
+.node-assessment-edit-form .details,
+.node-assessment-edit-form fieldset:not(.main-inputs),
+.node-assessment-edit-form fieldset:not(.field-group-fieldset) {
+  margin-bottom: 1rem;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+
+.node-assessment-edit-form .details .fieldset-wrapper,
 .node-assessment-edit-form .fieldset-wrapper {
   padding: 1rem;
 }
@@ -23,26 +104,24 @@
   margin-bottom: 1rem;
 }
 
-.node-assessment-edit-form fieldset:not(.fieldgroup).main-inputs > .fieldset-wrapper,
-.node-assessment-edit-form fieldset:not(.fieldgroup).details > .fieldset-wrapper {
+.node-assessment-edit-form fieldset:not(.fieldgroup).main-inputs > .fieldset-wrapper {
   padding: 0;
 }
 
 .node-assessment-edit-form fieldset:not(.fieldgroup) > legend {
+  top: 0;
   position: relative;
-  top: unset;
   display: block;
   width: 100%;
   box-sizing : border-box;
 }
 
 .node-assessment-edit-form fieldset legend {
+  display: block;
   color: #333;
   background-color: #f5f5f5;
-  border-color: #ddd;
   padding: 0.5rem 1rem;
-  border-bottom: 1px solid transparent;
-  border-bottom-color: transparent;
+  border: 1px solid #ddd;
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
 }
@@ -149,81 +228,3 @@ thead > tr {
 /*.field-name-field-related-content {*/
 /*  margin-bottom: 20px;*/
 /*}*/
-
-@media (min-width: 1024px) {
-  .node-assessment-edit-form .layout-region-node-main {
-
-  }
-
-  .node-assessment-edit-form .field--name-title,
-  .node-assessment-edit-form fieldset:not(.fieldgroup).main-inputs,
-  .node-assessment-edit-form .hr-additional,
-  .layout-region-node-secondary,
-  .layout-region-node-footer {
-    max-width: 52%;
-    float: left;
-    padding-right: 20px;
-  }
-
-  /*.main-inputs,*/
-  /*.field-name-field-related-content,*/
-  /*.field-name-field-asst-key-findings,*/
-  /*.field-name-field-asst-methodology,*/
-  /*.field-name-field-asst-subject,*/
-  /*.field-name-field-hid-contact-ref,*/
-  /*.field-name-field-related-content,*/
-  /*.field-name-field-contact-ref,*/
-  /*.form-item-title {*/
-  /*  flex-grow: 1;*/
-  /*  margin-right: 20px;*/
-  /*  width: 50%;*/
-  /*}*/
-
-  /*.field-name-field-themes {*/
-  /*  margin-right: 20px;*/
-  /*  width: 50%;*/
-  /*}*/
-
-  .node-assessment-edit-form fieldset:not(.fieldgroup).details {
-    float: right;
-    max-width: 45%;
-  }
-
-  .node-assessment-edit-form .hr-additional,
-  .layout-region-node-secondary,
-  .layout-region-node-footer {
-    clear: both;
-    float: none;
-  }
-
-
-  /*.details,*/
-  /*.field-name-field-asst-collection-method,*/
-  /*.field-name-field-asst-freq,*/
-  /*.field-name-field-asst-sample-size,*/
-  /*.field-name-field-asst-unit,*/
-  /*.field-name-field-level-of-representation,*/
-  /*.field-name-field-locations,*/
-  /*.field-name-field-location,*/
-  /*.form-item-language {*/
-  /*  width: 35%;*/
-  /*}*/
-
-  .link-field-subrow {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .link-field-subrow > .link-field-column {
-    width: 100%;
-  }
-
-  .node-assessment-edit-form #edit-actions {
-    width: 100%;
-  }
-}
-
-.node-assessment-edit-form .field-name-field-locations {
-  width: 100%;
-}
-
