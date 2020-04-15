@@ -10,6 +10,7 @@ use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use PhpOffice\PhpSpreadsheet\Style\Protection;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx as XlsxWriter;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class OchaAssessmentsCreateTemplate.
@@ -67,7 +68,7 @@ class OchaAssessmentsCreateTemplate extends FormBase {
     $operation = $form_state->getValue('operation');
 
     // Set paths.
-    $destination = 'public://template_' . $country->iso3 . '_' . date('Ymdhni') . '.xlsx';
+    $destination_name = 'template_' . $country->iso3 . '_' . date('Ymdhni') . '.xlsx';
     $source = drupal_get_path('module', 'ocha_assessments') . '/bulk_template.xlsx';
     $filename = drupal_realpath($source);
 
@@ -105,6 +106,10 @@ class OchaAssessmentsCreateTemplate extends FormBase {
       foreach ($options as $key => $value) {
         if (!strpos($value, '(' . $operation . ')')) {
           unset($options[$key]);
+        }
+        else {
+          // Remove operation name.
+          $options[$key] = str_replace(' (' . $operation . ')', '', $value);
         }
       }
     }
@@ -168,188 +173,237 @@ class OchaAssessmentsCreateTemplate extends FormBase {
     $worksheet->getProtection()->setSheet(TRUE);
 
     // Set validators for clusters.
+    $worksheet = $spreadsheet->getSheetByName('Clusters');
+    $highest_row = $worksheet->getHighestRow();
     $worksheet = $spreadsheet->getSheetByName('Assessments');
     $validation = $worksheet->getCell('B9')->getDataValidation();
     $validation->setType(DataValidation::TYPE_LIST);
     $validation->setErrorStyle(DataValidation::STYLE_INFORMATION);
     $validation->setAllowBlank(TRUE);
-    $validation->setShowInputMessage(TRUE);
+    $validation->setShowInputMessage(FALSE);
     $validation->setShowErrorMessage(TRUE);
     $validation->setShowDropDown(TRUE);
     $validation->setErrorTitle('Input error');
     $validation->setError('Value is not in list.');
     $validation->setPromptTitle('Pick from list');
     $validation->setPrompt('Please pick a value from the drop-down list.');
-    $validation->setFormula1('Clusters!$A$1:$A$9999');
-    $worksheet->setDataValidation("B2:B999", $validation);
+    $validation->setFormula1('Clusters!$A$1:$A$' . $highest_row);
+    $worksheet->setDataValidation('B9:B999', $validation);
 
     // Set validators for organizations.
+    $worksheet = $spreadsheet->getSheetByName('Organizations');
+    $highest_row = $worksheet->getHighestRow();
     $worksheet = $spreadsheet->getSheetByName('Assessments');
     $validation = $worksheet->getCell('C9')->getDataValidation();
     $validation->setType(DataValidation::TYPE_LIST);
     $validation->setErrorStyle(DataValidation::STYLE_INFORMATION);
     $validation->setAllowBlank(TRUE);
-    $validation->setShowInputMessage(TRUE);
+    $validation->setShowInputMessage(FALSE);
     $validation->setShowErrorMessage(TRUE);
     $validation->setShowDropDown(TRUE);
     $validation->setErrorTitle('Input error');
     $validation->setError('Value is not in list.');
     $validation->setPromptTitle('Pick from list');
     $validation->setPrompt('Please pick a value from the drop-down list.');
-    $validation->setFormula1('Organizations!$A$1:$A$9999');
-    $worksheet->setDataValidation("C2:D999", $validation);
+    $validation->setFormula1('Organizations!$A$1:$A$' . $highest_row);
+    $worksheet->setDataValidation('C9:D999', $validation);
 
     // Set validators for admin level 1.
+    $worksheet = $spreadsheet->getSheetByName('AdminLevel1');
+    $highest_row = $worksheet->getHighestRow();
     $worksheet = $spreadsheet->getSheetByName('Assessments');
     $validation = $worksheet->getCell('E9')->getDataValidation();
     $validation->setType(DataValidation::TYPE_LIST);
     $validation->setErrorStyle(DataValidation::STYLE_INFORMATION);
     $validation->setAllowBlank(TRUE);
-    $validation->setShowInputMessage(TRUE);
+    $validation->setShowInputMessage(FALSE);
     $validation->setShowErrorMessage(TRUE);
     $validation->setShowDropDown(TRUE);
     $validation->setErrorTitle('Input error');
     $validation->setError('Value is not in list.');
     $validation->setPromptTitle('Pick from list');
     $validation->setPrompt('Please pick a value from the drop-down list.');
-    $validation->setFormula1('AdminLevel1!$A$1:$A$9999');
-    $worksheet->setDataValidation("E2:E999", $validation);
+    $validation->setFormula1('AdminLevel1!$A$1:$A$' . $highest_row);
+    $worksheet->setDataValidation('E9:E999', $validation);
 
     // Set validators for admin level 2.
+    $worksheet = $spreadsheet->getSheetByName('AdminLevel2');
+    $highest_row = $worksheet->getHighestRow();
     $worksheet = $spreadsheet->getSheetByName('Assessments');
     $validation = $worksheet->getCell('F9')->getDataValidation();
     $validation->setType(DataValidation::TYPE_LIST);
     $validation->setErrorStyle(DataValidation::STYLE_INFORMATION);
     $validation->setAllowBlank(TRUE);
-    $validation->setShowInputMessage(TRUE);
+    $validation->setShowInputMessage(FALSE);
     $validation->setShowErrorMessage(TRUE);
     $validation->setShowDropDown(TRUE);
     $validation->setErrorTitle('Input error');
     $validation->setError('Value is not in list.');
     $validation->setPromptTitle('Pick from list');
     $validation->setPrompt('Please pick a value from the drop-down list.');
-    $validation->setFormula1('OFFSET(AdminLevel2!A1,MATCH(E9,AdminLevel2!$A$1:$A$9999,0)-1,1,COUNTIF(AdminLevel2!$A$1:$A$9999,E9),1)');
-    $worksheet->setDataValidation("F2:F999", $validation);
+    $validation->setFormula1('OFFSET(AdminLevel2!A1,MATCH(E9,AdminLevel2!$A$1:$A$' . $highest_row . ',0)-1,1,COUNTIF(AdminLevel2!$A$1:$A$' . $highest_row . ',E9),1)');
+    $worksheet->setDataValidation('F9:F999', $validation);
 
     // Set validators for admin level 3.
+    $worksheet = $spreadsheet->getSheetByName('AdminLevel3');
+    $highest_row = $worksheet->getHighestRow();
     $worksheet = $spreadsheet->getSheetByName('Assessments');
     $validation = $worksheet->getCell('G9')->getDataValidation();
     $validation->setType(DataValidation::TYPE_LIST);
     $validation->setErrorStyle(DataValidation::STYLE_INFORMATION);
     $validation->setAllowBlank(TRUE);
-    $validation->setShowInputMessage(TRUE);
+    $validation->setShowInputMessage(FALSE);
     $validation->setShowErrorMessage(TRUE);
     $validation->setShowDropDown(TRUE);
     $validation->setErrorTitle('Input error');
     $validation->setError('Value is not in list.');
     $validation->setPromptTitle('Pick from list');
     $validation->setPrompt('Please pick a value from the drop-down list.');
-    $validation->setFormula1('OFFSET(AdminLevel3!B1,MATCH(F9,AdminLevel3!$B$1:$B$9999,0)-1,1,COUNTIF(AdminLevel3!$B$1:$B$9999,F9),1)');
-    $worksheet->setDataValidation("G2:G999", $validation);
+    $validation->setFormula1('OFFSET(AdminLevel3!B1,MATCH(F9,AdminLevel3!$B$1:$B$' . $highest_row . ',0)-1,1,COUNTIF(AdminLevel3!$B$1:$B$' . $highest_row . ',F9),1)');
+    $worksheet->setDataValidation('G9:G999', $validation);
 
     // Set validators for units of measurement.
+    $worksheet = $spreadsheet->getSheetByName('Units');
+    $highest_row = $worksheet->getHighestRow();
     $worksheet = $spreadsheet->getSheetByName('Assessments');
     $validation = $worksheet->getCell('M9')->getDataValidation();
     $validation->setType(DataValidation::TYPE_LIST);
     $validation->setErrorStyle(DataValidation::STYLE_INFORMATION);
     $validation->setAllowBlank(TRUE);
-    $validation->setShowInputMessage(TRUE);
+    $validation->setShowInputMessage(FALSE);
     $validation->setShowErrorMessage(TRUE);
     $validation->setShowDropDown(TRUE);
     $validation->setErrorTitle('Input error');
     $validation->setError('Value is not in list.');
     $validation->setPromptTitle('Pick from list');
     $validation->setPrompt('Please pick a value from the drop-down list.');
-    $validation->setFormula1('Units!$A$1:$A$9999');
-    $worksheet->setDataValidation("M2:M999", $validation);
+    $validation->setFormula1('Units!$A$1:$A$' . $highest_row);
+    $worksheet->setDataValidation('M9:M999', $validation);
 
     // Set validators for collection method.
+    $worksheet = $spreadsheet->getSheetByName('CollectionMethod');
+    $highest_row = $worksheet->getHighestRow();
     $worksheet = $spreadsheet->getSheetByName('Assessments');
     $validation = $worksheet->getCell('N9')->getDataValidation();
     $validation->setType(DataValidation::TYPE_LIST);
     $validation->setErrorStyle(DataValidation::STYLE_INFORMATION);
     $validation->setAllowBlank(TRUE);
-    $validation->setShowInputMessage(TRUE);
+    $validation->setShowInputMessage(FALSE);
     $validation->setShowErrorMessage(TRUE);
     $validation->setShowDropDown(TRUE);
     $validation->setErrorTitle('Input error');
     $validation->setError('Value is not in list.');
     $validation->setPromptTitle('Pick from list');
     $validation->setPrompt('Please pick a value from the drop-down list.');
-    $validation->setFormula1('CollectionMethod!$A$1:$A$9999');
-    $worksheet->setDataValidation("N2:N999", $validation);
+    $validation->setFormula1('CollectionMethod!$A$1:$A$' . $highest_row);
+    $worksheet->setDataValidation('N9:N999', $validation);
 
     // Set validators for status.
+    $worksheet = $spreadsheet->getSheetByName('Status');
+    $highest_row = $worksheet->getHighestRow();
     $worksheet = $spreadsheet->getSheetByName('Assessments');
     $validation = $worksheet->getCell('I9')->getDataValidation();
     $validation->setType(DataValidation::TYPE_LIST);
     $validation->setErrorStyle(DataValidation::STYLE_INFORMATION);
     $validation->setAllowBlank(TRUE);
-    $validation->setShowInputMessage(TRUE);
+    $validation->setShowInputMessage(FALSE);
     $validation->setShowErrorMessage(TRUE);
     $validation->setShowDropDown(TRUE);
     $validation->setErrorTitle('Input error');
     $validation->setError('Value is not in list.');
     $validation->setPromptTitle('Pick from list');
     $validation->setPrompt('Please pick a value from the drop-down list.');
-    $validation->setFormula1('Status!$A$1:$A$9999');
-    $worksheet->setDataValidation("I2:I999", $validation);
+    $validation->setFormula1('Status!$A$1:$A$' . $highest_row);
+    $worksheet->setDataValidation('I9:I999', $validation);
 
     // Set validators for population types.
+    $worksheet = $spreadsheet->getSheetByName('PopulationTypes');
+    $highest_row = $worksheet->getHighestRow();
     $worksheet = $spreadsheet->getSheetByName('Assessments');
     $validation = $worksheet->getCell('L9')->getDataValidation();
     $validation->setType(DataValidation::TYPE_LIST);
     $validation->setErrorStyle(DataValidation::STYLE_INFORMATION);
     $validation->setAllowBlank(TRUE);
-    $validation->setShowInputMessage(TRUE);
+    $validation->setShowInputMessage(FALSE);
     $validation->setShowErrorMessage(TRUE);
     $validation->setShowDropDown(TRUE);
     $validation->setErrorTitle('Input error');
     $validation->setError('Value is not in list.');
     $validation->setPromptTitle('Pick from list');
     $validation->setPrompt('Please pick a value from the drop-down list.');
-    $validation->setFormula1('PopulationTypes!$A$1:$A$9999');
-    $worksheet->setDataValidation("L2:L999", $validation);
+    $validation->setFormula1('PopulationTypes!$A$1:$A$' . $highest_row);
+    $worksheet->setDataValidation('L9:L999', $validation);
 
     // Set validators for accessibility.
+    $worksheet = $spreadsheet->getSheetByName('Accessibility');
+    $highest_row = $worksheet->getHighestRow();
     $worksheet = $spreadsheet->getSheetByName('Assessments');
     $validation = $worksheet->getCell('O9')->getDataValidation();
     $validation->setType(DataValidation::TYPE_LIST);
     $validation->setErrorStyle(DataValidation::STYLE_INFORMATION);
     $validation->setAllowBlank(TRUE);
-    $validation->setShowInputMessage(TRUE);
+    $validation->setShowInputMessage(FALSE);
     $validation->setShowErrorMessage(TRUE);
     $validation->setShowDropDown(TRUE);
     $validation->setErrorTitle('Input error');
     $validation->setError('Value is not in list.');
     $validation->setPromptTitle('Pick from list');
     $validation->setPrompt('Please pick a value from the drop-down list.');
-    $validation->setFormula1('Accessibility!$A$1:$A$9999');
-    $worksheet->setDataValidation("O2:O999", $validation);
-    $worksheet->setDataValidation("Q2:Q999", clone $validation);
-    $worksheet->setDataValidation("S2:S999", clone $validation);
+    $validation->setFormula1('Accessibility!$A$1:$A$' . $highest_row);
+    $worksheet->setDataValidation('O9:O999', $validation);
+    $worksheet->setDataValidation('Q9:Q999', clone $validation);
+    $worksheet->setDataValidation('S9:S999', clone $validation);
 
     // Set title.
     $worksheet = $spreadsheet->getSheetByName('Assessments');
     $worksheet->getCell('C2')->setValue('Assessment Registry – ' . $country->name);
 
     // Protect headers.
-    $worksheet = $spreadsheet->getSheetByName('Assessments');
-    $worksheet->getProtection()->setSheet(TRUE);
     $spreadsheet->getDefaultStyle()->getProtection()->setLocked(TRUE);
+    $worksheet = $spreadsheet->getSheetByName('Assessments');
+    $worksheet->getProtection()
+      ->setSheet(TRUE)
+      ->setInsertColumns(TRUE)
+      ->setInsertRows(TRUE)
+      ->setFormatCells(TRUE);
     $worksheet->getStyle('A9:X999')->getProtection()->setLocked(Protection::PROTECTION_UNPROTECTED);
+
+    // Freeze.
+    $worksheet = $spreadsheet->getSheetByName('Assessments');
+    $worksheet->freezePane('A9');
 
     // Set focus to main sheet.
     $spreadsheet->setActiveSheetIndexByName('Assessments');
 
-    // Save.
-    $writer = new XlsxWriter($spreadsheet);
-    $writer->save(drupal_realpath($destination));
+    // Set metadata.
+    $spreadsheet->getProperties()
+      ->setCreator('OCHA')
+      ->setLastModifiedBy('OCHA')
+      ->setTitle('Assessment Registry – ' . $country->name)
+      ->setSubject('Assessment Registry – ' . $country->name)
+      ->setKeywords('OCHA AR ' . $country->iso3)
+      ->setCustomProperty('Country', $country->name)
+      ->setCustomProperty('CountryId', $country->id);
 
-    // Stream to browser?
-    drupal_set_message($this->t('<a href="@url">Download template</a>.', [
-      '@url' => file_create_url($destination),
-    ]), 'succes');
+    // Stream to browser.
+    ob_start();
+    $writer = new XlsxWriter($spreadsheet);
+    $writer->save('php://output');
+    $content = ob_get_clean();
+
+    $response = new Response();
+    $response->headers->set('Pragma', 'no-cache');
+    $response->headers->set('Expires', '0');
+    $response->headers->set('Content-Type', 'application/vnd.ms-excel');
+    $response->headers->set('Content-Transfer-Encoding', 'binary');
+    $response->headers->set('Content-Disposition', 'attachment; filename=' . $destination_name);
+    $response->setContent($content);
+
+    $form_state->setResponse($response);
+
+    // Clean up.
+    $spreadsheet->disconnectWorksheets();
+    unset($spreadsheet);
   }
 
   /**
