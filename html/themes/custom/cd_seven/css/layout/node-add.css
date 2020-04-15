@@ -1,27 +1,39 @@
-.layout-region-node-main {
-  width: 100%;
-  float: none;
-}
+/*.layout-region-node-main,*/
+/*.layout-region-node-secondary,*/
+/*.layout-region-node-footer {*/
+/*  width: 100%;*/
+/*  float: none;*/
+/*}*/
 
-.main-inputs,
-.layout-region-node-secondary,
-.hr-additional {
-  width: 65%;
-  float: left;
-}
 
-.layout-region-node-main .details {
-  width: 35%;
-  float: right
-}
+/*@media (min-width: 1024px) {*/
+/*  .main-inputs,*/
+/*  .layout-region-node-secondary,*/
+/*  .hr-additional {*/
+/*    width: 65%;*/
+/*    float: left;*/
+/*  }*/
+
+/*  .layout-region-node-main .details {*/
+/*    width: 35%;*/
+/*    float: right*/
+/*  }*/
+/*}*/
+
 .node-assessment-edit-form fieldset:not(.fieldgroup) {
   margin: 0;
   padding: 0;
   border: 0 none;
+  min-width: unset;
 }
 .node-assessment-edit-form fieldset:not(.fieldgroup) > legend {
   position: relative;
 }
+
+.node-assessment-edit-form fieldset:not(.fieldgroup) {
+  display: block;
+}
+
 
 /*.node-hr_assessment-form #actions,*/
 /*.node-hr_assessment-form .details,*/
@@ -57,57 +69,70 @@
 /*  margin-bottom: 20px;*/
 /*}*/
 
-/*@media (min-width: 1024px) {*/
-/*  .node-hr_assessment-form > div,*/
-/*  .hr-additional > div {*/
-/*    display: flex;*/
-/*    flex-wrap: wrap;*/
-/*    justify-content: space-between;*/
-/*  }*/
+@media (min-width: 1024px) {
 
-/*  .main-inputs,*/
-/*  .field-name-field-related-content,*/
-/*  .field-name-field-asst-key-findings,*/
-/*  .field-name-field-asst-methodology,*/
-/*  .field-name-field-asst-subject,*/
-/*  .field-name-field-hid-contact-ref,*/
-/*  .field-name-field-related-content,*/
-/*  .field-name-field-contact-ref,*/
-/*  .form-item-title {*/
-/*    flex-grow: 1;*/
-/*    margin-right: 20px;*/
-/*    width: 50%;*/
-/*  }*/
+  /*.node-assessment-edit-form .layout-region-node-main {*/
+  /*  display: flex;*/
+  /*  flex-wrap: wrap;*/
+  /*  justify-content: space-between;*/
+  /*}*/
 
-/*  .field-name-field-themes {*/
-/*    margin-right: 20px;*/
-/*    width: 50%;*/
-/*  }*/
+  /*.field--name-title,*/
+  /*.main-inputs,*/
+  /*.node-assessment-edit-form fieldset:not(.fieldgroup) {*/
+  /*  flex-basis: 0;*/
+  /*  flex-grow: 999;*/
+  /*  min-width: 50%;*/
+  /*}*/
 
-/*  .details,*/
-/*  .field-name-field-asst-collection-method,*/
-/*  .field-name-field-asst-freq,*/
-/*  .field-name-field-asst-sample-size,*/
-/*  .field-name-field-asst-unit,*/
-/*  .field-name-field-level-of-representation,*/
-/*  .field-name-field-locations,*/
-/*  .field-name-field-location,*/
-/*  .form-item-language {*/
-/*    width: 35%;*/
-/*  }*/
 
-/*  .link-field-subrow {*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*  }*/
-/*  .link-field-subrow > .link-field-column {*/
-/*    width: 100%;*/
-/*  }*/
+  /*.main-inputs,*/
+  /*.field-name-field-related-content,*/
+  /*.field-name-field-asst-key-findings,*/
+  /*.field-name-field-asst-methodology,*/
+  /*.field-name-field-asst-subject,*/
+  /*.field-name-field-hid-contact-ref,*/
+  /*.field-name-field-related-content,*/
+  /*.field-name-field-contact-ref,*/
+  /*.form-item-title {*/
+  /*  flex-grow: 1;*/
+  /*  margin-right: 20px;*/
+  /*  width: 50%;*/
+  /*}*/
 
-/*  .node-hr_assessment-form #edit-actions {*/
-/*    width: 100%;*/
-/*  }*/
-/*}*/
+  /*.field-name-field-themes {*/
+  /*  margin-right: 20px;*/
+  /*  width: 50%;*/
+  /*}*/
+
+  /*.details {*/
+  /*  flex-basis: 285px;*/
+  /*}*/
+
+  /*.details,*/
+  /*.field-name-field-asst-collection-method,*/
+  /*.field-name-field-asst-freq,*/
+  /*.field-name-field-asst-sample-size,*/
+  /*.field-name-field-asst-unit,*/
+  /*.field-name-field-level-of-representation,*/
+  /*.field-name-field-locations,*/
+  /*.field-name-field-location,*/
+  /*.form-item-language {*/
+  /*  width: 35%;*/
+  /*}*/
+
+  .link-field-subrow {
+    display: flex;
+    flex-direction: column;
+  }
+  .link-field-subrow > .link-field-column {
+    width: 100%;
+  }
+
+  .node-hr_assessment-form #edit-actions {
+    width: 100%;
+  }
+}
 
 /*.node-hr_assessment-form .field-name-field-locations {*/
 /*  width: 100%;*/
