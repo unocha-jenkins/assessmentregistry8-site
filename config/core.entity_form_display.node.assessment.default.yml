@@ -36,6 +36,7 @@ dependencies:
     - ocha_integrations
     - ocha_locations
     - path
+    - select2
 third_party_settings:
   field_group:
     group_main_inputs:
@@ -53,10 +54,10 @@ third_party_settings:
       format_type: fieldset
       region: content
       format_settings:
-        id: ''
-        classes: main-inputs
         description: ''
         required_fields: true
+        id: ''
+        classes: main-inputs
       label: main-inputs
     group_details:
       children:
@@ -122,20 +123,20 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_ass_date:
-    weight: 10
+    weight: 9
     settings: {  }
     third_party_settings: {  }
     type: daterange_default
     region: content
   field_assessment_data:
-    weight: 16
+    weight: 15
     settings:
       progress_indicator: throbber
     third_party_settings: {  }
     type: ocha_assessment_document_widget
     region: content
   field_assessment_questionnaire:
-    weight: 15
+    weight: 14
     settings:
       progress_indicator: throbber
     third_party_settings: {  }
@@ -143,7 +144,7 @@ content:
     region: content
   field_assessment_report:
     type: ocha_assessment_document_widget
-    weight: 14
+    weight: 13
     region: content
     settings:
       progress_indicator: throbber
@@ -156,13 +157,14 @@ content:
     region: content
   field_collection_methods:
     weight: 29
-    settings: {  }
+    settings:
+      width: 100%
     third_party_settings: {  }
-    type: options_select
+    type: select2
     region: content
   field_countries:
     type: ocha_integrations_select
-    weight: 11
+    weight: 10
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -174,9 +176,10 @@ content:
     third_party_settings: {  }
   field_frequency:
     weight: 26
-    settings: {  }
+    settings:
+      width: 100%
     third_party_settings: {  }
-    type: options_select
+    type: select2
     region: content
   field_key_findings:
     weight: 25
@@ -199,7 +202,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_locations:
-    weight: 12
+    weight: 11
     settings: {  }
     third_party_settings: {  }
     type: ocha_locations_select
@@ -219,7 +222,7 @@ content:
     type: ocha_integrations_select
     region: content
   field_other_location:
-    weight: 13
+    weight: 12
     settings:
       size: 60
       placeholder: ''
@@ -255,10 +258,11 @@ content:
     type: ocha_integrations_select
     region: content
   field_status:
-    weight: 9
-    settings: {  }
+    weight: 8
+    settings:
+      width: 100%
     third_party_settings: {  }
-    type: options_select
+    type: select2
     region: content
   field_subject_objective:
     weight: 21
@@ -276,9 +280,10 @@ content:
     region: content
   field_units_of_measurement:
     weight: 28
-    settings: {  }
+    settings:
+      width: 100%
     third_party_settings: {  }
-    type: options_select
+    type: select2
     region: content
   langcode:
     type: language_select
