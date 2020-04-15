@@ -241,7 +241,7 @@ class OchaAssessmentsCreateTemplate extends FormBase {
     $validation->setError('Value is not in list.');
     $validation->setPromptTitle('Pick from list');
     $validation->setPrompt('Please pick a value from the drop-down list.');
-    $validation->setFormula1('OFFSET(AdminLevel2!A1,MATCH(E9,AdminLevel2!$A$1:$A$9999,0)-1,1,COUNTIF(AdminLevel2!$A$1:$A$9999,E9),1)');
+    $validation->setFormula1('OFFSET(AdminLevel2!A1,MATCH(E9,AdminLevel2!$A$1:$A$' . $highest_row . ',0)-1,1,COUNTIF(AdminLevel2!$A$1:$A$' . $highest_row . ',E9),1)');
     $worksheet->setDataValidation('F9:F999', $validation);
 
     // Set validators for admin level 3.
@@ -259,7 +259,7 @@ class OchaAssessmentsCreateTemplate extends FormBase {
     $validation->setError('Value is not in list.');
     $validation->setPromptTitle('Pick from list');
     $validation->setPrompt('Please pick a value from the drop-down list.');
-    $validation->setFormula1('OFFSET(AdminLevel3!B1,MATCH(F9,AdminLevel3!$B$1:$B$9999,0)-1,1,COUNTIF(AdminLevel3!$B$1:$B$9999,F9),1)');
+    $validation->setFormula1('OFFSET(AdminLevel3!B1,MATCH(F9,AdminLevel3!$B$1:$B$' . $highest_row . ',0)-1,1,COUNTIF(AdminLevel3!$B$1:$B$' . $highest_row . ',F9),1)');
     $worksheet->setDataValidation('G9:G999', $validation);
 
     // Set validators for units of measurement.
@@ -359,14 +359,13 @@ class OchaAssessmentsCreateTemplate extends FormBase {
     $worksheet->getCell('C2')->setValue('Assessment Registry – ' . $country->name);
 
     // Protect headers.
+    $spreadsheet->getDefaultStyle()->getProtection()->setLocked(TRUE);
     $worksheet = $spreadsheet->getSheetByName('Assessments');
     $worksheet->getProtection()
       ->setSheet(TRUE)
       ->setInsertColumns(TRUE)
       ->setInsertRows(TRUE)
-      ->setFormatColumns(FALSE);
-
-    $spreadsheet->getDefaultStyle()->getProtection()->setLocked(TRUE);
+      ->setFormatCells(TRUE);
     $worksheet->getStyle('A9:X999')->getProtection()->setLocked(Protection::PROTECTION_UNPROTECTED);
 
     // Freeze.
