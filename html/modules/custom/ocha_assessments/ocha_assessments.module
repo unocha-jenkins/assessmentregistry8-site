@@ -8,6 +8,19 @@
 use Drupal\node\Entity\Node;
 
 /**
+ * Implements hook_field_widget_info_alter().
+ */
+function ocha_assessments_field_widget_info_alter(array &$info) {
+  $info['select2']['field_types'][] = 'ocha_countries';
+  $info['select2']['field_types'][] = 'ocha_disasters';
+  $info['select2']['field_types'][] = 'ocha_local_groups';
+  $info['select2']['field_types'][] = 'ocha_organizations';
+  $info['select2']['field_types'][] = 'ocha_themes';
+  $info['select2']['field_types'][] = 'ocha_population_type';
+  $info['select2']['field_types'][] = 'ocha_global_coordination_groups';
+}
+
+/**
  * Get a variable.
  */
 function ocha_assessments_variable_get($key, $default) {
