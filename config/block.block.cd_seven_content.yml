@@ -1,0 +1,22 @@
+uuid: bad2345e-004d-4b01-a075-09731a08d14c
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - cd_seven
+_core:
+  default_config_hash: 9EoWV2Lot6FVSr50t4hoKgiz1LIXYWNG-IIPYsWxBqo
+id: cd_seven_content
+theme: cd_seven
+region: content
+weight: -2
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Main page content'
+  provider: system
+  label_display: '0'
+visibility: {  }

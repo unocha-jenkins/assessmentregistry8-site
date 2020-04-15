@@ -1,0 +1,229 @@
+.layout-region-node-main,
+.layout-region-node-secondary,
+.layout-region-node-footer {
+  width: 100%;
+  float: none;
+  padding-right: 0;
+}
+
+.node-assessment-edit-form fieldset:not(.fieldgroup) {
+  margin: 0;
+  padding: 0;
+  border: 0 none;
+  min-width: unset;
+  border-radius: 0;
+  background-color: transparent;
+}
+
+.node-assessment-edit-form .fieldset-wrapper {
+  padding: 1rem;
+}
+
+.node-assessment-edit-form .fieldset-wrapper .form-wrapper {
+  margin-bottom: 1rem;
+}
+
+.node-assessment-edit-form fieldset:not(.fieldgroup).main-inputs > .fieldset-wrapper,
+.node-assessment-edit-form fieldset:not(.fieldgroup).details > .fieldset-wrapper {
+  padding: 0;
+}
+
+.node-assessment-edit-form fieldset:not(.fieldgroup) > legend {
+  position: relative;
+  top: unset;
+  display: block;
+  width: 100%;
+  box-sizing : border-box;
+}
+
+.node-assessment-edit-form fieldset legend {
+  color: #333;
+  background-color: #f5f5f5;
+  border-color: #ddd;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid transparent;
+  border-bottom-color: transparent;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+
+.node-assessment-edit-form fieldset:not(.fieldgroup).main-inputs > legend {
+  display: none;
+}
+
+.node-assessment-edit-form fieldset:not(.fieldgroup) {
+  display: block;
+}
+
+.node-assessment-edit-form .ui-accordion .ui-accordion-header {
+  text-transform: inherit;
+  border: 0 none;
+  display: block;
+  cursor: pointer;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+  color: #333;
+  background-color: #fff;
+  display: inline-block;
+  margin-bottom: 1rem;
+  font-weight: 400;
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  border-radius: 4px;
+}
+
+.node-assessment-edit-form .ui-accordion .ui-accordion-header .ui-accordion-header-icon {
+  display: none;
+}
+
+input.form-autocomplete, input.form-text, input.form-tel, input.form-email, input.form-url, input.form-search, input.form-number, input.form-color, input.form-file, input.form-date, input.form-time, textarea.form-textarea {
+  width: 100%;
+}
+
+
+thead th {
+  text-transform: uppercase;
+  color: #333;
+  border: solid #bfbfba;
+  border-top-width: medium;
+  border-right-width: medium;
+  border-bottom-width: medium;
+  border-left-width: medium;
+  border-width: 1px 0;
+  background: #f5f5f2;
+}
+
+thead > tr {
+  border-bottom: 1px solid #000;
+}
+
+.field-multiple-table .fieldset {
+  margin: 0;
+}
+.node-assessment-edit-form .field-multiple-table fieldset:not(.fieldgroup) legend {
+  padding: 0;
+}
+
+
+.node-assessment-edit-form .field-multiple-table .fieldset-wrapper {
+  padding: 0;
+}
+
+/*.node-hr_assessment-form #actions,*/
+/*.node-hr_assessment-form .details,*/
+/*.node-hr_assessment-form .field-name-field-sectors,*/
+/*.node-hr_assessment-form .form-item-language input,*/
+/*.node-hr_assessment-form .form-item-title input,*/
+/*  > div > .form-group,*/
+/*  > div > .form-wrapper {*/
+/*    margin-top: 20px;*/
+/*  }*/
+/*}*/
+
+/*.node-hr_assessment-form .field-name-field-exclude-reliefweb {*/
+/*  border: 1px solid #ddd;*/
+/*  border-radius: 4px;*/
+/*  font-size: 16px;*/
+/*  height: 65px;*/
+/*  padding: 10px;*/
+/*  width: 100%;*/
+/*}*/
+
+/*.node-hr_assessment-form label[for="edit-field-locations-und-0-target-id"] {*/
+/*  display: none;*/
+/*}*/
+
+/*.field-name-body,*/
+/*.field-name-field-asst-subject,*/
+/*.field-name-field-asst-methodology,*/
+/*.field-name-field-asst-key-findings,*/
+/*.field-name-field-hid-contact-ref,*/
+/*.field-name-field-locations,*/
+/*.field-name-field-related-content {*/
+/*  margin-bottom: 20px;*/
+/*}*/
+
+@media (min-width: 1024px) {
+  .node-assessment-edit-form .layout-region-node-main {
+
+  }
+
+  .node-assessment-edit-form .field--name-title,
+  .node-assessment-edit-form fieldset:not(.fieldgroup).main-inputs,
+  .node-assessment-edit-form .hr-additional,
+  .layout-region-node-secondary,
+  .layout-region-node-footer {
+    max-width: 52%;
+    float: left;
+    padding-right: 20px;
+  }
+
+  /*.main-inputs,*/
+  /*.field-name-field-related-content,*/
+  /*.field-name-field-asst-key-findings,*/
+  /*.field-name-field-asst-methodology,*/
+  /*.field-name-field-asst-subject,*/
+  /*.field-name-field-hid-contact-ref,*/
+  /*.field-name-field-related-content,*/
+  /*.field-name-field-contact-ref,*/
+  /*.form-item-title {*/
+  /*  flex-grow: 1;*/
+  /*  margin-right: 20px;*/
+  /*  width: 50%;*/
+  /*}*/
+
+  /*.field-name-field-themes {*/
+  /*  margin-right: 20px;*/
+  /*  width: 50%;*/
+  /*}*/
+
+  .node-assessment-edit-form fieldset:not(.fieldgroup).details {
+    float: right;
+    max-width: 45%;
+  }
+
+  .node-assessment-edit-form .hr-additional,
+  .layout-region-node-secondary,
+  .layout-region-node-footer {
+    clear: both;
+    float: none;
+  }
+
+
+  /*.details,*/
+  /*.field-name-field-asst-collection-method,*/
+  /*.field-name-field-asst-freq,*/
+  /*.field-name-field-asst-sample-size,*/
+  /*.field-name-field-asst-unit,*/
+  /*.field-name-field-level-of-representation,*/
+  /*.field-name-field-locations,*/
+  /*.field-name-field-location,*/
+  /*.form-item-language {*/
+  /*  width: 35%;*/
+  /*}*/
+
+  .link-field-subrow {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .link-field-subrow > .link-field-column {
+    width: 100%;
+  }
+
+  .node-assessment-edit-form #edit-actions {
+    width: 100%;
+  }
+}
+
+.node-assessment-edit-form .field-name-field-locations {
+  width: 100%;
+}
+

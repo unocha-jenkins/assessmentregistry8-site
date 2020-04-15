@@ -9,12 +9,14 @@ module:
   datetime: 0
   datetime_range: 0
   dblog: 0
+  devel: 0
   dynamic_page_cache: 0
   editor: 0
   facets: 0
   facets_pretty_paths: 0
   facets_rest: 0
   field: 0
+  field_group: 0
   field_ui: 0
   file: 0
   filter: 0
@@ -30,6 +32,7 @@ module:
   media_library: 0
   menu_ui: 0
   node: 0
+  node_title_help_text: 0
   ocha_assessment_document: 0
   ocha_assessments: 0
   ocha_countries: 0
@@ -77,6 +80,7 @@ theme:
   seven: 0
   common_design: 0
   common_design_subtheme: 0
+  cd_seven: 0
 profile: standard
 _core:
   default_config_hash: R4IF-ClDHXxblLcG0L7MgsLvfBIMAvi_skumNFQwkDc

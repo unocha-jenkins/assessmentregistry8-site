@@ -12,8 +12,8 @@ field_name: field_ass_date
 entity_type: node
 bundle: assessment
 label: 'Assessment Date(s)'
-description: 'Indicate the start/end dates of the assessment.'
-required: false
+description: ''
+required: true
 translatable: false
 default_value: {  }
 default_value_callback: ''
