@@ -1,0 +1,6 @@
+ocha_assessments.ocha_assessments_bulk_import:
+  title: Bulk import assessments
+  description: Allows user to create assessments by importing xlsx file
+  route_name: ocha_assessments.ocha_assessments_bulk_import
+  base_route: system.admin_content
+  weight: 10
