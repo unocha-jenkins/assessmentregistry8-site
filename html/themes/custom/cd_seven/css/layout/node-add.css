@@ -1,25 +1,38 @@
-/* Layout */
-
-
 /* Reset layout from seven */
 .layout-region-node-main,
 .layout-region-node-secondary,
-.layout-region-node-footer {
+.layout-region-node-footer,
+.node-assessment-edit-form .hr-additional {
   width: 100%;
   float: none;
   padding-right: 0;
 }
 
-
+/* Layout */
 @media (min-width: 1024px) {
   .node-assessment-edit-form .field--name-title,
   .node-assessment-edit-form fieldset:not(.fieldgroup).main-inputs,
-  .node-assessment-edit-form .hr-additional,
   .layout-region-node-secondary,
-  .layout-region-node-footer {
+  .node-assessment-edit-form .field--name-field-subject-objective,
+  .node-assessment-edit-form .field--name-field-methodology,
+  .node-assessment-edit-form .field--name-field-key-findings,
+  .node-assessment-edit-form .field--name-field-related-content,
+  .node-assessment-edit-form .field--name-field-collection-methods {
     max-width: 52%;
     float: left;
     padding-right: 20px;
+  }
+
+  .node-assessment-edit-form .field--name-field-subject-objective,
+  .node-assessment-edit-form .field--name-field-methodology,
+  .node-assessment-edit-form .field--name-field-key-findings,
+  .node-assessment-edit-form .field--name-field-related-content,
+  .node-assessment-edit-form .field--name-field-collection-methods {
+    width: 52%;
+  }
+
+  .node-assessment-edit-form .field--name-field-related-content {
+    padding-right: 0;
   }
 
   .node-assessment-edit-form .field--name-title {
@@ -31,9 +44,22 @@
     clear: left;
   }
 
-  .node-assessment-edit-form fieldset:not(.fieldgroup).details {
+  .node-assessment-edit-form fieldset:not(.fieldgroup).details,
+  .node-assessment-edit-form .field--name-field-sample-size,
+  .node-assessment-edit-form .field--name-field-level-of-representation,
+  .node-assessment-edit-form .field--name-field-frequency,
+  .node-assessment-edit-form .field--name-field-units-of-measurement,
+  .node-assessment-edit-form .field--name-field-themes {
     float: right;
     max-width: 45%;
+  }
+
+  .node-assessment-edit-form .field--name-field-sample-size,
+  .node-assessment-edit-form .field--name-field-level-of-representation,
+  .node-assessment-edit-form .field--name-field-frequency,
+  .node-assessment-edit-form .field--name-field-units-of-measurement,
+  .node-assessment-edit-form .field--name-field-themes {
+    width: 45%;
   }
 
   .node-assessment-edit-form .hr-additional,
@@ -62,7 +88,6 @@
 }
 
 
-
 /* Fieldset reset */
 .node-assessment-edit-form fieldset {
   margin: 0;
@@ -77,15 +102,18 @@
 .node-assessment-edit-form fieldset:not(.fieldgroup),
 .node-assessment-edit-form fieldset.main-inputs {
   margin: 0;
-  padding: 10px 0 0;
+  padding: 0;
   min-width: unset;
   border-radius: 0;
   border: 0 none;
   background-color: transparent;
 }
 
-/* Fieldset with border */
+/* Fieldset or div with border */
 .node-assessment-edit-form .details,
+.node-assessment-edit-form .field--name-field-locations,
+.node-assessment-edit-form .field--name-field-related-content,
+.node-assessment-edit-form .field--name-field-units-of-measurement,
 .node-assessment-edit-form fieldset:not(.main-inputs),
 .node-assessment-edit-form fieldset:not(.field-group-fieldset) {
   margin-bottom: 1rem;
@@ -100,6 +128,95 @@
   padding: 1rem;
 }
 
+/*.node-assessment-edit-form .details legend + .fieldset-wrapper,*/
+.node-assessment-edit-form legend + .fieldset-wrapper {
+  /* Height of legend, which is absolutely positioned, plus desired padding. */
+  padding-top: calc(38px + 1rem);
+}
+
+/* Location field */
+.node-assessment-edit-form .field--name-field-locations > div > .form-item,
+.node-assessment-edit-form .field--name-field-related-content > div > .form-item,
+.node-assessment-edit-form .field--name-field-units-of-measurement > div > .form-item {
+  margin: 0;
+  position: relative;
+}
+
+/* Table heading to match Group heading style */
+.field--name-field-locations table thead th,
+.field--name-field-related-content table thead th,
+.field--name-field-units-of-measurement table thead th {
+  color: #333;
+  background-color: #f5f5f5;
+  padding: 0.5rem 1rem;
+  border: 1px solid transparent;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* So it does not obscure Order heading when Row weights are visible */
+.node-assessment-edit-form .field--name-field-locations > div > .form-item .tabledrag-toggle-weight-wrapper,
+.node-assessment-edit-form .field--name-field-related-content > div > .form-item .tabledrag-toggle-weight-wrapper,
+.node-assessment-edit-form .field--name-field-units-of-measurement > div > .form-item .tabledrag-toggle-weight-wrapper {
+  position: absolute;
+  top: 9px;
+  right: 6rem;
+}
+
+.node-assessment-edit-form .field--name-field-locations fieldset,
+.node-assessment-edit-form .field--name-field-related-content fieldset,
+.node-assessment-edit-form .field--name-field-units-of-measurement fieldset {
+  margin: 0;
+  border: 0 none;
+  box-shadow: none;
+}
+
+/* Multi drag table */
+.field-multiple-table tr.odd .form-item,
+.field-multiple-table tr.even .form-item {
+  margin-top: 0;
+  display: block;
+}
+
+.field-multiple-table .form-item:only-of-type {
+  margin: 0;
+}
+
+.field-multiple-table .form-wrapper {
+  margin: 0;
+}
+
+.field-multiple-table + .description {
+  padding: 0.5rem 1rem 0;
+}
+
+/* Add another button in Multi drag table */
+.field-multiple-table + .description + .clearfix,
+.field-multiple-table + .clearfix {
+  padding: 0.5rem 1rem 1rem;
+}
+
+.node-assessment-edit-form .field-multiple-table thead > tr {
+  border-bottom: 0 none;
+}
+
+/*.node-assessment-edit-form table td {*/
+/*  padding: 0;*/
+/*}*/
+
+.field-multiple-table .fieldset {
+  margin: 0;
+}
+.node-assessment-edit-form .field-multiple-table fieldset:not(.fieldgroup) legend {
+  padding: 0;
+  border: 0 none;
+}
+
+.node-assessment-edit-form .field-multiple-table .fieldset-wrapper {
+  padding: 0;
+}
+
 .node-assessment-edit-form .fieldset-wrapper .form-wrapper {
   margin-bottom: 1rem;
 }
@@ -110,24 +227,41 @@
 
 .node-assessment-edit-form fieldset:not(.fieldgroup) > legend {
   top: 0;
-  position: relative;
-  display: block;
   width: 100%;
   box-sizing : border-box;
 }
 
+/* Group heading styles */
 .node-assessment-edit-form fieldset legend {
-  display: block;
   color: #333;
   background-color: #f5f5f5;
   padding: 0.5rem 1rem;
-  border: 1px solid #ddd;
+  border: 1px solid transparent;
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Checkbox widget */
+.node-assessment-edit-form .field--name-field-units-of-measurement legend + .fieldset-wrapper {
+  padding-top: 1rem;
+}
+
+.node-assessment-edit-form .field--name-field-units-of-measurement legend {
+  width: 100%;
+}
+
+.node-assessment-edit-form .form-checkboxes > div {
+  display: inline-block;
 }
 
 
-.node-assessment-edit-form fieldset:not(.fieldgroup).main-inputs > legend {
+.node-assessment-edit-form fieldset legend {
+  display: block;
+}
+
+.node-assessment-edit-form fieldset:not(.fieldgroup).main-inputs > legend,
+.node-assessment-edit-form fieldset:not(.fieldgroup).details > legend {
   display: none;
 }
 
@@ -135,65 +269,59 @@
   display: block;
 }
 
+
+/* Show more accordion */
 .node-assessment-edit-form .ui-accordion .ui-accordion-header {
   text-transform: inherit;
-  border: 0 none;
-  display: block;
   cursor: pointer;
   position: relative;
-  margin: 0;
-  padding: 0;
-  font-size: 100%;
+  margin: 0 0 1rem;
   color: #333;
   background-color: #fff;
   display: inline-block;
-  margin-bottom: 1rem;
   font-weight: 400;
   text-align: center;
-  cursor: pointer;
-  border: 1px solid #ccc;
+  border: 1px solid #ddd;
   padding: 6px 12px;
   font-size: 14px;
-  line-height: 1.42857143;
   border-radius: 4px;
+}
+
+.node-assessment-edit-form .ui-accordion .ui-accordion-content {
+  padding: 0;
+  border: 0 none;
 }
 
 .node-assessment-edit-form .ui-accordion .ui-accordion-header .ui-accordion-header-icon {
   display: none;
 }
 
-input.form-autocomplete, input.form-text, input.form-tel, input.form-email, input.form-url, input.form-search, input.form-number, input.form-color, input.form-file, input.form-date, input.form-time, textarea.form-textarea {
+
+/* Generic form elements */
+
+input.form-autocomplete,
+input.form-text,
+input.form-tel,
+input.form-email,
+input.form-url,
+input.form-search,
+input.form-number,
+input.form-color,
+input.form-file,
+input.form-date,
+input.form-time,
+textarea.form-textarea {
   width: 100%;
 }
 
-
-thead th {
-  text-transform: uppercase;
-  color: #333;
-  border: solid #bfbfba;
-  border-top-width: medium;
-  border-right-width: medium;
-  border-bottom-width: medium;
-  border-left-width: medium;
-  border-width: 1px 0;
-  background: #f5f5f2;
+input.form-file + input.form-submit {
+  margin: 0.5rem 1rem 0.5rem 0;
 }
 
-thead > tr {
-  border-bottom: 1px solid #000;
+.form-managed-file .button {
+  margin: 0 1rem 0.5rem 0;
 }
 
-.field-multiple-table .fieldset {
-  margin: 0;
-}
-.node-assessment-edit-form .field-multiple-table fieldset:not(.fieldgroup) legend {
-  padding: 0;
-}
-
-
-.node-assessment-edit-form .field-multiple-table .fieldset-wrapper {
-  padding: 0;
-}
 
 /*.node-hr_assessment-form #actions,*/
 /*.node-hr_assessment-form .details,*/
@@ -228,3 +356,4 @@ thead > tr {
 /*.field-name-field-related-content {*/
 /*  margin-bottom: 20px;*/
 /*}*/
+
