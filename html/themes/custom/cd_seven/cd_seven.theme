@@ -217,7 +217,8 @@ function cd_seven_theme_suggestions_alter(array &$suggestions, array $variables,
   if ($hook == 'node_edit_form') {
     if ($node = \Drupal::routeMatch()->getParameter('node')) {
       $content_type = $node->bundle();
-    } else {
+    }
+    else {
       $current_path = \Drupal::service('path.current')->getPath();
       $path_args = explode('/', $current_path);
       $content_type = $path_args[3];
@@ -225,7 +226,6 @@ function cd_seven_theme_suggestions_alter(array &$suggestions, array $variables,
     $suggestions[] = 'node_edit_form__' . $content_type;
   }
 }
-
 
 /**
  * Implements hook_form_BASE_FORM_ID_alter().
