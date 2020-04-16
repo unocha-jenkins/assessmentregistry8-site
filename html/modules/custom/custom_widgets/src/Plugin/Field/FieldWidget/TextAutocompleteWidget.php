@@ -127,7 +127,6 @@ class TextAutocompleteWidget extends WidgetBase {
           'hash' => '',
         ],
       ];
-      $element['#options'] = $options;
 
       // Add a hash.
       $element['value']['#route_settings']['hash'] = custom_widgets_calculate_hash($element['value']['#route_settings']);
@@ -147,7 +146,6 @@ class TextAutocompleteWidget extends WidgetBase {
         '#cardinalitty' => $this->fieldDefinition->getFieldStorageDefinition()->getCardinality(),
         '#tags' => $this->fieldDefinition->getFieldStorageDefinition()->getCardinality() != 1,
         '#default_value' => implode(', ', $default_values),
-        '#autocomplete_options_callback' => '\Drupal\custom_widgets\Plugin\Field\FieldWidget\TextAutocompleteWidget::getValidSelectedTextOptions',
         '#autocomplete_route_name' => 'custom_widgets.text_autocomplete',
         '#autocomplete_route_parameters' => [
           'field_name' => $items->getName(),
