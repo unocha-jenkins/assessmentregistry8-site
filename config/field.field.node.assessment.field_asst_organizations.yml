@@ -12,7 +12,7 @@ field_name: field_asst_organizations
 entity_type: node
 bundle: assessment
 label: 'Participating Organization(s)'
-description: ''
+description: 'Select the organization(s) taking part in (but not leading) the assessment. If the organization is not available, <a href="https://docs.google.com/a/humanitarianresponse.info/forms/d/e/1FAIpQLSdpkMue4gFydSm1PwhSIQonpWRGG50ouJJdo8NbcvaMv_pcDw/viewform?c=0&amp;w=1&amp;usp=send_form">request it to be added</a> and select "other" in the meantime.'
 required: false
 translatable: false
 default_value: {  }

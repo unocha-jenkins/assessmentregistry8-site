@@ -29,11 +29,11 @@ dependencies:
     - field.field.node.assessment.field_units_of_measurement
     - node.type.assessment
   module:
+    - custom_widgets
     - datetime_range
     - field_group
     - link
     - ocha_assessment_document
-    - ocha_integrations
     - ocha_locations
     - path
     - select2
@@ -151,9 +151,10 @@ content:
     third_party_settings: {  }
   field_asst_organizations:
     weight: 17
-    settings: {  }
+    settings:
+      width: 100%
     third_party_settings: {  }
-    type: ocha_integrations_select
+    type: select2
     region: content
   field_collection_methods:
     weight: 29
@@ -163,23 +164,26 @@ content:
     type: select2
     region: content
   field_countries:
-    type: ocha_integrations_select
+    type: custom_widgets_text_autocomplete
     weight: 10
     region: content
-    settings: {  }
+    settings:
+      max_items: '15'
+      matching_method: contains
+      use_select2: 'yes'
     third_party_settings: {  }
   field_disasters:
-    type: ocha_integrations_select
+    type: select2
     weight: 19
     region: content
-    settings: {  }
-    third_party_settings: {  }
-  field_frequency:
-    weight: 26
     settings:
       width: 100%
     third_party_settings: {  }
-    type: select2
+  field_frequency:
+    weight: 26
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
     region: content
   field_key_findings:
     weight: 25
@@ -196,10 +200,11 @@ content:
     type: options_select
     region: content
   field_local_groups:
-    type: ocha_integrations_select
+    type: select2
     weight: 15
     region: content
-    settings: {  }
+    settings:
+      width: 100%
     third_party_settings: {  }
   field_locations:
     weight: 11
@@ -217,9 +222,10 @@ content:
     region: content
   field_organizations:
     weight: 16
-    settings: {  }
+    settings:
+      width: 100%
     third_party_settings: {  }
-    type: ocha_integrations_select
+    type: select2
     region: content
   field_other_location:
     weight: 12
@@ -230,10 +236,11 @@ content:
     type: string_textfield
     region: content
   field_population_types:
-    type: ocha_integrations_select
+    type: select2
     weight: 18
     region: content
-    settings: {  }
+    settings:
+      width: 100%
     third_party_settings: {  }
   field_related_content:
     weight: 27
@@ -253,16 +260,18 @@ content:
     region: content
   field_sources:
     weight: 14
-    settings: {  }
+    settings:
+      max_items: '15'
+      matching_method: contains
+      use_select2: 'yes'
     third_party_settings: {  }
-    type: ocha_integrations_select
+    type: custom_widgets_text_autocomplete
     region: content
   field_status:
     weight: 8
-    settings:
-      width: 100%
+    settings: {  }
     third_party_settings: {  }
-    type: select2
+    type: options_select
     region: content
   field_subject_objective:
     weight: 21
@@ -274,16 +283,16 @@ content:
     region: content
   field_themes:
     weight: 30
-    settings: {  }
-    third_party_settings: {  }
-    type: ocha_integrations_select
-    region: content
-  field_units_of_measurement:
-    weight: 28
     settings:
       width: 100%
     third_party_settings: {  }
     type: select2
+    region: content
+  field_units_of_measurement:
+    weight: 28
+    settings: {  }
+    third_party_settings: {  }
+    type: options_buttons
     region: content
   langcode:
     type: language_select

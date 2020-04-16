@@ -26,21 +26,21 @@
 
 {#    <fieldset class="main-inputs">#}
 
-{#      {{ form.field_asst_status }}#}
-{#      {{ form.field_asst_date }}#}
+{#      {{ form.field_status }}#}
+{#      {{ form.field_ass_date }}#}
 {#      {{ form.field_locations }}#}
-{#      {{ form.field_asst_other_location }}#}
-{#      {{ form.field_asst_report }}#}
-{#      {{ form.field_asst_questionnaire }}#}
-{#      {{ form.field_asst_data }}#}
+{#      {{ form.field_other_location }}#}
+{#      {{ form.field_assessment_report }}#}
+{#      {{ form.field_assessment_questionnaire }}#}
+{#      {{ form.field_assessment_data }}#}
 
 {#    </fieldset>#}
 {#    <fieldset class="details">#}
 
-{#      {{ form.field_source }}  check this one#}
-{#      {{ form.field_bundles }}  Clusters#}
+{#      {{ form.field_sources }}#}
+{#      {{ form.field_local_groups }}#}
 {#      {{ form.field_organizations }}#}
-{#      {{ form.field_organizations2 }}#}
+{#      {{ form.field_asst_organizations }}#}
 {#      {{ form.field_population_types }}#}
 {#      {{ form.field_coordination_hubs }}#}
 {#      {{ form.field_disasters }}#}
@@ -50,15 +50,16 @@
 {#    <fieldset class="hr-additional">#}
 {#      <div class="toggle">#}
 
-{#        {{ form.field_asst_subject }}#}
-{#        {{ form.field_asst_sample_size }}#}
-{#        {{ form.field_asst_methodology }}#}
+{#        {{ form.field_subject_objective }}#}
+{#        {{ form.field_sample_size }}#}
+{#        {{ form.field_methodology }}#}
 {#        {{ form.field_level_of_representation }}#}
-{#        {{ form.field_asst_key_findings }}#}
+{#        {{ form.field_key_findings }}#}
+{#        {{ form.field_frequency }}#}
 {#        {{ form.field_related_content }}#}
-{#        {{ form.field_asst_unit }}#}
+{#        {{ form.field_units_of_measurement }}#}
 {#        {{ form.field_hid_contact_ref }}#}
-{#        {{ form.field_asst_collection_method }}#}
+{#        {{ form.field_collection_methods }}#}
 {#        {{ form.field_themes }}#}
 
 {#      </div>#}
@@ -72,7 +73,7 @@
 {#    {{ dpm(form) }}#}
   </div>
   <div class="layout-region layout-region-node-secondary">
-    {{ form.advanced }}
+{#    {{ form.advanced }}#}
   </div>
   <div class="layout-region layout-region-node-footer">
     <div class="layout-region-node-footer__content">
