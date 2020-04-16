@@ -1,0 +1,30 @@
+custom_widgets.text_autocomplete:
+  path: '/custom_widgets/autocomplete/{field_name}/{max_items}/{entity_type_id}/{matching_method}/{uid}/{hash}'
+  defaults:
+    _controller: '\Drupal\custom_widgets\Controller\TextAutocompleteController::handleAutocomplete'
+    _title: 'Handle Autocomplete of text fields with existing values'
+    _format: json
+    field_name: NULL
+    max_items: 15
+    entity_type_id: NULL
+    matching_method: contains
+    uid: NULL
+    hash: NULL
+  requirements:
+    # Might need one.
+    _access: 'TRUE'
+custom_widgets.text_autocomplete_select2:
+  path: '/custom_widgets/autocomplete_select2/{field_name}/{max_items}/{entity_type_id}/{matching_method}/{uid}/{hash}'
+  defaults:
+    _controller: '\Drupal\custom_widgets\Controller\TextAutocompleteController::handleAutocompleteSelect2'
+    _title: 'Handle Autocomplete of text fields with existing values'
+    _format: json
+    field_name: NULL
+    max_items: 15
+    entity_type_id: NULL
+    matching_method: contains
+    uid: NULL
+    hash: NULL
+  requirements:
+    # Might need one.
+    _access: 'TRUE'

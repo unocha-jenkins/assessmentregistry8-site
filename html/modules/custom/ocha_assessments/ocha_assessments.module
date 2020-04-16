@@ -18,6 +18,14 @@ function ocha_assessments_field_widget_info_alter(array &$info) {
   $info['select2']['field_types'][] = 'ocha_themes';
   $info['select2']['field_types'][] = 'ocha_population_type';
   $info['select2']['field_types'][] = 'ocha_global_coordination_groups';
+
+  $info['custom_widgets_text_autocomplete']['field_types'][] = 'ocha_countries';
+  $info['custom_widgets_text_autocomplete']['field_types'][] = 'ocha_disasters';
+  $info['custom_widgets_text_autocomplete']['field_types'][] = 'ocha_local_groups';
+  $info['custom_widgets_text_autocomplete']['field_types'][] = 'ocha_organizations';
+  $info['custom_widgets_text_autocomplete']['field_types'][] = 'ocha_themes';
+  $info['custom_widgets_text_autocomplete']['field_types'][] = 'ocha_population_type';
+  $info['custom_widgets_text_autocomplete']['field_types'][] = 'ocha_global_coordination_groups';
 }
 
 /**
