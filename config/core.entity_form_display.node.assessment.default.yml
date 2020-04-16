@@ -168,9 +168,9 @@ content:
     weight: 10
     region: content
     settings:
-      max_items: 15
+      max_items: '15'
       matching_method: contains
-      use_select2: 'no'
+      use_select2: 'yes'
     third_party_settings: {  }
   field_disasters:
     type: select2
@@ -261,9 +261,9 @@ content:
   field_sources:
     weight: 14
     settings:
-      max_items: 15
+      max_items: '15'
       matching_method: contains
-      use_select2: 'no'
+      use_select2: 'yes'
     third_party_settings: {  }
     type: custom_widgets_text_autocomplete
     region: content
