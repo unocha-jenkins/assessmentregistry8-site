@@ -12,7 +12,7 @@ field_name: field_related_content
 entity_type: node
 bundle: assessment
 label: 'Related content'
-description: ''
+description: 'Add a link to content related to the assessment you are publishing. Add up to 4 values using the "Add another item" button. To add more, save the form as draft then edit it.'
 required: false
 translatable: false
 default_value: {  }
