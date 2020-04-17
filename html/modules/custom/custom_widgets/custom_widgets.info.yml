@@ -1,5 +1,0 @@
-name: Custom widgets
-type: module
-description: Custom widgets.
-package: User interface
-core: '8.x'
