@@ -28,7 +28,7 @@ function custom_widgets_select2_available() {
  * Get uid from current user.
  */
 function custom_widgets_current_user_uid() {
-  return \Drupal::currentUser()->id();
+  return (int) \Drupal::currentUser()->id();
 }
 
 /**

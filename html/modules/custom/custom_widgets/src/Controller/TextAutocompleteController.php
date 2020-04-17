@@ -27,10 +27,10 @@ class TextAutocompleteController extends ControllerBase {
     // Check hash.
     $calculated_hash = custom_widgets_calculate_hash([
       'field_name' => $field_name,
-      'count' => $max_items,
+      'count' => (int) $max_items,
       'entity_type_id' => $entity_type_id,
       'matching_method' => $matching_method,
-      'uid' => $uid,
+      'uid' => (int) $uid,
     ]);
 
     if ($calculated_hash != $hash) {
@@ -83,10 +83,10 @@ class TextAutocompleteController extends ControllerBase {
     // Check hash.
     $calculated_hash = custom_widgets_calculate_hash([
       'field_name' => $field_name,
-      'count' => $max_items,
+      'count' => (int) $max_items,
       'entity_type_id' => $entity_type_id,
       'matching_method' => $matching_method,
-      'uid' => $uid,
+      'uid' => (int) $uid,
     ]);
 
     if ($calculated_hash != $hash) {

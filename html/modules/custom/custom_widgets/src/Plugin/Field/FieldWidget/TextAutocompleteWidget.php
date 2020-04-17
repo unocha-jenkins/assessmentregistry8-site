@@ -15,6 +15,8 @@ use Drupal\Core\Entity\ContentEntityFormInterface;
  *   label = @Translation("Autocomplete"),
  *   multiple_values = TRUE,
  *   field_types = {
+ *     "list_float",
+ *     "list_integer",
  *     "list_string"
  *   }
  * )
@@ -120,7 +122,7 @@ class TextAutocompleteWidget extends WidgetBase {
         '#maximumSelectionLength' => $this->fieldDefinition->getFieldStorageDefinition()->getCardinality() != 1 ? $this->fieldDefinition->getFieldStorageDefinition()->getCardinality() : 0,
         '#route_settings' => [
           'field_name' => $this->fieldDefinition->getName(),
-          'count' => $this->getSetting('max_items'),
+          'count' => (int) $this->getSetting('max_items'),
           'entity_type_id' => $this->fieldDefinition->getTargetEntityTypeId(),
           'matching_method' => $this->getSetting('matching_method'),
           'uid' => custom_widgets_current_user_uid(),
@@ -149,7 +151,7 @@ class TextAutocompleteWidget extends WidgetBase {
         '#autocomplete_route_name' => 'custom_widgets.text_autocomplete',
         '#autocomplete_route_parameters' => [
           'field_name' => $items->getName(),
-          'count' => $this->getSetting('max_items'),
+          'count' => (int) $this->getSetting('max_items'),
           'entity_type_id' => $this->fieldDefinition->getTargetEntityTypeId(),
           'matching_method' => $this->getSetting('matching_method'),
           'uid' => custom_widgets_current_user_uid(),
