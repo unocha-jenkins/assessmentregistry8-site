@@ -92,12 +92,9 @@ content:
   field_km_life_cycle_steps:
     weight: 14
     settings:
-      match_operator: CONTAINS
-      match_limit: 10
-      size: 60
-      placeholder: ''
+      force_deepest: '1'
     third_party_settings: {  }
-    type: entity_reference_autocomplete
+    type: custom_widgets_flat_select
     region: content
   field_km_media:
     type: media_library_widget
