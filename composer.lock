@@ -1568,26 +1568,26 @@
         },
         {
             "name": "drupal/custom_widgets",
-            "version": "2.0.0",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/custom_widgets.git",
-                "reference": "2.0.0"
+                "reference": "2.0.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/custom_widgets-2.0.0.zip",
-                "reference": "2.0.0",
-                "shasum": "aef6e5ddf0075a4b5c87053418af26028afca2a3"
+                "url": "https://ftp.drupal.org/files/projects/custom_widgets-2.0.1.zip",
+                "reference": "2.0.1",
+                "shasum": "de4dfafceddfe635a8ed5139b13cbd99f8feb5ee"
             },
             "require": {
-                "drupal/core": "~8.0"
+                "drupal/core": "^8 || ^9"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "2.0.0",
-                    "datestamp": "1587109773",
+                    "version": "2.0.1",
+                    "datestamp": "1587376591",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Project has not opted into security advisory coverage!"
