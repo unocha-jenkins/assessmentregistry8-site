@@ -78,6 +78,7 @@
     node.isSticky() ? 'node--sticky',
     not node.isPublished() ? 'node--unpublished',
     view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
+    'cd-layout-with-section-sidebar'
   ]
 %}
 {{ attach_library('classy/node') }}
@@ -102,7 +103,21 @@
   {% endif %}
 
   <div{{ content_attributes.addClass('node__content') }}>
-    {{ content }}
+
+    {% block section %}
+      <section class="cd-layout-two-col">
+
+        <div class="cd-layout-main-content">
+          {{ content|without('field_countries') }}
+        </div>
+
+        <aside class="cd-layout-sidebar-first" role="complementary">
+          {{ content.field_countries }}
+        </aside>
+
+      </section>
+    {% endblock %}
+
   </div>
 
 </article>

@@ -27,3 +27,40 @@
     }
   }
 }
+
+// with sidebar pattern
+.cd-layout {
+  //padding-top: 2rem;
+
+  @include tablet {
+    //padding-top: 3rem;
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+.cd-sidebar {
+  flex-basis: 285px;
+  flex-grow: 1;
+  //background: rgba(yellow, 0.2);
+}
+
+.cd-main {
+  flex-basis: 0;
+  flex-grow: 999;
+  min-width: 50%;
+  //background: rgba(red, 0.2);
+}
+
+section.cd-layout-two-col {
+  @extend .cd-layout;
+
+  .cd-layout-main-content {
+    @extend .cd-main;
+  }
+
+  .cd-layout-sidebar-first {
+    background-color: $cd-light-bluey-grey;
+    @extend .cd-sidebar;
+  }
+}
