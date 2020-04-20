@@ -5,6 +5,7 @@
  * OCHA Knowledge management.
  */
 
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\media\Entity\Media;
 use Drupal\node\Entity\Node;
 use Drupal\pathauto\PathautoState;
@@ -297,4 +298,24 @@ function ocha_knowledge_management_add_media_entity($url, $bundle, $created) {
   }
 
   return FALSE;
+}
+
+/**
+ * Implements hook_taxonomy_term_presave().
+ */
+function ocha_knowledge_management_taxonomy_term_presave(EntityInterface $term) {
+  if ($term->bundle() === 'life_cycle_steps') {
+    // Update long name based on direct child if needed.
+    if ($term->parent->target_id == 0) {
+      $term->field_display_label = $term->label();
+    }
+    else {
+      if (isset($term->parent->entity->get('field_display_label')->value)) {
+        $term->field_display_label = $term->parent->entity->get('field_display_label')->value . ' > ' . $term->label();
+      }
+      else {
+        $term->field_display_label = '... > ' . $term->label();
+      }
+    }
+  }
 }
