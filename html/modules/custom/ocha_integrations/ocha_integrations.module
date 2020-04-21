@@ -9,5 +9,5 @@
  * Order options alphabetically, ignoring accents.
  */
 function ocha_integrations_order_options($a, $b) {
-  return strcmp(iconv('utf8', 'ASCII//TRANSLIT', $a), iconv('utf8', 'ASCII//TRANSLIT', $b));
+  return strcmp(iconv('UTF-8', 'ASCII//TRANSLIT', $a), iconv('UTF-8', 'ASCII//TRANSLIT', $b));
 }
