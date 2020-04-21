@@ -48,3 +48,42 @@
   width: auto !important;
 }
 
+.block-facets .select2-container .select2-selection--multiple .select2-selection__rendered {
+  white-space: unset;
+}
+
+//@TODO this, better.
+#cd-filters-dropdown-toggler {
+  -webkit-appearance: none;
+  border-radius: 0;
+  box-shadow: none;
+  border: 0;
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+
+  svg {
+    fill: var(--cd-dark-grey);
+    width: 2rem;
+    height: 2rem;
+    padding: 0 0.5rem 0 0;
+  }
+
+  &:hover svg,
+  &:focus svg {
+    fill: var(--cd-white);
+  }
+
+  @include tablet {
+    display: none;
+
+    + .cd-dropdown[data-cd-hidden="true"] {
+      display: block;
+    }
+  }
+}

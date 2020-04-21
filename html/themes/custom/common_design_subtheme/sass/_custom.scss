@@ -27,3 +27,18 @@
     }
   }
 }
+
+.page-node-type-assessment {
+  .block-page-title-block {
+    margin-bottom: 1rem;
+    border-bottom: 1px solid $cd-mid-bluey-grey;
+
+    @include tablet {
+      padding-right: calc(285px + 3rem);
+    }
+  }
+
+  .page-title {
+    padding-bottom: 0;
+  }
+}
