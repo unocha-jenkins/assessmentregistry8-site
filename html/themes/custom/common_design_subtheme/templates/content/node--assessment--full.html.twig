@@ -108,12 +108,17 @@
       <section class="cd-layout-two-col">
 
         <div class="cd-layout-main-content">
-          {{ content|without('field_countries') }}
+          {{ content|without('field_countries', 'field_ass_date', 'field_status', 'field_population_types', 'field_organizations', 'field_locations') }}
         </div>
 
-        <aside class="cd-layout-sidebar-first" role="complementary">
+        <div class="cd-layout-sidebar-first" role="complementary">
           {{ content.field_countries }}
-        </aside>
+          {{ content.field_ass_date }}
+          {{ content.field_status }}
+          {{ content.field_population_types }}
+          {{ content.field_organizations }}
+          {{ content.field_locations }}
+        </div>
 
       </section>
     {% endblock %}
