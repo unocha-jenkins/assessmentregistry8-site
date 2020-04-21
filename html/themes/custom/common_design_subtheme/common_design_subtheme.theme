@@ -50,7 +50,7 @@ function common_design_subtheme_preprocess_region(&$variables) {
   if (isset($variables['region']) && $variables['region'] == 'sidebar_first') {
     $view_id = \Drupal::routeMatch()->getParameter('view_id');
     if ($view_id === 'assessments') {
-      $variables['attributes']['class'][] = 'has-filters';
+      $variables['attributes']['class'][] = 'cd-dropdown';
     }
     $variables['has_filters'] = TRUE;
   }
