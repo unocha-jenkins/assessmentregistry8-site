@@ -11,7 +11,7 @@ _core:
 id: common_design_subtheme_powered
 theme: common_design_subtheme
 region: footer_soft
-weight: -18
+weight: -23
 provider: null
 plugin: system_powered_by_block
 settings:
@@ -19,4 +19,9 @@ settings:
   label: 'Powered by Drupal'
   provider: system
   label_display: '0'
-visibility: {  }
+visibility:
+  request_path:
+    id: request_path
+    pages: '/km/*'
+    negate: false
+    context_mapping: {  }
