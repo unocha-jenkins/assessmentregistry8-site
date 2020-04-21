@@ -230,8 +230,10 @@ class OchaLeafletMap extends LeafletMap implements ContainerFactoryPluginInterfa
         // an array, also if single value.
         $geofield_value = (array) $this->getFieldValue($result->index, $geofield_name);
 
-        if (!empty($geofield_value)) {
+        // Make sure we have coordinates.
+        if (!empty($geofield_value) && !empty($geofield_value[0])) {
           $geom = explode(',', $geofield_value[0]);
+
           $features = [
             [
               'type' => 'point',
