@@ -195,7 +195,7 @@ class OchaIntegrationsController extends ControllerBase {
    * Order options alphabetically, ignoring accents.
    */
   public function orderOptions($a, $b) {
-    return strcmp(iconv('utf8', 'ASCII//TRANSLIT', $a), iconv('utf8', 'ASCII//TRANSLIT', $b));
+    return strcmp(iconv('UTF-8', 'ASCII//TRANSLIT', $a), iconv('UTF-8', 'ASCII//TRANSLIT', $b));
   }
 
   /**
