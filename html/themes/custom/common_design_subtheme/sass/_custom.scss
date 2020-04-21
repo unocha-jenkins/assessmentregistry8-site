@@ -28,47 +28,6 @@
   }
 }
 
-// with sidebar pattern
-.cd-layout {
-
-  @include tablet {
-    //padding-top: 3rem
-    display: flex;
-    flex-wrap: wrap;
-  }
-}
-
-.cd-sidebar {
-  flex-basis: 285px;
-  flex-grow: 1;
-  margin-top: 2rem;
-  //background: rgba(yellow, 0.2);
-  @include tablet {
-    margin-top: 0;
-  }
-}
-
-.cd-main {
-  flex-basis: 0;
-  flex-grow: 999;
-  min-width: 50%;
-  //background: rgba(red, 0.2);
-}
-
-section.cd-layout-two-col {
-  @extend .cd-layout;
-
-  .cd-layout-main-content {
-    @extend .cd-main;
-  }
-
-  .cd-layout-sidebar-first {
-    @extend .cd-sidebar;
-    background-color: $cd-light-bluey-grey;
-    padding: 1rem;
-  }
-}
-
 .page-node-type-assessment {
   .block-page-title-block {
     margin-bottom: 1rem;
