@@ -6,6 +6,7 @@
  */
 
 use Drupal\node\Entity\Node;
+use Drupal\Core\File\FileSystemInterface;
 
 /**
  * Implements hook_field_widget_info_alter().
@@ -352,8 +353,8 @@ function ocha_assessments_parse_document($document, $created) {
     $file_content = file_get_contents($url);
     if ($file_content) {
       $directory = 'public://assessments/' . date('Y-m', $created) . '/';
-      file_prepare_directory($directory, FILE_CREATE_DIRECTORY);
-      $file = file_save_data($file_content, $directory . $filename_save, FILE_EXISTS_REPLACE);
+      \Drupal::service('file_system')->prepareDirectory($directory, FileSystemInterface::CREATE_DIRECTORY);
+      $file = file_save_data($file_content, $directory . $filename_save, FileSystemInterface::EXISTS_REPLACE);
 
       $data['target_id'] = $file->id();
       $data['description'] = $filename;
@@ -404,8 +405,8 @@ function ocha_assessments_create_document($accessibility, $document_url, $instru
     $file_content = file_get_contents($document_url);
     if ($file_content) {
       $directory = 'public://assessments/' . date('Y-m') . '/';
-      file_prepare_directory($directory, FILE_CREATE_DIRECTORY);
-      $file = file_save_data($file_content, $directory . $filename_save, FILE_EXISTS_REPLACE);
+      \Drupal::service('file_system')->prepareDirectory($directory, FileSystemInterface::CREATE_DIRECTORY);
+      $file = file_save_data($file_content, $directory . $filename_save, FileSystemInterface::EXISTS_REPLACE);
 
       $data['target_id'] = $file->id();
       $data['description'] = $filename;

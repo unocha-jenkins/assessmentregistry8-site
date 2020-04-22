@@ -2,6 +2,7 @@
 
 namespace Drupal\ocha_assessments\Form;
 
+use Drupal\Core\File\FileSystem;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\node\Entity\Node;
@@ -74,7 +75,7 @@ class OchaAssessmentsBulkImport extends FormBase {
       return;
     }
 
-    $filename = drupal_realpath($file->destination);
+    $filename = FileSystem::realpath($file->destination);
 
     $reader = new Xlsx();
     $reader->setReadDataOnly(TRUE);
