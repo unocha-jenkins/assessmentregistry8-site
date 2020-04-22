@@ -1,0 +1,10 @@
+extended_block_manager.admin:
+  version: VERSION
+  js:
+    js/extended_block_manager.admin.js: {}
+  css:
+    theme:
+      css/extended_block_manager.admin.css: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
