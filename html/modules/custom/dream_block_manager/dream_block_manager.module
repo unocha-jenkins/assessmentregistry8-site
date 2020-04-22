@@ -1,0 +1,14 @@
+<?php
+
+/**
+ * @file
+ * Dream block manager.
+ */
+
+/**
+ * Implements hook_entity_type_alter().
+ */
+function dream_block_manager_entity_type_alter(array &$entity_types) {
+  $block_type = $entity_types['block'];
+  $block_type->setHandlerClass('list_builder', 'Drupal\dream_block_manager\BlockFilterListBuilder');
+}

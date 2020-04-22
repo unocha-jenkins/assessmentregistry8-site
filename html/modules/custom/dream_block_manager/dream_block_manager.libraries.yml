@@ -1,0 +1,10 @@
+dream_block_manager.admin:
+  version: VERSION
+  js:
+    js/dream_block_manager.admin.js: {}
+  css:
+    theme:
+      css/dream_block_manager.admin.css: {}
+  dependencies:
+    - core/jquery
+    - core/drupal

@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\extended_block_manager;
+namespace Drupal\dream_block_manager;
 
 use Drupal\block\BlockListBuilder;
 use Drupal\Core\Form\FormStateInterface;
@@ -9,18 +9,18 @@ use Drupal\Core\Render\Element;
 /**
  * Extends BlockListBuilder to add our elements only show certain blocks.
  */
-class BlockFilterByPathListBuilder extends BlockListBuilder {
+class BlockFilterListBuilder extends BlockListBuilder {
 
   /**
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $form = parent::buildForm($form, $form_state);
-    $form['#attached']['library'][] = 'extended_block_manager/extended_block_manager.admin';
+    $form['#attached']['library'][] = 'dream_block_manager/dream_block_manager.admin';
 
-    $form['path_filter'] = [
+    $form['block_filter'] = [
       '#type' => 'textfield',
-      '#title' => 'Filter by path',
+      '#title' => 'Filter',
       '#weight' => -100,
     ];
 
