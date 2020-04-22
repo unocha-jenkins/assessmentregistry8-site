@@ -6,7 +6,7 @@
  */
 
 use Drupal\Core\Entity\EntityInterface;
-Use Drupal\Core\File\FileSystemInterface;
+use Drupal\Core\File\FileSystemInterface;
 use Drupal\media\Entity\Media;
 use Drupal\node\Entity\Node;
 use Drupal\pathauto\PathautoState;
