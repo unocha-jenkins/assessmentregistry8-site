@@ -1,0 +1,14 @@
+<?php
+
+/**
+ * @file
+ * OCHA Assessments.
+ */
+
+/**
+ * Implements hook_entity_type_alter().
+ */
+function extended_block_manager_entity_type_alter(array &$entity_types) {
+  $block_type = $entity_types['block'];
+  $block_type->setHandlerClass('list_builder', 'Drupal\extended_block_manager\BlockFilterByPathListBuilder');
+}
