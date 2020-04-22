@@ -1,26 +1,26 @@
-uuid: b0fda6e6-8e18-4fa5-aaca-1a024d0bcce5
+uuid: 55ef4ad0-cee6-4310-8fdb-8fd67e3eb780
 langcode: en
 status: true
 dependencies:
   config:
-    - facets.facet.map_participating_organizations
+    - facets.facet.table_level_of_representation
   module:
     - facets
     - system
   theme:
     - common_design_subtheme
-id: map_participating_organizations
+id: map_levelofrepresentation
 theme: common_design_subtheme
 region: sidebar_first
-weight: -17
+weight: -6
 provider: null
-plugin: 'facet_block:map_participating_organizations'
+plugin: 'facet_block:table_level_of_representation'
 settings:
-  id: 'facet_block:map_participating_organizations'
-  label: 'Participating Organization(s)'
+  id: 'facet_block:table_level_of_representation'
+  label: 'Level of Representation'
   provider: facets
   label_display: visible
-  block_id: map_participating_organizations
+  block_id: map_levelofrepresentation
 visibility:
   request_path:
     id: request_path

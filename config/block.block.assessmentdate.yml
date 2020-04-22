@@ -1,26 +1,26 @@
-uuid: 7dc39a32-717a-4968-9e3a-e17cfcbbbe4c
+uuid: 7d2ea3e6-14a6-493b-84eb-33f52160a19c
 langcode: en
 status: true
 dependencies:
   config:
-    - facets.facet.population_types
+    - facets.facet.assessment_date
   module:
     - facets
     - system
   theme:
     - common_design_subtheme
-id: population_types
+id: assessmentdate
 theme: common_design_subtheme
 region: sidebar_first
-weight: -3
+weight: 3
 provider: null
-plugin: 'facet_block:population_types'
+plugin: 'facet_block:assessment_date'
 settings:
-  id: 'facet_block:population_types'
-  label: 'Population Type(s)'
+  id: 'facet_block:assessment_date'
+  label: 'Assessment Date'
   provider: facets
   label_display: visible
-  block_id: population_types
+  block_id: assessmentdate
 visibility:
   request_path:
     id: request_path

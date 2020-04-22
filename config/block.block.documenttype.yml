@@ -12,7 +12,7 @@ dependencies:
 id: documenttype
 theme: common_design_subtheme
 region: sidebar_first
-weight: -7
+weight: -5
 provider: null
 plugin: 'facet_block:document_type'
 settings:

@@ -17,7 +17,7 @@ provider: null
 plugin: 'facet_block:level_of_representation'
 settings:
   id: 'facet_block:level_of_representation'
-  label: 'Level of Representation'
+  label: 'Level of Representation 1'
   provider: facets
   label_display: visible
   block_id: levelofrepresentation
