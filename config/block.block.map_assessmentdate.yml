@@ -1,26 +1,26 @@
-uuid: 55ef4ad0-cee6-4310-8fdb-8fd67e3eb780
+uuid: 9be2a973-5ac6-4d5f-be0c-31883c350b9e
 langcode: en
 status: true
 dependencies:
   config:
-    - facets.facet.map_level_of_representation
+    - facets.facet.map_assessment_date
   module:
     - facets
     - system
   theme:
     - common_design_subtheme
-id: map_levelofrepresentation
+id: map_assessmentdate
 theme: common_design_subtheme
 region: sidebar_first
-weight: -6
+weight: 0
 provider: null
-plugin: 'facet_block:map_level_of_representation'
+plugin: 'facet_block:map_assessment_date'
 settings:
-  id: 'facet_block:map_level_of_representation'
-  label: 'Level of Representation'
+  id: 'facet_block:map_assessment_date'
+  label: 'Assessment Date'
   provider: facets
   label_display: visible
-  block_id: map_levelofrepresentation
+  block_id: map_assessmentdate
 visibility:
   request_path:
     id: request_path
