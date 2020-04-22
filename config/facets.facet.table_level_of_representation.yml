@@ -1,4 +1,4 @@
-uuid: 10ebf4cb-daeb-4528-8ced-f3e9c4a8ddb8
+uuid: 8d8f44e0-3778-4b08-a76d-bdb28a541512
 langcode: en
 status: true
 dependencies:
@@ -6,19 +6,15 @@ dependencies:
     - search_api.index.assessments
     - views.view.assessments
   module:
-    - facets_pretty_paths
     - search_api
-third_party_settings:
-  facets_pretty_paths:
-    coder: ocha_integer_list_coder
-id: map_participating_organizations
-name: 'Participating Organization(s)'
-url_alias: participating_organizations
+id: table_level_of_representation
+name: 'Level of Representation'
+url_alias: table_level_of_representation
 weight: 0
 min_count: 1
-show_only_one_result: true
-field_identifier: field_asst_organizations
-facet_source_id: 'search_api:views_page__assessments__assessments_map'
+show_only_one_result: false
+field_identifier: field_level_of_representation
+facet_source_id: 'search_api:views_page__assessments__assessments_table'
 widget:
   type: select2
   config:
@@ -26,7 +22,7 @@ widget:
     width: 100%
     autocomplete: false
     match_operator: CONTAINS
-query_operator: and
+query_operator: or
 use_hierarchy: false
 hierarchy:
   type: taxonomy
@@ -43,17 +39,18 @@ processor_configs:
       sort: 20
     settings:
       sort: DESC
+  count_widget_order:
+    processor_id: count_widget_order
+    weights:
+      sort: 30
+    settings:
+      sort: DESC
   display_value_widget_order:
     processor_id: display_value_widget_order
     weights:
       sort: 40
     settings:
       sort: ASC
-  list_item:
-    processor_id: list_item
-    weights:
-      build: 5
-    settings: {  }
   url_processor_handler:
     processor_id: url_processor_handler
     weights:
