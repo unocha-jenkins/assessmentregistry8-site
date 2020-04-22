@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Entity\EntityInterface;
+Use Drupal\Core\File\FileSystemInterface;
 use Drupal\media\Entity\Media;
 use Drupal\node\Entity\Node;
 use Drupal\pathauto\PathautoState;
@@ -277,8 +278,8 @@ function ocha_knowledge_management_add_media_entity($url, $bundle, $created) {
   $file_content = file_get_contents($url);
   if ($file_content) {
     $directory = 'public://knowledge_management/' . date('Y-m', strtotime($created)) . '/';
-    file_prepare_directory($directory, FILE_CREATE_DIRECTORY);
-    $file = file_save_data($file_content, $directory . $filename_save, FILE_EXISTS_REPLACE);
+    \Drupal::service('file_system')->prepareDirectory($directory, FileSystemInterface::CREATE_DIRECTORY);
+    $file = file_save_data($file_content, $directory . $filename_save, FileSystemInterface::EXISTS_REPLACE);
 
     $media_entity = Media::create([
       'bundle' => $bundle,

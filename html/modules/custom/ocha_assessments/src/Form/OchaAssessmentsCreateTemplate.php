@@ -2,6 +2,7 @@
 
 namespace Drupal\ocha_assessments\Form;
 
+use Drupal\Core\File\FileSystem;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -70,7 +71,7 @@ class OchaAssessmentsCreateTemplate extends FormBase {
     // Set paths.
     $destination_name = 'template_' . $country->iso3 . '_' . date('Ymdhni') . '.xlsx';
     $source = drupal_get_path('module', 'ocha_assessments') . '/bulk_template.xlsx';
-    $filename = drupal_realpath($source);
+    $filename = FileSystem::realpath($source);
 
     $reader = new Xlsx();
     $reader->setReadDataOnly(FALSE);

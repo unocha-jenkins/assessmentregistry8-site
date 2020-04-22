@@ -37,7 +37,7 @@ class LifeCycleStepsFormatter extends EntityReferenceLabelFormatter {
 
       if ($output_as_link && !$term->isNew()) {
         try {
-          $uri = $term->urlInfo();
+          $uri = $term->toUrl();
         }
         catch (UndefinedLinkTemplateException $e) {
           $output_as_link = FALSE;
