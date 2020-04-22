@@ -3,7 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - facets.facet.table_status
+    - facets.facet.map_status
   module:
     - facets
     - system
@@ -14,9 +14,9 @@ theme: common_design_subtheme
 region: sidebar_first
 weight: -9
 provider: null
-plugin: 'facet_block:table_status'
+plugin: 'facet_block:map_status'
 settings:
-  id: 'facet_block:table_status'
+  id: 'facet_block:map_status'
   label: Status
   provider: facets
   label_display: visible

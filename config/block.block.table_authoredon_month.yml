@@ -12,7 +12,7 @@ dependencies:
 id: table_authoredon_month
 theme: common_design_subtheme
 region: sidebar_first
-weight: -23
+weight: -24
 provider: null
 plugin: 'facet_block:table_authored_on_month'
 settings:
