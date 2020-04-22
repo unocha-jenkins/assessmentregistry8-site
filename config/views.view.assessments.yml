@@ -1349,7 +1349,7 @@ display:
             operator: search_api_fulltext_op
             operator_limit_selection: false
             operator_list: {  }
-            identifier: search_api_fulltext
+            identifier: s
             required: false
             remember: false
             multiple: false
@@ -1372,7 +1372,8 @@ display:
             group_items: {  }
           parse_mode: terms
           min_length: null
-          fields: {  }
+          fields:
+            - rendered_item
           plugin_id: search_api_fulltext
       sorts: {  }
       title: Assessments
@@ -1398,6 +1399,7 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
+        - 'user.node_grants:view'
       tags:
         - 'config:field.storage.node.field_asst_organizations'
         - 'config:field.storage.node.field_countries'
@@ -1408,6 +1410,7 @@ display:
         - 'config:field.storage.node.field_population_types'
         - 'config:field.storage.node.field_sources'
         - 'config:field.storage.node.field_themes'
+        - 'config:search_api.index.assessments'
   assessments_list:
     display_plugin: page
     id: assessments_list
@@ -1747,8 +1750,10 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
+        - 'user.node_grants:view'
       tags:
         - 'config:field.storage.node.field_countries'
+        - 'config:search_api.index.assessments'
   assessments_map:
     display_plugin: page
     id: assessments_map
@@ -1972,7 +1977,9 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
-      tags: {  }
+        - 'user.node_grants:view'
+      tags:
+        - 'config:search_api.index.assessments'
   assessments_table:
     display_plugin: page
     id: assessments_table
@@ -2397,8 +2404,10 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
+        - 'user.node_grants:view'
       tags:
         - 'config:field.storage.node.field_countries'
+        - 'config:search_api.index.assessments'
   rest_export_1:
     display_plugin: rest_export
     id: rest_export_1
@@ -5805,6 +5814,7 @@ display:
         - request_format
         - url
         - url.query_args
+        - 'user.node_grants:view'
       tags:
         - 'config:field.storage.node.field_ass_date'
         - 'config:field.storage.node.field_assessment_data'
@@ -5818,6 +5828,7 @@ display:
         - 'config:field.storage.node.field_sources'
         - 'config:field.storage.node.field_status'
         - 'config:field.storage.node.field_themes'
+        - 'config:search_api.index.assessments'
   rest_export_2:
     display_plugin: rest_export
     id: rest_export_2
@@ -6538,4 +6549,6 @@ display:
         - request_format
         - url
         - url.query_args
-      tags: {  }
+        - 'user.node_grants:view'
+      tags:
+        - 'config:search_api.index.assessments'
