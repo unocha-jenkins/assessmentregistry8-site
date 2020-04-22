@@ -1,5 +1,5 @@
-node-form:
+node-form--assessment:
   version: VERSION
   css:
-    layout:
-      css/layout/node-add.css: {}
+    theme:
+      css/layout/node-form--assessment.css: {}

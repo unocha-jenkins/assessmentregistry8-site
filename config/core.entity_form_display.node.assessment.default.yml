@@ -57,7 +57,7 @@ third_party_settings:
         description: ''
         required_fields: true
         id: ''
-        classes: main-inputs
+        classes: hr-main-inputs
       label: main-inputs
     group_details:
       children:
@@ -75,7 +75,7 @@ third_party_settings:
         description: ''
         required_fields: true
         id: ''
-        classes: details
+        classes: hr-details
       label: details
     group_show_more:
       children:
