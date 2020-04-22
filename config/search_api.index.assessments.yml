@@ -12,7 +12,6 @@ dependencies:
     - field.storage.node.field_disasters
     - field.storage.node.field_key_findings
     - field.storage.node.field_organizations
-    - field.storage.node.field_level_of_representation
     - field.storage.node.field_locations
     - field.storage.node.field_asst_organizations
     - field.storage.node.field_population_types
@@ -20,6 +19,7 @@ dependencies:
     - field.storage.node.field_status
     - field.storage.node.field_themes
     - search_api.server.db
+    - core.entity_view_mode.node.search_index
   module:
     - file
     - node
@@ -160,14 +160,6 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_key_findings
-  field_level_of_representation:
-    label: 'Level of Representation'
-    datasource_id: 'entity:node'
-    property_path: field_level_of_representation
-    type: string
-    dependencies:
-      config:
-        - field.storage.node.field_level_of_representation
   field_local_groups:
     label: Cluster(s)/Sector(s)
     datasource_id: 'entity:node'
@@ -260,7 +252,7 @@ field_settings:
     label: Status
     datasource_id: 'entity:node'
     property_path: field_status
-    type: integer
+    type: string
     dependencies:
       config:
         - field.storage.node.field_status
@@ -338,6 +330,16 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_assessment_questionnaire
+  rendered_item:
+    label: 'Rendered HTML output'
+    property_path: rendered_item
+    type: text
+    configuration:
+      roles:
+        anonymous: anonymous
+      view_mode:
+        'entity:node':
+          assessment: search_index
   report_accessibility:
     label: 'Assessment Report » Text Value'
     datasource_id: 'entity:node'
@@ -423,13 +425,13 @@ processor_settings:
       - field_countries_label
       - field_disasters_label
       - field_key_findings
-      - field_level_of_representation
       - field_local_groups_label
       - field_locations_label
       - field_locations_lat_lon
       - field_organizations_label
       - field_population_types_label
       - field_sources_label
+      - field_status
       - field_themes_label
       - langcode
       - questionnaire_accessibility
@@ -438,6 +440,7 @@ processor_settings:
       - questionnaire_instructions
       - questionnaire_link_title
       - questionnaire_link_uri
+      - rendered_item
       - report_accessibility
       - report_description
       - report_file_url
@@ -473,13 +476,13 @@ processor_settings:
       - field_countries_label
       - field_disasters_label
       - field_key_findings
-      - field_level_of_representation
       - field_local_groups_label
       - field_locations_label
       - field_locations_lat_lon
       - field_organizations_label
       - field_population_types_label
       - field_sources_label
+      - field_status
       - field_themes_label
       - langcode
       - questionnaire_accessibility
@@ -488,6 +491,7 @@ processor_settings:
       - questionnaire_instructions
       - questionnaire_link_title
       - questionnaire_link_uri
+      - rendered_item
       - report_accessibility
       - report_description
       - report_file_url
