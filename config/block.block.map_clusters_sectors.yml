@@ -12,7 +12,7 @@ dependencies:
 id: map_clusters_sectors
 theme: common_design_subtheme
 region: sidebar_first
-weight: -15
+weight: -16
 provider: null
 plugin: 'facet_block:map_clusters_sectors'
 settings:
