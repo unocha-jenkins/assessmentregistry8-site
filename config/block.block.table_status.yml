@@ -1,29 +1,29 @@
-uuid: 7dc39a32-717a-4968-9e3a-e17cfcbbbe4c
+uuid: 69974c3c-b5bc-48cb-9915-6ba745d5ac22
 langcode: en
 status: true
 dependencies:
   config:
-    - facets.facet.population_types
+    - facets.facet.table_status
   module:
     - facets
     - system
   theme:
     - common_design_subtheme
-id: population_types
+id: table_status
 theme: common_design_subtheme
 region: sidebar_first
-weight: -3
+weight: -10
 provider: null
-plugin: 'facet_block:population_types'
+plugin: 'facet_block:table_status'
 settings:
-  id: 'facet_block:population_types'
-  label: 'Population Type(s)'
+  id: 'facet_block:table_status'
+  label: Status
   provider: facets
   label_display: visible
-  block_id: population_types
+  block_id: table_status
 visibility:
   request_path:
     id: request_path
-    pages: "/assessments\r\n/assessments/*"
+    pages: "/assessments/table\r\n/assessments/table/*"
     negate: false
     context_mapping: {  }

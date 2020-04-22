@@ -12,6 +12,7 @@ dependencies:
     - field.storage.node.field_disasters
     - field.storage.node.field_key_findings
     - field.storage.node.field_organizations
+    - field.storage.node.field_level_of_representation
     - field.storage.node.field_locations
     - field.storage.node.field_asst_organizations
     - field.storage.node.field_population_types
@@ -160,6 +161,14 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_key_findings
+  field_level_of_representation:
+    label: 'Level of Representation'
+    datasource_id: 'entity:node'
+    property_path: field_level_of_representation
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_level_of_representation
   field_local_groups:
     label: Cluster(s)/Sector(s)
     datasource_id: 'entity:node'
@@ -425,6 +434,7 @@ processor_settings:
       - field_countries_label
       - field_disasters_label
       - field_key_findings
+      - field_level_of_representation
       - field_local_groups_label
       - field_locations_label
       - field_locations_lat_lon
@@ -476,6 +486,7 @@ processor_settings:
       - field_countries_label
       - field_disasters_label
       - field_key_findings
+      - field_level_of_representation
       - field_local_groups_label
       - field_locations_label
       - field_locations_lat_lon

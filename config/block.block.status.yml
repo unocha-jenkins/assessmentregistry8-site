@@ -1,26 +1,26 @@
-uuid: 7dc39a32-717a-4968-9e3a-e17cfcbbbe4c
+uuid: e71f6f7a-0d84-4000-aef1-17743901367f
 langcode: en
 status: true
 dependencies:
   config:
-    - facets.facet.population_types
+    - facets.facet.status
   module:
     - facets
     - system
   theme:
     - common_design_subtheme
-id: population_types
+id: status
 theme: common_design_subtheme
 region: sidebar_first
-weight: -3
+weight: -11
 provider: null
-plugin: 'facet_block:population_types'
+plugin: 'facet_block:status'
 settings:
-  id: 'facet_block:population_types'
-  label: 'Population Type(s)'
+  id: 'facet_block:status'
+  label: Status
   provider: facets
   label_display: visible
-  block_id: population_types
+  block_id: status
 visibility:
   request_path:
     id: request_path
