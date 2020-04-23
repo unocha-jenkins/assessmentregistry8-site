@@ -1971,6 +1971,7 @@ display:
             multi_type: separator
             multi_separator: ', '
           plugin_id: search_api_field
+      exposed_block: true
     cache_metadata:
       max-age: -1
       contexts:
@@ -2397,6 +2398,7 @@ display:
             multi_type: separator
             multi_separator: ', '
           plugin_id: search_api_field
+      exposed_block: true
     cache_metadata:
       max-age: -1
       contexts:
