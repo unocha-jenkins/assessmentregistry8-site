@@ -1,4 +1,4 @@
-uuid: 2fc2491c-3f1d-46fb-a38a-04392a716758
+uuid: b54df96a-cfab-4111-a217-e80672db8191
 langcode: en
 status: true
 dependencies:
@@ -16,7 +16,7 @@ name: Theme(s)
 url_alias: themes
 weight: 0
 min_count: 1
-show_only_one_result: false
+show_only_one_result: true
 field_identifier: field_themes
 facet_source_id: 'search_api:views_page__assessments__assessments_list'
 widget:
@@ -26,7 +26,7 @@ widget:
     width: 100%
     autocomplete: false
     match_operator: CONTAINS
-query_operator: and
+query_operator: or
 use_hierarchy: false
 hierarchy:
   type: taxonomy
@@ -41,6 +41,12 @@ processor_configs:
     processor_id: active_widget_order
     weights:
       sort: 20
+    settings:
+      sort: DESC
+  count_widget_order:
+    processor_id: count_widget_order
+    weights:
+      sort: 30
     settings:
       sort: DESC
   display_value_widget_order:

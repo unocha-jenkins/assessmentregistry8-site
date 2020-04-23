@@ -24,6 +24,6 @@ settings:
 visibility:
   request_path:
     id: request_path
-    pages: "/assessments/table\r\n/assessments/table/*"
+    pages: "/assessments/\r\n/assessments/*"
     negate: false
     context_mapping: {  }

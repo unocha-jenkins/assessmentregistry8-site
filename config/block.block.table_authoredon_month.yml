@@ -19,11 +19,11 @@ settings:
   id: 'facet_block:table_authored_on_month'
   label: 'Authored on - month'
   provider: facets
-  label_display: visible
+  label_display: '0'
   block_id: table_authoredon_month
 visibility:
   request_path:
     id: request_path
-    pages: "/assessments\r\n/assessments/*"
+    pages: "/assessments/table\r\n/assessments/table/*"
     negate: false
     context_mapping: {  }
