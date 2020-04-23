@@ -1389,6 +1389,19 @@ display:
           admin_label: 'No results message'
           empty: true
           plugin_id: messages
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          empty: true
+          tokenize: false
+          content:
+            value: 'Your search yielded no results.'
+            format: basic_html
+          plugin_id: text
       relationships: {  }
       arguments: {  }
       display_extenders: {  }
