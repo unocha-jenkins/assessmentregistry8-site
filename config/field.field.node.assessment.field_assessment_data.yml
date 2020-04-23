@@ -12,14 +12,14 @@ field_name: field_assessment_data
 entity_type: node
 bundle: assessment
 label: 'Assessment Data'
-description: ''
+description: '<strong>Assessment Data:</strong> If data is “Publicly available” upload the file stored on your computer. If data is “Available on request”, write the instructions on how to request access in the related space. If not available, select the corresponding option. The file URL is based on the file name, a clear file name creates a clear URL. To see File Standards and Naming Conventions click <a href="https://docs.google.com/document/d/1TxOek13c4uoYAQWqsYBhjppeYUwHZK7nhx5qgm1FALA/edit#heading=h.65y0voh25g07" title="Standards and Naming Conventions - Files" target="_blank">here</a>. When you need to edit or replace the uploaded file because of a newer or corrected version, follow the instructions available <a href="https://www.humanitarianresponse.info/en/help/sharing-website-content-visitors#replacefile" title="HumanitarianResponse.info - Upload from Computer or Dropbox" target="_blank">here</a>.'
 required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
 settings:
   file_directory: 'assessments/[date:custom:Y]-[date:custom:m]'
-  file_extensions: 'txt pdf doc docx xls xlsx zip rar csv'
+  file_extensions: 'pdf doc docx xls xlsx xlsb xlsm ppt pptx odt ods odp zip gz'
   max_filesize: ''
   description_field: 1
   title: 1
