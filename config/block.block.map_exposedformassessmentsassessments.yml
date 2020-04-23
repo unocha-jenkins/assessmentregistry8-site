@@ -1,4 +1,4 @@
-uuid: c999f533-a74d-4493-b07b-4985b35ff2fb
+uuid: 393ebb82-bb5e-462a-b34b-44f6e2de8248
 langcode: en
 status: true
 dependencies:
@@ -9,14 +9,14 @@ dependencies:
     - views
   theme:
     - common_design_subtheme
-id: search
+id: map_exposedformassessmentsassessments
 theme: common_design_subtheme
 region: header_search
-weight: -8
+weight: 0
 provider: null
-plugin: 'views_exposed_filter_block:assessments-assessments_list'
+plugin: 'views_exposed_filter_block:assessments-assessments_map'
 settings:
-  id: 'views_exposed_filter_block:assessments-assessments_list'
+  id: 'views_exposed_filter_block:assessments-assessments_map'
   label: ''
   provider: views
   label_display: visible
@@ -24,6 +24,6 @@ settings:
 visibility:
   request_path:
     id: request_path
-    pages: "/assessments/map\r\n/assessments/map/*\r\n/assessments/table\r\n/assessments/table/*"
-    negate: true
+    pages: "/assessments/map\r\n/assessments/map/*"
+    negate: false
     context_mapping: {  }
