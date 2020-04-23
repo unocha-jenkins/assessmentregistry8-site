@@ -64,8 +64,8 @@ class OchaAssessmentsList extends OchaAssessmentsBase {
             r =>
               html`
                 <li>
-                  <h2><a href="${this.baseurl}/node/${r.nid}">${r.title}</a></h2>
-                  <div>
+                  <h2 class="cd-list__title"><a href="${this.baseurl}/node/${r.nid}">${r.title}</a></h2>
+                  <div class="cd-list__description">
                     <p>
                       <span class="label">Leading/Coordinating Organization(s): </span>
                       <span class="values">${unsafeHTML(r.field_asst_organizations_label)}</span>
