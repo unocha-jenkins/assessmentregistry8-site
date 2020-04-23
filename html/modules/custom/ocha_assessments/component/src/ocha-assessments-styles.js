@@ -100,6 +100,10 @@ export const dropdownStyles = css`
     padding: 1rem;
   }
 
+  .cd-filters__form form{
+    margin-bottom: 0;
+  }
+
   .cd-filters__form label {
     display: block;
     margin: 0 0 0.5rem;
@@ -310,5 +314,25 @@ export const tableStyles = css`
     tfoot td {
       border-bottom: 0 none;
     }
+  }
+
+  .cd-list {
+    margin: 0;
+    padding: 0 0 1rem;
+    list-style: none;
+  }
+
+  .cd-list li {
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--cd-site-bg-color);
+  }
+
+  .cd-list li p:last-child {
+    margin-bottom: 0;
+  }
+
+  .cd-list__title {
+    margin: 0 0 0.5rem;
   }
 `;
