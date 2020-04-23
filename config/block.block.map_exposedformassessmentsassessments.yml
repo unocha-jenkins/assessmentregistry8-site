@@ -1,26 +1,26 @@
-uuid: 707bd413-5a40-460d-8737-e91f77d2280b
+uuid: 393ebb82-bb5e-462a-b34b-44f6e2de8248
 langcode: en
 status: true
 dependencies:
   config:
-    - facets.facet.map_organizations
+    - views.view.assessments
   module:
-    - facets
     - system
+    - views
   theme:
     - common_design_subtheme
-id: map_organizations
+id: map_exposedformassessmentsassessments
 theme: common_design_subtheme
-region: sidebar_first
-weight: -22
+region: header_search
+weight: 0
 provider: null
-plugin: 'facet_block:map_organizations'
+plugin: 'views_exposed_filter_block:assessments-assessments_map'
 settings:
-  id: 'facet_block:map_organizations'
-  label: Organization(s)
-  provider: facets
+  id: 'views_exposed_filter_block:assessments-assessments_map'
+  label: ''
+  provider: views
   label_display: visible
-  block_id: map_organizations
+  views_label: ''
 visibility:
   request_path:
     id: request_path

@@ -1,4 +1,4 @@
-uuid: 3cefac98-b689-413f-b68b-9e952f463bad
+uuid: ce03cb3b-e00e-4bf1-a261-8f736ec39d2e
 langcode: en
 status: true
 dependencies:
@@ -6,7 +6,11 @@ dependencies:
     - search_api.index.assessments
     - views.view.assessments
   module:
+    - facets_pretty_paths
     - search_api
+third_party_settings:
+  facets_pretty_paths:
+    coder: default_coder
 id: map_level_of_representation
 name: 'Level of Representation'
 url_alias: map_level_of_representation
@@ -14,11 +18,11 @@ weight: 0
 min_count: 1
 show_only_one_result: false
 field_identifier: field_level_of_representation
-facet_source_id: 'search_api:views_page__assessments__assessments_table'
+facet_source_id: 'search_api:views_page__assessments__assessments_map'
 widget:
   type: select2
   config:
-    show_numbers: false
+    show_numbers: true
     width: 100%
     autocomplete: false
     match_operator: CONTAINS

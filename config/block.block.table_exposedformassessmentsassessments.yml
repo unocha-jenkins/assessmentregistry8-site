@@ -1,26 +1,26 @@
-uuid: 69974c3c-b5bc-48cb-9915-6ba745d5ac22
+uuid: 187efbf7-4aba-4070-bcea-f05ae1511ff7
 langcode: en
 status: true
 dependencies:
   config:
-    - facets.facet.table_status
+    - views.view.assessments
   module:
-    - facets
     - system
+    - views
   theme:
     - common_design_subtheme
-id: table_status
+id: table_exposedformassessmentsassessments
 theme: common_design_subtheme
-region: sidebar_first
-weight: -12
+region: header_search
+weight: 0
 provider: null
-plugin: 'facet_block:table_status'
+plugin: 'views_exposed_filter_block:assessments-assessments_table'
 settings:
-  id: 'facet_block:table_status'
-  label: Status
-  provider: facets
+  id: 'views_exposed_filter_block:assessments-assessments_table'
+  label: ''
+  provider: views
   label_display: visible
-  block_id: table_status
+  views_label: ''
 visibility:
   request_path:
     id: request_path

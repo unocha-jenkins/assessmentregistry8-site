@@ -15,6 +15,8 @@ function common_design_subtheme_form_alter(&$form, FormStateInterface $form_stat
   // subtheme and add the relevant Views IDs to this array in your subtheme.
   $includeView = [
     'views-exposed-form-assessments-assessments-list',
+    'views-exposed-form-assessments-assessments-map',
+    'views-exposed-form-assessments-assessments-table',
   ];
 
   // If in array above, add search--inline attributes.

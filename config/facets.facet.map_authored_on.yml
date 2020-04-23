@@ -16,13 +16,13 @@ name: 'Authored on'
 url_alias: authored_on
 weight: 0
 min_count: 1
-show_only_one_result: false
+show_only_one_result: true
 field_identifier: created
 facet_source_id: 'search_api:views_page__assessments__assessments_map'
 widget:
   type: dropdown
   config:
-    show_numbers: false
+    show_numbers: true
     default_option_label: Year
 query_operator: or
 use_hierarchy: false
@@ -50,6 +50,16 @@ processor_configs:
       date_display: actual_date
       granularity: 6
       date_format: ''
+  hide_1_result_facet:
+    processor_id: hide_1_result_facet
+    weights:
+      build: 50
+    settings: {  }
+  hide_non_narrowing_result_processor:
+    processor_id: hide_non_narrowing_result_processor
+    weights:
+      build: 40
+    settings: {  }
   raw_value_widget_order:
     processor_id: raw_value_widget_order
     weights:

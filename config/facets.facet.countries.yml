@@ -16,7 +16,7 @@ name: Countries
 url_alias: countries
 weight: 0
 min_count: 1
-show_only_one_result: false
+show_only_one_result: true
 field_identifier: field_countries
 facet_source_id: 'search_api:views_page__assessments__assessments_list'
 widget:
