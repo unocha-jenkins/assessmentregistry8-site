@@ -1,4 +1,4 @@
-uuid: d17536ca-53b6-4c6f-ac34-a9bb92ed1c31
+uuid: cfbaf21f-2337-4335-9d0a-79a01dfd90a1
 langcode: en
 status: true
 dependencies:
@@ -7,9 +7,9 @@ dependencies:
     - views.view.assessments
   module:
     - search_api
-id: participating_organization
-name: 'Participating Organizations'
-url_alias: participating_organization
+id: table_participating_organizations
+name: 'Participating Organization(s)'
+url_alias: table_participating_organizations
 weight: 0
 min_count: 1
 show_only_one_result: false
@@ -22,7 +22,7 @@ widget:
     width: 100%
     autocomplete: false
     match_operator: CONTAINS
-query_operator: or
+query_operator: and
 use_hierarchy: false
 hierarchy:
   type: taxonomy

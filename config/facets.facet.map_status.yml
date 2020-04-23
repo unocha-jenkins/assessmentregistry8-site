@@ -1,4 +1,4 @@
-uuid: 7f0479d4-7fcc-49a5-a988-139fd00566e1
+uuid: 1d8f0358-44f4-49af-82e1-0eb76402ea51
 langcode: en
 status: true
 dependencies:
@@ -6,7 +6,11 @@ dependencies:
     - search_api.index.assessments
     - views.view.assessments
   module:
+    - facets_pretty_paths
     - search_api
+third_party_settings:
+  facets_pretty_paths:
+    coder: default_coder
 id: map_status
 name: Status
 url_alias: map_status
@@ -14,7 +18,7 @@ weight: 0
 min_count: 1
 show_only_one_result: false
 field_identifier: field_status
-facet_source_id: 'search_api:views_page__assessments__assessments_table'
+facet_source_id: 'search_api:views_page__assessments__assessments_map'
 widget:
   type: select2
   config:

@@ -1,4 +1,4 @@
-uuid: 7551ac9f-8dc1-4fa5-b391-1a34caece8a1
+uuid: dbc3eba0-c0c1-4bf8-9d08-879659b8ed38
 langcode: en
 status: true
 dependencies:
@@ -12,7 +12,7 @@ dependencies:
 id: map_status
 theme: common_design_subtheme
 region: sidebar_first
-weight: -10
+weight: -11
 provider: null
 plugin: 'facet_block:map_status'
 settings:

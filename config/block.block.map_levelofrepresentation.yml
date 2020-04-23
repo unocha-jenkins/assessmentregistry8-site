@@ -1,4 +1,4 @@
-uuid: 55ef4ad0-cee6-4310-8fdb-8fd67e3eb780
+uuid: 03f718c6-a1f0-4f9e-8b88-18967882c405
 langcode: en
 status: true
 dependencies:
@@ -12,7 +12,7 @@ dependencies:
 id: map_levelofrepresentation
 theme: common_design_subtheme
 region: sidebar_first
-weight: -7
+weight: -8
 provider: null
 plugin: 'facet_block:map_level_of_representation'
 settings:
