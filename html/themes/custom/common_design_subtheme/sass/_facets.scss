@@ -67,8 +67,14 @@
   justify-content: space-between;
   width: 100%;
 
+  &:hover,
+  &:focus {
+    background: $implementation-primary;
+    color: $cd-light-grey;
+  }
+
   svg {
-    fill: var(--cd-dark-grey);
+    fill: $implementation-primary;
     width: 2rem;
     height: 2rem;
     padding: 0 0.5rem 0 0;
@@ -76,7 +82,7 @@
 
   &:hover svg,
   &:focus svg {
-    fill: var(--cd-white);
+    fill: $cd-white;
   }
 
   @include tablet {
