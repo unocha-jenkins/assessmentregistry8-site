@@ -31,6 +31,13 @@
       border-bottom: 3px solid $implementation-highlight;
     }
   }
+
+  @media (min-width: 768px) {
+    .cd-grid-2-col > * {
+      /* IE11 fix for when padding is added  https://github.com/philipwalton/flexbugs/issues/3 */
+      max-width: 48%;
+    }
+  }
 }
 
 .page-node-type-assessment {
