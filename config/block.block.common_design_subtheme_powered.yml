@@ -1,6 +1,6 @@
 uuid: 04421b1a-1928-441d-a856-d3fc86543d31
 langcode: en
-status: true
+status: false
 dependencies:
   module:
     - system
@@ -19,9 +19,4 @@ settings:
   label: 'Powered by Drupal'
   provider: system
   label_display: '0'
-visibility:
-  request_path:
-    id: request_path
-    pages: '/km/*'
-    negate: false
-    context_mapping: {  }
+visibility: {  }
