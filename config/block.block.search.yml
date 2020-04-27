@@ -24,6 +24,6 @@ settings:
 visibility:
   request_path:
     id: request_path
-    pages: "/assessments/map\r\n/assessments/map/*\r\n/assessments/table\r\n/assessments/table/*"
+    pages: "/assessments/map\r\n/assessments/map/*\r\n/assessments/table\r\n/assessments/table/*\r\n/knowledge-management\r\n/knowledge-management/*\r\n/km/*"
     negate: true
     context_mapping: {  }
