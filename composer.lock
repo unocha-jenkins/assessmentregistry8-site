@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
     "content-hash": "3bc0e9b5a78b12c28c1e7833d6781b32",
@@ -2122,7 +2122,7 @@
             "extra": {
                 "drupal": {
                     "version": "8.x-1.7",
-                    "datestamp": "1588002767",
+                    "datestamp": "1587898105",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -2320,9 +2320,6 @@
             },
             "type": "drupal-module",
             "extra": {
-                "branch-alias": {
-                    "dev-1.x": "1.x-dev"
-                },
                 "drupal": {
                     "version": "8.x-1.7",
                     "datestamp": "1583142729",
@@ -3236,7 +3233,9 @@
             "version": "4.0.13",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/select2/-/select2-4.0.13.tgz"
+                "url": "https://registry.npmjs.org/select2/-/select2-4.0.13.tgz",
+                "reference": null,
+                "shasum": null
             },
             "type": "npm-asset",
             "license": [
@@ -5590,16 +5589,16 @@
         },
         {
             "name": "unocha/common_design",
-            "version": "v2.7.2",
+            "version": "v2.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/UN-OCHA/common_design.git",
-                "reference": "6e8472b6c30dce380033cd82316af331256cd12c"
+                "reference": "e435e05427ab7f37cc9ecb127724b812a6e78b4b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/UN-OCHA/common_design/zipball/6e8472b6c30dce380033cd82316af331256cd12c",
-                "reference": "6e8472b6c30dce380033cd82316af331256cd12c",
+                "url": "https://api.github.com/repos/UN-OCHA/common_design/zipball/e435e05427ab7f37cc9ecb127724b812a6e78b4b",
+                "reference": "e435e05427ab7f37cc9ecb127724b812a6e78b4b",
                 "shasum": ""
             },
             "require": {
@@ -5610,7 +5609,7 @@
             "license": [
                 "GPL-2.0-only"
             ],
-            "time": "2020-04-21T15:17:35+00:00"
+            "time": "2020-04-28T14:40:43+00:00"
         },
         {
             "name": "webflo/drupal-finder",
