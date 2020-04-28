@@ -43,11 +43,16 @@
   width: 100%;
 }
 
-// Control select2 select element width when options are wider than parent element.
+// Various overrides to control select2 elements widths when options are wider than parent element.
+.block-facets .select2-container {
+  overflow: hidden;
+}
+
 .block-facets .select2-container--default .select2-search--inline .select2-search__field {
   width: auto !important;
 }
 
+.block-facets .select2-container .select2-selection--single .select2-selection__rendered,
 .block-facets .select2-container .select2-selection--multiple .select2-selection__rendered {
   white-space: unset;
 }
