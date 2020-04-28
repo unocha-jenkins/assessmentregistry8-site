@@ -1,0 +1,10 @@
+api:
+  type: config_object
+  label: 'Ocha HID Contacts API settings'
+  mapping:
+    endpoint:
+      type: string
+      label: 'API endpoint'
+    key:
+      type: string
+      label: 'API key'

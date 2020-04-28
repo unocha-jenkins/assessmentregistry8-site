@@ -26,7 +26,7 @@ widget:
     width: 100%
     autocomplete: false
     match_operator: CONTAINS
-query_operator: or
+query_operator: and
 use_hierarchy: false
 hierarchy:
   type: taxonomy
@@ -47,6 +47,11 @@ processor_configs:
     processor_id: hide_1_result_facet
     weights:
       build: 50
+    settings: {  }
+  hide_non_narrowing_result_processor:
+    processor_id: hide_non_narrowing_result_processor
+    weights:
+      build: 40
     settings: {  }
   list_item:
     processor_id: list_item
