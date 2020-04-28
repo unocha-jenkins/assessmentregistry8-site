@@ -10,6 +10,7 @@ dependencies:
     - field.field.node.assessment.field_assessment_report
     - field.field.node.assessment.field_asst_organizations
     - field.field.node.assessment.field_collection_methods
+    - field.field.node.assessment.field_contacts
     - field.field.node.assessment.field_countries
     - field.field.node.assessment.field_disasters
     - field.field.node.assessment.field_frequency
@@ -75,6 +76,7 @@ hidden:
   field_assessment_questionnaire: true
   field_assessment_report: true
   field_collection_methods: true
+  field_contacts: true
   field_countries: true
   field_disasters: true
   field_frequency: true

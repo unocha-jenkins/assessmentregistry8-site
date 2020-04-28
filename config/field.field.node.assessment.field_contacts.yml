@@ -1,0 +1,21 @@
+uuid: d530e07d-4d66-4380-9055-29843db39803
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_contacts
+    - node.type.assessment
+  module:
+    - ocha_hid_contacts
+id: node.assessment.field_contacts
+field_name: field_contacts
+entity_type: node
+bundle: assessment
+label: Contacts
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: ocha_hid_contacts

@@ -38,6 +38,7 @@ module:
   ocha_countries: 0
   ocha_disasters: 0
   ocha_global_coordination_groups: 0
+  ocha_hid_contacts: 0
   ocha_integrations: 0
   ocha_knowledge_management: 0
   ocha_local_groups: 0
