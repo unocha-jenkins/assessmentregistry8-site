@@ -1,29 +1,29 @@
-uuid: 0e4d4a07-267f-45f1-91c1-a2c8a6fe41ef
+uuid: e7cea26d-0487-4c1e-8124-eba92328f2d3
 langcode: en
 status: true
 dependencies:
   config:
-    - facets.facet.level_of_representation
+    - facets.facet.table_clusters_sectors
   module:
     - facets
     - system
   theme:
     - common_design_subtheme
-id: levelofrepresentation
+id: table_clusters_sectors
 theme: common_design_subtheme
 region: sidebar_first
-weight: -10
+weight: 0
 provider: null
-plugin: 'facet_block:level_of_representation'
+plugin: 'facet_block:table_clusters_sectors'
 settings:
-  id: 'facet_block:level_of_representation'
-  label: 'Level of Representation'
+  id: 'facet_block:table_clusters_sectors'
+  label: Cluster(s)/Sector(s)
   provider: facets
   label_display: visible
-  block_id: levelofrepresentation
+  block_id: table_clusters_sectors
 visibility:
   request_path:
     id: request_path
-    pages: "/assessments/list\r\n/assessments/list/*"
+    pages: "/assessments/table\r\n/assessments/table/*"
     negate: false
     context_mapping: {  }

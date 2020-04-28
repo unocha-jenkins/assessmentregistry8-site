@@ -1,0 +1,12 @@
+uuid: 074f56f5-33c4-472c-8dc8-93ed4568ea4b
+langcode: en
+status: true
+dependencies: {  }
+id: search_api__views_page__assessments__assessments_table
+name: 'search_api:views_page__assessments__assessments_table'
+filter_key: ''
+url_processor: facets_pretty_paths
+breadcrumb:
+  active: false
+  before: true
+  group: false
