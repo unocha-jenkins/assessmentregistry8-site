@@ -1,26 +1,26 @@
-uuid: 0e4d4a07-267f-45f1-91c1-a2c8a6fe41ef
+uuid: 89b75127-b57b-4370-94cf-1bd243712365
 langcode: en
 status: true
 dependencies:
   config:
-    - facets.facet.level_of_representation
+    - facets.facet.clusters_sectors
   module:
     - facets
     - system
   theme:
     - common_design_subtheme
-id: levelofrepresentation
+id: clusters_sectors
 theme: common_design_subtheme
 region: sidebar_first
-weight: -10
+weight: 0
 provider: null
-plugin: 'facet_block:level_of_representation'
+plugin: 'facet_block:clusters_sectors'
 settings:
-  id: 'facet_block:level_of_representation'
-  label: 'Level of Representation'
+  id: 'facet_block:clusters_sectors'
+  label: Cluster(s)/Sector(s)
   provider: facets
   label_display: visible
-  block_id: levelofrepresentation
+  block_id: clusters_sectors
 visibility:
   request_path:
     id: request_path
