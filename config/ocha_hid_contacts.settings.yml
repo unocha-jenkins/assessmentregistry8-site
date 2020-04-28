@@ -1,0 +1,5 @@
+api:
+  endpoint: 'https://api.humanitarian.id'
+  key: ''
+_core:
+  default_config_hash: cEmYIkK8GazakOKP_H142dqbA6nW7eF1ECmacdbu8pw

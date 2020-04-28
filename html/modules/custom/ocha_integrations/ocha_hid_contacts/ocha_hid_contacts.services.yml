@@ -1,0 +1,10 @@
+services:
+  ocha_hid_contacts_controller:
+    class: \Drupal\ocha_hid_contacts\Controller\OchaHidContactsController
+    arguments: ['@http_client', '@config.factory', '@cache.ocha_hid_contacts', '@logger.factory', '@state', '@file_system']
+  cache.ocha_hid_contacts:
+    class: Drupal\Core\Cache\CacheBackendInterface
+    tags:
+      - { name: cache.bin, default_backend: cache.backend.permanent_database }
+    factory: cache_factory:get
+    arguments: [ocha_hid_contacts]

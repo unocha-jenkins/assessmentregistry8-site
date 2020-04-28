@@ -9,6 +9,7 @@ dependencies:
     - field.field.node.assessment.field_assessment_report
     - field.field.node.assessment.field_asst_organizations
     - field.field.node.assessment.field_collection_methods
+    - field.field.node.assessment.field_contacts
     - field.field.node.assessment.field_countries
     - field.field.node.assessment.field_disasters
     - field.field.node.assessment.field_frequency
@@ -34,6 +35,7 @@ dependencies:
     - field_group
     - link
     - ocha_assessment_document
+    - ocha_hid_contacts
     - ocha_locations
     - path
     - select2
@@ -101,6 +103,7 @@ third_party_settings:
         - field_units_of_measurement
         - field_collection_methods
         - field_themes
+        - field_contacts
       parent_name: group_show_more
       weight: 20
       format_type: accordion_item
@@ -163,6 +166,15 @@ content:
     third_party_settings: {  }
     type: select2
     region: content
+  field_contacts:
+    type: ocha_hid_contacts_autocomplete
+    weight: 31
+    region: content
+    settings:
+      max_items: '15'
+      matching_method: contains
+      use_select2: 'no'
+    third_party_settings: {  }
   field_countries:
     type: custom_widgets_text_autocomplete
     weight: 10

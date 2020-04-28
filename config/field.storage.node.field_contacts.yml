@@ -1,0 +1,21 @@
+uuid: e250db69-ce7c-4906-9bc6-7cd71309effa
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - ocha_hid_contacts
+id: node.field_contacts
+field_name: field_contacts
+entity_type: node
+type: ocha_hid_contacts
+settings:
+  allowed_values: {  }
+  allowed_values_function: ocha_hid_contacts_allowed_values_function
+module: ocha_hid_contacts
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
