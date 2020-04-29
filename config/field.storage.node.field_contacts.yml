@@ -1,18 +1,17 @@
-uuid: e250db69-ce7c-4906-9bc6-7cd71309effa
+uuid: f520ef85-726c-4c30-b0d8-fa80e62795d0
 langcode: en
 status: true
 dependencies:
   module:
     - node
-    - ocha_hid_contacts
+    - ocha_persons
 id: node.field_contacts
 field_name: field_contacts
 entity_type: node
-type: ocha_hid_contacts
+type: entity_reference
 settings:
-  allowed_values: {  }
-  allowed_values_function: ocha_hid_contacts_allowed_values_function
-module: ocha_hid_contacts
+  target_type: person_entity
+module: core
 locked: false
 cardinality: -1
 translatable: true

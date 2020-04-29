@@ -1,0 +1,5 @@
+person_entity.admin.structure.settings:
+  title: 'Person settings'
+  description: 'Configure persons'
+  route_name: person_entity.settings
+  parent: system.admin_structure

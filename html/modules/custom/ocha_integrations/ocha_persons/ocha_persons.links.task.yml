@@ -1,0 +1,33 @@
+# Person entity routing definition
+person_entity.settings_tab:
+  route_name: person_entity.settings
+  title: 'Settings'
+  base_route: person_entity.settings
+
+entity.person_entity.canonical:
+  route_name: entity.person_entity.canonical
+  base_route: entity.person_entity.canonical
+  title: 'View'
+
+entity.person_entity.edit_form:
+  route_name: entity.person_entity.edit_form
+  base_route: entity.person_entity.canonical
+  title: 'Edit'
+
+entity.person_entity.version_history:
+  route_name: entity.person_entity.version_history
+  base_route: entity.person_entity.canonical
+  title: 'Revisions'
+
+entity.person_entity.delete_form:
+  route_name:  entity.person_entity.delete_form
+  base_route:  entity.person_entity.canonical
+  title: Delete
+  weight: 10
+
+entity.person_entity.collection:
+  title: Persons
+  route_name: entity.person_entity.collection
+  description: 'List persons'
+  base_route: system.admin_content
+  weight: 100

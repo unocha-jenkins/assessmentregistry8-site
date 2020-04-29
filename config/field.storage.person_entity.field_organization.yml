@@ -1,0 +1,21 @@
+uuid: 2e731434-2fc2-43b9-92f2-7b4b8e459a50
+langcode: en
+status: true
+dependencies:
+  module:
+    - ocha_organizations
+    - ocha_persons
+id: person_entity.field_organization
+field_name: field_organization
+entity_type: person_entity
+type: ocha_organizations
+settings:
+  allowed_values: {  }
+  allowed_values_function: ocha_organizations_allowed_values_function
+module: ocha_organizations
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

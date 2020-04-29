@@ -35,7 +35,6 @@ dependencies:
     - ocha_assessment_document
     - ocha_countries
     - ocha_disasters
-    - ocha_hid_contacts
     - ocha_integrations
     - ocha_local_groups
     - ocha_locations
@@ -107,14 +106,10 @@ content:
     weight: 25
     label: above
     settings:
-      output: label
-      output_global_cluster: 0
-      output_lead_agencies: 0
-      output_partners: 0
-      output_activation_document: 0
-      output_operations: 0
+      link: false
+      view_mode: default
     third_party_settings: {  }
-    type: ocha_hid_contacts_default
+    type: entity_reference_entity_view
     region: content
   field_countries:
     weight: 1

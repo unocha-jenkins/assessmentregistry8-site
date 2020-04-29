@@ -1,0 +1,21 @@
+uuid: b1f199d0-6112-4d67-ae3c-2189ce4e2f01
+langcode: en
+status: true
+dependencies:
+  module:
+    - ocha_hid_contacts
+    - ocha_persons
+id: person_entity.field_hid
+field_name: field_hid
+entity_type: person_entity
+type: ocha_hid_contacts
+settings:
+  allowed_values: {  }
+  allowed_values_function: ocha_hid_contacts_allowed_values_function
+module: ocha_hid_contacts
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
