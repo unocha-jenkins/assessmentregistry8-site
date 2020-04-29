@@ -1,0 +1,23 @@
+uuid: 08cd30f7-b624-4361-8fc1-1a75a2586632
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.person_entity.field_organization
+  module:
+    - ocha_organizations
+    - ocha_persons
+id: person_entity.person_entity.field_organization
+field_name: field_organization
+entity_type: person_entity
+bundle: person_entity
+label: Organization
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: '73074'
+default_value_callback: ''
+settings: {  }
+field_type: ocha_organizations

@@ -1,0 +1,65 @@
+uuid: 7cc8d28b-d3cd-4df7-89db-854e5a9bf255
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.person_entity.person_entity.field_email
+    - field.field.person_entity.person_entity.field_hid
+    - field.field.person_entity.person_entity.field_organization
+    - field.field.person_entity.person_entity.field_phone
+  module:
+    - ocha_hid_contacts
+    - ocha_integrations
+    - ocha_persons
+    - telephone
+id: person_entity.person_entity.default
+targetEntityType: person_entity
+bundle: person_entity
+mode: default
+content:
+  field_email:
+    weight: 1
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  field_hid:
+    weight: 4
+    label: above
+    settings:
+      output: label
+      output_global_cluster: 0
+      output_lead_agencies: 0
+      output_partners: 0
+      output_activation_document: 0
+      output_operations: 0
+    third_party_settings: {  }
+    type: ocha_hid_contacts_default
+    region: content
+  field_organization:
+    weight: 3
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: ocha_integrations_default
+    region: content
+  field_phone:
+    weight: 2
+    label: hidden
+    settings:
+      title: ''
+    third_party_settings: {  }
+    type: telephone_link
+    region: content
+  name:
+    label: hidden
+    type: string
+    weight: 0
+    region: content
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+hidden:
+  langcode: true
+  search_api_excerpt: true

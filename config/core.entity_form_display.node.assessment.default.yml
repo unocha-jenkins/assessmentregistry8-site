@@ -33,9 +33,9 @@ dependencies:
     - custom_widgets
     - datetime_range
     - field_group
+    - inline_entity_form
     - link
     - ocha_assessment_document
-    - ocha_hid_contacts
     - ocha_locations
     - path
     - select2
@@ -69,6 +69,7 @@ third_party_settings:
         - field_asst_organizations
         - field_population_types
         - field_disasters
+        - field_contacts
       parent_name: ''
       weight: 9
       format_type: fieldset
@@ -103,7 +104,6 @@ third_party_settings:
         - field_units_of_measurement
         - field_collection_methods
         - field_themes
-        - field_contacts
       parent_name: group_show_more
       weight: 20
       format_type: accordion_item
@@ -167,14 +167,22 @@ content:
     type: select2
     region: content
   field_contacts:
-    type: ocha_hid_contacts_autocomplete
-    weight: 31
-    region: content
+    weight: 20
     settings:
-      max_items: '15'
-      matching_method: contains
-      use_select2: 'no'
+      form_mode: default
+      label_singular: ''
+      label_plural: ''
+      allow_new: true
+      allow_existing: true
+      match_operator: CONTAINS
+      revision: false
+      override_labels: false
+      collapsible: false
+      collapsed: false
+      allow_duplicate: false
     third_party_settings: {  }
+    type: inline_entity_form_complex
+    region: content
   field_countries:
     type: custom_widgets_text_autocomplete
     weight: 10

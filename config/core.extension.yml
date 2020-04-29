@@ -23,6 +23,7 @@ module:
   geofield: 0
   help: 0
   image: 0
+  inline_entity_form: 0
   language: 0
   leaflet: 0
   leaflet_markercluster: 0
@@ -45,6 +46,7 @@ module:
   ocha_locations: 0
   ocha_map: 0
   ocha_organizations: 0
+  ocha_persons: 0
   ocha_population_type: 0
   ocha_themes: 0
   options: 0
@@ -66,6 +68,7 @@ module:
   syslog: 0
   system: 0
   taxonomy: 0
+  telephone: 0
   text: 0
   token: 0
   toolbar: 0
