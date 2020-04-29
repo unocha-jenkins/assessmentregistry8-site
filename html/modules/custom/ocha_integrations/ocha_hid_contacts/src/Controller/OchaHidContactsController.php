@@ -159,6 +159,60 @@ class OchaHidContactsController extends OchaIntegrationsController {
   }
 
   /**
+   * Load by HID Id.
+   */
+  public function loadById($hid_id) {
+    $api_endpoint = $this->config->get('api.endpoint');
+    $api_key = $this->config->get('api.key');
+
+    if (empty($api_key)) {
+      return [];
+    }
+
+    $url = $api_endpoint . '/api/v2/user/' . $hid_id;
+
+    $query_string = '';
+    $fields = [
+      'name',
+      'given_name',
+      'family_name',
+      'email',
+      'job_title',
+      'organization',
+      'phone_number',
+      'phone_number_type',
+    ];
+
+    foreach ($fields as $field) {
+      $query_string .= empty($query_string) ? '' : '&';
+      $query_string .= 'fields=' . $field;
+    }
+
+    $url .= '?' . $query_string;
+
+    // Add API key.
+    $variables['headers'] = ['Authorization' => 'Bearer ' . $api_key];
+
+    $response = $this->httpClient->request('GET', $url, $variables);
+    if ($response->getStatusCode() === 200) {
+      $raw = $response->getBody()->getContents();
+      $data = json_decode($raw);
+
+      // Add to cache.
+      $this->appendToCache([$data]);
+
+      return $data;
+    }
+    else {
+      $this->loggerFactory->get('ocha_hid_contacts')->error('Fetching ocha_hid_contacts failed with @status', [
+        '@status' => $response->getStatusCode(),
+      ]);
+
+      return [];
+    }
+  }
+
+  /**
    * Find contacts.
    */
   public function autocomplete($search) {

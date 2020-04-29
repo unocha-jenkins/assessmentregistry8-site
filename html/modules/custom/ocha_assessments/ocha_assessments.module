@@ -7,6 +7,7 @@
 
 use Drupal\node\Entity\Node;
 use Drupal\Core\File\FileSystemInterface;
+use Drupal\ocha_persons\Entity\PersonEntity;
 
 /**
  * Implements hook_field_widget_info_alter().
@@ -126,6 +127,7 @@ function ocha_assessments_process_row_from_hrinfo($item) {
       'type' => 'assessment',
       'title' => $label,
       'nid' => $item->id,
+      'field_contacts' => [],
       'field_local_groups' => [],
       'field_organizations' => [],
       'field_asst_organizations' => [],
@@ -138,6 +140,22 @@ function ocha_assessments_process_row_from_hrinfo($item) {
       'field_assessment_report' => [],
       'field_assessment_questionnaire' => [],
     ];
+
+    // Contacts.
+    if (isset($item->contacts) && count($item->contacts)) {
+      // Uses the same Ids.
+      foreach ($item->contacts as $hid_id) {
+        // Lookup existing contacts.
+        $person_id = ocha_assessments_lookup_person($hid_id);
+        if (!$person_id) {
+          // Or create new contact.
+          $person_id = ocha_assessments_create_person($hid_id);
+        }
+        $data['field_contacts'][] = [
+          'value' => $person_id,
+        ];
+      }
+    }
 
     // Local group aka Cluster(s)/Sector(s).
     if (isset($item->bundles) && count($item->bundles)) {
@@ -417,4 +435,54 @@ function ocha_assessments_create_document($accessibility, $document_url, $instru
   }
 
   return $data;
+}
+
+/**
+ * Lookup contact using HID Id.
+ */
+function ocha_assessments_lookup_person($hid_id) {
+  $query = Drupal::service('entity.query')
+    ->get('person_entity')
+    ->condition('field_hid', $hid_id);
+  $entity_ids = $query->execute();
+
+  if (empty($entity_ids)) {
+    return FALSE;
+  }
+
+  return reset($entity_ids);
+}
+
+/**
+ * Create contact using HID Id.
+ */
+function ocha_assessments_create_person($hid_id) {
+  $data = [
+    'name' => $hid_id,
+    'field_hid' => $hid_id,
+  ];
+
+  // Check HID.
+  if ($contact = ocha_hid_contacts_load_by_id($hid_id)) {
+    $data['name'] = $contact->name;
+    $data['field_email'] = [];
+    $data['field_phone'] = [];
+
+    if (!empty($contact->phone_number)) {
+      $data['field_phone'][] = $contact->phone_number;
+    }
+
+    if (!empty($contact->email)) {
+      $data['field_email'][] = $contact->email;
+    }
+
+    if (!empty($contact->email)) {
+      $data['field_email'][] = $contact->email;
+    }
+  }
+
+  $person = PersonEntity::create($data);
+  $person->save();
+
+  return $person->id();
 }
