@@ -38,7 +38,7 @@
     margin-bottom: 1rem;
     border-bottom: 1px solid $cd-mid-bluey-grey;
 
-    @include tablet {
+    @include desktop {
       padding-right: calc(285px + 3rem);
     }
   }
