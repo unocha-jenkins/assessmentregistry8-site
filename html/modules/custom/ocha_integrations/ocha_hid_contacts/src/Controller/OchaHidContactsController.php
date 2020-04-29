@@ -175,14 +175,39 @@ class OchaHidContactsController extends OchaIntegrationsController {
     }
 
     $url = $api_endpoint . '/api/v2/user';
+    $query_string = '';
 
-    $variables['query'] = [
+    $query_vars = [
       'sort' => 'name',
       'limit' => 50,
       'name' => $search,
       'authOnly' => 'false',
     ];
 
+    $fields = [
+      'name',
+      'given_name',
+      'family_name',
+      'email',
+      'job_title',
+      'organization',
+      'phone_number',
+      'phone_number_type',
+    ];
+
+    // Construct querystring based on array.
+    foreach ($query_vars as $query_name => $query_var) {
+      $query_string .= empty($query_string) ? '' : '&';
+      $query_string .= $query_name . '=' . $query_var;
+    }
+    foreach ($fields as $field) {
+      $query_string .= empty($query_string) ? '' : '&';
+      $query_string .= 'fields=' . $field;
+    }
+
+    $url .= '?' . $query_string;
+
+    // Add API key.
     $variables['headers'] = ['Authorization' => 'Bearer ' . $api_key];
 
     $response = $this->httpClient->request('GET', $url, $variables);
