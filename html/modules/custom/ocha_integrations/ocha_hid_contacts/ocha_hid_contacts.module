@@ -62,6 +62,20 @@ function ocha_hid_contacts_get_item($id, $langcode = NULL) {
 }
 
 /**
+ * Get one item by HID id.
+ */
+function ocha_hid_contacts_load_by_id($id) {
+  $controller = ocha_hid_contacts_get_controller();
+
+  // Check cache first.
+  if ($contact = $controller->getItem($id)) {
+    return $contact;
+  }
+
+  return $controller->loadById($id);
+}
+
+/**
  * Autocomplete.
  */
 function ocha_hid_contacts_autocomplete($input) {
