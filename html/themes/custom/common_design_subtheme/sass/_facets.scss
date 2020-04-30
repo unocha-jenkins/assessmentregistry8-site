@@ -108,7 +108,7 @@
   background-color: $cd-light-grey;
   //color: $p-dark-text;
   font-size: 0.8rem;
-  padding: 1rem;
+  padding: 1rem 1rem 0.5rem;
 
   ul {
     list-style: none;
@@ -116,9 +116,15 @@
     padding: 0;
   }
 
+  li {
+    display: block;
+    margin: 0 0 0.5rem;
+    line-height: 1.2;
+  }
+
   a {
     text-decoration: none;
-    
+
     :hover,
     :focus {
       color: $cd-black;
