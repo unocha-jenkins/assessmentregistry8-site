@@ -122,53 +122,59 @@ class OchaLocalGroupsDefaultFormatter extends OchaIntegrationsDefaultFormatter {
         if ($this->getSetting('output') != 'label') {
           // Get item data.
           $data = ocha_local_groups_get_item($value, $langcode);
-          switch ($this->getSetting('output')) {
-            case 'extended':
-              $output = $data->name;
+          if (!isset($data->name)) {
+            $output = $value;
+          }
+          else {
 
-              if ($this->getSetting('output_global_cluster')) {
-                if (!empty($data->global_cluster) && isset($data->global_cluster->label)) {
-                  $output .= ' - ' . $data->global_cluster->label;
-                }
-              }
+            switch ($this->getSetting('output')) {
+              case 'extended':
+                $output = $data->name;
 
-              if ($this->getSetting('output_lead_agencies')) {
-                if (!empty($data->lead_agencies) && is_array($data->lead_agencies)) {
-                  $agencies = [];
-                  foreach ($data->lead_agencies as $lead_agency) {
-                    $agencies[] = $lead_agency->label;
+                if ($this->getSetting('output_global_cluster')) {
+                  if (!empty($data->global_cluster) && isset($data->global_cluster->label)) {
+                    $output .= ' - ' . $data->global_cluster->label;
                   }
-                  $output .= ' - ' . implode(', ', $agencies);
                 }
-              }
 
-              if ($this->getSetting('output_partners')) {
-                if (!empty($data->partners) && is_array($data->partners)) {
-                  $partners = [];
-                  foreach ($data->partners as $partner) {
-                    $partners[] = $partner->label;
+                if ($this->getSetting('output_lead_agencies')) {
+                  if (!empty($data->lead_agencies) && is_array($data->lead_agencies)) {
+                    $agencies = [];
+                    foreach ($data->lead_agencies as $lead_agency) {
+                      $agencies[] = $lead_agency->label;
+                    }
+                    $output .= ' - ' . implode(', ', $agencies);
                   }
-                  $output .= ' - ' . implode(', ', $partners);
                 }
-              }
 
-              if ($this->getSetting('output_activation_document')) {
-                if (!empty($data->activation_document) && isset($data->activation_document->label)) {
-                  $output .= ' - ' . $data->activation_document->label;
-                }
-              }
-
-              if ($this->getSetting('output_operations')) {
-                if (!empty($data->operations) && is_array($data->operations)) {
-                  $operations = [];
-                  foreach ($data->operations as $operation) {
-                    $operations[] = $operation->label;
+                if ($this->getSetting('output_partners')) {
+                  if (!empty($data->partners) && is_array($data->partners)) {
+                    $partners = [];
+                    foreach ($data->partners as $partner) {
+                      $partners[] = $partner->label;
+                    }
+                    $output .= ' - ' . implode(', ', $partners);
                   }
-                  $output .= ' - ' . implode(', ', $operations);
                 }
-              }
 
-              break;
+                if ($this->getSetting('output_activation_document')) {
+                  if (!empty($data->activation_document) && isset($data->activation_document->label)) {
+                    $output .= ' - ' . $data->activation_document->label;
+                  }
+                }
+
+                if ($this->getSetting('output_operations')) {
+                  if (!empty($data->operations) && is_array($data->operations)) {
+                    $operations = [];
+                    foreach ($data->operations as $operation) {
+                      $operations[] = $operation->label;
+                    }
+                    $output .= ' - ' . implode(', ', $operations);
+                  }
+                }
+
+                break;
+            }
           }
         }
 

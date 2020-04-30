@@ -2,12 +2,15 @@
 
 namespace Drupal\ocha_assessments\Form;
 
+use Drupal\Core\Entity\Query\QueryInterface;
 use Drupal\Core\File\FileSystem;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\node\Entity\Node;
+use Drupal\ocha_persons\Entity\PersonEntity;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class OchaAssessmentsBulkImport.
@@ -15,10 +18,42 @@ use PhpOffice\PhpSpreadsheet\Shared\Date;
 class OchaAssessmentsBulkImport extends FormBase {
 
   /**
+   * File system.
+   *
+   * @var Drupal\Core\File\FileSystem
+   */
+  protected $fileSystem;
+
+  /**
+   * Entity query.
+   *
+   * @var Drupal\Core\Entity\Query\QueryInterface
+   */
+  protected $entityQuery;
+
+  /**
    * {@inheritdoc}
    */
   public function getFormId() {
     return 'ocha_assessments_bulk_import';
+  }
+
+  /**
+   * Class constructor.
+   */
+  public function __construct(FileSystem $fileSystem, QueryInterface $entityQuery) {
+    $this->fileSystem = $fileSystem;
+    $this->entityQuery = $entityQuery;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('file_system'),
+      $container->get('entity.query')
+    );
   }
 
   /**
@@ -75,7 +110,7 @@ class OchaAssessmentsBulkImport extends FormBase {
       return;
     }
 
-    $filename = FileSystem::realpath($file->destination);
+    $filename = $this->fileSystem->realpath($file->destination);
 
     $reader = new Xlsx();
     $reader->setReadDataOnly(TRUE);
@@ -288,6 +323,18 @@ class OchaAssessmentsBulkImport extends FormBase {
       $data['field_assessment_questionnaire'][] = ocha_assessments_create_document($item['questionnaire availability'], $item['questionnaire url'], $instructions);
     }
 
+    // Contact.
+    if (isset($item['name']) && !empty($item['name'])) {
+      $person_name = $item['name'];
+      $person_email = $item['email'] ?? '';
+      $person_tel = $item['tel'] ?? '';
+      if ($person_id = $this->addPerson($person_name, $person_email, $person_tel)) {
+        $data['field_contacts'][] = [
+          'target_id' => $person_id,
+        ];
+      }
+    }
+
     $node = Node::create($data);
     $node->save();
   }
@@ -298,6 +345,63 @@ class OchaAssessmentsBulkImport extends FormBase {
   protected function extractIdFromInput($input) {
     $pos = strrpos($input, '[');
     return substr($input, $pos + 1, -1);
+  }
+
+  /**
+   * Create contact using HID Id.
+   */
+  protected function addPerson($name, $email, $tel) {
+    // Email and tel can be multivalue.
+    $email = str_replace(['&', 'and'], '|', $email);
+    $tel = str_replace(['&', 'and'], '|', $tel);
+
+    $emails = explode('|', $email);
+    $tels = explode('|', $tel);
+
+    $existing_person_id = FALSE;
+    foreach ($emails as $e) {
+      $e = trim($e);
+      $existing_person_id = $this->lookupPersonByEmail($e);
+      if ($existing_person_id) {
+        return $existing_person_id;
+      }
+    }
+
+    // Create new person.
+    $data['name'] = $name;
+    $data['field_email'] = [];
+    $data['field_phone'] = [];
+
+    foreach ($tels as $t) {
+      $t = trim($t);
+      $data['field_phone'][] = $t;
+    }
+
+    foreach ($emails as $e) {
+      $e = trim($e);
+      $data['field_email'][] = $e;
+    }
+
+    $person = PersonEntity::create($data);
+    $person->save();
+
+    return $person->id();
+  }
+
+  /**
+   * Lookup contact using email.
+   */
+  protected function lookupPersonByEmail($email) {
+    $query = $this->entityQuery
+      ->get('person_entity')
+      ->condition('field_email', $email);
+    $entity_ids = $query->execute();
+
+    if (empty($entity_ids)) {
+      return FALSE;
+    }
+
+    return reset($entity_ids);
   }
 
 }
