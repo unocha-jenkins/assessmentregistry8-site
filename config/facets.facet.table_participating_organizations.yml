@@ -6,7 +6,11 @@ dependencies:
     - search_api.index.assessments
     - views.view.assessments
   module:
+    - facets_pretty_paths
     - search_api
+third_party_settings:
+  facets_pretty_paths:
+    coder: ocha_integer_list_coder
 id: table_participating_organizations
 name: 'Participating Organization(s)'
 url_alias: table_participating_organizations
@@ -45,6 +49,16 @@ processor_configs:
       sort: 40
     settings:
       sort: ASC
+  hide_1_result_facet:
+    processor_id: hide_1_result_facet
+    weights:
+      build: 50
+    settings: {  }
+  hide_non_narrowing_result_processor:
+    processor_id: hide_non_narrowing_result_processor
+    weights:
+      build: 40
+    settings: {  }
   list_item:
     processor_id: list_item
     weights:
