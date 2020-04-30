@@ -118,15 +118,10 @@
 
   a {
     text-decoration: none;
-  }
-
-  a:hover,
-  a:focus {
-    text-decoration: underline;
-    color: $cd-black;
-
-    svg {
-      fill: $cd-black;
+    
+    :hover,
+    :focus {
+      color: $cd-black;
     }
   }
 
