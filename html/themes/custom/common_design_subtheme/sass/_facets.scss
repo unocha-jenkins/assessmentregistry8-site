@@ -1,3 +1,5 @@
+@import 'cd/cd-mixins';
+
 .block-facets {
   margin-bottom: 2rem;
 }
@@ -67,7 +69,8 @@
   padding: 1rem;
   font-size: 1rem;
   font-weight: bold;
-  background: $cd-light-grey;
+  background: $implementation-primary-dark;
+  color: $cd-light-grey;
   transition: background 0.3s ease;
   display: flex;
   align-items: center;
@@ -77,11 +80,11 @@
   &:hover,
   &:focus {
     background: $implementation-primary;
-    color: $cd-light-grey;
+    color: $cd-white;
   }
 
   svg {
-    fill: $implementation-primary;
+    fill: $cd-white;
     width: 2rem;
     height: 2rem;
     padding: 0 0.5rem 0 0;
@@ -98,5 +101,58 @@
     + .cd-dropdown[data-cd-hidden="true"] {
       display: block;
     }
+  }
+}
+
+.block-facets-summary {
+  background-color: $cd-light-grey;
+  //color: $p-dark-text;
+  font-size: 0.8rem;
+  padding: 1rem 1rem 0.5rem;
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    display: block;
+    margin: 0 0 0.5rem;
+    line-height: 1.2;
+  }
+
+  a {
+    text-decoration: none;
+
+    :hover,
+    :focus {
+      color: $cd-black;
+    }
+  }
+
+  .facet-item__status {
+    font-size: 1rem;
+    font-weight: bold;
+
+    svg {
+      fill: $implementation-primary;
+      height: 0.5rem;
+      width: 0.5rem;
+    }
+  }
+
+  .facet-item__value {
+    font-weight: bold;
+  }
+
+  // Hide Summary block title.
+  h2 {
+    position: absolute !important;
+    clip: rect(1px, 1px, 1px, 1px);
+    overflow: hidden;
+    height: 1px;
+    width: 1px;
+    word-wrap: normal;
   }
 }

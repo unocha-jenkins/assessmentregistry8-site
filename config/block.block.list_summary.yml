@@ -1,26 +1,25 @@
-uuid: 7dc39a32-717a-4968-9e3a-e17cfcbbbe4c
+uuid: a033edd2-dc8a-4408-a292-1f62a36ef22b
 langcode: en
 status: true
 dependencies:
   config:
-    - facets.facet.population_types
+    - facets_summary.facets_summary.list_summary
   module:
-    - facets
+    - facets_summary
     - system
   theme:
     - common_design_subtheme
-id: population_types
+id: list_summary
 theme: common_design_subtheme
 region: sidebar_first
-weight: -7
+weight: -32
 provider: null
-plugin: 'facet_block:population_types'
+plugin: 'facets_summary_block:list_summary'
 settings:
-  id: 'facet_block:population_types'
-  label: 'Population Type(s)'
-  provider: facets
+  id: 'facets_summary_block:list_summary'
+  label: 'List summary'
+  provider: facets_summary
   label_display: visible
-  block_id: population_types
 visibility:
   request_path:
     id: request_path
