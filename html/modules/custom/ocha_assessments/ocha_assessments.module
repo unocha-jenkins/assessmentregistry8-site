@@ -152,7 +152,7 @@ function ocha_assessments_process_row_from_hrinfo($item) {
           $person_id = ocha_assessments_create_person($hid_id);
         }
         $data['field_contacts'][] = [
-          'value' => $person_id,
+          'target_id' => $person_id,
         ];
       }
     }
@@ -441,7 +441,7 @@ function ocha_assessments_create_document($accessibility, $document_url, $instru
  * Lookup contact using HID Id.
  */
 function ocha_assessments_lookup_person($hid_id) {
-  $query = Drupal::service('entity.query')
+  $query = \Drupal::service('entity.query')
     ->get('person_entity')
     ->condition('field_hid', $hid_id);
   $entity_ids = $query->execute();
@@ -470,10 +470,6 @@ function ocha_assessments_create_person($hid_id) {
 
     if (!empty($contact->phone_number)) {
       $data['field_phone'][] = $contact->phone_number;
-    }
-
-    if (!empty($contact->email)) {
-      $data['field_email'][] = $contact->email;
     }
 
     if (!empty($contact->email)) {
