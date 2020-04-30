@@ -1,26 +1,25 @@
-uuid: e7cea26d-0487-4c1e-8124-eba92328f2d3
+uuid: 523f1497-ce2b-4dfa-9efd-0cf12b4de0bb
 langcode: en
 status: true
 dependencies:
   config:
-    - facets.facet.table_clusters_sectors
+    - facets_summary.facets_summary.table_summary
   module:
-    - facets
+    - facets_summary
     - system
   theme:
     - common_design_subtheme
-id: table_clusters_sectors
+id: table_summary
 theme: common_design_subtheme
 region: sidebar_first
-weight: 4
+weight: -30
 provider: null
-plugin: 'facet_block:table_clusters_sectors'
+plugin: 'facets_summary_block:table_summary'
 settings:
-  id: 'facet_block:table_clusters_sectors'
-  label: Cluster(s)/Sector(s)
-  provider: facets
+  id: 'facets_summary_block:table_summary'
+  label: 'Table summary'
+  provider: facets_summary
   label_display: visible
-  block_id: table_clusters_sectors
 visibility:
   request_path:
     id: request_path

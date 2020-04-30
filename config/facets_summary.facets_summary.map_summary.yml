@@ -1,4 +1,4 @@
-uuid: f4c1d102-7983-4f92-a4d1-98ae1c308cda
+uuid: 56e5591a-6092-4baf-86d3-082aae0514c0
 langcode: en
 status: true
 dependencies:
@@ -7,86 +7,86 @@ dependencies:
     - views.view.assessments
   module:
     - search_api
-id: list_summary
-name: 'List summary'
+id: map_summary
+name: 'map summary'
 facets:
-  clusters_sectors:
+  map_clusters_sectors:
     checked: true
     label: Cluster(s)/Sector(s)
     separator: ', '
     weight: 0
     show_count: false
-  countries:
+  map_countries:
     checked: true
     label: Countries
     separator: ', '
     weight: 0
     show_count: false
-  disasters_emergencies:
+  map_disasters_emergencies:
     checked: true
     label: Disaster(s)/Emergencies
     separator: ', '
     weight: 0
     show_count: false
-  level_of_representation:
+  map_level_of_representation:
     checked: true
     label: 'Level of Representation'
     separator: ', '
     weight: 0
     show_count: false
-  locations:
+  map_locations:
     checked: true
     label: Location(s)
     separator: ', '
     weight: 0
     show_count: false
-  organizations:
+  map_organizations:
     checked: true
     label: Organization(s)
     separator: ', '
     weight: 0
     show_count: false
-  participating_organizations:
+  map_participating_organizations:
     checked: true
     label: 'Participating Organization(s)'
     separator: ', '
     weight: 0
     show_count: false
-  population_types:
+  map_population_types:
     checked: true
     label: 'Population Type(s)'
     separator: ', '
     weight: 0
     show_count: false
-  sources:
+  map_sources:
     checked: true
     label: Source(s)
     separator: ', '
     weight: 0
     show_count: false
-  status:
+  map_status:
     checked: true
     label: Status
     separator: ', '
     weight: 0
     show_count: false
-  themes:
+  map_themes:
     checked: true
     label: Theme(s)
     separator: ', '
     weight: 0
     show_count: false
-facet_source_id: 'search_api:views_page__assessments__assessments_list'
+facet_source_id: 'search_api:views_page__assessments__assessments_map'
 processor_configs:
   hide_when_not_rendered:
     processor_id: hide_when_not_rendered
     weights:
-      build: '-7'
+      build: '-9'
     settings: {  }
   reset_facets:
     processor_id: reset_facets
     weights:
-      build: '-6'
+      build: '-7'
     settings:
       link_text: 'Reset all filters'
   show_count:
@@ -97,7 +97,7 @@ processor_configs:
   show_text_when_empty:
     processor_id: show_text_when_empty
     weights:
-      build: '-9'
+      build: '-8'
     settings:
       text:
         value: 'No results found.'

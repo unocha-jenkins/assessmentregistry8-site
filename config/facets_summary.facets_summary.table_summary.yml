@@ -1,4 +1,4 @@
-uuid: f4c1d102-7983-4f92-a4d1-98ae1c308cda
+uuid: 2adad537-d1fb-43c0-abad-ea0f22bbe7c4
 langcode: en
 status: true
 dependencies:
@@ -7,97 +7,97 @@ dependencies:
     - views.view.assessments
   module:
     - search_api
-id: list_summary
-name: 'List summary'
+id: table_summary
+name: 'Table summary'
 facets:
-  clusters_sectors:
+  table_clusters_sectors:
     checked: true
     label: Cluster(s)/Sector(s)
     separator: ', '
     weight: 0
     show_count: false
-  countries:
+  table_countries:
     checked: true
     label: Countries
     separator: ', '
     weight: 0
     show_count: false
-  disasters_emergencies:
+  table_disasters_emergencies:
     checked: true
     label: Disaster(s)/Emergencies
     separator: ', '
     weight: 0
     show_count: false
-  level_of_representation:
+  table_level_of_representation:
     checked: true
     label: 'Level of Representation'
     separator: ', '
     weight: 0
     show_count: false
-  locations:
+  table_locations:
     checked: true
     label: Location(s)
     separator: ', '
     weight: 0
     show_count: false
-  organizations:
+  table_organizations:
     checked: true
     label: Organization(s)
     separator: ', '
     weight: 0
     show_count: false
-  participating_organizations:
+  table_participating_organizations:
     checked: true
     label: 'Participating Organization(s)'
     separator: ', '
     weight: 0
     show_count: false
-  population_types:
+  table_population_types:
     checked: true
     label: 'Population Type(s)'
     separator: ', '
     weight: 0
     show_count: false
-  sources:
+  table_sources:
     checked: true
     label: Source(s)
     separator: ', '
     weight: 0
     show_count: false
-  status:
+  table_status:
     checked: true
     label: Status
     separator: ', '
     weight: 0
     show_count: false
-  themes:
+  table_themes:
     checked: true
     label: Theme(s)
     separator: ', '
     weight: 0
     show_count: false
-facet_source_id: 'search_api:views_page__assessments__assessments_list'
+facet_source_id: 'search_api:views_page__assessments__assessments_table'
 processor_configs:
   hide_when_not_rendered:
     processor_id: hide_when_not_rendered
     weights:
-      build: '-7'
+      build: '-9'
     settings: {  }
   reset_facets:
     processor_id: reset_facets
     weights:
-      build: '-6'
+      build: '30'
     settings:
       link_text: 'Reset all filters'
   show_count:
     processor_id: show_count
     weights:
-      build: '-10'
+      build: '-8'
     settings: {  }
   show_text_when_empty:
     processor_id: show_text_when_empty
     weights:
-      build: '-9'
+      build: '-10'
     settings:
       text:
         value: 'No results found.'

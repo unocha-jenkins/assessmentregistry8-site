@@ -1,26 +1,25 @@
-uuid: 03f718c6-a1f0-4f9e-8b88-18967882c405
+uuid: 0fdc1633-5c88-4f9f-a3fe-c35c976152ef
 langcode: en
 status: true
 dependencies:
   config:
-    - facets.facet.map_level_of_representation
+    - facets_summary.facets_summary.map_summary
   module:
-    - facets
+    - facets_summary
     - system
   theme:
     - common_design_subtheme
-id: map_levelofrepresentation
+id: map_summary
 theme: common_design_subtheme
 region: sidebar_first
-weight: -10
+weight: -31
 provider: null
-plugin: 'facet_block:map_level_of_representation'
+plugin: 'facets_summary_block:map_summary'
 settings:
-  id: 'facet_block:map_level_of_representation'
-  label: 'Level of Representation'
-  provider: facets
+  id: 'facets_summary_block:map_summary'
+  label: 'Map summary'
+  provider: facets_summary
   label_display: visible
-  block_id: map_levelofrepresentation
 visibility:
   request_path:
     id: request_path
