@@ -9,7 +9,25 @@ dependencies:
     - search_api
 id: km_summary
 name: 'km summary'
-facets: {  }
+facets:
+  country:
+    checked: true
+    label: Country
+    separator: ', '
+    weight: 0
+    show_count: false
+  document_type:
+    checked: true
+    label: 'Document type'
+    separator: ', '
+    weight: 0
+    show_count: false
+  hpc_document_repository:
+    checked: true
+    label: 'HPC Document Repository'
+    separator: ', '
+    weight: 0
+    show_count: false
 facet_source_id: 'search_api:views_page__knowledge_management__page_1'
 processor_configs:
   hide_when_not_rendered:
