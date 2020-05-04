@@ -4,7 +4,6 @@ namespace Drupal\ocha_integrations\Plugin\facets_summary\processor;
 
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Url;
 use Drupal\facets_summary\FacetsSummaryInterface;
 use Drupal\facets_summary\Processor\BuildProcessorInterface;
 use Drupal\facets_summary\Processor\ProcessorPluginBase;
@@ -43,7 +42,7 @@ class ShowStringProcessorOcha extends ProcessorPluginBase implements BuildProces
       '#search_string' => Html::escape($currentString),
       '#cache' => [
         'contexts' => [
-          'url.query_args:' . 's',
+          'url.query_args:s',
         ],
       ],
     ];

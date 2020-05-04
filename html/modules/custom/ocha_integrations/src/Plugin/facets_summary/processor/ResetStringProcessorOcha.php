@@ -87,7 +87,7 @@ class ResetStringProcessorOcha extends ProcessorPluginBase implements BuildProce
       ],
       '#cache' => [
         'contexts' => [
-          'url.query_args:' . 's',
+          'url.query_args:s',
         ],
       ],
     ];
