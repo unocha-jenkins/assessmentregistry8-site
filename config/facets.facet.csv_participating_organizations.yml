@@ -1,31 +1,34 @@
-uuid: cfbaf21f-2337-4335-9d0a-79a01dfd90a1
+uuid: 0b6ad8c7-dfc0-473b-aa0c-8c6ed845a866
 langcode: en
 status: true
 dependencies:
   config:
     - search_api.index.assessments
-    - views.view.assessments
   module:
     - facets_pretty_paths
-    - search_api
+    - views_data_export
 third_party_settings:
   facets_pretty_paths:
     coder: ocha_integer_list_coder
-id: table_participating_organizations
+id: csv_participating_organizations
 name: 'Participating Organization(s)'
 url_alias: participating_organizations
 weight: 0
 min_count: 1
 show_only_one_result: true
 field_identifier: field_asst_organizations
-facet_source_id: 'search_api:views_page__assessments__assessments_table'
+facet_source_id: 'search_api:views_data_export__assessments__data_export_1'
 widget:
-  type: select2
+  type: links
   config:
     show_numbers: true
-    width: 100%
-    autocomplete: false
-    match_operator: CONTAINS
+    soft_limit: 0
+    soft_limit_settings:
+      show_less_label: 'Show less'
+      show_more_label: 'Show more'
+    show_reset_link: false
+    reset_text: 'Show all'
+    hide_reset_when_no_selection: false
 query_operator: and
 use_hierarchy: false
 hierarchy:
