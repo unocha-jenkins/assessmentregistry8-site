@@ -3,3 +3,5 @@ global-styling:
     theme:
       css/styles.css: {}
       ../../contrib/common_design/components/cd-grid/cd-grid.css: {}
+  js:
+    js/cd-search--inline-action.js: {}
