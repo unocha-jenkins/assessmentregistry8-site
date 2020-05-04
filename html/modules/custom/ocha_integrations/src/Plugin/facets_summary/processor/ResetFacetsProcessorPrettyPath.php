@@ -6,8 +6,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
 use Drupal\facets_summary\FacetsSummaryInterface;
-use Drupal\facets_summary\Processor\BuildProcessorInterface;
-use Drupal\facets_summary\Processor\ProcessorPluginBase;
 use Drupal\facets_summary\Plugin\facets_summary\processor\ResetFacetsProcessor;
 
 /**
@@ -39,6 +37,13 @@ class ResetFacetsProcessorPrettyPath extends ResetFacetsProcessor {
     $request = \Drupal::requestStack()->getMasterRequest();
     $query_params = $request->query->all();
 
+    if (isset($configuration['settings']['clear_string']) && $configuration['settings']['clear_string']) {
+      if (!empty($query_params['s'])) {
+        unset($query_params['s']);
+        $hasReset = TRUE;
+      }
+    }
+
     // Bypass all active facets and remove them from the query parameters array.
     foreach ($facets as $facet) {
       $url_alias = $facet->getUrlAlias();
@@ -46,7 +51,7 @@ class ResetFacetsProcessorPrettyPath extends ResetFacetsProcessor {
 
       if ($facet->getActiveItems()) {
         // This removes query params when using the query url processor.
-        if(isset($query_params[$filter_key])){
+        if (isset($query_params[$filter_key])) {
           foreach ($query_params[$filter_key] as $delta => $param) {
             if (strpos($param, $url_alias . ':') !== FALSE) {
               unset($query_params[$filter_key][$delta]);
@@ -75,8 +80,44 @@ class ResetFacetsProcessorPrettyPath extends ResetFacetsProcessor {
         'facet-summary-item--clear',
       ],
     ];
-    array_unshift($build['#items'], $item);
+
+    // Add to the end.
+    array_push($build['#items'], $item);
+
     return $build;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function buildConfigurationForm(array $form, FormStateInterface $form_state, FacetsSummaryInterface $facets_summary) {
+    // By default, there should be no config form.
+    $config = $this->getConfiguration();
+
+    $build['link_text'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Reset facets link text'),
+      '#default_value' => $config['link_text'],
+    ];
+
+    $build['clear_string'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Clear the current search string'),
+      '#default_value' => $config['clear_string'],
+      '#description' => $this->t('If checked, the reset link will also clear the text used for the search.'),
+    ];
+
+    return $build;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function defaultConfiguration() {
+    return [
+      'link_text' => '',
+      'clear_string' => TRUE,
+    ];
   }
 
 }
