@@ -83,6 +83,10 @@
     color: $cd-white;
   }
 
+  &:focus {
+    outline: 3px solid $implementation-highlight;
+  }
+
   svg {
     fill: $cd-white;
     width: 2rem;
@@ -153,7 +157,6 @@
 
   .facet-summary-item--clear {
     position: relative;
-    margin-top: 0.5rem;
 
     ::before {
       display: inline-block;
@@ -177,4 +180,10 @@
     width: 1px;
     word-wrap: normal;
   }
+}
+
+.select2-container--open,
+.select2-container--focus,
+.item-list__dropdown:focus {
+  outline: 2px solid $implementation-highlight;
 }
