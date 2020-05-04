@@ -4,9 +4,12 @@ namespace Drupal\ocha_integrations\Plugin\facets_summary\processor;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Url;
 use Drupal\facets_summary\FacetsSummaryInterface;
 use Drupal\facets_summary\Plugin\facets_summary\processor\ResetFacetsProcessor;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Provides a processor that adds a link to reset facet filters.
@@ -20,7 +23,38 @@ use Drupal\facets_summary\Plugin\facets_summary\processor\ResetFacetsProcessor;
  *   }
  * )
  */
-class ResetFacetsProcessorPrettyPath extends ResetFacetsProcessor {
+class ResetFacetsProcessorPrettyPath extends ResetFacetsProcessor implements ContainerFactoryPluginInterface {
+
+  /**
+   * The request stack.
+   *
+   * @var \Symfony\Component\HttpFoundation\RequestStack
+   */
+  protected $requestStack;
+
+  /**
+   * Builds ResetFacetsProcessor object.
+   *
+   * @param array $configuration
+   *   A configuration array containing information about the plugin instance.
+   * @param string $plugin_id
+   *   The plugin_id for the plugin instance.
+   * @param string $plugin_definition
+   *   The plugin_definition for the plugin instance.
+   * @param \Symfony\Component\HttpFoundation\RequestStack $request_stack
+   *   The request stack.
+   */
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, RequestStack $request_stack) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition);
+    $this->requestStack = $request_stack;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static($configuration, $plugin_id, $plugin_definition, $container->get('request_stack'));
+  }
 
   /**
    * {@inheritdoc}
@@ -34,7 +68,7 @@ class ResetFacetsProcessorPrettyPath extends ResetFacetsProcessor {
       return $build;
     }
 
-    $request = \Drupal::requestStack()->getMasterRequest();
+    $request = $this->requestStack->getMasterRequest();
     $query_params = $request->query->all();
 
     if (isset($configuration['settings']['clear_string']) && $configuration['settings']['clear_string']) {
@@ -44,25 +78,9 @@ class ResetFacetsProcessorPrettyPath extends ResetFacetsProcessor {
       }
     }
 
-    // Bypass all active facets and remove them from the query parameters array.
+    // Check if we have an active filter.
     foreach ($facets as $facet) {
-      $url_alias = $facet->getUrlAlias();
-      $filter_key = $facet->getFacetSourceConfig()->getFilterKey() ?: 'f';
-
       if ($facet->getActiveItems()) {
-        // This removes query params when using the query url processor.
-        if (isset($query_params[$filter_key])) {
-          foreach ($query_params[$filter_key] as $delta => $param) {
-            if (strpos($param, $url_alias . ':') !== FALSE) {
-              unset($query_params[$filter_key][$delta]);
-            }
-          }
-
-          if (!$query_params[$filter_key]) {
-            unset($query_params[$filter_key]);
-          }
-        }
-
         $hasReset = TRUE;
       }
     }

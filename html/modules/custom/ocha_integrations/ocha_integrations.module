@@ -11,3 +11,27 @@
 function ocha_integrations_order_options($a, $b) {
   return strcmp(iconv('UTF-8', 'ASCII//TRANSLIT', $a), iconv('UTF-8', 'ASCII//TRANSLIT', $b));
 }
+
+/**
+ * Implements hook_theme().
+ */
+function ocha_integrations_theme($existing, $type, $theme, $path) {
+  return [
+    'ocha_integrations_facets_summary_string' => [
+      'render element' => 'elements',
+      'variables' => [
+        'label' => NULL,
+        'search_string' => NULL,
+      ],
+      'template' => 'facets-summary-string',
+    ],
+    'ocha_integrations_facets_reset_string' => [
+      'render element' => 'elements',
+      'variables' => [
+        'label' => NULL,
+        'search_string' => NULL,
+      ],
+      'template' => 'facets-reset-string',
+    ],
+  ];
+}
