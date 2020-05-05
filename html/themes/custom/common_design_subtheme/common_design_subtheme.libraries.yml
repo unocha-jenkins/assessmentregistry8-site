@@ -5,6 +5,7 @@ global-styling:
       ../../contrib/common_design/components/cd-grid/cd-grid.css: {}
   js:
     js/cd-search--inline-action.js: {}
+
 export-button:
   js:
     js/export-button.js: {}
