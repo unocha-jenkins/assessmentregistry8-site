@@ -1,7 +1,7 @@
 (function (Drupal) {
   'use strict';
 
-  Drupal.behaviors.cdSearchInlineAction = {
+  Drupal.behaviors.exportButton = {
     attach: function (context, settings) {
 
       var exportButton = context.querySelector('.export-button--button');
