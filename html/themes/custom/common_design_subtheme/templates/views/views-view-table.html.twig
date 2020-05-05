@@ -42,6 +42,11 @@
     'cd-table cd-table--responsive cd-table--striped'
   ]
 %}
+
+<div class="export-button--wrapper">
+  <button class="export-button--button">Export to CSV</button>
+</div>
+
 <table{{ attributes.addClass(classes) }}>
   {% if caption_needed %}
     <caption>

@@ -1,31 +1,27 @@
-uuid: 5ba9d927-2fdc-4c1e-80d0-cc2a1ad6ff1a
+uuid: 07fd0ac9-0ada-4ddf-80ae-534508a15a8a
 langcode: en
 status: true
 dependencies:
   config:
     - search_api.index.assessments
-    - views.view.assessments
   module:
     - facets_pretty_paths
-    - search_api
+    - views_data_export
 third_party_settings:
   facets_pretty_paths:
     coder: default_coder
-id: table_assessment_date
+id: csv_assessment_date
 name: 'Assessment Date'
 url_alias: assessment_date
 weight: 0
 min_count: 1
 show_only_one_result: false
 field_identifier: field_ass_date
-facet_source_id: 'search_api:views_page__assessments__assessments_table'
+facet_source_id: 'search_api:views_data_export__assessments__data_export_1'
 widget:
-  type: select2
+  type: array
   config:
     show_numbers: true
-    width: 100%
-    autocomplete: false
-    match_operator: CONTAINS
 query_operator: or
 use_hierarchy: false
 hierarchy:

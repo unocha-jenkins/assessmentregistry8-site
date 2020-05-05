@@ -1,38 +1,34 @@
-uuid: 3b14361d-eb0f-400b-8a5e-d4650fe00727
+uuid: 54cda862-52ec-42f9-a126-e0af771028b3
 langcode: en
 status: true
 dependencies:
   config:
     - search_api.index.assessments
-    - views.view.assessments
   module:
     - facets_pretty_paths
-    - search_api
+    - views_data_export
 third_party_settings:
   facets_pretty_paths:
     coder: ocha_integer_list_coder
-id: table_status
-name: Status
-url_alias: status
+id: csv_locations
+name: Location(s)
+url_alias: locations
 weight: 0
 min_count: 1
-show_only_one_result: false
-field_identifier: field_status
-facet_source_id: 'search_api:views_page__assessments__assessments_table'
+show_only_one_result: true
+field_identifier: field_locations
+facet_source_id: 'search_api:views_data_export__assessments__data_export_1'
 widget:
-  type: select2
+  type: array
   config:
     show_numbers: true
-    width: 100%
-    autocomplete: false
-    match_operator: CONTAINS
-query_operator: or
-use_hierarchy: false
+query_operator: and
+use_hierarchy: true
 hierarchy:
-  type: taxonomy
+  type: ocha_locations_hierarchy
   config: {  }
 expand_hierarchy: false
-enable_parent_when_child_gets_disabled: true
+enable_parent_when_child_gets_disabled: false
 hard_limit: 0
 exclude: false
 only_visible_when_facet_source_is_visible: true
@@ -55,10 +51,10 @@ processor_configs:
       sort: 40
     settings:
       sort: ASC
-  hide_active_items_processor:
-    processor_id: hide_active_items_processor
+  list_item:
+    processor_id: list_item
     weights:
-      build: 25
+      build: 5
     settings: {  }
   url_processor_handler:
     processor_id: url_processor_handler

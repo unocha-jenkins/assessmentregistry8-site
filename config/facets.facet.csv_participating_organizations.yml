@@ -1,32 +1,35 @@
-uuid: 3b14361d-eb0f-400b-8a5e-d4650fe00727
+uuid: 0b6ad8c7-dfc0-473b-aa0c-8c6ed845a866
 langcode: en
 status: true
 dependencies:
   config:
     - search_api.index.assessments
-    - views.view.assessments
   module:
     - facets_pretty_paths
-    - search_api
+    - views_data_export
 third_party_settings:
   facets_pretty_paths:
     coder: ocha_integer_list_coder
-id: table_status
-name: Status
-url_alias: status
+id: csv_participating_organizations
+name: 'Participating Organization(s)'
+url_alias: participating_organizations
 weight: 0
 min_count: 1
-show_only_one_result: false
-field_identifier: field_status
-facet_source_id: 'search_api:views_page__assessments__assessments_table'
+show_only_one_result: true
+field_identifier: field_asst_organizations
+facet_source_id: 'search_api:views_data_export__assessments__data_export_1'
 widget:
-  type: select2
+  type: links
   config:
     show_numbers: true
-    width: 100%
-    autocomplete: false
-    match_operator: CONTAINS
-query_operator: or
+    soft_limit: 0
+    soft_limit_settings:
+      show_less_label: 'Show less'
+      show_more_label: 'Show more'
+    show_reset_link: false
+    reset_text: 'Show all'
+    hide_reset_when_no_selection: false
+query_operator: and
 use_hierarchy: false
 hierarchy:
   type: taxonomy
@@ -43,22 +46,26 @@ processor_configs:
       sort: 20
     settings:
       sort: DESC
-  count_widget_order:
-    processor_id: count_widget_order
-    weights:
-      sort: 30
-    settings:
-      sort: DESC
   display_value_widget_order:
     processor_id: display_value_widget_order
     weights:
       sort: 40
     settings:
       sort: ASC
-  hide_active_items_processor:
-    processor_id: hide_active_items_processor
+  hide_1_result_facet:
+    processor_id: hide_1_result_facet
     weights:
-      build: 25
+      build: 50
+    settings: {  }
+  hide_non_narrowing_result_processor:
+    processor_id: hide_non_narrowing_result_processor
+    weights:
+      build: 40
+    settings: {  }
+  list_item:
+    processor_id: list_item
+    weights:
+      build: 5
     settings: {  }
   url_processor_handler:
     processor_id: url_processor_handler
