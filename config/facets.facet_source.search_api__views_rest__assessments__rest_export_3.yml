@@ -1,0 +1,12 @@
+uuid: 554cf5a5-7fb8-42e9-b77c-f33a62fee793
+langcode: en
+status: true
+dependencies: {  }
+id: search_api__views_rest__assessments__rest_export_3
+name: 'search_api:views_rest__assessments__rest_export_3'
+filter_key: ''
+url_processor: facets_pretty_paths
+breadcrumb:
+  active: false
+  before: true
+  group: false
