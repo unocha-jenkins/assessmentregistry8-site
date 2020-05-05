@@ -1787,10 +1787,26 @@ display:
         header: false
         fields: false
       pager:
-        type: some
+        type: full
         options:
-          items_per_page: 1000
+          items_per_page: 10000
           offset: 0
+          id: 0
+          total_pages: null
+          tags:
+            previous: ‹‹
+            next: ››
+            first: '« First'
+            last: 'Last »'
+          expose:
+            items_per_page: false
+            items_per_page_label: 'Items per page'
+            items_per_page_options: '5, 10, 25, 50'
+            items_per_page_options_all: false
+            items_per_page_options_all_label: '- All -'
+            offset: false
+            offset_label: Offset
+          quantity: 9
       style:
         type: ocha_leaflet_map
         options:
@@ -1848,20 +1864,7 @@ display:
         type: fields
         options: {  }
       display_description: ''
-      header:
-        area:
-          id: area
-          table: views
-          field: area
-          relationship: none
-          group_type: group
-          admin_label: ''
-          empty: false
-          tokenize: false
-          content:
-            value: 'For performance reasons only the first 1000 matches are displayed.'
-            format: basic_html
-          plugin_id: text
+      header: {  }
       fields:
         field_locations_lat_lon:
           id: field_locations_lat_lon
@@ -1993,6 +1996,7 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
+        - url.query_args
         - 'user.node_grants:view'
       tags:
         - 'config:search_api.index.assessments'
@@ -4444,7 +4448,7 @@ display:
       include_query_params: false
       export_method: standard
       export_batch_size: 250
-      facet_settings: 'search_api:views_page__assessments__assessments_table'
+      facet_settings: 'search_api:views_data_export__assessments__data_export_1'
     cache_metadata:
       max-age: -1
       contexts:
