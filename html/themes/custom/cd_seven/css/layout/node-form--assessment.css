@@ -24,12 +24,15 @@
     padding-right: 20px;
   }
 
+  /* Additional left side */
   .field--name-field-subject-objective,
   .field--name-field-methodology,
   .field--name-field-key-findings,
   .field--name-field-related-content,
-  .field--name-field-collection-methods {
+  .field--name-field-collection-methods,
+  .field--name-field-contacts {
     width: 52%;
+    margin-bottom: 1rem;
   }
 
   .field--name-field-related-content {
@@ -73,6 +76,11 @@
 
 .field-name-field-locations {
   width: 100%;
+}
+
+.field--name-field-subject-objective,
+.field--name-field-sample-size {
+  margin-top: 1rem;
 }
 
 /* Fieldset reset */
