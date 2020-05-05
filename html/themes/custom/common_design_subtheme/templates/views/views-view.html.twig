@@ -30,7 +30,6 @@
  * @see template_preprocess_views_view()
  */
 #}
-{{ attach_library('common_design_subtheme/export-button') }}
 
 {%
   set classes = [
@@ -41,6 +40,11 @@
     dom_id ? 'js-view-dom-id-' ~ dom_id,
   ]
 %}
+
+{% if display_id != 'assessments_map' %}
+  {% include '@cd-components/cd-export-button/cd-export-button.html.twig' %}
+{% endif %}
+
 <div{{ attributes.addClass(classes) }}>
   {{ title_prefix }}
   {% if title %}
