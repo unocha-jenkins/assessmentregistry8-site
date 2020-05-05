@@ -101,12 +101,6 @@ processor_configs:
     weights:
       build: '-9'
     settings: {  }
-  reset_facets:
-    processor_id: reset_facets
-    weights:
-      build: '-7'
-    settings:
-      link_text: 'Reset all filters - default'
   reset_facets_pretty_path:
     processor_id: reset_facets_pretty_path
     weights:
@@ -124,11 +118,3 @@ processor_configs:
     weights:
       build: '-10'
     settings: {  }
-  show_text_when_empty:
-    processor_id: show_text_when_empty
-    weights:
-      build: '-8'
-    settings:
-      text:
-        value: 'No results found.'
-        format: plain_text

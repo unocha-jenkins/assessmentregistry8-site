@@ -225,7 +225,6 @@ class OchaLeafletMap extends LeafletMap implements ContainerFactoryPluginInterfa
 
       /* @var \Drupal\views\ResultRow $result */
       foreach ($this->view->result as $result) {
-
         // For proper processing make sure the geofield_value is created as
         // an array, also if single value.
         $geofield_value = (array) $this->getFieldValue($result->index, $geofield_name);
