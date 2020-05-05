@@ -1,7 +1,7 @@
 @import 'cd/cd-mixins';
 
 .block-facets {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 
   .form-item,
   .form-actions {
@@ -192,4 +192,21 @@
 .select2-container--focus,
 .item-list__dropdown:focus {
   outline: 2px solid $implementation-highlight;
+}
+
+.cd-export-button--wrapper {
+  margin-top: -2rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cd-button.cd-button--export {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.8rem;
+  font-weight: normal;
+  margin-bottom: 1rem;
+
+  &:focus {
+    outline: 3px solid $implementation-highlight;
+  }
 }
