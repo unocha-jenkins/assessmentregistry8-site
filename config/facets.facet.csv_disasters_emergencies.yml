@@ -1,32 +1,28 @@
-uuid: 5ba9d927-2fdc-4c1e-80d0-cc2a1ad6ff1a
+uuid: c2f197a8-7287-44f0-8000-6f67a90ef747
 langcode: en
 status: true
 dependencies:
   config:
     - search_api.index.assessments
-    - views.view.assessments
   module:
     - facets_pretty_paths
-    - search_api
+    - views_data_export
 third_party_settings:
   facets_pretty_paths:
-    coder: default_coder
-id: table_assessment_date
-name: 'Assessment Date'
-url_alias: assessment_date
+    coder: ocha_integer_list_coder
+id: csv_disasters_emergencies
+name: Disaster(s)/Emergencies
+url_alias: disasters_emergencies
 weight: 0
 min_count: 1
-show_only_one_result: false
-field_identifier: field_ass_date
-facet_source_id: 'search_api:views_page__assessments__assessments_table'
+show_only_one_result: true
+field_identifier: field_disasters
+facet_source_id: 'search_api:views_data_export__assessments__data_export_1'
 widget:
-  type: select2
+  type: array
   config:
     show_numbers: true
-    width: 100%
-    autocomplete: false
-    match_operator: CONTAINS
-query_operator: or
+query_operator: and
 use_hierarchy: false
 hierarchy:
   type: taxonomy
@@ -37,20 +33,23 @@ hard_limit: 0
 exclude: false
 only_visible_when_facet_source_is_visible: true
 processor_configs:
-  date_item:
-    processor_id: date_item
+  active_widget_order:
+    processor_id: active_widget_order
     weights:
-      build: 35
-    settings:
-      date_display: actual_date
-      granularity: 6
-      date_format: ''
-  raw_value_widget_order:
-    processor_id: raw_value_widget_order
-    weights:
-      sort: 50
+      sort: 20
     settings:
       sort: DESC
+  display_value_widget_order:
+    processor_id: display_value_widget_order
+    weights:
+      sort: 40
+    settings:
+      sort: ASC
+  list_item:
+    processor_id: list_item
+    weights:
+      build: 5
+    settings: {  }
   url_processor_handler:
     processor_id: url_processor_handler
     weights:

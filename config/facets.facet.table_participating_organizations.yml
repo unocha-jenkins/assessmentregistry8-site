@@ -13,7 +13,7 @@ third_party_settings:
     coder: ocha_integer_list_coder
 id: table_participating_organizations
 name: 'Participating Organization(s)'
-url_alias: table_participating_organizations
+url_alias: participating_organizations
 weight: 0
 min_count: 1
 show_only_one_result: true

@@ -5,6 +5,7 @@ module:
   breakpoint: 0
   ckeditor: 0
   config: 0
+  csv_serialization: 0
   ctools: 0
   custom_widgets: 0
   datetime: 0
@@ -74,6 +75,7 @@ module:
   token: 0
   toolbar: 0
   user: 0
+  views_data_export: 0
   views_ui: 0
   menu_link_content: 1
   pathauto: 1
