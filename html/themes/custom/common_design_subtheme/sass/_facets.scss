@@ -1,7 +1,13 @@
 @import 'cd/cd-mixins';
 
 .block-facets {
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
+
+  .form-item,
+  .form-actions {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
 }
 
 .block-facets h2 {
