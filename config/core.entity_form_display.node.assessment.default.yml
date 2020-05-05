@@ -69,7 +69,6 @@ third_party_settings:
         - field_asst_organizations
         - field_population_types
         - field_disasters
-        - field_contacts
       parent_name: ''
       weight: 9
       format_type: fieldset
@@ -104,6 +103,7 @@ third_party_settings:
         - field_units_of_measurement
         - field_collection_methods
         - field_themes
+        - field_contacts
       parent_name: group_show_more
       weight: 20
       format_type: accordion_item
@@ -113,7 +113,7 @@ third_party_settings:
         required_fields: true
         id: ''
         classes: toggle
-      label: 'Show more'
+      label: 'Additional information'
 id: node.assessment.default
 targetEntityType: node
 bundle: assessment
@@ -167,7 +167,7 @@ content:
     type: select2
     region: content
   field_contacts:
-    weight: 20
+    weight: 31
     settings:
       form_mode: default
       label_singular: ''
