@@ -13,7 +13,7 @@ third_party_settings:
     coder: ocha_integer_list_coder
 id: table_clusters_sectors
 name: Cluster(s)/Sector(s)
-url_alias: table_clusters_sectors
+url_alias: clusters_sectors
 weight: 0
 min_count: 1
 show_only_one_result: true

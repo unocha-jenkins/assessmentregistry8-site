@@ -4846,10 +4846,10 @@ display:
           1: AND
       display_description: ''
       displays:
-        assessments_table: assessments_table
         default: '0'
         assessments_list: '0'
         assessments_map: '0'
+        assessments_table: '0'
       filename: assessments.csv
       automatic_download: true
       store_in_public_file_directory: null

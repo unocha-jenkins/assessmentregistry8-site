@@ -6,10 +6,14 @@ dependencies:
     - search_api.index.assessments
     - views.view.assessments
   module:
+    - facets_pretty_paths
     - search_api
+third_party_settings:
+  facets_pretty_paths:
+    coder: default_coder
 id: table_level_of_representation
 name: 'Level of Representation'
-url_alias: table_level_of_representation
+url_alias: level_of_representation
 weight: 0
 min_count: 1
 show_only_one_result: false
