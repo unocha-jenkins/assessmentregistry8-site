@@ -76,6 +76,24 @@ facets:
     separator: ', '
     weight: 0
     show_count: false
+  map_assessment_date:
+    checked: true
+    label: 'Assessment Date'
+    separator: ', '
+    weight: 0
+    show_count: false
+  map_authored_on:
+    checked: true
+    label: 'Authored on'
+    separator: ', '
+    weight: 0
+    show_count: false
+  map_authored_on_month:
+    checked: true
+    label: 'Authored on - month'
+    separator: ', '
+    weight: 0
+    show_count: false
 facet_source_id: 'search_api:views_page__assessments__assessments_map'
 processor_configs:
   hide_when_not_rendered:

@@ -1,0 +1,9 @@
+uuid: b0d4bf15-429f-4ebe-bc3a-603302c751a7
+langcode: en
+status: true
+dependencies: {  }
+id: search_api__views_rest__assessments__rest_export_1
+name: 'search_api:views_rest__assessments__rest_export_1'
+filter_key: null
+url_processor: query_string
+breadcrumb: {  }

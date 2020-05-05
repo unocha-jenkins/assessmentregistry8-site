@@ -10,7 +10,7 @@ dependencies:
     - search_api
 third_party_settings:
   facets_pretty_paths:
-    coder: ocha_integer_list_coder
+    coder: default_coder
 id: table_status
 name: Status
 url_alias: status
@@ -55,11 +55,6 @@ processor_configs:
       sort: 40
     settings:
       sort: ASC
-  hide_active_items_processor:
-    processor_id: hide_active_items_processor
-    weights:
-      build: 25
-    settings: {  }
   url_processor_handler:
     processor_id: url_processor_handler
     weights:
