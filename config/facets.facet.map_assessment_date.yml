@@ -13,7 +13,7 @@ third_party_settings:
     coder: default_coder
 id: map_assessment_date
 name: 'Assessment Date'
-url_alias: map_assessment_date
+url_alias: assessment_date
 weight: 0
 min_count: 1
 show_only_one_result: false
