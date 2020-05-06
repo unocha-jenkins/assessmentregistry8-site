@@ -11,8 +11,9 @@ class OchaAssessmentsMap extends OchaAssessmentsBase {
     return [
       super.styles,
       css`
-        :host { display: block;
-          border: 1px solid green;
+        :host {
+          display: block;
+          border: 1px solid transparent;
         }`
     ]
   }
