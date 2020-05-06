@@ -2186,7 +2186,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Cluster(s)/Sector(s)
+          label: 'Cluster(s) / Sector(s)'
           exclude: false
           alter:
             alter_text: false
@@ -2380,7 +2380,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Data
+          label: Report
           exclude: false
           alter:
             alter_text: false
@@ -2454,7 +2454,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: 'Assessment Questionnaire'
+          label: Questionnaire
           exclude: false
           alter:
             alter_text: false
@@ -2528,7 +2528,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: 'Assessment Data'
+          label: Data
           exclude: false
           alter:
             alter_text: false
