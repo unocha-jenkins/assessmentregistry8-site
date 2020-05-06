@@ -2380,7 +2380,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Report
+          label: Data
           exclude: false
           alter:
             alter_text: false
