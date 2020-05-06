@@ -2454,7 +2454,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Questionnaire
+          label: 'Assessment Questionnaire'
           exclude: false
           alter:
             alter_text: false
@@ -2528,7 +2528,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Data
+          label: 'Assessment Data'
           exclude: false
           alter:
             alter_text: false
