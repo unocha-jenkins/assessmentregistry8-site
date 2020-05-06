@@ -35,6 +35,7 @@
         "drupal/field_group": "^3.0",
         "drupal/inline_entity_form": "^1.0",
         "drupal/leaflet": "^1.27",
+        "drupal/maintenance200": "^1.0",
         "drupal/node_title_help_text": "^1.1",
         "drupal/pcb": "^2.0",
         "drupal/search_api": "^1.15",

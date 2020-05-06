@@ -32,6 +32,7 @@ module:
   leaflet_markercluster: 0
   leaflet_views: 0
   link: 0
+  maintenance200: 0
   media: 0
   media_library: 0
   menu_ui: 0
