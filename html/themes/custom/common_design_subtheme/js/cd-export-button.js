@@ -4,7 +4,7 @@
   Drupal.behaviors.exportButton = {
     attach: function (context, settings) {
 
-      var exportButton = context.querySelector('.export-button--button');
+      var exportButton = context.querySelector('.cd-button--export');
 
       if (exportButton) {
         exportButton.addEventListener('click', function (e) {

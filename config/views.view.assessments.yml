@@ -5,6 +5,8 @@ dependencies:
   config:
     - field.storage.node.field_ass_date
     - field.storage.node.field_assessment_data
+    - field.storage.node.field_assessment_questionnaire
+    - field.storage.node.field_assessment_report
     - field.storage.node.field_asst_organizations
     - field.storage.node.field_countries
     - field.storage.node.field_disasters
@@ -2029,15 +2031,12 @@ display:
           description: ''
           columns:
             title: title
-            created: created
-            field_local_groups: field_local_groups
-            field_countries: field_countries
-            field_disasters: field_disasters
-            field_locations_1: field_locations_1
-            field_organizations: field_organizations
-            field_asst_organizations: field_asst_organizations
-            field_themes: field_themes
-            field_locations_lat_lon: field_locations_lat_lon
+            field_local_groups_label: field_local_groups_label
+            field_status: field_status
+            field_ass_date: field_ass_date
+            field_assessment_report: field_assessment_report
+            field_assessment_questionnaire: field_assessment_report
+            field_assessment_data: field_assessment_report
           info:
             title:
               sortable: false
@@ -2046,65 +2045,38 @@ display:
               separator: ''
               empty_column: false
               responsive: ''
-            created:
+            field_local_groups_label:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: priority-medium
+            field_status:
               sortable: false
               default_sort_order: asc
               align: ''
               separator: ''
               empty_column: false
               responsive: ''
-            field_local_groups:
+            field_ass_date:
               sortable: false
               default_sort_order: asc
               align: ''
               separator: ''
               empty_column: false
-              responsive: ''
-            field_countries:
-              sortable: false
-              default_sort_order: asc
+              responsive: priority-medium
+            field_assessment_report:
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: priority-low
+            field_assessment_questionnaire:
               align: ''
               separator: ''
               empty_column: false
               responsive: ''
-            field_disasters:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            field_locations_1:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            field_organizations:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            field_asst_organizations:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            field_themes:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            field_locations_lat_lon:
-              sortable: false
-              default_sort_order: asc
+            field_assessment_data:
               align: ''
               separator: ''
               empty_column: false
@@ -2207,10 +2179,132 @@ display:
             multi_type: separator
             multi_separator: ', '
           plugin_id: search_api_field
-        created:
-          id: created
+        field_local_groups_label:
+          id: field_local_groups_label
           table: search_api_index_assessments
-          field: created
+          field: field_local_groups_label
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: Cluster(s)/Sector(s)
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          link_to_item: false
+          use_highlighting: false
+          multi_type: separator
+          multi_separator: ', '
+          plugin_id: search_api
+        field_status:
+          id: field_status
+          table: search_api_index_assessments
+          field: field_status
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: Status
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: list_default
+          settings: {  }
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          field_rendering: true
+          fallback_handler: search_api
+          fallback_options:
+            link_to_item: false
+            use_highlighting: false
+            multi_type: separator
+            multi_separator: ', '
+          plugin_id: search_api_field
+        field_ass_date:
+          id: field_ass_date
+          table: search_api_index_assessments
+          field: field_ass_date
           relationship: none
           group_type: group
           admin_label: ''
@@ -2256,11 +2350,11 @@ display:
           empty_zero: false
           hide_alter_empty: true
           click_sort_column: value
-          type: timestamp
+          type: daterange_default
           settings:
-            date_format: html_date
-            custom_date_format: ''
-            timezone: ''
+            timezone_override: ''
+            format_type: teaser_date
+            separator: '-'
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -2272,26 +2366,21 @@ display:
           separator: ', '
           field_api_classes: false
           field_rendering: true
-          fallback_handler: search_api_date
+          fallback_handler: search_api
           fallback_options:
-            date_format: fallback
-            custom_date_format: ''
-            timezone: ''
             link_to_item: false
             use_highlighting: false
             multi_type: separator
             multi_separator: ', '
-          entity_type: null
-          entity_field: null
           plugin_id: search_api_field
-        field_countries:
-          id: field_countries
-          table: search_api_index_assessments
-          field: field_countries
+        field_assessment_report:
+          id: field_assessment_report
+          table: search_api_datasource_assessments_entity_node
+          field: field_assessment_report
           relationship: none
           group_type: group
           admin_label: ''
-          label: Countries
+          label: Data
           exclude: false
           alter:
             alter_text: false
@@ -2332,74 +2421,14 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          click_sort_column: value
-          type: ocha_countries_default
+          click_sort_column: target_id
+          type: ocha_assessment_document_default
           settings:
-            relationship: none
-            field_rendering: 1
-            fieldsets:
-              - more
-              - admin_label
-            custom_label: 1
-            label: 'Countries (indexed field)'
-            element_label_colon: 1
-            exclude: 0
-            element_type_enable: 0
-            element_type: ''
-            element_class_enable: 0
-            element_class: ''
-            element_label_type_enable: 0
-            element_label_type: ''
-            element_label_class_enable: 0
-            element_label_class: ''
-            element_wrapper_type_enable: 0
-            element_wrapper_type: ''
-            element_wrapper_class_enable: 0
-            element_wrapper_class: ''
-            element_default_classes: 1
-            alter:
-              alter_text: 0
-              text: ''
-              make_link: 0
-              path: ''
-              absolute: 0
-              replace_spaces: 0
-              external: 0
-              path_case: none
-              link_class: ''
-              alt: ''
-              rel: ''
-              prefix: ''
-              suffix: ''
-              target: ''
-              trim: 0
-              max_length: '0'
-              word_boundary: 1
-              ellipsis: 1
-              more_link: 0
-              more_link_text: ''
-              more_link_path: ''
-              html: 0
-              strip_tags: 0
-              preserve_tags: ''
-              trim_whitespace: 0
-              nl2br: 0
-            empty: ''
-            empty_zero: 0
-            hide_empty: 0
-            hide_alter_empty: 1
-            group_rows: 1
-            multi_type: separator
-            separator: ', '
-            delta_limit: '0'
-            delta_offset: '0'
-            delta_reversed: 0
-            delta_first_last: 0
-            click_sort_column: value
-            type: ocha_countries_default
-            field_api_classes: 0
-            output: label
-          group_column: value
+            use_description_as_link_text: 1
+            display_accessibility: 1
+            display_file: 1
+            display_link: 1
+          group_column: ''
           group_columns: {  }
           group_rows: true
           delta_limit: 0
@@ -2408,7 +2437,7 @@ display:
           delta_first_last: false
           multi_type: separator
           separator: ', '
-          field_api_classes: false
+          field_api_classes: true
           field_rendering: true
           fallback_handler: search_api
           fallback_options:
@@ -2416,6 +2445,155 @@ display:
             use_highlighting: false
             multi_type: separator
             multi_separator: ', '
+          entity_type: node
+          plugin_id: search_api_field
+        field_assessment_questionnaire:
+          id: field_assessment_questionnaire
+          table: search_api_datasource_assessments_entity_node
+          field: field_assessment_questionnaire
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: 'Assessment Questionnaire'
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: target_id
+          type: ocha_assessment_document_default
+          settings:
+            use_description_as_link_text: 1
+            display_accessibility: 1
+            display_file: 1
+            display_link: 1
+          group_column: ''
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: true
+          field_rendering: true
+          fallback_handler: search_api
+          fallback_options:
+            link_to_item: false
+            use_highlighting: false
+            multi_type: separator
+            multi_separator: ', '
+          entity_type: node
+          plugin_id: search_api_field
+        field_assessment_data:
+          id: field_assessment_data
+          table: search_api_datasource_assessments_entity_node
+          field: field_assessment_data
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: 'Assessment Data'
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: target_id
+          type: ocha_assessment_document_default
+          settings:
+            use_description_as_link_text: 1
+            display_accessibility: 1
+            display_file: 1
+            display_link: 1
+          group_column: ''
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: true
+          field_rendering: true
+          fallback_handler: search_api
+          fallback_options:
+            link_to_item: false
+            use_highlighting: false
+            multi_type: separator
+            multi_separator: ', '
+          entity_type: node
           plugin_id: search_api_field
       exposed_block: true
     cache_metadata:
@@ -2427,7 +2605,11 @@ display:
         - url.query_args
         - 'user.node_grants:view'
       tags:
-        - 'config:field.storage.node.field_countries'
+        - 'config:field.storage.node.field_ass_date'
+        - 'config:field.storage.node.field_assessment_data'
+        - 'config:field.storage.node.field_assessment_questionnaire'
+        - 'config:field.storage.node.field_assessment_report'
+        - 'config:field.storage.node.field_status'
         - 'config:search_api.index.assessments'
   data_export_1:
     display_plugin: data_export
@@ -2665,7 +2847,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: ''
+          label: Country
           exclude: false
           alter:
             alter_text: false
@@ -2718,7 +2900,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: ''
+          label: Disasters/Emergencies
           exclude: false
           alter:
             alter_text: false
@@ -2771,7 +2953,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: ''
+          label: Organizations
           exclude: false
           alter:
             alter_text: false
@@ -2824,7 +3006,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: ''
+          label: Locations
           exclude: false
           alter:
             alter_text: false
@@ -2877,7 +3059,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: ''
+          label: 'Partner organizations'
           exclude: false
           alter:
             alter_text: false
@@ -2930,7 +3112,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: ''
+          label: 'Population types'
           exclude: false
           alter:
             alter_text: false
@@ -2983,7 +3165,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: ''
+          label: Sources
           exclude: false
           alter:
             alter_text: false
@@ -3036,7 +3218,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: ''
+          label: Themes
           exclude: false
           alter:
             alter_text: false
@@ -3089,7 +3271,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: ''
+          label: 'Assessment date (start)'
           exclude: false
           alter:
             alter_text: false
@@ -3161,7 +3343,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: ''
+          label: 'Assessment date (end)'
           exclude: false
           alter:
             alter_text: true
@@ -3217,7 +3399,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: ''
+          label: Status
           exclude: false
           alter:
             alter_text: false
@@ -3286,7 +3468,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: ''
+          label: Clusters/sectors
           exclude: false
           alter:
             alter_text: false
@@ -3339,8 +3521,8 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: ''
-          exclude: false
+          label: 'Assessment data'
+          exclude: true
           alter:
             alter_text: false
             text: ''
@@ -3412,8 +3594,8 @@ display:
           field: data_description
           relationship: none
           group_type: group
-          admin_label: ''
-          label: ''
+          admin_label: 'Data description'
+          label: 'Data description'
           exclude: false
           alter:
             alter_text: false
@@ -3466,7 +3648,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: ''
+          label: 'Data instructions'
           exclude: false
           alter:
             alter_text: false
@@ -3519,7 +3701,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: ''
+          label: 'Data title'
           exclude: false
           alter:
             alter_text: false
@@ -3572,7 +3754,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: ''
+          label: 'Data accessibility'
           exclude: false
           alter:
             alter_text: false
@@ -3626,7 +3808,7 @@ display:
           group_type: group
           admin_label: ''
           label: ''
-          exclude: false
+          exclude: true
           alter:
             alter_text: false
             text: ''
@@ -3678,7 +3860,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: ''
+          label: 'Data attachment'
           exclude: false
           alter:
             alter_text: false
@@ -3731,7 +3913,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: ''
+          label: 'Questionnaire description'
           exclude: false
           alter:
             alter_text: false
@@ -3784,7 +3966,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: ''
+          label: 'Questionnaire attachment'
           exclude: false
           alter:
             alter_text: false
@@ -3837,7 +4019,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: ''
+          label: 'Questionnaire instructions'
           exclude: false
           alter:
             alter_text: false
@@ -3890,7 +4072,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: ''
+          label: 'Questionnaire title'
           exclude: false
           alter:
             alter_text: false
@@ -3943,7 +4125,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: ''
+          label: 'Questionnaire accessibility'
           exclude: false
           alter:
             alter_text: false
@@ -3997,7 +4179,7 @@ display:
           group_type: group
           admin_label: ''
           label: ''
-          exclude: false
+          exclude: true
           alter:
             alter_text: false
             text: ''
@@ -4049,7 +4231,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: ''
+          label: 'Report description'
           exclude: false
           alter:
             alter_text: false
@@ -4102,7 +4284,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: ''
+          label: 'Report attachment'
           exclude: false
           alter:
             alter_text: false
@@ -4155,7 +4337,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: ''
+          label: 'Report instructions'
           exclude: false
           alter:
             alter_text: false
@@ -4208,7 +4390,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: ''
+          label: 'Report title'
           exclude: false
           alter:
             alter_text: false
@@ -4261,7 +4443,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: ''
+          label: 'Report accessibility'
           exclude: false
           alter:
             alter_text: false
@@ -4314,7 +4496,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: ''
+          label: 'Report attachment'
           exclude: false
           alter:
             alter_text: false
