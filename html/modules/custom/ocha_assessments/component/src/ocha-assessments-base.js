@@ -170,7 +170,7 @@ export class OchaAssessmentsBase extends LitElement {
                 d => this.renderDropdown(d)
               )
             }
-            <button @click="${this.resetData}" class="cd-button cd-button--style cd-button--small">Reset</button>
+            <button @click="${this.resetData}" class="cd-button cd-button--style">Reset</button>
           </form>
         </div>
       </div>
@@ -261,18 +261,15 @@ export class OchaAssessmentsBase extends LitElement {
     }
 
     return html`
-      <nav class="cd-pager" role="navigation" aria-labelledby="pagination-heading">
-        <ul class="cd-pager__items">
-          ${this.pager.current_page > 0?
-            html`<li class="cd-pager__item cd-pager__item--prev"><a class="pager-prev" @click="${this.prevPage}" title="Go to previous page" rel="previous"><span class="visually-hidden">Previous</span></a></li>`: html``
-          }
-          <li class="cd-pager__item"><span><span class="page-num">${this.pager.current_page + 1}</span> / <span class="page-total">${this.pager.total_pages}</span></span></li>
-          ${this.pager.current_page < this.pager.total_pages - 1?
-            html`<li class="cd-pager__item cd-pager__item--next"><a class="pager-next" @click="${this.nextPage}" title="Go to next page" rel="next"><span class="visually-hidden">Next</span></a>
-          </li>`: html``
-          }
-        </ul>
-      </nav>
+      <div class="cd-pager">
+        ${this.pager.current_page > 0?
+          html`<button class="cd-pager--prev cd-pager__item" @click="${this.prevPage}">Previous</button>`: html``
+        }
+        <span class="cd-pager__item"><span class="page-num">${this.pager.current_page + 1}</span> / <span class="page-total">${this.pager.total_pages}</span></span>
+        ${this.pager.current_page < this.pager.total_pages - 1?
+          html`<button class="cd-pager--next cd-pager__item" @click="${this.nextPage}">Next</button>`: html``
+        }
+      </div>
     `;
   }
 
