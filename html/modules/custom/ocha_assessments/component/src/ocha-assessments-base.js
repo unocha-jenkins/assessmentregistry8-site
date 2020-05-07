@@ -170,7 +170,7 @@ export class OchaAssessmentsBase extends LitElement {
                 d => this.renderDropdown(d)
               )
             }
-            <button @click="${this.resetData}">Reset</button>
+            <button @click="${this.resetData}" class="cd-button cd-button--style">Reset</button>
           </form>
         </div>
       </div>
@@ -261,13 +261,13 @@ export class OchaAssessmentsBase extends LitElement {
     }
 
     return html`
-      <div class="pager">
+      <div class="cd-pager">
         ${this.pager.current_page > 0?
-          html`<button class="pager-prev" @click="${this.prevPage}">Previous</button>`: html``
+          html`<button class="cd-pager--prev cd-pager__item" @click="${this.prevPage}">Previous</button>`: html``
         }
-        <span><span class="page-num">${this.pager.current_page + 1}</span> / <span class="page-total">${this.pager.total_pages}</span></span>
+        <span class="cd-pager__item"><span class="page-num">${this.pager.current_page + 1}</span> / <span class="page-total">${this.pager.total_pages}</span></span>
         ${this.pager.current_page < this.pager.total_pages - 1?
-          html`<button class="pager-next" @click="${this.nextPage}">Next</button>`: html``
+          html`<button class="cd-pager--next cd-pager__item" @click="${this.nextPage}">Next</button>`: html``
         }
       </div>
     `;

@@ -5,10 +5,22 @@ export const typography = css`
     font-size: var(--cd-font-size-base);
     font-family: var(--cd-font);
     color: var(--cd-dark-grey);
+    font-size: 16px;
+    line-height: 1.5;
   }
 `;
 
 export const buttonStyles = css`
+  a {
+    color: var(--cd-dark-blue);
+   }
+
+  a:hover,
+  a:focus {
+    color: var(--cd-ocha-blue);
+    text-decoration: none;
+  }
+
   .blue-button {
     color: white;
     background-color: blue;
@@ -21,11 +33,17 @@ export const buttonStyles = css`
     border-radius: 0;
     box-shadow: none;
     border: 0;
-    padding: 1rem;
+    padding: 0.5rem 1rem;
     font-size: 1rem;
     font-weight: bold;
     transition: background 0.3s ease;
     width: auto;
+  }
+
+  .cd-button--small {
+    padding: 0.25rem 0.75rem;
+    font-size: 0.8rem;
+    font-weight: normal;
   }
 
   .cd-button--icon {
@@ -106,7 +124,7 @@ export const dropdownStyles = css`
 
   .cd-filters__form label {
     display: block;
-    margin: 0 0 0.5rem;
+    margin: 0 0 0.25rem;
   }
 
   .cd-filters__group {
@@ -116,6 +134,11 @@ export const dropdownStyles = css`
   .cd-filters__form select {
     width: 100%;
     max-width: 100%;
+  }
+
+  .cd-filters__form .cd-button {
+    text-transform: unset;
+    font-weight: normal;
   }
 
   @media (min-width: 768px) {
@@ -131,6 +154,11 @@ export const dropdownStyles = css`
 
     .cd-filters__group {
       padding-right: 1rem;
+    }
+
+    .cd-filters__form .cd-button {
+      align-self: flex-end;
+      margin-bottom: 1rem;
     }
 
     /* Quantity queries */
@@ -334,5 +362,46 @@ export const tableStyles = css`
 
   .cd-list__title {
     margin: 0 0 0.5rem;
+  }
+`;
+
+export const paginationStyles = css`
+  .cd-pager {
+    clear: both;
+    text-align: center;
+    padding: 0.5rem;
+  }
+
+  @supports (display: grid) {
+    .cd-pager {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  }
+
+  @supports (display: grid) {
+    .cd-pager__item {
+      display: flex;
+      align-self: baseline;
+    }
+  }
+
+  .cd-pager__item {
+    padding: 0.5rem 0.75rem;
+   }
+
+  .cd-pager button {
+    display: block;
+    background-color: white;
+    border: 1px solid var(--cd-site-bg-color);
+    border-radius: 0.25rem;
+   }
+
+  .cd-pager button:hover,
+  .cd-pager button:focus {
+    color: white;
+    background-color: var(--cd-dark-blue);
+    border-color: var(--cd-dark-blue);
   }
 `;

@@ -1,6 +1,7 @@
 import { html, css } from 'lit-element';
 import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
 import { OchaAssessmentsBase } from './ocha-assessments-base.js';
+import { paginationStyles } from './ocha-assessments-styles.js';
 import { tableStyles } from './ocha-assessments-styles.js';
 
 // Extend the LitElement base class
@@ -8,10 +9,12 @@ class OchaAssessmentsList extends OchaAssessmentsBase {
   static get styles() {
     return [
       super.styles,
+      paginationStyles,
       tableStyles,
       css`
-        :host { display: block;
-          border: 1px solid purple;
+        :host {
+          display: block;
+          border: 1px solid transparent;
         }`
     ]
   }
@@ -54,8 +57,6 @@ class OchaAssessmentsList extends OchaAssessmentsBase {
 
       ${this.renderErrorMessage()}
 
-      ${this.renderPager()}
-
       ${this.renderDropdowns()}
 
       <ul class="cd-list">
@@ -83,6 +84,8 @@ class OchaAssessmentsList extends OchaAssessmentsBase {
                 `
         )}
       </ul>
+
+      ${this.renderPager()}
     `;
   }
 
