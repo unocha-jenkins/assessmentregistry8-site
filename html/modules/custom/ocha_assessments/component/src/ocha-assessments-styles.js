@@ -5,7 +5,6 @@ export const typography = css`
     font-size: var(--cd-font-size-base);
     font-family: var(--cd-font);
     color: var(--cd-dark-grey);
-    font-size: 16px;
     line-height: 1.5;
   }
 `;
@@ -21,13 +20,6 @@ export const buttonStyles = css`
     text-decoration: none;
   }
 
-  .blue-button {
-    color: white;
-    background-color: blue;
-  }
-  .blue-button:disabled {
-    background-color: grey;
-  }
   .cd-button {
     -webkit-appearance: none;
     border-radius: 0;
@@ -216,7 +208,7 @@ export const dropdownStyles = css`
 `;
 
 export const tableStyles = css`
-  .cd-table {
+ .cd-table {
     margin: 0 auto 3rem;
     border-collapse: collapse;
     width: 100%;
