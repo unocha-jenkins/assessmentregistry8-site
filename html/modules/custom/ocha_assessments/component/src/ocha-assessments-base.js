@@ -170,7 +170,7 @@ export class OchaAssessmentsBase extends LitElement {
                 d => this.renderDropdown(d)
               )
             }
-            <button @click="${this.resetData}" class="cd-button cd-button--style">Reset</button>
+            <button @click="${this.resetData}" class="cd-button cd-button--style cd-button--small">Reset</button>
           </form>
         </div>
       </div>
