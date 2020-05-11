@@ -1788,10 +1788,11 @@ display:
         row: false
         header: false
         fields: false
+        query: false
       pager:
         type: full
         options:
-          items_per_page: 10000
+          items_per_page: 0
           offset: 0
           id: 0
           total_pages: null
@@ -2079,6 +2080,12 @@ display:
           entity_type: node
           plugin_id: search_api_field
       exposed_block: true
+      query:
+        type: views_query
+        options:
+          skip_access: 1
+          bypass_access: 1
+          preserve_facet_query_args: 0
     cache_metadata:
       max-age: -1
       contexts:
