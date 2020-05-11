@@ -4,16 +4,11 @@ namespace Drupal\ocha_map\Plugin\views\style;
 
 use Drupal\leaflet_views\Plugin\views\style\LeafletMap;
 use Drupal\Core\Render\BubbleableMetadata;
-use Drupal\Core\Render\RenderContext;
-use Drupal\Core\Entity\Plugin\DataType\EntityAdapter;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\leaflet_views\Controller\LeafletAjaxPopupController;
-use Drupal\Core\Url;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Component\Utility\Html;
 use Drupal\leaflet\LeafletSettingsElementsTrait;
-use Drupal\views\Plugin\views\PluginBase;
 
 /**
  * Style plugin to render a View output as a Leaflet map.
