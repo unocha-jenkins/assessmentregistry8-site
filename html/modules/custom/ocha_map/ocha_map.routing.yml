@@ -1,0 +1,7 @@
+ocha_map.map:
+  path: '/map'
+  defaults:
+    _controller: '\Drupal\ocha_map\Controller\OchaMapController::map'
+    _title: 'Assessments map'
+  requirements:
+    _permission: 'access content'
