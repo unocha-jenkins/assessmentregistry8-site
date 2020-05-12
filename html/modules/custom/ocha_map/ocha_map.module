@@ -7,7 +7,6 @@
 
 /**
  * Implements hook_theme().
- *
  */
 function ocha_map_theme($existing, $type, $theme, $path) {
   return [
