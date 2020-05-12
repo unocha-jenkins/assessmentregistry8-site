@@ -7,7 +7,7 @@ use Drupal\Core\Controller\ControllerBase;
 /**
  * An ocha_map controller.
  */
-class ochaMapController extends ControllerBase {
+class OchaMapController extends ControllerBase {
 
   /**
    * Returns a map.
@@ -16,12 +16,12 @@ class ochaMapController extends ControllerBase {
     global $base_url;
     $src = $base_url . '/rest/assessments-map?items_per_page=8000';
 
-    return array(
+    return [
       '#theme' => 'ocha_map_map',
       '#base_url' => $base_url,
       '#src' => $src,
       '#component_url' => '/modules/custom/ocha_map/component/',
-    );
+    ];
   }
 
 }
