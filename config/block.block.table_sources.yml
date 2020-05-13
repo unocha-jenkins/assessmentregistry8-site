@@ -1,6 +1,6 @@
 uuid: ea76ed6b-3a69-4a16-8fa3-e8ee79ef0853
 langcode: en
-status: true
+status: false
 dependencies:
   config:
     - facets.facet.table_sources

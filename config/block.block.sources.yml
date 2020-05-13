@@ -1,6 +1,6 @@
 uuid: 371f6ace-e72d-47bb-b289-516621f57d35
 langcode: en
-status: true
+status: false
 dependencies:
   config:
     - facets.facet.sources
