@@ -1,29 +1,29 @@
-uuid: 0fbea9cd-2ed2-4e6a-ae3a-b1cd3c5c3490
+uuid: 81b4b387-e301-4b99-a9a6-7a4fe1f777a4
 langcode: en
 status: true
 dependencies:
   config:
-    - facets.facet.disasters_emergencies
+    - facets.facet.km_population_types
   module:
     - facets
     - system
   theme:
     - common_design_subtheme
-id: disasters_emergencies
+id: km_population_types
 theme: common_design_subtheme
 region: sidebar_first
-weight: -2
+weight: -30
 provider: null
-plugin: 'facet_block:disasters_emergencies'
+plugin: 'facet_block:km_population_types'
 settings:
-  id: 'facet_block:disasters_emergencies'
-  label: Disaster(s)/Emergencies
+  id: 'facet_block:km_population_types'
+  label: 'Population Type(s)'
   provider: facets
   label_display: visible
-  block_id: disasters_emergencies
+  block_id: km_population_types
 visibility:
   request_path:
     id: request_path
-    pages: "/assessments/list\r\n/assessments/list/*"
+    pages: "/knowledge-management\r\n/knowledge-management/*"
     negate: false
     context_mapping: {  }
