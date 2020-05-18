@@ -1,0 +1,14 @@
+uuid: 0c4e2faf-9b42-461e-acd4-7b2523398b07
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.assessment_global_editor
+  module:
+    - user
+id: user_remove_role_action.assessment_global_editor
+label: 'Remove the Assessment global editor role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: assessment_global_editor
