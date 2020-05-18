@@ -28,6 +28,24 @@ facets:
     separator: ', '
     weight: 0
     show_count: false
+  context:
+    checked: true
+    label: Context
+    separator: ', '
+    weight: 0
+    show_count: false
+  km_population_types:
+    checked: true
+    label: 'Population Type(s)'
+    separator: ', '
+    weight: 0
+    show_count: false
+  life_cycle_steps:
+    checked: true
+    label: 'Life cycle steps'
+    separator: ', '
+    weight: 0
+    show_count: false
 facet_source_id: 'search_api:views_page__knowledge_management__page_1'
 processor_configs:
   hide_when_not_rendered:
@@ -35,12 +53,6 @@ processor_configs:
     weights:
       build: '-5'
     settings: {  }
-  reset_facets:
-    processor_id: reset_facets
-    weights:
-      build: '-4'
-    settings:
-      link_text: 'Reset all filters - default'
   reset_facets_pretty_path:
     processor_id: reset_facets_pretty_path
     weights:
