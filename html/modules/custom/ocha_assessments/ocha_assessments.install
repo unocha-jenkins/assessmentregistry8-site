@@ -1,0 +1,38 @@
+<?php
+
+/**
+ * @file
+ * OCHA Assessments.
+ */
+
+use Drupal\node\Entity\Node;
+
+/**
+ * Add about page.
+ */
+function ocha_assessments_update_8001() {
+  $data = [
+    'type' => 'page',
+    'title' => 'About',
+    'nid' => 1,
+    'body' => [],
+  ];
+
+  $node = Node::create($data);
+  $node->save();
+}
+
+/**
+ * Add documents list.
+ */
+function ocha_assessments_update_8002() {
+  $data = [
+    'type' => 'page',
+    'title' => 'Documents list',
+    'nid' => 2,
+    'body' => [],
+  ];
+
+  $node = Node::create($data);
+  $node->save();
+}
