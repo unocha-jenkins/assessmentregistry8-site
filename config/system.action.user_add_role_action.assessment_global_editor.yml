@@ -1,0 +1,14 @@
+uuid: 726cfdec-39ee-4b44-a348-95b00a48a0a6
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.assessment_global_editor
+  module:
+    - user
+id: user_add_role_action.assessment_global_editor
+label: 'Add the Assessment global editor role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: assessment_global_editor

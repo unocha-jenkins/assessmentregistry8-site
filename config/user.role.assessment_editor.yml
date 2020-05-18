@@ -1,0 +1,35 @@
+uuid: 5f265a91-4ec2-4065-85d9-793d95321f1d
+langcode: en
+status: true
+dependencies: {  }
+id: assessment_editor
+label: 'Assessment editor'
+weight: 3
+is_admin: null
+permissions:
+  - 'access content overview'
+  - 'access files overview'
+  - 'access media overview'
+  - 'create assessment content'
+  - 'create document media'
+  - 'create image media'
+  - 'create media'
+  - 'create remote_video media'
+  - 'create video media'
+  - 'delete media'
+  - 'delete own assessment content'
+  - 'delete own document media'
+  - 'delete own image media'
+  - 'delete own remote_video media'
+  - 'delete own video media'
+  - 'edit own assessment content'
+  - 'edit own document media'
+  - 'edit own image media'
+  - 'edit own remote_video media'
+  - 'edit own video media'
+  - 'ocha assessments bulk import'
+  - 'update media'
+  - 'view all revisions'
+  - 'view assessment revisions'
+  - 'view own unpublished content'
+  - 'view own unpublished media'

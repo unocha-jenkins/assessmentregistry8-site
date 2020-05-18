@@ -1,0 +1,14 @@
+uuid: 25c50693-77f6-4d0a-a510-e46d865cd2b6
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.knowledge_management_editor
+  module:
+    - user
+id: user_add_role_action.knowledge_management_editor
+label: 'Add the Knowledge Management editor role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: knowledge_management_editor
