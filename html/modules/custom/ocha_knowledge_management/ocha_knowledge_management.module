@@ -69,14 +69,13 @@ function ocha_knowledge_management_process_row_from_hrinfo($data) {
   ocha_knowledge_management_log('Migrating ' . $item->title);
 
   if (isset($item->title) && $item->title) {
+    $title = trim($item->title);
+
     // Skip existing nodes.
     if ($node = \Drupal::entityTypeManager()->getStorage('node')->load($item->nid)) {
-      // TODO: Handle this.
-      ocha_knowledge_management_log('Skipping ' . $item->nid . ' -- ' . $item->title);
-      return;
+      ocha_knowledge_management_log('Deleting ' . $item->nid . ' -- ' . $title);
+      $node->delete();
     }
-
-    $title = trim($item->title);
 
     // Create node object.
     $data = [
