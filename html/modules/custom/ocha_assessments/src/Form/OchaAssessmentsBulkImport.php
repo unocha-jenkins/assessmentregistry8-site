@@ -2,7 +2,7 @@
 
 namespace Drupal\ocha_assessments\Form;
 
-use Drupal\Core\Entity\Query\QueryInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\File\FileSystem;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -27,7 +27,7 @@ class OchaAssessmentsBulkImport extends FormBase {
   /**
    * Entity query.
    *
-   * @var Drupal\Core\Entity\Query\QueryInterface
+   * @var Drupal\Core\Entity\EntityTypeManagerInterface
    */
   protected $entityQuery;
 
@@ -41,7 +41,7 @@ class OchaAssessmentsBulkImport extends FormBase {
   /**
    * Class constructor.
    */
-  public function __construct(FileSystem $fileSystem, QueryInterface $entityQuery) {
+  public function __construct(FileSystem $fileSystem, EntityTypeManagerInterface $entityQuery) {
     $this->fileSystem = $fileSystem;
     $this->entityQuery = $entityQuery;
   }
@@ -52,7 +52,7 @@ class OchaAssessmentsBulkImport extends FormBase {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('file_system'),
-      $container->get('entity.query')
+      $container->get('entity_type.manager')
     );
   }
 
