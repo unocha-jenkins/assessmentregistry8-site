@@ -9,8 +9,8 @@ dependencies:
     - media
     - search_api
   config:
-    - field.storage.node.field_km_context
     - field.storage.node.field_countries
+    - field.storage.node.field_km_context
     - field.storage.node.field_km_document_type
     - field.storage.media.field_media_document
     - field.storage.node.field_km_document
@@ -164,6 +164,7 @@ processor_settings:
   hierarchy:
     fields:
       field_km_hpc_document_repository: taxonomy_term-parent
+      field_km_life_cycle_steps: taxonomy_term-parent
     weights:
       preprocess_index: -45
   ignorecase:
