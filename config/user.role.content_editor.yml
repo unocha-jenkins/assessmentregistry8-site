@@ -1,10 +1,10 @@
-uuid: 5f265a91-4ec2-4065-85d9-793d95321f1d
+uuid: 82efbad2-d293-4a90-bea4-695cf746ca2f
 langcode: en
 status: true
 dependencies: {  }
-id: assessment_editor
-label: 'Assessment editor'
-weight: 3
+id: content_editor
+label: 'Content editor'
+weight: 7
 is_admin: null
 permissions:
   - 'access content overview'
@@ -12,27 +12,33 @@ permissions:
   - 'access media overview'
   - 'access shortcuts'
   - 'access toolbar'
-  - 'create assessment content'
+  - 'administer menu'
   - 'create document media'
   - 'create image media'
   - 'create media'
+  - 'create page content'
   - 'create remote_video media'
+  - 'create url aliases'
   - 'create video media'
+  - 'delete any page content'
   - 'delete media'
-  - 'delete own assessment content'
   - 'delete own document media'
   - 'delete own image media'
+  - 'delete own page content'
   - 'delete own remote_video media'
   - 'delete own video media'
-  - 'edit own assessment content'
+  - 'delete page revisions'
+  - 'edit any page content'
   - 'edit own document media'
   - 'edit own image media'
+  - 'edit own page content'
   - 'edit own remote_video media'
   - 'edit own video media'
-  - 'ocha assessments bulk import'
+  - 'revert page revisions'
   - 'update media'
+  - 'use text format full_html'
   - 'view all revisions'
-  - 'view assessment revisions'
   - 'view own unpublished content'
   - 'view own unpublished media'
+  - 'view page revisions'
   - 'view the administration theme'
