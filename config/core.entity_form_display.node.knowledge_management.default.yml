@@ -16,6 +16,7 @@ dependencies:
     - field.field.node.knowledge_management.field_population_types
     - node.type.knowledge_management
   module:
+    - custom_widgets
     - datetime
     - media_library
     - ocha_integrations
@@ -82,12 +83,9 @@ content:
   field_km_hpc_document_repository:
     weight: 16
     settings:
-      match_operator: CONTAINS
-      match_limit: 10
-      size: 60
-      placeholder: ''
+      force_deepest: 0
     third_party_settings: {  }
-    type: entity_reference_autocomplete
+    type: custom_widgets_flat_select
     region: content
   field_km_life_cycle_steps:
     weight: 14
