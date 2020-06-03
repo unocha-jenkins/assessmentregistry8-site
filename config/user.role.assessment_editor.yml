@@ -7,9 +7,11 @@ label: 'Assessment editor'
 weight: 3
 is_admin: null
 permissions:
+  - 'access administration pages'
   - 'access content overview'
   - 'access files overview'
   - 'access media overview'
+  - 'access toolbar'
   - 'create assessment content'
   - 'create document media'
   - 'create image media'
@@ -33,3 +35,4 @@ permissions:
   - 'view assessment revisions'
   - 'view own unpublished content'
   - 'view own unpublished media'
+  - 'view the administration theme'

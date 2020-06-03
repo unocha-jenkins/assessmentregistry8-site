@@ -7,9 +7,11 @@ label: 'Knowledge Management editor'
 weight: 6
 is_admin: null
 permissions:
+  - 'access administration pages'
   - 'access content overview'
   - 'access files overview'
   - 'access media overview'
+  - 'access toolbar'
   - 'create document media'
   - 'create image media'
   - 'create knowledge_management content'
@@ -32,3 +34,4 @@ permissions:
   - 'view knowledge_management revisions'
   - 'view own unpublished content'
   - 'view own unpublished media'
+  - 'view the administration theme'
