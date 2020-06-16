@@ -53,8 +53,6 @@ class OchaAssessmentsList extends OchaAssessmentsBase {
     }
 
     return html`
-      <p>Source (debug): ${this.src}</p>
-
       ${this.renderErrorMessage()}
 
       ${this.renderDropdowns()}

@@ -31,8 +31,6 @@ class OchaAssessmentsMap extends OchaAssessmentsBase {
         }
       </style>
 
-      <p>Source (debug): ${this.src}</p>
-
       ${this.renderErrorMessage()}
 
       ${this.renderDropdowns()}
