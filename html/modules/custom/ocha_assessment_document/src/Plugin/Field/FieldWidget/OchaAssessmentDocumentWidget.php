@@ -6,7 +6,6 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\file\Plugin\Field\FieldWidget\FileWidget;
 use Drupal\external_media\Plugin\Field\FieldWidget\ExternalMediaFile;
 
 /**
