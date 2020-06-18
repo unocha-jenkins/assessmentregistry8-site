@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fcf0a7a9bbbf345469f901af2387db84",
+    "content-hash": "875af9e70b69f2176a531aceef0cedcf",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1701,6 +1701,51 @@
             "homepage": "https://www.drupal.org/project/dream_block_manager",
             "support": {
                 "source": "https://git.drupalcode.org/project/dream_block_manager"
+            }
+        },
+        {
+            "name": "drupal/external_media",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/external_media.git",
+                "reference": "1.0.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/external_media-1.0.1.zip",
+                "reference": "1.0.1",
+                "shasum": "4fa53655e781e7e257c8da87c154e5b809988bbb"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "1.0.1",
+                    "datestamp": "1592462483",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Project has not opted into security advisory coverage!"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "minnur",
+                    "homepage": "https://www.drupal.org/user/702026"
+                }
+            ],
+            "description": "Field widget to upload files and images from third-party services.",
+            "homepage": "https://www.drupal.org/project/external_media",
+            "support": {
+                "source": "https://git.drupalcode.org/project/external_media",
+                "error": "name : invalid value (External Media), must match [A-Za-z0-9][A-Za-z0-9_.-]*/[A-Za-z0-9][A-Za-z0-9_.-]*"
             }
         },
         {

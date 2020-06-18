@@ -6,7 +6,7 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\file\Plugin\Field\FieldWidget\FileWidget;
+use Drupal\external_media\Plugin\Field\FieldWidget\ExternalMediaFile;
 
 /**
  * Plugin implementation of the 'ocha_assessment_document' widget.
@@ -19,7 +19,7 @@ use Drupal\file\Plugin\Field\FieldWidget\FileWidget;
  *   }
  * )
  */
-class OchaAssessmentDocumentWidget extends FileWidget {
+class OchaAssessmentDocumentWidget extends ExternalMediaFile {
 
   use StringTranslationTrait;
 
@@ -28,10 +28,13 @@ class OchaAssessmentDocumentWidget extends FileWidget {
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
     $state_name = $this->fieldDefinition->getName() . '[' . $delta . '][accessibility]';
-    $element_info = $this->elementInfo->getInfo('managed_file');
+    $element_info = $this->elementInfo->getInfo('external_media');
 
     // Make file a child element.
     $document_widget = parent::formElement($items, $delta, $element, $form, $form_state);
+    $document_widget['#visible_widgets'] = [
+      'dropbox_chooser',
+    ];
 
     $element = [
       '#type' => 'fieldset',
