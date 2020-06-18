@@ -27,7 +27,7 @@
         "drupal/admin_denied": "^1.0",
         "drupal/components": "^1.1",
         "drupal/config_split": "^1.4",
-        "drupal/core": "^8.8.0",
+        "drupal/core": "^8.8.8",
         "drupal/custom_widgets": "^2.0",
         "drupal/dream_block_manager": "^1.0",
         "drupal/facets": "^1.4",
