@@ -12,7 +12,7 @@ dependencies:
 id: organizations
 theme: common_design_subtheme
 region: sidebar_first
-weight: -9
+weight: -20
 provider: null
 plugin: 'facet_block:organizations'
 settings:
@@ -24,6 +24,6 @@ settings:
 visibility:
   request_path:
     id: request_path
-    pages: "/assessments\r\n/assessments/*"
+    pages: "/assessments/list\r\n/assessments/list/*"
     negate: false
     context_mapping: {  }

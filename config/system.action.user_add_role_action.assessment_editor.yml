@@ -1,0 +1,14 @@
+uuid: d5c94ec6-6a06-48a8-98a4-697230ae7ac9
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.assessment_editor
+  module:
+    - user
+id: user_add_role_action.assessment_editor
+label: 'Add the Assessment editor role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: assessment_editor

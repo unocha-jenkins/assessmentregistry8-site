@@ -36,6 +36,11 @@ class OchaDisastersController extends OchaIntegrationsController {
   protected $loggerId = 'ocha_disasters';
 
   /**
+   * {@inheritdoc}
+   */
+  protected static $staticCache;
+
+  /**
    * Get API data.
    */
   public function getApiDataFromEndpoint() {
@@ -154,7 +159,7 @@ class OchaDisastersController extends OchaIntegrationsController {
   public function getItemByGlide($glide) {
     $data = $this->getCache();
 
-    foreach ($data as $key => $value) {
+    foreach ($data as $value) {
       if ($value->glide == $glide) {
         return $value;
       }

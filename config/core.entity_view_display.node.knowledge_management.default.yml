@@ -20,6 +20,7 @@ dependencies:
     - ocha_countries
     - ocha_global_coordination_groups
     - ocha_integrations
+    - ocha_knowledge_management
     - text
     - user
 id: node.knowledge_management.default
@@ -89,7 +90,7 @@ content:
     settings:
       link: false
     third_party_settings: {  }
-    type: entity_reference_label
+    type: ocha_knowledge_management_lfs
     region: content
   field_km_media:
     type: entity_reference_entity_view

@@ -1,0 +1,117 @@
+<?php
+
+/**
+ * @file
+ * Ocha HID Contacts logic.
+ */
+
+use Drupal\Component\Utility\Crypt;
+use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\Core\Site\Settings;
+use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\ocha_hid_contacts\Controller\OchaHidContactsController;
+
+/**
+ * Returns a controller.
+ */
+function ocha_hid_contacts_get_controller() {
+  return new OchaHidContactsController(
+    \Drupal::service('http_client'),
+    \Drupal::service('config.factory'),
+    \Drupal::service('cache.ocha_hid_contacts'),
+    \Drupal::service('logger.factory'),
+    \Drupal::service('state'),
+    \Drupal::service('file_system')
+  );
+}
+
+/**
+ * Allowed values callback.
+ *
+ * @param \Drupal\field\Entity\FieldStorageConfig $definition
+ *   The field definition.
+ * @param \Drupal\Core\Entity\ContentEntityInterface|null $entity
+ *   The entity being created if applicable.
+ * @param bool $cacheable
+ *   Boolean indicating if the results are cacheable.
+ *
+ * @return array
+ *   An array of possible key and value options.
+ *
+ * @see options_allowed_values()
+ */
+function ocha_hid_contacts_allowed_values_function(FieldStorageConfig $definition, ContentEntityInterface $entity = NULL, $cacheable) {
+  static $options;
+
+  if (isset($options)) {
+    return $options;
+  }
+
+  $controller = ocha_hid_contacts_get_controller();
+  $options = $controller->getAllowedValues();
+
+  return $options;
+}
+
+/**
+ * Get one item by id.
+ */
+function ocha_hid_contacts_get_item($id, $langcode = NULL) {
+  $controller = ocha_hid_contacts_get_controller();
+  return $controller->getItem($id);
+}
+
+/**
+ * Get one item by HID id.
+ */
+function ocha_hid_contacts_load_by_id($id) {
+  $controller = ocha_hid_contacts_get_controller();
+
+  // Check cache first.
+  if ($contact = $controller->getItem($id)) {
+    return $contact;
+  }
+
+  return $controller->loadById($id);
+}
+
+/**
+ * Autocomplete.
+ */
+function ocha_hid_contacts_autocomplete($input) {
+  $controller = ocha_hid_contacts_get_controller();
+  return $controller->autocomplete($input);
+}
+
+/**
+ * Load from JSON.
+ */
+function ocha_hid_contacts_import_json() {
+  $controller = ocha_hid_contacts_get_controller();
+  $controller->getApiDataFromJson();
+}
+
+/**
+ * Is select2 available.
+ */
+function ocha_hid_contacts_select2_available() {
+  return \Drupal::moduleHandler()->moduleExists('select2');
+}
+
+/**
+ * Get uid from current user.
+ */
+function ocha_hid_contacts_current_user_uid() {
+  return (int) \Drupal::currentUser()->id();
+}
+
+/**
+ * Calculate a hash.
+ */
+function ocha_hid_contacts_calculate_hash($params) {
+  if (isset($params['hash'])) {
+    unset($params['hash']);
+  }
+
+  return Crypt::hmacBase64(serialize($params), Settings::getHashSalt());
+}

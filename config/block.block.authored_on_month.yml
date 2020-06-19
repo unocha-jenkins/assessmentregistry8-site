@@ -12,18 +12,18 @@ dependencies:
 id: authored_on_month
 theme: common_design_subtheme
 region: sidebar_first
-weight: -15
+weight: -23
 provider: null
 plugin: 'facet_block:authored_on_month'
 settings:
   id: 'facet_block:authored_on_month'
-  label: 'Authored on monthe'
+  label: 'Authored on - month'
   provider: facets
   label_display: '0'
   block_id: authored_on_month
 visibility:
   request_path:
     id: request_path
-    pages: "/assessments/table\r\n/assessments/table/*"
+    pages: "/assessments/list\r\n/assessments/list/*"
     negate: false
     context_mapping: {  }

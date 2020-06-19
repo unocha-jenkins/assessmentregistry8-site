@@ -36,6 +36,11 @@ class OchaOrganizationsController extends OchaIntegrationsController {
   protected $loggerId = 'ocha_organizations';
 
   /**
+   * {@inheritdoc}
+   */
+  protected static $staticCache;
+
+  /**
    * Get API data.
    */
   public function getApiDataFromEndpoint() {
@@ -101,6 +106,7 @@ class OchaOrganizationsController extends OchaIntegrationsController {
     foreach ($data as $row) {
       $keyed_data[$row->id] = (object) [
         'name' => trim($row->label),
+        'acronym' => isset($row->acronym) ? $row->acronym : '',
         'href' => $row->self,
         'global_cluster' => isset($row->global_cluster) ? $row->global_cluster : NULL,
         'lead_agencies' => isset($row->lead_agencies) ? $row->lead_agencies : [],
@@ -139,6 +145,10 @@ class OchaOrganizationsController extends OchaIntegrationsController {
 
     foreach ($data as $key => $value) {
       $options[$key] = $value->name;
+      if (isset($value->acronym) && !empty($value->acronym)) {
+        $options[$key] .= ' [' . $value->acronym . ']';
+      }
+
       if (!empty($value->operations) && isset($value->operations[0]->label)) {
         $options[$key] .= ' (' . $value->operations[0]->label . ')';
       }

@@ -1,8 +1,4 @@
 <?php
-/**
- * @file
- * Contains \Drupal\ocha_locations\GetLocationLatLon.
- */
 
 namespace Drupal\ocha_locations;
 
@@ -34,7 +30,6 @@ class GetLocationLatLon extends TypedData {
     $location = ocha_locations_get_item($item->value);
     if ($location) {
       $this->processed = $location->lon . ',' . $location->lat;
-      //$this->processed = 'POINT (' . $location->lon . ' ' . $location->lat . ')';
     }
 
     return $this->processed;
@@ -51,4 +46,5 @@ class GetLocationLatLon extends TypedData {
       $this->parent->onChange($this->name);
     }
   }
+
 }

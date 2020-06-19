@@ -12,7 +12,7 @@ field_name: field_themes
 entity_type: node
 bundle: assessment
 label: Theme(s)
-description: ''
+description: 'Select all relevant themes. Choose only themes the assessment substantively refers to. Complete taxonomy is also available <a href="https://docs.google.com/spreadsheets/d/1dfgOtG5GQKJqRutkWQ6TFKkSJAFL5JXpzK4QWYd5_ZA/edit#gid=1310702751" title="HR.info Taxonomies - Themes" target="_blank">here</a>.'
 required: false
 translatable: false
 default_value: {  }

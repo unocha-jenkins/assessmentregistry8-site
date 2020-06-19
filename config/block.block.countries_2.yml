@@ -12,7 +12,7 @@ dependencies:
 id: countries_2
 theme: common_design_subtheme
 region: sidebar_first
-weight: -5
+weight: 9
 provider: null
 plugin: 'facet_block:map_countries'
 settings:

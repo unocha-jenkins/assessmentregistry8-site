@@ -1,0 +1,320 @@
+/* Reset layout from seven */
+.layout-region-node-main,
+.layout-region-node-secondary,
+.layout-region-node-footer,
+.hr-additional {
+  width: 100%;
+  float: none;
+  padding-right: 0;
+}
+
+/* Layout */
+@media (min-width: 1024px) {
+  .field--name-title,
+  fieldset:not(.fieldgroup).hr-main-inputs,
+  .layout-region-node-secondary,
+  .field--name-field-subject-objective,
+  .field--name-field-methodology,
+  .field--name-field-key-findings,
+  .field--name-field-related-content,
+  .field--name-field-collection-methods {
+    width: 100%;
+    max-width: 52%;
+    float: left;
+    padding-right: 20px;
+  }
+
+  /* Additional left side */
+  .field--name-field-subject-objective,
+  .field--name-field-methodology,
+  .field--name-field-key-findings,
+  .field--name-field-related-content,
+  .field--name-field-collection-methods,
+  .field--name-field-contacts {
+    width: 52%;
+    margin-bottom: 1rem;
+  }
+
+  .field--name-field-related-content {
+    padding-right: 0;
+  }
+
+  .field--name-title {
+    display: block;
+    width: 100%;
+  }
+
+  .hr-main-inputs {
+    clear: left;
+  }
+
+  fieldset:not(.fieldgroup).details,
+  .field--name-field-sample-size,
+  .field--name-field-level-of-representation,
+  .field--name-field-frequency,
+  .field--name-field-units-of-measurement,
+  .field--name-field-themes {
+    float: right;
+    max-width: 45%;
+  }
+
+  .field--name-field-sample-size,
+  .field--name-field-level-of-representation,
+  .field--name-field-frequency,
+  .field--name-field-units-of-measurement,
+  .field--name-field-themes {
+    width: 45%;
+  }
+
+  .hr-additional,
+  .layout-region-node-secondary,
+  .layout-region-node-footer {
+    clear: both;
+    float: none;
+  }
+}
+
+.field-name-field-locations {
+  width: 100%;
+}
+
+.field--name-field-subject-objective,
+.field--name-field-sample-size {
+  margin-top: 1rem;
+}
+
+/* Fieldset reset */
+fieldset {
+  margin: 0;
+  padding: 0;
+  min-width: unset;
+  border-radius: 0;
+  border: 0 none;
+  background-color: transparent;
+}
+
+/* Fieldset with border */
+fieldset:not(.fieldgroup),
+fieldset.hr-main-inputs {
+  margin: 0;
+  padding: 0;
+  min-width: unset;
+  border-radius: 0;
+  border: 0 none;
+  background-color: transparent;
+}
+
+/* Fieldset or div with border */
+.hr-details,
+.field--name-field-locations,
+.field--name-field-related-content,
+.field--name-field-units-of-measurement,
+fieldset:not(.hr-main-inputs),
+fieldset:not(.field-group-fieldset) {
+  margin-bottom: 1rem;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+
+.fieldset-wrapper {
+  padding: 1rem;
+}
+
+legend + .fieldset-wrapper {
+  /* Height of legend, which is absolutely positioned, plus desired padding. */
+  padding-top: calc(38px + 1rem);
+}
+
+/* Legend is hidden */
+.hr-details .fieldset-wrapper {
+  padding-top: 1rem;
+}
+
+/* Location field */
+.field--name-field-locations > div > .form-item,
+.field--name-field-related-content > div > .form-item,
+.field--name-field-units-of-measurement > div > .form-item {
+  margin: 0;
+  position: relative;
+}
+
+/* Table heading to match Group heading style */
+.field--name-field-locations table thead th,
+.field--name-field-related-content table thead th,
+.field--name-field-units-of-measurement table thead th {
+  color: #333;
+  background-color: #f5f5f5;
+  padding: 0.5rem 1rem;
+  border: 1px solid transparent;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* So it does not obscure Order heading when Row weights are visible */
+.field--name-field-locations > div > .form-item .tabledrag-toggle-weight-wrapper,
+.field--name-field-related-content > div > .form-item .tabledrag-toggle-weight-wrapper,
+.field--name-field-units-of-measurement > div > .form-item .tabledrag-toggle-weight-wrapper {
+  position: absolute;
+  top: 9px;
+  right: 20%;
+}
+
+.field--name-field-locations fieldset,
+.field--name-field-related-content fieldset,
+.field--name-field-units-of-measurement fieldset {
+  margin: 0;
+  border: 0 none;
+  box-shadow: none;
+}
+
+/* Multi drag table */
+.field-multiple-table tr.odd .form-item,
+.field-multiple-table tr.even .form-item {
+  margin-top: 0;
+  display: block;
+}
+
+.field-multiple-table .form-item:only-of-type {
+  margin: 0;
+}
+
+.field-multiple-table .form-wrapper {
+  margin: 0;
+}
+
+.field-multiple-table + .description {
+  padding: 0.5rem 1rem 0;
+}
+
+/* "Add another" button in Multi drag table */
+.field-multiple-table + .description + .clearfix,
+.field-multiple-table + .clearfix {
+  padding: 0.5rem 1rem 1rem;
+}
+
+.field-multiple-table thead > tr {
+  border-bottom: 0 none;
+}
+
+.field-multiple-table .fieldset {
+  margin: 0;
+}
+.field-multiple-table fieldset:not(.fieldgroup) legend {
+  padding: 0;
+  border: 0 none;
+}
+
+.field-multiple-table .fieldset-wrapper {
+  padding: 0;
+}
+
+.fieldset-wrapper .form-wrapper {
+  margin-bottom: 1rem;
+}
+
+fieldset:not(.fieldgroup).hr-main-inputs > .fieldset-wrapper {
+  padding: 0;
+}
+
+fieldset:not(.fieldgroup) > legend,
+fieldset.form-composite > legend {
+  top: 0;
+  width: 100%;
+  box-sizing : border-box;
+  letter-spacing: unset;
+  text-transform: uppercase;
+  font-size: 1em;
+  font-weight: bold;
+}
+
+/* Group heading styles */
+fieldset legend,
+.form-composite > legend {
+  color: #333;
+  background-color: #f5f5f5;
+  padding: 0.5rem 1rem;
+  border: 1px solid transparent;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Checkbox widget */
+.field--name-field-units-of-measurement legend + .fieldset-wrapper {
+  padding-top: 1rem;
+}
+
+.field--name-field-units-of-measurement legend {
+  width: 100%;
+}
+
+.form-checkboxes > div {
+  display: inline-block;
+}
+
+fieldset legend,
+.form-composite > legend {
+  display: block;
+}
+
+fieldset:not(.fieldgroup).hr-main-inputs > legend,
+fieldset:not(.fieldgroup).hr-details > legend {
+  display: none;
+}
+
+fieldset:not(.fieldgroup) {
+  display: block;
+}
+
+/* Show more accordion */
+.ui-accordion .ui-accordion-header {
+  text-transform: inherit;
+  cursor: pointer;
+  position: relative;
+  margin: 0 0 1rem;
+  color: #333;
+  background-color: #fff;
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  border: 1px solid #ddd;
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+.ui-accordion .ui-accordion-content {
+  padding: 0;
+  border: 0 none;
+}
+
+.ui-accordion .ui-accordion-header .ui-accordion-header-icon {
+  display: none;
+}
+
+/* Generic form elements */
+input.form-autocomplete,
+input.form-text,
+input.form-tel,
+input.form-email,
+input.form-url,
+input.form-search,
+input.form-number,
+input.form-color,
+input.form-file,
+input.form-date,
+input.form-time,
+textarea.form-textarea {
+  width: 100%;
+}
+
+input.form-file + input.form-submit {
+  margin: 0.5rem 1rem 0.5rem 0;
+}
+
+.form-managed-file .button {
+  margin: 0 1rem 0.5rem 0;
+}

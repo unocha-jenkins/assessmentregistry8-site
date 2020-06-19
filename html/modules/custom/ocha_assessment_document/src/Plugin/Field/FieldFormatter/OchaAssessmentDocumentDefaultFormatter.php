@@ -4,6 +4,7 @@ namespace Drupal\ocha_assessment_document\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Link;
 use Drupal\Core\Url;
 use Drupal\file\Plugin\Field\FieldFormatter\GenericFileFormatter;
 
@@ -87,13 +88,13 @@ class OchaAssessmentDocumentDefaultFormatter extends GenericFileFormatter {
               $link_text = $file->getFilename();
             }
 
-            $output[] = \Drupal::l($link_text, Url::fromUri($file_url, []));
+            $output[] = Link::fromTextAndUrl($link_text, Url::fromUri($file_url, []))->toString();
           }
 
           if ($this->getSetting('display_link')) {
             if (!empty($item->uri)) {
               $link_text = !empty($item->title) ? $item->title : $item->uri;
-              $output[] = \Drupal::l($link_text, Url::fromUri($item->uri, []));
+              $output[] = Link::fromTextAndUrl($link_text, Url::fromUri($item->uri, []))->toString();
             }
           }
         }

@@ -36,6 +36,11 @@ class OchaLocalGroupsController extends OchaIntegrationsController {
   protected $loggerId = 'ocha_local_groups';
 
   /**
+   * {@inheritdoc}
+   */
+  protected static $staticCache;
+
+  /**
    * Get API data.
    */
   public function getApiDataFromEndpoint() {

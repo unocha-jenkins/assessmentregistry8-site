@@ -1,7 +1,38 @@
 <?php
 
-use Drupal\node\Entity\Node;
+/**
+ * @file
+ * OCHA Assessments.
+ */
 
+use Drupal\node\Entity\Node;
+use Drupal\Core\File\FileSystemInterface;
+use Drupal\ocha_persons\Entity\PersonEntity;
+
+/**
+ * Implements hook_field_widget_info_alter().
+ */
+function ocha_assessments_field_widget_info_alter(array &$info) {
+  $info['select2']['field_types'][] = 'ocha_countries';
+  $info['select2']['field_types'][] = 'ocha_disasters';
+  $info['select2']['field_types'][] = 'ocha_local_groups';
+  $info['select2']['field_types'][] = 'ocha_organizations';
+  $info['select2']['field_types'][] = 'ocha_themes';
+  $info['select2']['field_types'][] = 'ocha_population_type';
+  $info['select2']['field_types'][] = 'ocha_global_coordination_groups';
+
+  $info['custom_widgets_text_autocomplete']['field_types'][] = 'ocha_countries';
+  $info['custom_widgets_text_autocomplete']['field_types'][] = 'ocha_disasters';
+  $info['custom_widgets_text_autocomplete']['field_types'][] = 'ocha_local_groups';
+  $info['custom_widgets_text_autocomplete']['field_types'][] = 'ocha_organizations';
+  $info['custom_widgets_text_autocomplete']['field_types'][] = 'ocha_themes';
+  $info['custom_widgets_text_autocomplete']['field_types'][] = 'ocha_population_type';
+  $info['custom_widgets_text_autocomplete']['field_types'][] = 'ocha_global_coordination_groups';
+}
+
+/**
+ * Get a variable.
+ */
 function ocha_assessments_variable_get($key, $default) {
   if (Drupal::state()->get($key)) {
     return Drupal::state()->get($key);
@@ -10,6 +41,9 @@ function ocha_assessments_variable_get($key, $default) {
   return $default;
 }
 
+/**
+ * Set a variable.
+ */
 function ocha_assessments_variable_set($key, $value) {
   Drupal::state()->set($key, $value);
 }
@@ -32,7 +66,7 @@ function ocha_assessments_log($message) {
 function ocha_assessments_from_hrinfo() {
   if (ocha_assessments_variable_get('ocha_assessments_stop_processing_hrinfo', FALSE)) {
     ocha_assessments_log('Kill switch is enabled!');
-    //return;
+    return;
   }
 
   ocha_assessments_log('Getting page ' . ocha_assessments_variable_get('ocha_assessments_page_hrinfo', 1));
@@ -40,9 +74,9 @@ function ocha_assessments_from_hrinfo() {
   $page = ocha_assessments_variable_get('ocha_assessments_page_hrinfo', 1);
   $api_url = ocha_assessments_variable_get('ocha_assessments_api_url_hrinfo', 'https://www.humanitarianresponse.info/api/v1.0/assessments');
 
-  // Build URL;
+  // Build URL.
   $ts = ocha_assessments_variable_get('ocha_assessments_most_recent_hrinfo', 1);
-$ts=0;
+
   $url = $api_url;
   $url .= '?page[number]=' . $page;
   $url .= '&filter[changed][value]=' . $ts . '&filter[changed][operator]=>';
@@ -93,6 +127,7 @@ function ocha_assessments_process_row_from_hrinfo($item) {
       'type' => 'assessment',
       'title' => $label,
       'nid' => $item->id,
+      'field_contacts' => [],
       'field_local_groups' => [],
       'field_organizations' => [],
       'field_asst_organizations' => [],
@@ -105,6 +140,22 @@ function ocha_assessments_process_row_from_hrinfo($item) {
       'field_assessment_report' => [],
       'field_assessment_questionnaire' => [],
     ];
+
+    // Contacts.
+    if (isset($item->contacts) && count($item->contacts)) {
+      // Uses the same Ids.
+      foreach ($item->contacts as $hid_id) {
+        // Lookup existing contacts.
+        $person_id = ocha_assessments_lookup_person($hid_id);
+        if (!$person_id) {
+          // Or create new contact.
+          $person_id = ocha_assessments_create_person($hid_id);
+        }
+        $data['field_contacts'][] = [
+          'target_id' => $person_id,
+        ];
+      }
+    }
 
     // Local group aka Cluster(s)/Sector(s).
     if (isset($item->bundles) && count($item->bundles)) {
@@ -254,13 +305,6 @@ function ocha_assessments_process_row_from_hrinfo($item) {
       $data['field_status'] = $item->status;
     }
 
-    // Geographic level.
-    /*
-    if (isset($item->geographic_level) && $item->geographic_level) {
-      $data['field_geographic_level'] = $item->geographic_level;
-    }
-    */
-
     // Assessment Date(s).
     if (isset($item->date) && $item->date) {
       $data['field_ass_date'][] = [
@@ -301,13 +345,9 @@ function ocha_assessments_process_row_from_hrinfo($item) {
   }
 }
 
-function ocha_assessments_get_id_by_label($source, $label) {
-  switch($source) {
-    case 'ms_local_group':
-    break;
-  }
-}
-
+/**
+ * Add a document.
+ */
 function ocha_assessments_parse_document($document, $created) {
   $data = [
     'accessibility' => isset($document->accessibility) ? $document->accessibility : 'Publicly Available',
@@ -331,8 +371,8 @@ function ocha_assessments_parse_document($document, $created) {
     $file_content = file_get_contents($url);
     if ($file_content) {
       $directory = 'public://assessments/' . date('Y-m', $created) . '/';
-      file_prepare_directory($directory, FILE_CREATE_DIRECTORY);
-      $file = file_save_data($file_content, $directory . $filename_save, FILE_EXISTS_REPLACE);
+      \Drupal::service('file_system')->prepareDirectory($directory, FileSystemInterface::CREATE_DIRECTORY);
+      $file = file_save_data($file_content, $directory . $filename_save, FileSystemInterface::EXISTS_REPLACE);
 
       $data['target_id'] = $file->id();
       $data['description'] = $filename;
@@ -345,6 +385,9 @@ function ocha_assessments_parse_document($document, $created) {
   return $data;
 }
 
+/**
+ * Implements hook_entity_presave().
+ */
 function ocha_assessments_node_presave($node) {
   if ($node->bundle() == 'assessment') {
     $changed = $node->changed_override;
@@ -352,4 +395,90 @@ function ocha_assessments_node_presave($node) {
       $node->set('changed', $changed);
     }
   }
+}
+
+/**
+ * Add a document.
+ */
+function ocha_assessments_create_document($accessibility, $document_url, $instructions = '') {
+  $data = [
+    'accessibility' => isset($accessibility) ? $accessibility : 'Publicly Available',
+    'uri' => '',
+    'title' => '',
+    'instructions' => $instructions,
+    'target_id' => 0,
+    'display' => 1,
+    'description' => '',
+  ];
+
+  if (!empty($document_url)) {
+    $trans = \Drupal::transliteration();
+
+    $url_parts = explode('/', $document_url);
+    $filename = end($url_parts);
+    $filename = $trans->transliterate($document_url, 'en');
+    $filename_save = preg_replace('/\-+/', '-', strtolower(preg_replace('/[^a-zA-Z0-9_\-\.]+/', '', str_replace(' ', '-', $filename))));
+
+    // Copy file.
+    $file_content = file_get_contents($document_url);
+    if ($file_content) {
+      $directory = 'public://assessments/' . date('Y-m') . '/';
+      \Drupal::service('file_system')->prepareDirectory($directory, FileSystemInterface::CREATE_DIRECTORY);
+      $file = file_save_data($file_content, $directory . $filename_save, FileSystemInterface::EXISTS_REPLACE);
+
+      $data['target_id'] = $file->id();
+      $data['description'] = $filename;
+    }
+    else {
+      ocha_assessments_log('Unable to fetch ' . $document_url);
+    }
+  }
+
+  return $data;
+}
+
+/**
+ * Lookup contact using HID Id.
+ */
+function ocha_assessments_lookup_person($hid_id) {
+  $query = \Drupal::service('entity.query')
+    ->get('person_entity')
+    ->condition('field_hid', $hid_id);
+  $entity_ids = $query->execute();
+
+  if (empty($entity_ids)) {
+    return FALSE;
+  }
+
+  return reset($entity_ids);
+}
+
+/**
+ * Create contact using HID Id.
+ */
+function ocha_assessments_create_person($hid_id) {
+  $data = [
+    'name' => $hid_id,
+    'field_hid' => $hid_id,
+  ];
+
+  // Check HID.
+  if ($contact = ocha_hid_contacts_load_by_id($hid_id)) {
+    $data['name'] = $contact->name;
+    $data['field_email'] = [];
+    $data['field_phone'] = [];
+
+    if (!empty($contact->phone_number)) {
+      $data['field_phone'][] = $contact->phone_number;
+    }
+
+    if (!empty($contact->email)) {
+      $data['field_email'][] = $contact->email;
+    }
+  }
+
+  $person = PersonEntity::create($data);
+  $person->save();
+
+  return $person->id();
 }

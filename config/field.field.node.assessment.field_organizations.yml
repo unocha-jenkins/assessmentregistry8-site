@@ -12,8 +12,8 @@ field_name: field_organizations
 entity_type: node
 bundle: assessment
 label: 'Leading/Coordinating Organization(s)'
-description: ''
-required: false
+description: 'Select the organization(s) conducting the assessment. If the organization is not available, <a href="https://docs.google.com/a/humanitarianresponse.info/forms/d/e/1FAIpQLSdpkMue4gFydSm1PwhSIQonpWRGG50ouJJdo8NbcvaMv_pcDw/viewform?c=0&amp;w=1&amp;usp=send_form">request it to be added</a> and select "other" in the meantime.'
+required: true
 translatable: false
 default_value: {  }
 default_value_callback: ''

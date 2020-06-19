@@ -18,18 +18,12 @@ weight: 0
 min_count: 1
 show_only_one_result: false
 field_identifier: created
-facet_source_id: 'search_api:views_page__assessments__page_1'
+facet_source_id: 'search_api:views_page__assessments__assessments_list'
 widget:
-  type: links
+  type: dropdown
   config:
-    show_numbers: false
-    soft_limit: 0
-    soft_limit_settings:
-      show_less_label: 'Show less'
-      show_more_label: 'Show more'
-    show_reset_link: false
-    reset_text: 'Show all'
-    hide_reset_when_no_selection: false
+    show_numbers: true
+    default_option_label: Month
 query_operator: and
 use_hierarchy: false
 hierarchy:
@@ -57,11 +51,6 @@ processor_configs:
       authored_on:
         enable: true
         condition: not_empty
-        values: ''
-        negate: false
-      clusters_sectors:
-        enable: false
-        condition: null
         values: ''
         negate: false
       countries:
@@ -104,6 +93,11 @@ processor_configs:
         condition: null
         values: ''
         negate: false
+  hide_1_result_facet:
+    processor_id: hide_1_result_facet
+    weights:
+      build: 50
+    settings: {  }
   hide_non_narrowing_result_processor:
     processor_id: hide_non_narrowing_result_processor
     weights:
@@ -114,7 +108,7 @@ processor_configs:
     weights:
       sort: 50
     settings:
-      sort: DESC
+      sort: ASC
   url_processor_handler:
     processor_id: url_processor_handler
     weights:

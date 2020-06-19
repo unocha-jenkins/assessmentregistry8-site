@@ -1,0 +1,22 @@
+<?php
+
+/**
+ * @file
+ * OCHA Map.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function ocha_map_theme($existing, $type, $theme, $path) {
+  return [
+    'ocha_map_map' => [
+      'template' => 'ocha-map',
+      'variables' => [
+        'base_url' => 'https://assessmentregistry8-site.docksal',
+        'src' => 'https://assessmentregistry8-site.docksal/rest/assessments-map?items_per_page=800',
+        'component_url' => '/modules/custom/ocha_map/component/',
+      ],
+    ],
+  ];
+}

@@ -74,3 +74,22 @@ function ocha_local_groups_import_json() {
   $controller = ocha_local_groups_get_controller();
   $controller->getApiDataFromJson();
 }
+
+/**
+ * Return list of operations.
+ */
+function ocha_local_groups_get_operations() {
+  $operations = [];
+
+  $controller = ocha_local_groups_get_controller();
+  $local_groups = $controller->getApiData();
+  foreach ($local_groups as $local_group) {
+    if (!empty($local_group->operations) && isset($local_group->operations[0]->label)) {
+      $operations[$local_group->operations[0]->label] = $local_group->operations[0]->label;
+    }
+  }
+
+  asort($operations);
+
+  return $operations;
+}

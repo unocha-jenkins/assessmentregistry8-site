@@ -1,0 +1,14 @@
+uuid: 31dbca3f-a29a-45cb-9720-8c380a23ae0c
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.knowledge_management_global_editor
+  module:
+    - user
+id: user_remove_role_action.knowledge_management_global_editor
+label: 'Remove the Knowledge Management global editor role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: knowledge_management_global_editor

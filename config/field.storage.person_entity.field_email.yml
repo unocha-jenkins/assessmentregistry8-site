@@ -1,0 +1,18 @@
+uuid: 81ed468e-fe63-4537-9201-b2bc024ebafa
+langcode: en
+status: true
+dependencies:
+  module:
+    - ocha_persons
+id: person_entity.field_email
+field_name: field_email
+entity_type: person_entity
+type: email
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

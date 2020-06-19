@@ -36,6 +36,11 @@ class OchaPopulationTypeController extends OchaIntegrationsController {
   protected $loggerId = 'ocha_population_type';
 
   /**
+   * {@inheritdoc}
+   */
+  protected static $staticCache;
+
+  /**
    * Get API data.
    */
   public function getApiDataFromEndpoint() {
@@ -154,7 +159,7 @@ class OchaPopulationTypeController extends OchaIntegrationsController {
   public function getItemByLabel($label) {
     $data = $this->getApiData();
 
-    foreach ($data as $key => $value) {
+    foreach ($data as $value) {
       if ($value->name == $label) {
         return $value;
       }
@@ -162,4 +167,5 @@ class OchaPopulationTypeController extends OchaIntegrationsController {
 
     return FALSE;
   }
+
 }

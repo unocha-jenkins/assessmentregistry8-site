@@ -1,0 +1,14 @@
+uuid: 4963f653-e43f-4edc-8de6-408670b26d79
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.assessment_editor
+  module:
+    - user
+id: user_remove_role_action.assessment_editor
+label: 'Remove the Assessment editor role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: assessment_editor

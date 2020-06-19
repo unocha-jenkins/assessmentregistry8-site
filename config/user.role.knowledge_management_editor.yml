@@ -1,0 +1,37 @@
+uuid: c90dcbfe-76ed-4ff4-b06b-dca6d9525c12
+langcode: en
+status: true
+dependencies: {  }
+id: knowledge_management_editor
+label: 'Knowledge Management editor'
+weight: 6
+is_admin: null
+permissions:
+  - 'access content overview'
+  - 'access files overview'
+  - 'access media overview'
+  - 'access shortcuts'
+  - 'access toolbar'
+  - 'create document media'
+  - 'create image media'
+  - 'create knowledge_management content'
+  - 'create media'
+  - 'create remote_video media'
+  - 'create video media'
+  - 'delete media'
+  - 'delete own document media'
+  - 'delete own image media'
+  - 'delete own knowledge_management content'
+  - 'delete own remote_video media'
+  - 'delete own video media'
+  - 'edit own document media'
+  - 'edit own image media'
+  - 'edit own knowledge_management content'
+  - 'edit own remote_video media'
+  - 'edit own video media'
+  - 'update media'
+  - 'view all revisions'
+  - 'view knowledge_management revisions'
+  - 'view own unpublished content'
+  - 'view own unpublished media'
+  - 'view the administration theme'

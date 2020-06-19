@@ -1,0 +1,84 @@
+{#
+/**
+ * @file
+ * Theme override for a node edit form.
+ *
+ * Two column template for the node add/edit form.
+ *
+ * This template will be used when a node edit form specifies 'node_edit_form'
+ * as its #theme callback.  Otherwise, by default, node add/edit forms will be
+ * themed by form.html.twig.
+ *
+ * Available variables:
+ * - form: The node add/edit form.
+ *
+ * @see seven_form_node_form_alter()
+ */
+#}
+
+{{ attach_library('cd_seven/node-form--assessment') }}
+
+<div class="layout-node-form clearfix">
+  <div class="layout-region layout-region-node-main">
+
+{#    {{ form.title_field }}#}
+{#    {{ form.language }}#}
+
+{#    <fieldset class="hr-main-inputs">#}
+
+{#      {{ form.field_status }}#}
+{#      {{ form.field_ass_date }}#}
+{#      {{ form.field_locations }}#}
+{#      {{ form.field_other_location }}#}
+{#      {{ form.field_assessment_report }}#}
+{#      {{ form.field_assessment_questionnaire }}#}
+{#      {{ form.field_assessment_data }}#}
+
+{#    </fieldset>#}
+{#    <fieldset class="hr-details">#}
+
+{#      {{ form.field_sources }}#}
+{#      {{ form.field_local_groups }}#}
+{#      {{ form.field_organizations }}#}
+{#      {{ form.field_asst_organizations }}#}
+{#      {{ form.field_population_types }}#}
+{#      {{ form.field_coordination_hubs }}#}
+{#      {{ form.field_disasters }}#}
+
+{#    </fieldset>#}
+
+{#    <fieldset class="hr-additional">#}
+{#      <div class="toggle">#}
+
+{#        {{ form.field_subject_objective }}#}
+{#        {{ form.field_sample_size }}#}
+{#        {{ form.field_methodology }}#}
+{#        {{ form.field_level_of_representation }}#}
+{#        {{ form.field_key_findings }}#}
+{#        {{ form.field_frequency }}#}
+{#        {{ form.field_related_content }}#}
+{#        {{ form.field_units_of_measurement }}#}
+{#        {{ form.field_hid_contact_ref }}#}
+{#        {{ form.field_collection_methods }}#}
+{#        {{ form.field_themes }}#}
+
+{#      </div>#}
+{#      <div class="optional-fields">#}
+{#        {% trans %}Click to add Subject, Methodology, Key Findings, Related content, and other details.{% endtrans %}#}
+{#      </div>#}
+{#    </fieldset>#}
+
+    {{ form|without('advanced', 'footer', 'actions') }}
+
+{#    {{ dpm(form) }}#}
+  </div>
+  <div class="layout-region layout-region-node-secondary">
+{#    {{ form.advanced }}#}
+  </div>
+  <div class="layout-region layout-region-node-footer">
+    <div class="layout-region-node-footer__content">
+      {{ form.footer }}
+      {{ form.actions }}
+    </div>
+  </div>
+</div>

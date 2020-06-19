@@ -83,7 +83,7 @@ function ocha_locations_children_to_options($location) {
 }
 
 /**
- * Get one item().
+ * Get one item by Id.
  */
 function ocha_locations_get_item($id, $langcode = NULL) {
   static $items;
@@ -96,6 +96,19 @@ function ocha_locations_get_item($id, $langcode = NULL) {
   $items[$id] = $controller->getItem($id);
 
   return $items[$id];
+}
+
+/**
+ * Get one item by label.
+ */
+function ocha_locations_get_item_by_label($label) {
+  $options = ocha_locations_allowed_values();
+
+  if ($index = array_search($label, $options)) {
+    return ocha_locations_get_item($index);
+  }
+
+  return FALSE;
 }
 
 /**

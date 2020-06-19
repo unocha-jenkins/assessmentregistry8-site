@@ -1,0 +1,14 @@
+uuid: 6726ce17-27e3-4905-bbbb-4bea49be4623
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.knowledge_management_editor
+  module:
+    - user
+id: user_remove_role_action.knowledge_management_editor
+label: 'Remove the Knowledge Management editor role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: knowledge_management_editor

@@ -1,0 +1,30 @@
+ocha_hid_contacts.autocomplete:
+  path: '/ocha_hid_contacts/autocomplete/{field_name}/{max_items}/{entity_type_id}/{matching_method}/{uid}/{hash}'
+  defaults:
+    _controller: '\Drupal\ocha_hid_contacts\Controller\AutocompleteController::handleAutocomplete'
+    _title: 'Handle autocomplete of HID contacts'
+    _format: json
+    field_name: NULL
+    max_items: 15
+    entity_type_id: NULL
+    matching_method: contains
+    uid: NULL
+    hash: NULL
+  requirements:
+    # Might need one.
+    _access: 'TRUE'
+ocha_hid_contacts.autocomplete_select2:
+  path: '/ocha_hid_contacts/autocomplete_select2/{field_name}/{max_items}/{entity_type_id}/{matching_method}/{uid}/{hash}'
+  defaults:
+    _controller: '\Drupal\ocha_hid_contacts\Controller\AutocompleteController::handleAutocompleteSelect2'
+    _title: 'Handle Autocomplete of HID contacts'
+    _format: json
+    field_name: NULL
+    max_items: 15
+    entity_type_id: NULL
+    matching_method: contains
+    uid: NULL
+    hash: NULL
+  requirements:
+    # Might need one.
+    _access: 'TRUE'

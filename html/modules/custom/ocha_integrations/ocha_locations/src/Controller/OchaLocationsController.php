@@ -39,19 +39,24 @@ class OchaLocationsController extends OchaIntegrationsController {
   /**
    * {@inheritdoc}
    */
-  protected static $static_flat_cache;
+  protected static $staticCache;
+
+  /**
+   * {@inheritdoc}
+   */
+  protected static $staticFlatCache;
 
   /**
    * Get flat cached data.
    */
   public function getFlatCache() {
-    if (isset($this::$static_flat_cache)) {
-      return $this::$static_flat_cache;
+    if (isset(static::$staticFlatCache)) {
+      return static::$staticFlatCache;
     }
 
     if ($cache = $this->cacheBackend->get('ocha_locations:apiFlatData')) {
-      $this::$static_flat_cache = $cache->data;
-      return $this::$static_flat_cache;
+      static::$staticFlatCache = $cache->data;
+      return static::$staticFlatCache;
     }
 
     return [];
@@ -68,7 +73,7 @@ class OchaLocationsController extends OchaIntegrationsController {
     Cache::invalidateTags([$this->cacheTag]);
 
     // Update static cache.
-    $this::$static_flat_cache = $data;
+    static::$staticFlatCache = $data;
   }
 
   /**

@@ -103,7 +103,7 @@ class OchaIntegrationsController extends ControllerBase {
   /**
    * {@inheritdoc}
    */
-  protected static $static_cache;
+  protected static $staticCache;
 
   /**
    * {@inheritdoc}
@@ -152,20 +152,20 @@ class OchaIntegrationsController extends ControllerBase {
     Cache::invalidateTags([$this->cacheTag]);
 
     // Set static cache.
-    $this::$static_cache = $data;
+    static::$staticCache = $data;
   }
 
   /**
    * Get cached data.
    */
   public function getCache() {
-    if (isset($this::$static_cache)) {
-      return $this::$static_cache;
+    if (isset(static::$staticCache)) {
+      return static::$staticCache;
     }
 
     if ($cache = $this->cacheBackend->get($this->cacheId)) {
-      $this::$static_cache = $cache->data;
-      return $this::$static_cache;
+      static::$staticCache = $cache->data;
+      return static::$staticCache;
     }
 
     return [];
@@ -195,7 +195,7 @@ class OchaIntegrationsController extends ControllerBase {
    * Order options alphabetically, ignoring accents.
    */
   public function orderOptions($a, $b) {
-    return strcmp(iconv('utf8', 'ASCII//TRANSLIT', $a), iconv('utf8', 'ASCII//TRANSLIT', $b));
+    return strcmp(iconv('UTF-8', 'ASCII//TRANSLIT', $a), iconv('UTF-8', 'ASCII//TRANSLIT', $b));
   }
 
   /**

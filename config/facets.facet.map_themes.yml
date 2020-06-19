@@ -18,12 +18,14 @@ weight: 0
 min_count: 1
 show_only_one_result: true
 field_identifier: field_themes
-facet_source_id: 'search_api:views_page__assessments__page_2'
+facet_source_id: 'search_api:views_page__assessments__assessments_map'
 widget:
-  type: dropdown
+  type: select2
   config:
-    show_numbers: false
-    default_option_label: Choose
+    show_numbers: true
+    width: 100%
+    autocomplete: false
+    match_operator: CONTAINS
 query_operator: and
 use_hierarchy: false
 hierarchy:

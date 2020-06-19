@@ -2,6 +2,8 @@ uuid: 290a3163-06a9-40b0-849a-359df037e768
 langcode: en
 status: true
 dependencies:
+  module:
+    - system
   theme:
     - common_design_subtheme
 _core:
@@ -9,7 +11,7 @@ _core:
 id: common_design_subtheme_page_title
 theme: common_design_subtheme
 region: content
-weight: -50
+weight: -16
 provider: null
 plugin: page_title_block
 settings:
@@ -17,4 +19,9 @@ settings:
   label: 'Page title'
   provider: core
   label_display: '0'
-visibility: {  }
+visibility:
+  request_path:
+    id: request_path
+    pages: '<front>'
+    negate: true
+    context_mapping: {  }

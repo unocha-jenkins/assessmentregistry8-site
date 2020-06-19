@@ -12,8 +12,8 @@ field_name: field_locations
 entity_type: node
 bundle: assessment
 label: Location(s)
-description: ''
-required: false
+description: 'Select the country(ies) (or more specific locations) of the assessment(s).'
+required: true
 translatable: false
 default_value: {  }
 default_value_callback: ''

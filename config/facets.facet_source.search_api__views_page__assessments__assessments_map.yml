@@ -1,0 +1,12 @@
+uuid: 14135eca-b8bc-404d-9a46-bed21c1ff297
+langcode: en
+status: true
+dependencies: {  }
+id: search_api__views_page__assessments__assessments_map
+name: 'search_api:views_page__assessments__assessments_map'
+filter_key: ''
+url_processor: facets_pretty_paths
+breadcrumb:
+  active: false
+  before: true
+  group: false

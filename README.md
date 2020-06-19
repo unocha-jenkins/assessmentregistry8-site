@@ -1,25 +1,30 @@
+[![Development build](https://travis-ci.com/UN-OCHA/assessmentregistry8-site.svg?branch=develop)](https://travis-ci.com/UN-OCHA/assessmentregistry8-site)
+[![Master build](https://travis-ci.com/UN-OCHA/assessmentregistry8-site.svg?branch=master)](https://travis-ci.com/UN-OCHA/assessmentregistry8-site)
+![Development image](https://github.com/UN-OCHA/assessmentregistry8-site/workflows/Build%20docker%20image/badge.svg?branch=develop)
+![Master image](https://github.com/UN-OCHA/assessmentregistry8-site/workflows/Build%20docker%20image/badge.svg?branch=master)
+
 # Assessment Registry
 
 ## Pages
 
-- https://site-assessments8.docksal/assessments/table
-- https://site-assessments8.docksal/assessments/list
-- https://site-assessments8.docksal/assessments/map
-- https://site-assessments8.docksal/knowledge-management
+- https://assessmentregistry8-site.docksal/assessments/table
+- https://assessmentregistry8-site.docksal/assessments/list
+- https://assessmentregistry8-site.docksal/assessments/map
+- https://assessmentregistry8-site.docksal/knowledge-management
 
 ## JSON API
 
 Has a problem outputting the label of a select list.
 
-Test link: `http://site-assessments8.docksal/jsonapi/index/knowledge_management?filter[field_countries]=210`
+Test link: `http://assessmentregistry8-site.docksal/jsonapi/index/knowledge_management?filter[field_countries]=210`
 
 ## REST + json
 
 Works:
 
-- http://site-assessments8.docksal/rest/knowledge-management
-- http://site-assessments8.docksal/rest/knowledge-management?x=&f[0]=country%3A106
-- http://site-assessments8.docksal/rest/assessments?items_per_page=All
+- http://assessmentregistry8-site.docksal/rest/knowledge-management
+- http://assessmentregistry8-site.docksal/rest/knowledge-management?x=&f[0]=country%3A106
+- http://assessmentregistry8-site.docksal/rest/assessments?items_per_page=All
 
 ### JSON map
 
@@ -39,12 +44,14 @@ Add new endpoint, change existing for the map and return all data.
 
 ## Cron jobs
 
+```bash
 fin drush eval --verbose "ocha_countries_cron()"
 fin drush eval --verbose "ocha_disasters_cron()"
 fin drush eval --verbose "ocha_local_groups_cron()"
 fin drush eval --verbose "ocha_locations_cron()"
 fin drush eval --verbose "ocha_organizations_cron()"
 fin drush eval --verbose "ocha_themes_cron()"
+```
 
 ## Migrate
 

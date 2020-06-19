@@ -1,8 +1,4 @@
 <?php
-/**
- * @file
- * Contains \Drupal\ocha_organizations\GetLabel.
- */
 
 namespace Drupal\ocha_organizations;
 
@@ -34,6 +30,9 @@ class GetLabel extends TypedData {
     $term = ocha_organizations_get_item($item->value);
     if ($term) {
       $this->processed = $term->name;
+      if (isset($item->acronym) && !empty($item->acronym)) {
+        $this->processed .= ' [' . $item->acronym . ']';
+      }
     }
 
     return $this->processed;
@@ -50,4 +49,5 @@ class GetLabel extends TypedData {
       $this->parent->onChange($this->name);
     }
   }
+
 }

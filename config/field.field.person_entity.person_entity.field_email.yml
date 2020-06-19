@@ -1,0 +1,20 @@
+uuid: d6c5ba30-c835-48b2-9016-2e787b93761d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.person_entity.field_email
+  module:
+    - ocha_persons
+id: person_entity.person_entity.field_email
+field_name: field_email
+entity_type: person_entity
+bundle: person_entity
+label: Email
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: email

@@ -1,4 +1,4 @@
-FROM unocha/unified-builder:7.3.14-r0-202001-04 as builder
+FROM unocha/unified-builder:7.3.14-r0-202003-02 as builder
 ARG  BRANCH_ENVIRONMENT
 ENV  NODE_ENV=$BRANCH_ENVIRONMENT
 COPY . /srv/www
@@ -7,7 +7,7 @@ RUN composer install --quiet --no-dev --prefer-dist && \
     cp -a docker/settings.php docker/services.yml html/sites/default && \
     composer run gulp
 
-FROM unocha/php7-k8s:7.3.14-r0-202001-04-NR
+FROM unocha/php7-k8s:7.3.14-r0-202004-03-NR
 
 ARG VCS_REF
 ARG VCS_URL
@@ -17,7 +17,7 @@ ARG GITHUB_REPOSITORY
 ARG GITHUB_SHA
 ARG GITHUB_REF
 
-ENV  NGINX_SERVERNAME=interagencystandingcommittee.org
+ENV  NGINX_SERVERNAME=assessments.hpc.tools
 ENV  PHP_ENVIRONMENT=production
 ENV  PHP_MEMORY_LIMIT=256M
 ENV  PHP_MAX_CHILDREN=16

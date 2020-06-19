@@ -1,4 +1,4 @@
-uuid: e2c99c8e-4b8b-4293-b357-337402a3a25a
+uuid: 44811a58-9699-485f-a600-98c327206cec
 langcode: en
 status: true
 dependencies:
@@ -12,7 +12,7 @@ dependencies:
 id: themes
 theme: common_design_subtheme
 region: sidebar_first
-weight: -7
+weight: 12
 provider: null
 plugin: 'facet_block:themes'
 settings:
@@ -24,6 +24,6 @@ settings:
 visibility:
   request_path:
     id: request_path
-    pages: "/assessments\r\n/assessments/*"
+    pages: "/assessments/list\r\n/assessments/list/*"
     negate: false
     context_mapping: {  }

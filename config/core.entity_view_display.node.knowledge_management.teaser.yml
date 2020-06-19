@@ -18,6 +18,7 @@ dependencies:
     - node.type.knowledge_management
   module:
     - ocha_integrations
+    - ocha_knowledge_management
     - text
     - user
 id: node.knowledge_management.teaser
@@ -41,7 +42,7 @@ content:
       link: false
     third_party_settings: {  }
   field_km_life_cycle_steps:
-    type: entity_reference_label
+    type: ocha_knowledge_management_lfs
     weight: 2
     region: content
     label: inline

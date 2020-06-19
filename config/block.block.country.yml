@@ -12,7 +12,7 @@ dependencies:
 id: country
 theme: common_design_subtheme
 region: sidebar_first
-weight: 0
+weight: 11
 provider: null
 plugin: 'facet_block:country'
 settings:

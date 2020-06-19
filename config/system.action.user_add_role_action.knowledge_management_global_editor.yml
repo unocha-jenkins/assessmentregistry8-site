@@ -1,0 +1,14 @@
+uuid: 11f88c66-538c-4516-8f3f-1ad27058f423
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.knowledge_management_global_editor
+  module:
+    - user
+id: user_add_role_action.knowledge_management_global_editor
+label: 'Add the Knowledge Management global editor role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: knowledge_management_global_editor

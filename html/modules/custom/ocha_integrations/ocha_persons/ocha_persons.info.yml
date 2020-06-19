@@ -1,0 +1,9 @@
+name: OCHA Persons
+description: List of Ocha persons
+package: OCHA Integrations
+type: module
+core: 8.x
+core_version_requirement: ^8 || ^9
+dependencies:
+  - drupal:ocha_integrations
+  - drupal:pcb

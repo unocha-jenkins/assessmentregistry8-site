@@ -36,6 +36,11 @@ class OchaGlobalCoordinationGroupsController extends OchaIntegrationsController 
   protected $loggerId = 'ocha_global_coordination_groups';
 
   /**
+   * {@inheritdoc}
+   */
+  protected static $staticCache;
+
+  /**
    * Get API data.
    */
   public function getApiDataFromEndpoint() {
@@ -123,7 +128,7 @@ class OchaGlobalCoordinationGroupsController extends OchaIntegrationsController 
   public function getItemByLabel($label) {
     $data = $this->getCache();
 
-    foreach ($data as $key => $value) {
+    foreach ($data as $value) {
       if ($value->label == $label) {
         return $value;
       }
