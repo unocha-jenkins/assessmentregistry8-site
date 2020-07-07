@@ -3661,6 +3661,7 @@ class OchaAssessmentsBase extends LitElement {
       local_groups: 'Local group',
       clusters_sectors: 'Cluster/sector',
       countries: 'Country',
+      disasters_emergencies: 'Disasters/Emergencies',
       disasters: 'Disaster',
       locations: 'Location',
       organizations: 'Organization',
@@ -19254,8 +19255,6 @@ class OchaAssessmentsMap extends OchaAssessmentsBase {
           @apply (--leaflet-map-component)
         }
       </style>
-
-      <p>Source (debug): ${this.src}</p>
 
       ${this.renderErrorMessage()}
 
