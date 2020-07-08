@@ -67,20 +67,9 @@
 }
 
 //@TODO this, better.
-#cd-filters-dropdown-toggler {
-  -webkit-appearance: none;
-  border-radius: 0;
-  box-shadow: none;
-  border: 0;
-  padding: 1rem;
-  font-size: 1rem;
-  font-weight: bold;
+.cd-filters__btn {
   background: $implementation-primary-dark;
   color: $cd-light-grey;
-  transition: background 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   width: 100%;
 
   &:hover,
@@ -93,7 +82,7 @@
     outline: 3px solid $implementation-highlight;
   }
 
-  svg {
+  &[aria-expanded] .cd-icon--arrow-down {
     fill: $cd-white;
     width: 2rem;
     height: 2rem;
@@ -103,14 +92,6 @@
   &:hover svg,
   &:focus svg {
     fill: $cd-white;
-  }
-
-  @include tablet {
-    display: none;
-
-    + .cd-dropdown[data-cd-hidden="true"] {
-      display: block;
-    }
   }
 }
 

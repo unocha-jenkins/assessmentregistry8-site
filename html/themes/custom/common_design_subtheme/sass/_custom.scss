@@ -48,7 +48,8 @@
   }
 }
 
-// Temp.
-.cd-table a {
-  word-break: break-word;
+.cd-filters[data-cd-toggable] {
+  @include tablet {
+    --dropdown: false;
+  }
 }
