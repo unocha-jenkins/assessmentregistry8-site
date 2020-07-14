@@ -48,8 +48,62 @@
   }
 }
 
-.cd-filters[data-cd-toggable] {
+//@TODO this, better.
+.cd-filter__btn {
+  background: $implementation-primary-dark;
+  color: $cd-light-grey;
+  &.cd-button {
+    width: 100%;
+  }
+
+  &:hover,
+  &:focus {
+    background: $implementation-primary;
+    color: $cd-white;
+  }
+
+  &:focus {
+    outline: 3px solid $implementation-highlight;
+  }
+
+  &[aria-expanded] .cd-icon--arrow-down {
+    fill: $cd-white;
+    width: 2rem;
+    height: 2rem;
+    padding: 0 0.5rem 0 0;
+  }
+
+  &:hover svg,
+  &:focus svg {
+    fill: $cd-white;
+  }
+
+  @include tablet {
+    // This is needed for IE11
+    // No support for CSS custom properties means
+    // --dropdown: false; property on nav container is not recognised
+    // so the cd-dropdown.js creates a toggler button on desktop
+    // This hides it when that happens.
+    @media all and (-ms-high-contrast: none) {
+      display: none;
+    }
+  }
+}
+
+.cd-filter {
   @include tablet {
     --dropdown: false;
+
+    // This is needed for IE11
+    // No support for CSS custom properties means
+    // --dropdown: false; property on nav container is not recognised
+    // so the cd-dropdown.js does not run the updateToggler function
+    // which toggles the data-cd-hidden attribute.
+    // This displays the nav regardless of that attribute value.
+    @media all and (-ms-high-contrast: none) {
+      &[data-cd-hidden='true'] {
+        display: block;
+      }
+    }
   }
 }

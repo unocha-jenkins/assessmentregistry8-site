@@ -66,35 +66,6 @@
   white-space: unset;
 }
 
-//@TODO this, better.
-.cd-filters__btn {
-  background: $implementation-primary-dark;
-  color: $cd-light-grey;
-  width: 100%;
-
-  &:hover,
-  &:focus {
-    background: $implementation-primary;
-    color: $cd-white;
-  }
-
-  &:focus {
-    outline: 3px solid $implementation-highlight;
-  }
-
-  &[aria-expanded] .cd-icon--arrow-down {
-    fill: $cd-white;
-    width: 2rem;
-    height: 2rem;
-    padding: 0 0.5rem 0 0;
-  }
-
-  &:hover svg,
-  &:focus svg {
-    fill: $cd-white;
-  }
-}
-
 .block-facets-summary {
   background-color: $cd-light-grey;
   //color: $p-dark-text;
