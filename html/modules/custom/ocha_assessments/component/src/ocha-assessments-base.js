@@ -163,8 +163,8 @@ export class OchaAssessmentsBase extends LitElement {
     let dropdowns = this.buildFacets();
 
     return html`
-      <div class="cd-filters">
-        <div class="cd-filters__form">
+      <div class="cd-filter">
+        <div class="cd-filter__form">
           <form>
             ${
               dropdowns.map(
@@ -198,7 +198,7 @@ export class OchaAssessmentsBase extends LitElement {
     }
 
     return html`
-      <div class="cd-filters__group">
+      <div class="cd-filter__group">
         <label for="${dropdown.label}">${dropdown.label}</label>
         <high-select class="dropdown" search arrow animated @change="${this.changeSrc}" id="${dropdown.id}">
           <high-option value="${emptytOption.value}">${emptytOption.label}</high-option>
