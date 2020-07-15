@@ -106,55 +106,55 @@ export const dropdownStyles = css`
     min-width: 10em;
   }
 
-  .cd-filters {
+  .cd-filter {
     margin-bottom: 1rem;
   }
 
-  .cd-filters__form {
+  .cd-filter__form {
     display: block;
     background: var(--cd-light-grey);
     padding: 1rem;
   }
 
-  .cd-filters__form form{
+  .cd-filter__form form{
     margin-bottom: 0;
   }
 
-  .cd-filters__form label {
+  .cd-filter__form label {
     display: block;
     margin: 0 0 0.25rem;
   }
 
-  .cd-filters__group {
+  .cd-filter__group {
     margin: 0 0 1rem;
   }
 
-  .cd-filters__form select {
+  .cd-filter__form select {
     width: 100%;
     max-width: 100%;
   }
 
-  .cd-filters__form .cd-button {
+  .cd-filter__form .cd-button {
     text-transform: unset;
     font-weight: normal;
   }
 
   @media (min-width: 768px) {
-    .cd-filters {
+    .cd-filter {
       margin-bottom: 2rem;
     }
 
-    .cd-filters__form form {
+    .cd-filter__form form {
       display: flex;
       flex-wrap: wrap;
       align-items: flex-start;
     }
 
-    .cd-filters__group {
+    .cd-filter__group {
       padding-right: 1rem;
     }
 
-    .cd-filters__form .cd-button {
+    .cd-filter__form .cd-button {
       align-self: flex-end;
       margin-bottom: 1rem;
     }
@@ -163,45 +163,45 @@ export const dropdownStyles = css`
     /* https://alistapart.com/article/quantity-queries-for-css */
 
     /* If one element */
-    .cd-filters__group:only-of-type,
+    .cd-filter__group:only-of-type,
     /* If two elements */
-    .cd-filters__group:nth-last-child(2):first-child,
-    .cd-filters__group:nth-last-child(2):first-child ~ .cd-filters__group,
-    .cd-filters__group:nth-last-child(2):first-child ~ .cd-export,
+    .cd-filter__group:nth-last-child(2):first-child,
+    .cd-filter__group:nth-last-child(2):first-child ~ .cd-filter__group,
+    .cd-filter__group:nth-last-child(2):first-child ~ .cd-export,
     /* If three elements */
-    .cd-filters__group:nth-last-child(3):first-child,
-    .cd-filters__group:nth-last-child(3):first-child ~ .cd-filters__group,
-    .cd-filters__group:nth-last-child(3):first-child ~ .cd-export {
+    .cd-filter__group:nth-last-child(3):first-child,
+    .cd-filter__group:nth-last-child(3):first-child ~ .cd-filter__group,
+    .cd-filter__group:nth-last-child(3):first-child ~ .cd-export {
       flex: 1 0 33%;
       max-width: 33%;
     }
 
-    .cd-filters__group:nth-last-child(2):first-child ~ .cd-filters__group:last-child,
-    .cd-filters__group:nth-last-child(3):first-child ~ .cd-filters__group:last-child {
+    .cd-filter__group:nth-last-child(2):first-child ~ .cd-filter__group:last-child,
+    .cd-filter__group:nth-last-child(3):first-child ~ .cd-filter__group:last-child {
       padding-right: 0;
     }
 
     /* If four elements */
-    .cd-filters__group:nth-last-child(4):first-child,
-    .cd-filters__group:nth-last-child(4):first-child ~ .cd-filters__group,
-    .cd-filters__group:nth-last-child(4):first-child ~ .cd-export {
+    .cd-filter__group:nth-last-child(4):first-child,
+    .cd-filter__group:nth-last-child(4):first-child ~ .cd-filter__group,
+    .cd-filter__group:nth-last-child(4):first-child ~ .cd-export {
       flex: 1 0 25%;
       max-width: 25%;
     }
 
-    .cd-filters__group:nth-last-child(4):first-child ~ .cd-filters__group:last-child {
+    .cd-filter__group:nth-last-child(4):first-child ~ .cd-filter__group:last-child {
       padding-right: 0;
     }
 
     /* If five elements */
-    .cd-filters__group:nth-last-child(5):first-child,
-    .cd-filters__group:nth-last-child(5):first-child ~ .cd-filters__group,
-    .cd-filters__group:nth-last-child(5):first-child ~ .cd-export {
+    .cd-filter__group:nth-last-child(5):first-child,
+    .cd-filter__group:nth-last-child(5):first-child ~ .cd-filter__group,
+    .cd-filter__group:nth-last-child(5):first-child ~ .cd-export {
       flex: 1 0 20%;
       max-width: 20%;
     }
 
-    .cd-filters__group:nth-last-child(5):first-child ~ .cd-filters__group:last-child {
+    .cd-filter__group:nth-last-child(5):first-child ~ .cd-filter__group:last-child {
       padding-right: 0;
     }
   }
