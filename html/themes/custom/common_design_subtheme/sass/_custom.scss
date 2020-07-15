@@ -52,14 +52,27 @@
 .cd-filter__btn {
   background: $implementation-primary-dark;
   color: $cd-light-grey;
-  &.cd-button {
-    width: 100%;
+  -webkit-appearance: none;
+  border-radius: 0;
+  box-shadow: none;
+  border: 0;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  transition: background 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+
+  svg {
+    width: 2rem;
+    height: 2rem;
+    padding: 0 0 0 0.5rem;
   }
 
   &:hover,
   &:focus {
     background: $implementation-primary;
-    color: $cd-white;
   }
 
   &:focus {
@@ -67,15 +80,8 @@
   }
 
   &[aria-expanded] .cd-icon--arrow-down {
-    fill: $cd-white;
     width: 2rem;
     height: 2rem;
-    padding: 0 0.5rem 0 0;
-  }
-
-  &:hover svg,
-  &:focus svg {
-    fill: $cd-white;
   }
 
   @include tablet {
