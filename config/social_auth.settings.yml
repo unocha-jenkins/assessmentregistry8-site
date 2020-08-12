@@ -11,6 +11,7 @@ disabled_roles:
   assessment_global_editor: '0'
   knowledge_management_global_editor: '0'
   knowledge_management_editor: '0'
+  content_editor: '0'
 user_allowed: register
 _core:
   default_config_hash: 0E8z47ONguVcapiw1PGWDRs6g0NRDCzrym4mP_jcELU
