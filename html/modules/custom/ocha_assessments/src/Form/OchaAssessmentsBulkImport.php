@@ -13,7 +13,7 @@ use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Class OchaAssessmentsBulkImport.
+ * Class OchaAssessmentsBulkImport for bulk imports.
  */
 class OchaAssessmentsBulkImport extends FormBase {
 
