@@ -13,6 +13,7 @@
     padding-top: 3rem;
     display: flex;
     flex-wrap: wrap;
+    min-width: 50%;
   }
 
   @include desktop {
@@ -62,6 +63,13 @@
 }
 
 .cd-layout-content {
+  @include tablet {
+    .cd-layout-with-sidebar-first &,
+    .cd-layout-with-sidebar-second & {
+      min-width: 50%;
+    }
+  }
+
   .cd-layout-with-sidebar-first & {
     @include tablet {
       margin-left: 0;
