@@ -41,7 +41,7 @@
 // One sidebar.
 .cd-layout-with-sidebar-first .cd-layout-sidebar-first {
   @include tablet {
-    flex-basis: 550px; // 
+    flex-basis: 550px;
   }
 
   @include desktop {
