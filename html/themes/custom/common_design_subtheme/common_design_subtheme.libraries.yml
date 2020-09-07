@@ -10,3 +10,8 @@ cd-export-button:
   js:
     js/cd-export-button.js: {}
 
+cd-table:
+  css:
+    component:
+      components/cd-table/cd-table.css: { }
+
