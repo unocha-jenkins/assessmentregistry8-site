@@ -157,7 +157,7 @@ class OchaAssessmentDocumentWidget extends ExternalMediaFile {
       'description',
       'upload_button',
       'remove_button',
-       ] as $key) {
+    ] as $key) {
       if (isset($element[$key])) {
         $element[$key]['#states'] = [
           'visible' => [
