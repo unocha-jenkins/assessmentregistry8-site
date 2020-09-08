@@ -172,7 +172,7 @@ class OchaLeafletMap extends LeafletMap implements ContainerFactoryPluginInterfa
   protected function getAvailableDataSources() {
     $fields_geo_data = [];
 
-    /* @var \Drupal\views\Plugin\views\ViewsHandlerInterface $handler) */
+    /** @var \Drupal\views\Plugin\views\ViewsHandlerInterface $handler) */
     foreach ($this->displayHandler->getHandlers('field') as $field_id => $handler) {
       $label = $handler->adminLabel() ?: $field_id;
       $this->viewFields[$field_id] = $label;

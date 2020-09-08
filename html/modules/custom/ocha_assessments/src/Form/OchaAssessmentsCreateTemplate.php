@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class OchaAssessmentsCreateTemplate.
+ * Class OchaAssessmentsCreateTemplate to create template.
  */
 class OchaAssessmentsCreateTemplate extends FormBase {
 
