@@ -116,7 +116,6 @@ function ocha_assessments_process_row_from_hrinfo($item) {
   if (isset($item->label) && $item->label && isset($item->id) && $item->id) {
     // Skip existing nodes.
     if ($node = \Drupal::entityTypeManager()->getStorage('node')->load($item->id)) {
-      // TODO: Handle this.
       return;
     }
 

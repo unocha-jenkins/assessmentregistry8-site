@@ -245,7 +245,6 @@ class OchaAssessmentsBulkImport extends FormBase {
 
     // Other location.
     if (isset($item['admin 4']) && !empty($item['admin 4'])) {
-      // TODO: Check length.
       $data['field_other_location'] = substr($item['admin 4'], 0, 255);
     }
 
