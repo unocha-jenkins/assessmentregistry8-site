@@ -5,7 +5,7 @@ export default {
   output: {
     file: 'build/ocha-assessments-list.js',
     format: 'es',
-    sourcemap: true
+    sourcemap: false
   },
   plugins: [
     resolve()

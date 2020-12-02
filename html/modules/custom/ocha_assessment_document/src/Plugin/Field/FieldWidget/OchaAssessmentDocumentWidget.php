@@ -43,7 +43,8 @@ class OchaAssessmentDocumentWidget extends ExternalMediaFile {
 
     $element['document'] = $document_widget;
     $element['document']['#title'] = $this->t('Document');
-    $element['document']['#process'] = array_merge($element_info['#process'], [[get_class($this), 'process']]);
+    $element['document']['#process'] = array_merge($element_info['#process'],
+    [[get_class($this), 'process']]);
 
     $element['accessibility'] = [
       '#type' => 'select',
@@ -151,7 +152,12 @@ class OchaAssessmentDocumentWidget extends ExternalMediaFile {
     $element = parent::process($element, $form_state, $form);
     $state_name = $element['#field_name'] . '[' . $element['#delta'] . '][accessibility]';
 
-    foreach (['upload', 'description', 'upload_button', 'remove_button'] as $key) {
+    foreach ([
+      'upload',
+      'description',
+      'upload_button',
+      'remove_button',
+    ] as $key) {
       if (isset($element[$key])) {
         $element[$key]['#states'] = [
           'visible' => [
