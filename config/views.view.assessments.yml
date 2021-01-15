@@ -4641,8 +4641,9 @@ display:
         filters: false
         filter_groups: false
       pager:
-        type: none
+        type: some
         options:
+          items_per_page: 9999
           offset: 0
       filters:
         search_api_fulltext:
@@ -4706,8 +4707,9 @@ display:
       custom_redirect_path: false
       include_query_params: false
       export_method: standard
-      export_batch_size: 250
+      export_batch_size: 50
       facet_settings: 'search_api:views_data_export__assessments__data_export_1'
+      export_limit: 9999
     cache_metadata:
       max-age: -1
       contexts:
