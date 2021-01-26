@@ -138,6 +138,10 @@ class OchaAssessmentsBulkImport extends FormBase {
     $header_lowercase = [];
 
     $worksheet = $spreadsheet->getActiveSheet();
+    if ($worksheet->getHighestRow() === 1) {
+      $this->messenger()->addError($this->t('No data found, sheets has to be named "Assessments"'));
+    }
+
     foreach ($worksheet->getRowIterator() as $row) {
       // Skip first 8 rows if needed.
       if ($form_state->getValue('skip_rows') === 'yes') {
