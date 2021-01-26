@@ -66,6 +66,17 @@ class OchaAssessmentsBulkImport extends FormBase {
       '#description' => $this->t('Excel file containing assessments to import'),
     ];
 
+    $form['skip_rows'] = [
+      '#type' => 'radios',
+      '#options' => [
+        'no' => $this->t('First row contains row headers, other rows contain data.'),
+        'yes' => $this->t('Import is using the template file, row 9 is the first row with data.'),
+      ],
+      '#title' => $this->t('Data file'),
+      '#default_value' => 'yes',
+      '#required' => TRUE,
+    ];
+
     $controller = ocha_countries_get_controller();
     $countries = $controller->getAllowedValues();
     $form['country'] = [
@@ -114,22 +125,37 @@ class OchaAssessmentsBulkImport extends FormBase {
 
     $reader = new Xlsx();
     $reader->setReadDataOnly(TRUE);
-    $reader->setLoadSheetsOnly(['Assessments']);
+    $reader->setLoadSheetsOnly([
+      'Assessments',
+      'assessments',
+    ]);
     $spreadsheet = $reader->load($filename);
+
+    // Assume headers on first row.
+    $header_row = 1;
 
     $header = [];
     $header_lowercase = [];
 
     $worksheet = $spreadsheet->getActiveSheet();
+    if ($worksheet->getHighestRow() === 1) {
+      $this->messenger()->addError($this->t('No data found, sheets has to be named "Assessments"'));
+    }
+
     foreach ($worksheet->getRowIterator() as $row) {
-      // Skip first 8 rows.
-      if ($row->getRowIndex() < 8) {
-        continue;
+      // Skip first 8 rows if needed.
+      if ($form_state->getValue('skip_rows') === 'yes') {
+        $header_row = 8;
+        if ($row->getRowIndex() < 8) {
+          continue;
+        }
       }
 
-      if ($row->getRowIndex() == 8) {
+      // Process headers.
+      if ($row->getRowIndex() === $header_row) {
         $cellIterator = $row->getCellIterator();
         $cellIterator->setIterateOnlyExistingCells(TRUE);
+
         foreach ($cellIterator as $cell) {
           $header[$cell->getColumn()] = $cell->getValue();
           $header[$cell->getColumn()] = $cell->getValue();
@@ -137,9 +163,11 @@ class OchaAssessmentsBulkImport extends FormBase {
 
         $header_lowercase = array_map('strtolower', $header);
         $header_lowercase = array_map('trim', $header_lowercase);
+
         continue;
       }
 
+      // Process data.
       $data = [
         '_row' => $row->getRowIndex(),
         'country' => $form_state->getValue('country'),
