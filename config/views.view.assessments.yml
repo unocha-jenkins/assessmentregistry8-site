@@ -3957,8 +3957,8 @@ display:
           label: 'Data attachment'
           exclude: false
           alter:
-            alter_text: false
-            text: ''
+            alter_text: true
+            text: '{{ url(''<front>'') }}{{ data_file_url }}'
             make_link: false
             path: ''
             absolute: false
@@ -4063,8 +4063,8 @@ display:
           label: 'Questionnaire attachment'
           exclude: false
           alter:
-            alter_text: false
-            text: ''
+            alter_text: true
+            text: '{{ url(''<front>'') }}{{ questionnaire_file_url }}'
             make_link: false
             path: ''
             absolute: false
@@ -4275,8 +4275,8 @@ display:
           label: ''
           exclude: true
           alter:
-            alter_text: false
-            text: ''
+            alter_text: true
+            text: '{{ url(''<front>'') }}{{ file_url(questionnaire_link_uri) }}'
             make_link: false
             path: ''
             absolute: false
@@ -4381,8 +4381,8 @@ display:
           label: 'Report attachment'
           exclude: false
           alter:
-            alter_text: false
-            text: ''
+            alter_text: true
+            text: '{{ url(''<front>'') }}{{ report_file_url }}'
             make_link: false
             path: ''
             absolute: false
@@ -4591,7 +4591,7 @@ display:
           group_type: group
           admin_label: ''
           label: 'Report attachment'
-          exclude: false
+          exclude: true
           alter:
             alter_text: false
             text: ''
