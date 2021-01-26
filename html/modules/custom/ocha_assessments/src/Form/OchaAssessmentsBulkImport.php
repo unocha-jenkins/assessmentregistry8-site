@@ -139,7 +139,7 @@ class OchaAssessmentsBulkImport extends FormBase {
 
     $worksheet = $spreadsheet->getActiveSheet();
     if ($worksheet->getHighestRow() === 1) {
-      $this->messenger()->addError($this->t('No data found, sheets has to be named "Assessments"'));
+      $this->messenger()->addError($this->t('No data found, sheet has to be named "Assessments" (case-sensitive)!'));
     }
 
     foreach ($worksheet->getRowIterator() as $row) {
