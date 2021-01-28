@@ -51,7 +51,7 @@ display:
         type: none
         options: {  }
       cache:
-        type: tag
+        type: search_api_tag
         options: {  }
       query:
         type: views_query
@@ -1437,7 +1437,8 @@ display:
       display_extenders: {  }
       path: assessments/list
       cache:
-        type: none
+        type: search_api_tag
+        options: {  }
       defaults:
         cache: false
         style: false
@@ -2086,6 +2087,7 @@ display:
           skip_access: 1
           bypass_access: 1
           preserve_facet_query_args: 0
+      enabled: false
     cache_metadata:
       max-age: -1
       contexts:
@@ -2105,7 +2107,8 @@ display:
       display_extenders: {  }
       path: assessments/table
       cache:
-        type: none
+        type: search_api_tag
+        options: {  }
       defaults:
         cache: false
         style: false
@@ -8903,7 +8906,8 @@ display:
           1: AND
       display_description: ''
       cache:
-        type: none
+        type: search_api_tag
+        options: {  }
     cache_metadata:
       max-age: -1
       contexts:

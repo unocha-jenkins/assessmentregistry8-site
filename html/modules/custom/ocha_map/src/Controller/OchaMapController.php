@@ -24,4 +24,11 @@ class OchaMapController extends ControllerBase {
     ];
   }
 
+  /**
+   * Redirect old to new.
+   */
+  public function redirectLegacy() {
+    return $this->redirect('ocha_map.map');
+  }
+
 }

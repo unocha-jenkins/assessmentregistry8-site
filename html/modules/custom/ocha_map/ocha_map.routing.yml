@@ -5,3 +5,10 @@ ocha_map.map:
     _title: 'Assessments map'
   requirements:
     _permission: 'access content'
+ocha_map.map_legacy:
+  path: '/assessments/map'
+  defaults:
+    _controller: '\Drupal\ocha_map\Controller\OchaMapController::redirectLegacy'
+    _title: 'Assessments map'
+  requirements:
+    _permission: 'access content'
