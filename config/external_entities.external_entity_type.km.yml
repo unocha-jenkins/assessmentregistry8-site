@@ -1,0 +1,45 @@
+uuid: 9aa98d30-348c-4555-ac5e-27d2e25a0ee3
+langcode: en
+status: true
+dependencies: {  }
+id: km
+label: km
+label_plural: kms
+description: ''
+read_only: false
+field_mappings:
+  id:
+    value: uuid
+  uuid:
+    value: uuid
+  title:
+    value: title
+  field_author:
+    value: author
+  field_context:
+    target_id: 'ar_context/*/uuid'
+  field_description:
+    value: description
+  field_life_cycle_steps:
+    target_id: 'ar_life_cycle_steps/*/uuid'
+storage_client_id: restjson
+storage_client_config:
+  endpoint: 'http://docstore.local.docksal/api/v1/documents/knowledge-managements'
+  response_format: json
+  pager:
+    default_limit: '50'
+    page_parameter: ''
+    page_parameter_type: null
+    page_size_parameter: ''
+    page_size_parameter_type: null
+  api_key:
+    header_name: API-KEY
+    key: abcd
+  parameters:
+    list: {  }
+    single: {  }
+persistent_cache_max_age: 0
+annotation_entity_type_id: null
+annotation_bundle_id: null
+annotation_field_name: null
+inherits_annotation_fields: false
