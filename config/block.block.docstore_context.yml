@@ -1,0 +1,29 @@
+uuid: c0611193-17a6-477a-a1e0-697a1b5534ff
+langcode: en
+status: true
+dependencies:
+  config:
+    - facets.facet.docstore_context
+  module:
+    - facets
+    - system
+  theme:
+    - common_design_subtheme
+id: docstore_context
+theme: common_design_subtheme
+region: sidebar_first
+weight: 0
+provider: null
+plugin: 'facet_block:docstore_context'
+settings:
+  id: 'facet_block:docstore_context'
+  label: Context
+  provider: facets
+  label_display: visible
+  block_id: docstore_context
+visibility:
+  request_path:
+    id: request_path
+    pages: "/docstore-knowledge-management\r\n/docstore-knowledge-management/*"
+    negate: false
+    context_mapping: {  }
