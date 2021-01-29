@@ -12,7 +12,7 @@ dependencies:
 id: themes
 theme: common_design_subtheme
 region: sidebar_first
-weight: 12
+weight: 14
 provider: null
 plugin: 'facet_block:themes'
 settings:

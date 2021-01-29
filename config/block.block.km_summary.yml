@@ -12,7 +12,7 @@ dependencies:
 id: km_summary
 theme: common_design_subtheme
 region: sidebar_first
-weight: -31
+weight: -32
 provider: null
 plugin: 'facets_summary_block:km_summary'
 settings:
