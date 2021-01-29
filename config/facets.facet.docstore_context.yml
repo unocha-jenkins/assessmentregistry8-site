@@ -6,10 +6,14 @@ dependencies:
     - search_api.index.km
     - views.view.knowledge_management_docstore_
   module:
+    - facets_pretty_paths
     - search_api
+third_party_settings:
+  facets_pretty_paths:
+    coder: default_coder
 id: docstore_context
 name: Context
-url_alias: docstore_context
+url_alias: context
 weight: 0
 min_count: 1
 show_only_one_result: false
@@ -37,6 +41,18 @@ processor_configs:
       sort: 40
     settings:
       sort: ASC
+  exclude_specified_items:
+    processor_id: exclude_specified_items
+    weights:
+      build: 50
+    settings:
+      exclude: ^$
+      regex: true
+  hide_non_narrowing_result_processor:
+    processor_id: hide_non_narrowing_result_processor
+    weights:
+      build: 40
+    settings: {  }
   url_processor_handler:
     processor_id: url_processor_handler
     weights:

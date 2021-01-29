@@ -6,10 +6,14 @@ dependencies:
     - search_api.index.km
     - views.view.knowledge_management_docstore_
   module:
+    - facets_pretty_paths
     - search_api
+third_party_settings:
+  facets_pretty_paths:
+    coder: default_coder
 id: docstore_life_cycle_steps
 name: 'Life cycle steps'
-url_alias: docstore_life_cycle_steps
+url_alias: life-cycle-steps
 weight: 0
 min_count: 1
 show_only_one_result: false
@@ -18,7 +22,7 @@ facet_source_id: 'search_api:views_page__knowledge_management_docstore___page_1'
 widget:
   type: dropdown
   config:
-    show_numbers: false
+    show_numbers: true
     default_option_label: Choose
 query_operator: or
 use_hierarchy: false
@@ -37,6 +41,18 @@ processor_configs:
       sort: 40
     settings:
       sort: ASC
+  exclude_specified_items:
+    processor_id: exclude_specified_items
+    weights:
+      build: 50
+    settings:
+      exclude: ^$
+      regex: true
+  hide_non_narrowing_result_processor:
+    processor_id: hide_non_narrowing_result_processor
+    weights:
+      build: 40
+    settings: {  }
   url_processor_handler:
     processor_id: url_processor_handler
     weights:
