@@ -1,12 +1,12 @@
-uuid: 70ace887-bd18-4212-aed4-d401b63cdb1b
+uuid: 5c5b46a9-1223-46f3-9504-115c696d5db6
 langcode: en
 status: true
 dependencies: {  }
-id: life_cycle_step
-label: 'Life cycle step'
-label_plural: 'Life cycle steps'
+id: population_type
+label: 'Population Type'
+label_plural: 'Population Types'
 description: ''
-read_only: false
+read_only: true
 field_mappings:
   id:
     value: uuid
@@ -14,11 +14,9 @@ field_mappings:
     value: uuid
   title:
     value: label
-  field_parent:
-    target_id: parent/uuid
 storage_client_id: restjson
 storage_client_config:
-  endpoint: 'http://docstore.local.docksal/api/v1/vocabularies/ar_life_cycle_steps/terms'
+  endpoint: 'http://docstore.local.docksal/api/v1/vocabularies/population_types/terms'
   response_format: json
   pager:
     default_limit: '50'

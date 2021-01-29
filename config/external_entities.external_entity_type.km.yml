@@ -20,8 +20,16 @@ field_mappings:
     target_id: 'ar_context/*/uuid'
   field_description:
     value: description
+  field_document_type:
+    target_id: 'ar_document_type/*/uuid'
+  field_hpc_document_repository:
+    target_id: 'ar_hpc_document_repository/*/uuid'
   field_life_cycle_steps:
     target_id: 'ar_life_cycle_steps/*/uuid'
+  field_original_publication_date:
+    value: original_publication_date
+  field_population_types:
+    target_id: 'population_types/*/uuid'
 storage_client_id: restjson
 storage_client_config:
   endpoint: 'http://docstore.local.docksal/api/v1/documents/knowledge-managements'

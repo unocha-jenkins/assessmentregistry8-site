@@ -5,8 +5,13 @@ dependencies:
   config:
     - field.field.km.km.field_author
     - field.field.km.km.field_context
+    - field.field.km.km.field_countries
     - field.field.km.km.field_description
+    - field.field.km.km.field_document_type
+    - field.field.km.km.field_hpc_document_repository
     - field.field.km.km.field_life_cycle_steps
+    - field.field.km.km.field_original_publication_date
+    - field.field.km.km.field_population_types
   module:
     - external_entities
 id: km.km.default
@@ -28,6 +33,12 @@ content:
     third_party_settings: {  }
     type: options_select
     region: content
+  field_countries:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
   field_description:
     weight: -3
     settings:
@@ -36,11 +47,47 @@ content:
     third_party_settings: {  }
     type: string_textarea
     region: content
+  field_document_type:
+    weight: 1
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_hpc_document_repository:
+    weight: 2
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
   field_life_cycle_steps:
     weight: -1
     settings: {  }
     third_party_settings: {  }
     type: options_select
+    region: content
+  field_original_publication_date:
+    weight: 3
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_timestamp
+    region: content
+  field_population_types:
+    weight: 4
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
     region: content
   title:
     type: string_textfield

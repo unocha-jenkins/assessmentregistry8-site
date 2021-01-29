@@ -1,12 +1,12 @@
-uuid: 70ace887-bd18-4212-aed4-d401b63cdb1b
+uuid: 50e1318a-02cd-4a63-a829-1e878abacd33
 langcode: en
 status: true
 dependencies: {  }
-id: life_cycle_step
-label: 'Life cycle step'
-label_plural: 'Life cycle steps'
+id: country
+label: Country
+label_plural: Countries
 description: ''
-read_only: false
+read_only: true
 field_mappings:
   id:
     value: uuid
@@ -14,11 +14,9 @@ field_mappings:
     value: uuid
   title:
     value: label
-  field_parent:
-    target_id: parent/uuid
 storage_client_id: restjson
 storage_client_config:
-  endpoint: 'http://docstore.local.docksal/api/v1/vocabularies/ar_life_cycle_steps/terms'
+  endpoint: 'http://docstore.local.docksal/api/v1/vocabularies/countries/terms'
   response_format: json
   pager:
     default_limit: '50'
