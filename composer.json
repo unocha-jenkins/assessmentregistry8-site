@@ -48,6 +48,7 @@
         "drupal/facets": "^1.4",
         "drupal/facets_pretty_paths": "^1.0",
         "drupal/field_group": "^3.0",
+        "drupal/flysystem": "^2.0@alpha",
         "drupal/inline_entity_form": "^1.0",
         "drupal/leaflet": "^1.27",
         "drupal/maintenance200": "^1.0",
