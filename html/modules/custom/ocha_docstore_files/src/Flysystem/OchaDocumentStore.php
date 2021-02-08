@@ -2,6 +2,11 @@
 
 namespace Drupal\ocha_docstore_files\Flysystem;
 
+/**
+ * @file
+ * OCHA Document store connector.
+ */
+
 use Drupal\Core\Logger\RfcLogLevel;
 use Drupal\flysystem\Flysystem\Adapter\MissingAdapter;
 use Drupal\flysystem\Plugin\FlysystemPluginInterface;
@@ -26,6 +31,11 @@ class OchaDocumentStore implements FlysystemPluginInterface {
    */
   protected $configuration;
 
+  /**
+   * The HTTP client.
+   *
+   * @var \GuzzleHttp\Client
+   */
   protected $httpClient;
 
   /**

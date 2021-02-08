@@ -4,12 +4,3 @@
  * @file
  * OCHA Document store connector.
  */
-
-use \Drupal\file\FileInterface;
-
-/**
- * Implements hook_ENTITY_TYPE_presave().
- */
-function ocha_docstore_files_file_presave(FileInterface $file) {
-  // Update uri, add uuid from docstore.
-}

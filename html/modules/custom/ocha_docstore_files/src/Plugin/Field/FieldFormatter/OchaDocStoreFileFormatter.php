@@ -2,7 +2,6 @@
 
 namespace Drupal\ocha_docstore_files\Plugin\Field\FieldFormatter;
 
-use Drupal\Component\Utility\Html;
 use Drupal\Core\Field\FieldItemInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
@@ -44,7 +43,6 @@ class OchaDocStoreFileFormatter extends FormatterBase {
    */
   public function settingsSummary() {
     $summary = [];
-    // Implement settings summary.
 
     return $summary;
   }
@@ -57,10 +55,10 @@ class OchaDocStoreFileFormatter extends FormatterBase {
 
     foreach ($items as $delta => $item) {
       $elements[$delta] = [
-        '#markup' => $this->viewValue($item)
+        '#markup' => $this->viewValue($item),
       ];
     }
-dpm($elements);
+
     return $elements;
   }
 
