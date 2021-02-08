@@ -171,9 +171,6 @@ class OchaDocumentStoreAdapter implements AdapterInterface {
    * {@inheritdoc}
    */
   public function listContents($directory = '', $recursive = FALSE) {
-    // Don't cache directory listings to avoid having to keep track of
-    // incomplete cache entries.
-    // TODO: This could be a good place for a microcache?
     return $this->adapter->listContents($directory, $recursive);
   }
 
