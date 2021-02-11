@@ -9,6 +9,7 @@ use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
+use Drupal\Core\Render\Element\File as FileElement;
 use Drupal\Core\Render\Element\FormElement;
 use Drupal\Core\Site\Settings;
 use Drupal\Core\Url;
@@ -21,7 +22,7 @@ use Drupal\file\Element\ManagedFile;
  *
  * @FormElement("ocha_docstore_managed_file")
  */
-class OchaDocStoreManagedFile extends ManagedFile {
+class OchaDocStoreManagedFile extends FileElement {
 
   /**
    * {@inheritdoc}
@@ -30,28 +31,18 @@ class OchaDocStoreManagedFile extends ManagedFile {
     $class = get_class($this);
     return [
       '#input' => TRUE,
-      '#process' => [
-        [$class, 'processManagedFile'],
-      ],
-      '#element_validate' => [
-        [$class, 'validateManagedFile'],
-      ],
-      '#pre_render' => [
-        [$class, 'preRenderManagedFile'],
-      ],
-      '#theme' => 'file_managed_file',
-      '#theme_wrappers' => ['form_element'],
-      '#progress_indicator' => 'throbber',
-      '#progress_message' => NULL,
-      '#upload_validators' => [],
-      '#upload_location' => NULL,
-      '#size' => 22,
       '#multiple' => FALSE,
-      '#extended' => FALSE,
-      '#attached' => [
-        'library' => ['file/drupal.file'],
+      '#process' => [
+        [$class, 'processFile'],
       ],
-      '#accept' => NULL,
+      '#size' => 60,
+      '#pre_render' => [
+        [$class, 'preRenderFile'],
+      ],
+      '#theme' => 'input__file',
+      '#theme_wrappers' => ['form_element'],
+      '#endpoint' => FALSE,
+      '#apikey' => FALSE,
     ];
   }
 
@@ -61,9 +52,6 @@ class OchaDocStoreManagedFile extends ManagedFile {
   public static function valueCallback(&$element, $input, FormStateInterface $form_state) {
     // Find the current value of this field.
     $uuids = !empty($input['uuids']) ? explode(' ', $input['uuids']) : [];
-    foreach ($uuids as $key => $fid) {
-      $uuids[$key] = (int) $fid;
-    }
     $force_default = FALSE;
 
     // Process any input and save new uploads.
@@ -72,60 +60,40 @@ class OchaDocStoreManagedFile extends ManagedFile {
       $return = $input;
 
       // Uploads take priority over all other values.
-      if ($files = file_managed_file_save_upload($element, $form_state)) {
-        if ($element['#multiple']) {
-          $uuids = array_merge($uuids, array_keys($files));
-        }
-        else {
-          $uuids = array_keys($files);
-        }
-      }
-      else {
-        // Check for #filefield_value_callback values.
-        // Because FAPI does not allow multiple #value_callback values like it
-        // does for #element_validate and #process, this fills the missing
-        // functionality to allow File fields to be extended through FAPI.
-        if (isset($element['#file_value_callbacks'])) {
-          foreach ($element['#file_value_callbacks'] as $callback) {
-            $callback($element, $input, $form_state);
-          }
-        }
+      $upload_name = implode('_', $element['#parents']);
+      $all_files = \Drupal::request()->files->get('files', []);
 
-        // Load files if the uuids have changed to confirm they exist.
-        if (!empty($input['uuids'])) {
-          $uuids = [];
-          foreach ($input['uuids'] as $fid) {
-            if ($file = File::load($fid)) {
-              $uuids[] = $file->id();
-              if (!$file->access('download')) {
-                $force_default = TRUE;
-                break;
-              }
-              // Temporary files that belong to other users should never be
-              // allowed.
-              if ($file->isTemporary()) {
-                if ($file->getOwnerId() != \Drupal::currentUser()->id()) {
-                  $force_default = TRUE;
-                  break;
-                }
-                // Since file ownership can't be determined for anonymous users,
-                // they are not allowed to reuse temporary files at all. But
-                // they do need to be able to reuse their own files from earlier
-                // submissions of the same form, so to allow that, check for the
-                // token added by $this->processManagedFile().
-                elseif (\Drupal::currentUser()->isAnonymous()) {
-                  $token = NestedArray::getValue($form_state->getUserInput(), array_merge($element['#parents'], ['file_' . $file->id(), 'fid_token']));
-                  $file_hmac = Crypt::hmacBase64('file-' . $file->id(), \Drupal::service('private_key')->get() . Settings::getHashSalt());
-                  if ($token === NULL || !hash_equals($file_hmac, $token)) {
-                    $force_default = TRUE;
-                    break;
-                  }
-                }
-              }
-            }
-          }
-          if ($force_default) {
-            $uuids = [];
+      if (!empty($all_files[$upload_name])) {
+        $uploaded_files = $all_files[$upload_name];
+
+        $files = [];
+        foreach ($uploaded_files as $i => $file_info) {
+          $user = \Drupal::currentUser();
+          $original_file_name = trim($file_info->getClientOriginalName(), '.');
+          $file_tmp = $file_info->getRealPath();
+
+          if ($blob = fopen($file_tmp, "rb")) {
+            $contents = fread($blob, filesize($file_tmp));
+            $response = \Drupal::httpClient()->request(
+              'POST',
+              $element['#endpoint'],
+              [
+                'body' => json_encode([
+                  'filename' => $original_file_name,
+                  'data' => base64_encode($contents),
+                  'private' => FALSE,
+                ]),
+                'headers' => [
+                  'API-KEY' => $element['#apikey'],
+                ],
+              ]
+            );
+
+            $body = $response->getBody() . '';
+            $body = json_decode($body);
+            $uuids[] = $body->uuid;
+
+            fclose($blob);
           }
         }
       }
@@ -144,14 +112,7 @@ class OchaDocStoreManagedFile extends ManagedFile {
       }
 
       // Confirm that the file exists when used as a default value.
-      if (!empty($default_uuids)) {
-        $uuids = [];
-        foreach ($default_uuids as $fid) {
-          if ($file = File::load($fid)) {
-            $uuids[] = $file->id();
-          }
-        }
-      }
+      $uuids = $default_uuids;
     }
 
     $return['uuids'] = $uuids;
@@ -404,50 +365,7 @@ class OchaDocStoreManagedFile extends ManagedFile {
    * Render API callback: Validates the managed_file element.
    */
   public static function validateManagedFile(&$element, FormStateInterface $form_state, &$complete_form) {
-    $clicked_button = end($form_state->getTriggeringElement()['#parents']);
-    if ($clicked_button != 'remove_button' && !empty($element['uuids']['#value'])) {
-      $uuids = $element['uuids']['#value'];
-      foreach ($uuids as $fid) {
-        if ($file = File::load($fid)) {
-          // If referencing an existing file, only allow if there are existing
-          // references. This prevents unmanaged files from being deleted if
-          // this item were to be deleted. When files that are no longer in use
-          // are automatically marked as temporary (now disabled by default),
-          // it is not safe to reference a permanent file without usage. Adding
-          // a usage and then later on removing it again would delete the file,
-          // but it is unknown if and where it is currently referenced. However,
-          // when files are not marked temporary (and then removed)
-          // automatically, it is safe to add and remove usages, as it would
-          // simply return to the current state.
-          // @see https://www.drupal.org/node/2891902
-          if ($file->isPermanent() && \Drupal::config('file.settings')->get('make_unused_managed_files_temporary')) {
-            $references = static::fileUsage()->listUsage($file);
-            if (empty($references)) {
-              // We expect the field name placeholder value to be wrapped in t()
-              // here, so it won't be escaped again as it's already marked safe.
-              $form_state->setError($element, t('The file used in the @name field may not be referenced.', ['@name' => $element['#title']]));
-            }
-          }
-        }
-        else {
-          // We expect the field name placeholder value to be wrapped in t()
-          // here, so it won't be escaped again as it's already marked safe.
-          $form_state->setError($element, t('The file referenced by the @name field does not exist.', ['@name' => $element['#title']]));
-        }
-      }
-    }
-
-    // Check required property based on the FID.
-    if ($element['#required'] && empty($element['uuids']['#value']) && !in_array($clicked_button, ['upload_button', 'remove_button'])) {
-      // We expect the field name placeholder value to be wrapped in t()
-      // here, so it won't be escaped again as it's already marked safe.
-      $form_state->setError($element, t('@name field is required.', ['@name' => $element['#title']]));
-    }
-
-    // Consolidate the array value of this field to array of uuids.
-    if (!$element['#extended']) {
-      $form_state->setValueForElement($element, $element['uuids']['#value']);
-    }
+    $form_state->setValueForElement($element, ['uuids' => $element['uuids']['#value']]);
   }
 
   /**

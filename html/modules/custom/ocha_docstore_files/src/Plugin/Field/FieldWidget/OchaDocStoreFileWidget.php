@@ -26,6 +26,51 @@ use Drupal\ocha_docstore_files\Element\OchaDocStoreManagedFile;
 class OchaDocStoreFileWidget extends FileWidget {
 
   /**
+   * {@inheritdoc}
+   */
+  public static function defaultSettings() {
+    return [
+      'endpoint' => 'http://docstore.local.docksal/api/v1/files',
+      'api-key' => 'abcd',
+    ] + parent::defaultSettings();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function settingsForm(array $form, FormStateInterface $form_state) {
+    $element = parent::settingsForm($form, $form_state);
+
+    $element['endpoint'] = [
+      '#type' => 'textfield',
+      '#title' => t('API end point'),
+      '#default_value' => $this->getSetting('endpoint'),
+      '#weight' => 17,
+    ];
+
+    $element['api-key'] = [
+      '#type' => 'textfield',
+      '#title' => t('API key'),
+      '#default_value' => $this->getSetting('api-key'),
+      '#weight' => 18,
+    ];
+
+    return $element;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function settingsSummary() {
+    $summary = [];
+
+    $summary[] = t('Progress indicator: @progress_indicator', ['@progress_indicator' => $this->getSetting('progress_indicator')]);
+    $summary[] = t('Endpoint: @endpoint', ['@endpoint' => $this->getSetting('endpoint')]);
+
+    return $summary;
+  }
+
+  /**
    * Overrides \Drupal\Core\Field\WidgetBase::formMultipleElements().
    *
    * Special handling for draggable multiple widgets and 'add more' button.
@@ -130,11 +175,10 @@ class OchaDocStoreFileWidget extends FileWidget {
       // Add some properties that will eventually be added to the file upload
       // field. These are added here so that they may be referenced easily
       // through a hook_form_alter().
-      $elements['#file_upload_title'] = t('Add a new file');
+      $elements['#file_upload_title'] = t('Add a new file from your computer');
       $elements['#file_upload_description'] = [
         '#theme' => 'file_upload_help',
         '#description' => '',
-        '#upload_validators' => $elements[0]['#upload_validators'],
         '#cardinality' => $cardinality,
       ];
     }
@@ -164,7 +208,7 @@ class OchaDocStoreFileWidget extends FileWidget {
       'description' => '',
     ];
 
-    // Essentially we use the managed_file type, extended with some
+    // Essentially we use the file type, extended with some
     // enhancements.
     $element_info = $this->elementInfo->getInfo('ocha_docstore_managed_file');
     $element += [
@@ -172,7 +216,6 @@ class OchaDocStoreFileWidget extends FileWidget {
       '#value_callback' => [get_class($this), 'value'],
       '#process' => array_merge($element_info['#process'], [[get_class($this), 'process']]),
       '#progress_indicator' => $this->getSetting('progress_indicator'),
-      // Allows this field to return an array instead of a single value.
       '#extended' => TRUE,
       // Add properties needed by value() and process() methods.
       '#field_name' => $this->fieldDefinition->getName(),
@@ -181,6 +224,8 @@ class OchaDocStoreFileWidget extends FileWidget {
       '#display_default' => $field_settings['display_default'],
       '#description_field' => $field_settings['description_field'],
       '#cardinality' => $cardinality,
+      '#endpoint' => $this->getSetting('endpoint'),
+      '#apikey' => $this->getSetting('api-key'),
     ];
 
     $element['#weight'] = $delta;
@@ -213,16 +258,13 @@ class OchaDocStoreFileWidget extends FileWidget {
    * {@inheritdoc}
    */
   public function massageFormValues(array $values, array $form, FormStateInterface $form_state) {
-    // Since file upload widget now supports uploads of more than one file at a
-    // time it always returns an array of uuids. We have to translate this to a
-    // single fid, as field expects single value.
-    $new_values = [];
+    $new_values = [
+      'uuids' => [],
+    ];
+
     foreach ($values as &$value) {
-      foreach ($value['uuids'] as $fid) {
-        $new_value = $value;
-        $new_value['media_uuid'] = $fid;
-        unset($new_value['uuids']);
-        $new_values[] = $new_value;
+      foreach ($value['uuids'] as $uuid) {
+        $new_values['uuids'][] = $uuid;
       }
     }
 
