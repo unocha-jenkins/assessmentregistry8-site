@@ -66,6 +66,7 @@ class OchaDocStoreManagedFile extends FileElement {
       if (!empty($all_files[$upload_name])) {
         $uploaded_files = $all_files[$upload_name];
 
+        // @todo return temp file and original name.
         $files = [];
         foreach ($uploaded_files as $i => $file_info) {
           $user = \Drupal::currentUser();
