@@ -13,6 +13,10 @@ use Drupal\file\Entity\File;
 use Drupal\file\Plugin\Field\FieldWidget\FileWidget;
 use Symfony\Component\HttpFoundation\Request;
 
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\ReplaceCommand;
+use Drupal\Core\Ajax\MessageCommand;
+
 /**
  * Plugin implementation of the 'ocha_doc_store_file_widget' widget.
  *
@@ -80,14 +84,78 @@ class OchaDocStoreFileWidget extends FileWidget {
   protected function formMultipleElements(FieldItemListInterface $items, array &$form, FormStateInterface $form_state) {
     $field_name = $this->fieldDefinition->getName();
     $parents = $form['#parents'];
-    $ajax_wrapper_id = Html::getUniqueId('ajax-wrapper');
 
+    $field_state = static::getWidgetState($form['#parents'], $field_name, $form_state);
+    if (!isset($field_state['queued_files'])) {
+      $field_state['queued_files'] = [];
+    }
+
+    // Check for AJAX data.
+    $trigger = $form_state->getTriggeringElement();
+    if ($trigger && isset($trigger['#method'])) {
+      $element_parents = $trigger['#parents'];
+      array_pop($element_parents);
+
+      if ($trigger['#method'] === 'fetch_files') {
+        $element_parents[] = 'uri';
+        $from_uri = $form_state->getValue($element_parents);
+        if (!empty($from_uri)) {
+          $uris = explode("\n", $from_uri);
+          foreach ($uris as $uri) {
+            $uri = trim($uri);
+            if (empty($uri)) {
+              continue;
+            }
+
+            $field_state['queued_files'][] = [
+              'filename' => basename(parse_url($uri, PHP_URL_PATH)),
+              'uri' => $uri,
+            ];
+          }
+
+          static::setWidgetState($form['#parents'], $field_name, $form_state, $field_state);
+        }
+      }
+      elseif ($trigger['#method'] === 'local_files') {
+        // Get uploaded files.
+        $all_files = \Drupal::request()->files->get('files', []);
+
+        // Add files without uploading.
+        foreach ($all_files as $field) {
+          foreach ($field as $file_info) {
+            $field_state['queued_files'][] = [
+              'filename' => trim($file_info->getClientOriginalName(), '.'),
+              'tmp_path' => $file_info->getRealPath(),
+            ];
+          }
+        }
+
+        static::setWidgetState($form['#parents'], $field_name, $form_state, $field_state);
+      }
+      elseif ($trigger['#method'] === 'remove_queue') {
+        // Get index from parents.
+        $index = $trigger['#index'];
+
+        if (isset($field_state['queued_files'][$index])) {
+          unset($field_state['queued_files'][$index]);
+
+          // Re-key the array.
+          $field_state['queued_files'] = array_values($field_state['queued_files']);
+          static::setWidgetState($form['#parents'], $field_name, $form_state, $field_state);
+        }
+      }
+    }
+
+    $ajax_wrapper_id = Html::getUniqueId('ajax-wrapper');
+/*
     $field_state = static::getWidgetState($parents, $field_name, $form_state);
     if (isset($field_state['items'])) {
       $items->setValue($field_state['items']);
     }
-
+*/
     $elements = [
+      '#process' => [[get_class($this), 'process']],
+      '#queue' => ['test'],
       'existing_files' => [
         '#type' => 'fieldset',
         '#title' => $this->t('Existing files'),
@@ -111,14 +179,20 @@ class OchaDocStoreFileWidget extends FileWidget {
           ],
           'upload' => [
             '#type' => 'button',
+            '#method' => 'local_files',
             '#value' => $this->t('Upload file(s)'),
             '#ajax' => [
-              'callback' => [get_called_class(), 'uploadAjaxCallback'],
+              'callback' => [get_called_class(), 'rebuildWidgetFormLocal'],
+              'options' => [
+                'query' => [
+                  'element_parents' => implode('/', $parents),
+                ],
+              ],
               'wrapper' => $ajax_wrapper_id,
               'effect' => 'fade',
               'progress' => [
                 'type' => 'throbber',
-                'message' => NULL,
+                'message' => $this->t('Uploading files'),
               ],
             ],
           ],
@@ -133,14 +207,20 @@ class OchaDocStoreFileWidget extends FileWidget {
           ],
           'fetch' => [
             '#type' => 'button',
+            '#method' => 'fetch_files',
             '#value' => $this->t('Add file(s)'),
             '#ajax' => [
-              'callback' => [get_called_class(), 'remoteAjaxCallback'],
+              'callback' => [get_called_class(), 'rebuildWidgetFormRemote'],
+              'options' => [
+                'query' => [
+                  'element_parents' => implode('/', $parents),
+                ],
+              ],
               'wrapper' => $ajax_wrapper_id,
               'effect' => 'fade',
               'progress' => [
                 'type' => 'throbber',
-                'message' => NULL,
+                'message' => $this->t('Fetching files'),
               ],
             ],
           ],
@@ -162,25 +242,44 @@ class OchaDocStoreFileWidget extends FileWidget {
           'remove' => [
             '#type' => 'button',
             '#value' => $this->t('Remove file'),
-          ],
-        ];
-      }
-      elseif (isset($item->filename)) {
-        $elements['queued_files']['#access'] = TRUE;
-        $elements['queued_files'][$delta] = [
-          'filelink' => [
-            '#type' => 'link',
-            '#title' => $item->filename,
-            '#url' => Url::fromUri($item->uri),
-          ],
-          'remove' => [
-            '#type' => 'button',
-            '#value' => $this->t('Remove file'),
+            '#name' => 'remove-existing-' . $delta,
           ],
         ];
       }
 
       $delta++;
+    }
+
+    // Add all queued files.
+    foreach ($field_state['queued_files'] as $delta => $queued_file) {
+      $elements['queued_files']['#access'] = TRUE;
+      if (isset($queued_file['uri'])) {
+        $elements['queued_files'][] = [
+          'filelink' => [
+            '#type' => 'link',
+            '#title' => $queued_file['filename'],
+            '#url' => Url::fromUri($queued_file['uri']),
+          ],
+          'remove' => [
+            '#type' => 'button',
+            '#value' => 'Remove queued file',
+            '#name' => 'remove-queued-' . $delta,
+          ],
+        ];
+      }
+      else {
+        $elements['queued_files'][] = [
+          'filelink' => [
+            '#type' => 'markup',
+            '#markup' => $queued_file['filename'],
+          ],
+          'remove' => [
+            '#type' => 'button',
+            '#value' => 'Remove queued file',
+            '#name' => 'remove-queued-' . $delta,
+          ],
+        ];
+      }
     }
 
     $elements['#tree'] = TRUE;
@@ -191,32 +290,47 @@ class OchaDocStoreFileWidget extends FileWidget {
   }
 
   /**
-   * #ajax callback for file upload.
-   *
-   * @param array $form
-   *   The build form.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   The form state.
-   * @param \Symfony\Component\HttpFoundation\Request $request
-   *   The current request.
-   *
-   * @return \Drupal\Core\Ajax\AjaxResponse
-   *   The ajax response of the ajax upload.
+   * Form API callback.
    */
-  public static function uploadAjaxCallback(&$form, FormStateInterface &$form_state, Request $request) {
-    // Get uploaded files.
-    $all_files = \Drupal::request()->files->get('files', []);
+  public static function process($element, FormStateInterface $form_state, $form) {
+    $element['add_files']['from_uri']['fetch']['#ajax']['options'] = [
+      'query' => [
+        'element_parents' => implode('/', $element['#array_parents']),
+      ],
+    ];
 
-    // Add 'dummy' items.
-    foreach ($all_files as $field) {
-      foreach ($field as $file_info) {
-        $original_file_name = trim($file_info->getClientOriginalName(), '.');
-        $file_tmp = $file_info->getRealPath();
+    $element['add_files']['from_local']['upload']['#ajax']['options'] = [
+      'query' => [
+        'element_parents' => implode('/', $element['#array_parents']),
+      ],
+    ];
+
+    if (isset($element['queued_files']) && $element['queued_files']['#access']) {
+      foreach ($element['queued_files'] as $delta => $queued_file) {
+        if (strpos($delta, '#') !== FALSE) {
+          continue;
+        }
+
+        $element['queued_files'][$delta]['remove']['#method'] = 'remove_queue';
+        $element['queued_files'][$delta]['remove']['#index'] = $delta;
+
+        $element['queued_files'][$delta]['remove']['#ajax'] = [
+          'callback' => [get_called_class(), 'rebuildWidgetForm'],
+          'options' => [
+            'query' => [
+              'element_parents' => implode('/', $element['#array_parents']),
+            ],
+          ],
+          'wrapper' => $element['add_files']['from_local']['upload']['#ajax']['wrapper'],
+          'effect' => 'fade',
+          'progress' => [
+            'type' => 'throbber',
+            'message' => NULL,
+          ],
+        ];
       }
     }
-
-    // Rebuild complete element form, so newly uploaded files are added to queued_files.
-    return [];
+    return $element;
   }
 
   /**
@@ -232,14 +346,62 @@ class OchaDocStoreFileWidget extends FileWidget {
    * @return \Drupal\Core\Ajax\AjaxResponse
    *   The ajax response of the ajax upload.
    */
-  public static function remoteAjaxCallback(&$form, FormStateInterface &$form_state, Request $request) {
-    // Get URLs.
+  public static function rebuildWidgetFormRemote(&$form, FormStateInterface &$form_state, Request $request) {
+    // Remove entered URLs.
+    $form['add_files']['from_uri']['uri']['#value'] = '';
 
-    // Add 'dummy' items.
-    // Extract filename from URL.
+    return static::rebuildWidgetForm($form, $form_state, $request);
+  }
+
+  /**
+   * #ajax callback for remote files.
+   *
+   * @param array $form
+   *   The build form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state.
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   The current request.
+   *
+   * @return \Drupal\Core\Ajax\AjaxResponse
+   *   The ajax response of the ajax upload.
+   */
+  public static function rebuildWidgetFormLocal(&$form, FormStateInterface &$form_state, Request $request) {
+    return static::rebuildWidgetForm($form, $form_state, $request);
+  }
+
+  /**
+   * #ajax callback for remote files.
+   *
+   * @param array $form
+   *   The build form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state.
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   The current request.
+   *
+   * @return \Drupal\Core\Ajax\AjaxResponse
+   *   The ajax response of the ajax upload.
+   */
+  public static function rebuildWidgetForm(&$form, FormStateInterface &$form_state, Request $request) {
+    $form_parents = explode('/', $request->query->get('element_parents'));
+
+    // Sanitize form parents before using them.
+    $form_parents = array_filter($form_parents, [Element::class, 'child']);
+
+    // Retrieve the element to be rendered.
+    $form = NestedArray::getValue($form, $form_parents);
+
+    /** @var \Drupal\Core\Render\RendererInterface $renderer */
+    $renderer = \Drupal::service('renderer');
 
     // Rebuild complete element form, so remote files are added to queued_files.
-    return [];
+    $output = $renderer->renderRoot($form);
+
+    $response = new AjaxResponse();
+    $response->setAttachments($form['#attached']);
+
+    return $response->addCommand(new ReplaceCommand(NULL, $output));
   }
 
   /**
