@@ -4,18 +4,14 @@ namespace Drupal\ocha_docstore_files\Plugin\Field\FieldWidget;
 
 use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\NestedArray;
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Field\FieldItemListInterface;
-use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Url;
-use Drupal\file\Entity\File;
 use Drupal\file\Plugin\Field\FieldWidget\FileWidget;
 use Symfony\Component\HttpFoundation\Request;
-
-use Drupal\Core\Ajax\AjaxResponse;
-use Drupal\Core\Ajax\ReplaceCommand;
-use Drupal\Core\Ajax\MessageCommand;
 
 /**
  * Plugin implementation of the 'ocha_doc_store_file_widget' widget.
@@ -89,76 +85,28 @@ class OchaDocStoreFileWidget extends FileWidget {
     if (!isset($field_state['queued_files'])) {
       $field_state['queued_files'] = [];
     }
-
-    // Check for AJAX data.
-    $trigger = $form_state->getTriggeringElement();
-    if ($trigger && isset($trigger['#method'])) {
-      $element_parents = $trigger['#parents'];
-      array_pop($element_parents);
-
-      if ($trigger['#method'] === 'fetch_files') {
-        $element_parents[] = 'uri';
-        $from_uri = $form_state->getValue($element_parents);
-        if (!empty($from_uri)) {
-          $uris = explode("\n", $from_uri);
-          foreach ($uris as $uri) {
-            $uri = trim($uri);
-            if (empty($uri)) {
-              continue;
-            }
-
-            $field_state['queued_files'][] = [
-              'filename' => basename(parse_url($uri, PHP_URL_PATH)),
-              'uri' => $uri,
-            ];
-          }
-
-          static::setWidgetState($form['#parents'], $field_name, $form_state, $field_state);
-        }
-      }
-      elseif ($trigger['#method'] === 'local_files') {
-        // Get uploaded files.
-        $all_files = \Drupal::request()->files->get('files', []);
-
-        // Add files without uploading.
-        foreach ($all_files as $field) {
-          foreach ($field as $file_info) {
-            $field_state['queued_files'][] = [
-              'filename' => trim($file_info->getClientOriginalName(), '.'),
-              'tmp_path' => $file_info->getRealPath(),
-            ];
-          }
-        }
-
-        static::setWidgetState($form['#parents'], $field_name, $form_state, $field_state);
-      }
-      elseif ($trigger['#method'] === 'remove_queue') {
-        // Get index from parents.
-        $index = $trigger['#index'];
-
-        if (isset($field_state['queued_files'][$index])) {
-          unset($field_state['queued_files'][$index]);
-
-          // Re-key the array.
-          $field_state['queued_files'] = array_values($field_state['queued_files']);
-          static::setWidgetState($form['#parents'], $field_name, $form_state, $field_state);
-        }
-      }
+    if (!isset($field_state['deleted_files'])) {
+      $field_state['deleted_files'] = [];
+    }
+    if (!isset($field_state['existing_files'])) {
+      $field_state['existing_files'] = $items->getValue();
+      static::setWidgetState($form['#parents'], $field_name, $form_state, $field_state);
     }
 
     $ajax_wrapper_id = Html::getUniqueId('ajax-wrapper');
-/*
-    $field_state = static::getWidgetState($parents, $field_name, $form_state);
-    if (isset($field_state['items'])) {
-      $items->setValue($field_state['items']);
-    }
-*/
+
     $elements = [
       '#process' => [[get_class($this), 'process']],
       '#queue' => ['test'],
       'existing_files' => [
         '#type' => 'fieldset',
         '#title' => $this->t('Existing files'),
+        '#access' => FALSE,
+      ],
+      'deleted_files' => [
+        '#type' => 'fieldset',
+        '#title' => $this->t('Files to be removed'),
+        '#access' => FALSE,
       ],
       'queued_files' => [
         '#type' => 'fieldset',
@@ -204,6 +152,7 @@ class OchaDocStoreFileWidget extends FileWidget {
             '#type' => 'textarea',
             '#rows' => 2,
             '#description' => $this->t('One URL per line.'),
+            '#default_value' => '',
           ],
           'fetch' => [
             '#type' => 'button',
@@ -230,24 +179,44 @@ class OchaDocStoreFileWidget extends FileWidget {
 
     $delta = 0;
     // Add an element for every existing item.
-    foreach ($items as $item) {
+    foreach ($field_state['existing_files'] as $item) {
       // Add existing files.
-      if (isset($item->media_uuid)) {
+      if (isset($item['media_uuid'])) {
+        $elements['existing_files']['#access'] = TRUE;
         $elements['existing_files'][$delta] = [
           'filelink' => [
             '#type' => 'link',
-            '#title' => $item->filename,
-            '#url' => Url::fromUri($item->uri),
+            '#title' => $item['filename'],
+            '#url' => Url::fromUri($item['uri']),
           ],
           'remove' => [
             '#type' => 'button',
             '#value' => $this->t('Remove file'),
             '#name' => 'remove-existing-' . $delta,
+            '#method' => 'remove_existing',
           ],
         ];
       }
 
       $delta++;
+    }
+
+    // Add deleted files.
+    foreach ($field_state['deleted_files'] as $delta => $item) {
+      $elements['deleted_files']['#access'] = TRUE;
+      $elements['deleted_files'][] = [
+        'filelink' => [
+          '#type' => 'link',
+          '#title' => $item['filename'],
+          '#url' => Url::fromUri($item['uri']),
+        ],
+        'restore' => [
+          '#type' => 'button',
+          '#value' => 'Restore deleted file',
+          '#name' => 'restore-deleted-' . $delta,
+          '#method' => 'restore_deleted',
+        ],
+      ];
     }
 
     // Add all queued files.
@@ -264,6 +233,7 @@ class OchaDocStoreFileWidget extends FileWidget {
             '#type' => 'button',
             '#value' => 'Remove queued file',
             '#name' => 'remove-queued-' . $delta,
+            '#method' => 'remove_queue',
           ],
         ];
       }
@@ -277,6 +247,7 @@ class OchaDocStoreFileWidget extends FileWidget {
             '#type' => 'button',
             '#value' => 'Remove queued file',
             '#name' => 'remove-queued-' . $delta,
+            '#method' => 'remove_queue',
           ],
         ];
       }
@@ -305,31 +276,39 @@ class OchaDocStoreFileWidget extends FileWidget {
       ],
     ];
 
-    if (isset($element['queued_files']) && $element['queued_files']['#access']) {
-      foreach ($element['queued_files'] as $delta => $queued_file) {
-        if (strpos($delta, '#') !== FALSE) {
-          continue;
-        }
+    $fieldsets = [
+      'existing_files' => 'remove',
+      'queued_files' => 'remove',
+      'deleted_files' => 'restore',
+    ];
 
-        $element['queued_files'][$delta]['remove']['#method'] = 'remove_queue';
-        $element['queued_files'][$delta]['remove']['#index'] = $delta;
+    foreach ($fieldsets as $fieldset => $child) {
+      if (isset($element[$fieldset]) && $element[$fieldset]['#access']) {
+        foreach ($element[$fieldset] as $delta => $existing_file) {
+          if (strpos($delta, '#') !== FALSE) {
+            continue;
+          }
 
-        $element['queued_files'][$delta]['remove']['#ajax'] = [
-          'callback' => [get_called_class(), 'rebuildWidgetForm'],
-          'options' => [
-            'query' => [
-              'element_parents' => implode('/', $element['#array_parents']),
+          $element[$fieldset][$delta][$child]['#index'] = $delta;
+
+          $element[$fieldset][$delta][$child]['#ajax'] = [
+            'callback' => [get_called_class(), 'rebuildWidgetForm'],
+            'options' => [
+              'query' => [
+                'element_parents' => implode('/', $element['#array_parents']),
+              ],
             ],
-          ],
-          'wrapper' => $element['add_files']['from_local']['upload']['#ajax']['wrapper'],
-          'effect' => 'fade',
-          'progress' => [
-            'type' => 'throbber',
-            'message' => NULL,
-          ],
-        ];
+            'wrapper' => $element['add_files']['from_local']['upload']['#ajax']['wrapper'],
+            'effect' => 'fade',
+            'progress' => [
+              'type' => 'throbber',
+              'message' => NULL,
+            ],
+          ];
+        }
       }
     }
+
     return $element;
   }
 
@@ -347,8 +326,10 @@ class OchaDocStoreFileWidget extends FileWidget {
    *   The ajax response of the ajax upload.
    */
   public static function rebuildWidgetFormRemote(&$form, FormStateInterface &$form_state, Request $request) {
+    $form_parents = explode('/', $request->query->get('element_parents'));
+
     // Remove entered URLs.
-    $form['add_files']['from_uri']['uri']['#value'] = '';
+    $form[$form_parents[0]]['widget']['add_files']['from_uri']['uri']['#value'] = '';
 
     return static::rebuildWidgetForm($form, $form_state, $request);
   }
@@ -408,7 +389,84 @@ class OchaDocStoreFileWidget extends FileWidget {
    * {@inheritdoc}
    */
   public function massageFormValues(array $values, array $form, FormStateInterface $form_state) {
-    return $values;
+    $field_name = $this->fieldDefinition->getName();
+    $field_state = static::getWidgetState($form['#parents'], $field_name, $form_state);
+    $uuids = [];
+
+    // Add existing files.
+    if (isset($field_state['existing_files'])) {
+      $uuids = $field_state['existing_files'];
+    }
+
+    // Process queued files.
+    if (isset($field_state['queued_files'])) {
+      foreach ($field_state['queued_files'] as &$queued_file) {
+        // File upload.
+        if (isset($queued_file['tmp_path'])) {
+          $contents = file_get_contents($queued_file['tmp_path']);
+          $response = \Drupal::httpClient()->request(
+            'POST',
+            $this->getSetting('endpoint'),
+            [
+              'body' => json_encode([
+                'filename' => $queued_file['filename'],
+                'data' => base64_encode($contents),
+                'private' => FALSE,
+              ]),
+              'headers' => [
+                'API-KEY' => $this->getSetting('api-key'),
+              ],
+            ]
+          );
+
+          $body = $response->getBody() . '';
+          $body = json_decode($body);
+
+          // @todo: check return value.
+          if ($body->uuid) {
+            $uuids[] = $body->media_uuid;
+            $field_state['existing_files'][] = $body->media_uuid;
+          }
+
+          // Avoid duplicate uploads.
+          unset($queued_file['tmp_path']);
+        }
+
+        // Remote file.
+        if (isset($queued_file['uri'])) {
+          $response = \Drupal::httpClient()->request(
+            'POST',
+            $this->getSetting('endpoint'),
+            [
+              'body' => json_encode([
+                'filename' => $queued_file['filename'],
+                'uri' => $queued_file['uri'],
+                'private' => FALSE,
+              ]),
+              'headers' => [
+                'API-KEY' => $this->getSetting('api-key'),
+              ],
+            ]
+          );
+
+          $body = $response->getBody() . '';
+          $body = json_decode($body);
+
+          // @todo: check return value.
+          if ($body->uuid) {
+            $uuids[] = $body->media_uuid;
+            $field_state['existing_files'][] = $body->media_uuid;
+          }
+
+          // Avoid duplicate uploads.
+          unset($queued_file['uri']);
+        }
+      }
+    }
+
+    static::setWidgetState($form['#parents'], $field_name, $form_state, $field_state);
+
+    return $uuids;
   }
 
   /**
@@ -417,66 +475,117 @@ class OchaDocStoreFileWidget extends FileWidget {
   public function extractFormValues(FieldItemListInterface $items, array $form, FormStateInterface $form_state) {
     parent::extractFormValues($items, $form, $form_state);
 
-    // Update reference to 'items' stored during upload to take into account
-    // changes to values like 'alt' etc.
-    // @see \Drupal\file\Plugin\Field\FieldWidget\FileWidget::submit()
+    $trigger = $form_state->getTriggeringElement();
+    if (!$trigger || !isset($trigger['#method'])) {
+      return;
+    }
+
     $field_name = $this->fieldDefinition->getName();
     $field_state = static::getWidgetState($form['#parents'], $field_name, $form_state);
+    if (!isset($field_state['queued_files'])) {
+      $field_state['queued_files'] = [];
+    }
+    if (!isset($field_state['deleted_files'])) {
+      $field_state['deleted_files'] = [];
+    }
+    if (!isset($field_state['existing_files'])) {
+      $field_state['existing_files'] = [];
+    }
+
     $field_state['items'] = $items->getValue();
-    static::setWidgetState($form['#parents'], $field_name, $form_state, $field_state);
-  }
 
-  /**
-   * Form submission handler for upload/remove button of formElement().
-   */
-  public static function submit($form, FormStateInterface $form_state) {
-    // During the form rebuild, formElement() will create field item widget
-    // elements using re-indexed deltas, so clear out FormState::$input to
-    // avoid a mismatch between old and new deltas. The rebuilt elements will
-    // have #default_value set appropriately for the current state of the field,
-    // so nothing is lost in doing this.
-    $button = $form_state->getTriggeringElement();
-    $parents = array_slice($button['#parents'], 0, -2);
-    NestedArray::setValue($form_state->getUserInput(), $parents, NULL);
+    $element_parents = $trigger['#parents'];
+    array_pop($element_parents);
 
-    // Go one level up in the form, to the widgets container.
-    $element = NestedArray::getValue($form, array_slice($button['#array_parents'], 0, -1));
-    $field_name = $element['#field_name'];
-    $parents = $element['#field_parents'];
+    switch ($trigger['#method']) {
+      case 'remove_existing':
+        $index = $trigger['#index'];
 
-    $submitted_values = NestedArray::getValue($form_state->getValues(), array_slice($button['#parents'], 0, -2));
-    foreach ($submitted_values as $delta => $submitted_value) {
-      if (empty($submitted_value['uuids'])) {
-        unset($submitted_values[$delta]);
-      }
-    }
+        if (isset($field_state['existing_files'][$index])) {
+          $field_state['deleted_files'][] = $field_state['existing_files'][$trigger['#index']];
+          unset($field_state['existing_files'][$index]);
 
-    // If there are more files uploaded via the same widget, we have to separate
-    // them, as we display each file in its own widget.
-    $new_values = [];
-    foreach ($submitted_values as $delta => $submitted_value) {
-      if (is_array($submitted_value['uuids'])) {
-        foreach ($submitted_value['uuids'] as $uuid) {
-          $new_value = $submitted_value;
-          $new_value['uuids'] = [$uuid];
-          $new_values[] = $new_value;
+          // Re-key the array.
+          $field_state['existing_files'] = array_values($field_state['existing_files']);
         }
-      }
-      else {
-        $new_value = $submitted_value;
-      }
+
+        break;
+
+      case 'restore_deleted':
+        $index = $trigger['#index'];
+
+        if (isset($field_state['deleted_files'][$index])) {
+          $field_state['existing_files'][] = $field_state['deleted_files'][$trigger['#index']];
+          unset($field_state['deleted_files'][$index]);
+
+          // Re-key the array.
+          $field_state['deleted_files'] = array_values($field_state['deleted_files']);
+        }
+
+        break;
+
+      case 'fetch_files':
+        $element_parents[] = 'uri';
+        $from_uri = $form_state->getValue($element_parents);
+        if (!empty($from_uri)) {
+          $uris = explode("\n", $from_uri);
+          foreach ($uris as $uri) {
+            $uri = trim($uri);
+            if (empty($uri)) {
+              continue;
+            }
+
+            $field_state['queued_files'][] = [
+              'filename' => basename(parse_url($uri, PHP_URL_PATH)),
+              'uri' => $uri,
+            ];
+          }
+        }
+
+        // Clear entered URIs.
+        $form_state->setValue($element_parents, '');
+
+        break;
+
+      case 'local_files':
+        // Get uploaded files.
+        $all_files = \Drupal::request()->files->get('files', []);
+
+        // Add files without uploading.
+        foreach ($all_files as $field) {
+          foreach ($field as $file_info) {
+            // Move file if it's rally uploaded.
+            if (is_uploaded_file($file_info->getRealPath())) {
+              $destination = 'temporary://' . microtime();
+              if (file_prepare_directory($destination, FILE_CREATE_DIRECTORY)) {
+                $destination .= '/' . trim($file_info->getClientOriginalName(), '.');
+                if (move_uploaded_file($file_info->getRealPath(), $destination)) {
+                  $field_state['queued_files'][] = [
+                    'filename' => trim($file_info->getClientOriginalName(), '.'),
+                    'tmp_path' => $destination,
+                  ];
+                }
+              }
+            }
+          }
+        }
+
+        break;
+
+      case 'remove_queue':
+        $index = $trigger['#index'];
+
+        if (isset($field_state['queued_files'][$index])) {
+          unset($field_state['queued_files'][$index]);
+
+          // Re-key the array.
+          $field_state['queued_files'] = array_values($field_state['queued_files']);
+        }
+
+        break;
     }
 
-    // Re-index deltas after removing empty items.
-    $submitted_values = array_values($new_values);
-
-    // Update form_state values.
-    NestedArray::setValue($form_state->getValues(), array_slice($button['#parents'], 0, -2), $submitted_values);
-
-    // Update items.
-    $field_state = static::getWidgetState($parents, $field_name, $form_state);
-    $field_state['items'] = $submitted_values;
-    static::setWidgetState($parents, $field_name, $form_state, $field_state);
+    static::setWidgetState($form['#parents'], $field_name, $form_state, $field_state);
   }
 
 }
