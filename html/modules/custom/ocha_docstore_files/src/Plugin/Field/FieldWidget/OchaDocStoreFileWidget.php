@@ -7,12 +7,16 @@ use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Url;
-use Drupal\file\Plugin\Field\FieldWidget\FileWidget;
 use Symfony\Component\HttpFoundation\Request;
 
+use Drupal\Core\Field\FieldDefinitionInterface;
+use Drupal\Core\Render\ElementInfoManagerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Plugin implementation of the 'ocha_doc_store_file_widget' widget.
  *
@@ -20,12 +24,28 @@ use Symfony\Component\HttpFoundation\Request;
  *   id = "ocha_doc_store_file_widget",
  *   module = "ocha_docstore_files",
  *   label = @Translation("OCHA Document store file widget"),
+ *   multiple_values = true,
  *   field_types = {
  *     "ocha_doc_store_file"
  *   }
  * )
  */
-class OchaDocStoreFileWidget extends FileWidget {
+class OchaDocStoreFileWidget extends WidgetBase implements ContainerFactoryPluginInterface {
+
+  /**
+   * {@inheritdoc}
+   */
+  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, array $third_party_settings, ElementInfoManagerInterface $element_info) {
+    parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $third_party_settings);
+    $this->elementInfo = $element_info;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static($plugin_id, $plugin_definition, $configuration['field_definition'], $configuration['settings'], $configuration['third_party_settings'], $container->get('element_info'));
+  }
 
   /**
    * {@inheritdoc}
@@ -70,6 +90,13 @@ class OchaDocStoreFileWidget extends FileWidget {
     $summary[] = t('Endpoint: @endpoint', ['@endpoint' => $this->getSetting('endpoint')]);
 
     return $summary;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
+    return $this->formMultipleElements($items, $form, $form_state);
   }
 
   /**
@@ -124,6 +151,7 @@ class OchaDocStoreFileWidget extends FileWidget {
             '#name' => 'files[]',
             '#multiple' => TRUE,
             '#error_no_message' => TRUE,
+            '#limit_validation_errors' => [],
           ],
           'upload' => [
             '#type' => 'button',
@@ -153,6 +181,7 @@ class OchaDocStoreFileWidget extends FileWidget {
             '#rows' => 2,
             '#description' => $this->t('One URL per line.'),
             '#default_value' => '',
+            '#limit_validation_errors' => [],
           ],
           'fetch' => [
             '#type' => 'button',

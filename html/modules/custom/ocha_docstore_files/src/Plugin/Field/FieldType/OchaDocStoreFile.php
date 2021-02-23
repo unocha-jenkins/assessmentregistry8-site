@@ -42,16 +42,16 @@ class OchaDocStoreFile extends FieldItemBase {
     $properties['filename'] = DataDefinition::create('string')
       ->setLabel(new TranslatableMarkup('File name'))
       ->setSetting('case_sensitive', TRUE)
-      ->setRequired(TRUE);
+      ->setRequired(FALSE);
 
     $properties['uri'] = DataDefinition::create('string')
       ->setLabel(new TranslatableMarkup('URI'))
       ->setSetting('case_sensitive', TRUE)
-      ->setRequired(TRUE);
+      ->setRequired(FALSE);
 
     $properties['private'] = DataDefinition::create('boolean')
       ->setLabel(new TranslatableMarkup('Private'))
-      ->setRequired(TRUE);
+      ->setRequired(FALSE);
 
     return $properties;
   }
