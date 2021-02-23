@@ -27,7 +27,7 @@
 
     &:nth-child(1),
     &:nth-child(2) {
-      background-color: $cd-light-grey;
+      background-color: $cd-grey--light;
       border-bottom: 3px solid $implementation-highlight;
     }
   }
@@ -36,7 +36,7 @@
 .page-node-type-assessment {
   .block-page-title-block {
     margin-bottom: 1rem;
-    border-bottom: 1px solid $cd-mid-bluey-grey;
+    border-bottom: 1px solid $cd-blue-grey;
 
     @include desktop {
       padding-right: calc(285px + 3rem);
@@ -51,7 +51,7 @@
 //@TODO this, better.
 .cd-filter__btn {
   background: $implementation-primary-dark;
-  color: $cd-light-grey;
+  color: $cd-grey--light;
   -webkit-appearance: none;
   border-radius: 0;
   box-shadow: none;
