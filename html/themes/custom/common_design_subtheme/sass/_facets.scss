@@ -31,15 +31,7 @@
 }
 
 .cd-export-button--wrapper {
-  margin-top: -2rem;
   display: flex;
   justify-content: flex-end;
-}
-
-.cd-button.cd-button--export {
   margin-bottom: 1rem;
-
-  &:focus {
-    outline: 3px solid $implementation-highlight;
-  }
 }
