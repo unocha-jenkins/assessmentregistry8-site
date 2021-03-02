@@ -452,7 +452,7 @@ class OchaDocStoreFileWidget extends WidgetBase implements ContainerFactoryPlugi
           $body = $response->getBody() . '';
           $body = json_decode($body);
 
-          // @todo: check return value.
+          // @todo Check return value.
           if ($body->uuid) {
             $uuids[] = $body->media_uuid;
             $field_state['existing_files'][] = $body->media_uuid;
@@ -483,7 +483,7 @@ class OchaDocStoreFileWidget extends WidgetBase implements ContainerFactoryPlugi
           $body = $response->getBody() . '';
           $body = json_decode($body);
 
-          // @todo: check return value.
+          // @todo Check return value.
           if ($body->uuid) {
             $uuids[] = $body->media_uuid;
             $field_state['existing_files'][] = $body->media_uuid;
