@@ -6,17 +6,17 @@ use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\ReplaceCommand;
+use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Render\Element;
+use Drupal\Core\Render\ElementInfoManagerInterface;
 use Drupal\Core\Url;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-use Drupal\Core\Field\FieldDefinitionInterface;
-use Drupal\Core\Render\ElementInfoManagerInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Plugin implementation of the 'ocha_doc_store_file_widget' widget.
  *
@@ -65,14 +65,14 @@ class OchaDocStoreFileWidget extends WidgetBase implements ContainerFactoryPlugi
 
     $element['endpoint'] = [
       '#type' => 'textfield',
-      '#title' => t('API end point'),
+      '#title' => $this->t('API end point'),
       '#default_value' => $this->getSetting('endpoint'),
       '#weight' => 17,
     ];
 
     $element['api-key'] = [
       '#type' => 'textfield',
-      '#title' => t('API key'),
+      '#title' => $this->t('API key'),
       '#default_value' => $this->getSetting('api-key'),
       '#weight' => 18,
     ];
@@ -86,8 +86,8 @@ class OchaDocStoreFileWidget extends WidgetBase implements ContainerFactoryPlugi
   public function settingsSummary() {
     $summary = [];
 
-    $summary[] = t('Progress indicator: @progress_indicator', ['@progress_indicator' => $this->getSetting('progress_indicator')]);
-    $summary[] = t('Endpoint: @endpoint', ['@endpoint' => $this->getSetting('endpoint')]);
+    $summary[] = $this->t('Progress indicator: @progress_indicator', ['@progress_indicator' => $this->getSetting('progress_indicator')]);
+    $summary[] = $this->t('Endpoint: @endpoint', ['@endpoint' => $this->getSetting('endpoint')]);
 
     return $summary;
   }
@@ -342,7 +342,7 @@ class OchaDocStoreFileWidget extends WidgetBase implements ContainerFactoryPlugi
   }
 
   /**
-   * #ajax callback for remote files.
+   * Rebuild form.
    *
    * @param array $form
    *   The build form.
@@ -354,7 +354,7 @@ class OchaDocStoreFileWidget extends WidgetBase implements ContainerFactoryPlugi
    * @return \Drupal\Core\Ajax\AjaxResponse
    *   The ajax response of the ajax upload.
    */
-  public static function rebuildWidgetFormRemote(&$form, FormStateInterface &$form_state, Request $request) {
+  public static function rebuildWidgetFormRemote(array &$form, FormStateInterface &$form_state, Request $request) {
     $form_parents = explode('/', $request->query->get('element_parents'));
 
     // Remove entered URLs.
@@ -364,7 +364,7 @@ class OchaDocStoreFileWidget extends WidgetBase implements ContainerFactoryPlugi
   }
 
   /**
-   * #ajax callback for remote files.
+   * Rebuild form.
    *
    * @param array $form
    *   The build form.
@@ -376,12 +376,12 @@ class OchaDocStoreFileWidget extends WidgetBase implements ContainerFactoryPlugi
    * @return \Drupal\Core\Ajax\AjaxResponse
    *   The ajax response of the ajax upload.
    */
-  public static function rebuildWidgetFormLocal(&$form, FormStateInterface &$form_state, Request $request) {
+  public static function rebuildWidgetFormLocal(array &$form, FormStateInterface &$form_state, Request $request) {
     return static::rebuildWidgetForm($form, $form_state, $request);
   }
 
   /**
-   * #ajax callback for remote files.
+   * Rebuild form.
    *
    * @param array $form
    *   The build form.
@@ -393,7 +393,7 @@ class OchaDocStoreFileWidget extends WidgetBase implements ContainerFactoryPlugi
    * @return \Drupal\Core\Ajax\AjaxResponse
    *   The ajax response of the ajax upload.
    */
-  public static function rebuildWidgetForm(&$form, FormStateInterface &$form_state, Request $request) {
+  public static function rebuildWidgetForm(array &$form, FormStateInterface &$form_state, Request $request) {
     $form_parents = explode('/', $request->query->get('element_parents'));
 
     // Sanitize form parents before using them.
@@ -433,6 +433,7 @@ class OchaDocStoreFileWidget extends WidgetBase implements ContainerFactoryPlugi
         // File upload.
         if (isset($queued_file['tmp_path'])) {
           $contents = file_get_contents($queued_file['tmp_path']);
+          // phpcs:ignore
           $response = \Drupal::httpClient()->request(
             'POST',
             $this->getSetting('endpoint'),
@@ -463,6 +464,7 @@ class OchaDocStoreFileWidget extends WidgetBase implements ContainerFactoryPlugi
 
         // Remote file.
         if (isset($queued_file['uri'])) {
+          // phpcs:ignore
           $response = \Drupal::httpClient()->request(
             'POST',
             $this->getSetting('endpoint'),
@@ -578,6 +580,7 @@ class OchaDocStoreFileWidget extends WidgetBase implements ContainerFactoryPlugi
 
       case 'local_files':
         // Get uploaded files.
+        // phpcs:ignore
         $all_files = \Drupal::request()->files->get('files', []);
 
         // Add files without uploading.
