@@ -8,12 +8,14 @@ dependencies:
     - field.field.km.km.field_countries
     - field.field.km.km.field_description
     - field.field.km.km.field_document_type
+    - field.field.km.km.field_files
     - field.field.km.km.field_hpc_document_repository
     - field.field.km.km.field_life_cycle_steps
     - field.field.km.km.field_original_publication_date
     - field.field.km.km.field_population_types
   module:
     - external_entities
+    - ocha_docstore_files
 id: km.km.default
 targetEntityType: km
 bundle: km
@@ -56,6 +58,14 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: entity_reference_autocomplete
+    region: content
+  field_files:
+    weight: 5
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: ocha_doc_store_file_widget
     region: content
   field_hpc_document_repository:
     weight: 2

@@ -22,6 +22,11 @@ field_mappings:
     value: description
   field_document_type:
     target_id: 'ar_document_type/*/uuid'
+  field_files:
+    media_uuid: 'files/*/media_uuid'
+    filename: 'files/*/filename'
+    uri: 'files/*/uri'
+    private: 'files/*/private'
   field_hpc_document_repository:
     target_id: 'ar_hpc_document_repository/*/uuid'
   field_life_cycle_steps:
