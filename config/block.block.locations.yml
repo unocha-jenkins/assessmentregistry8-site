@@ -11,8 +11,8 @@ dependencies:
     - common_design_subtheme
 id: locations
 theme: common_design_subtheme
-region: sidebar_first
-weight: -15
+region: facets
+weight: -14
 provider: null
 plugin: 'facet_block:locations'
 settings:

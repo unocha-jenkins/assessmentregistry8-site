@@ -11,8 +11,8 @@ dependencies:
     - common_design_subtheme
 id: km_population_types
 theme: common_design_subtheme
-region: sidebar_first
-weight: -31
+region: facets
+weight: -30
 provider: null
 plugin: 'facet_block:km_population_types'
 settings:

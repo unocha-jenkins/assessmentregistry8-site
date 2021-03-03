@@ -11,8 +11,8 @@ dependencies:
     - common_design_subtheme
 id: map_status
 theme: common_design_subtheme
-region: sidebar_first
-weight: -11
+region: facets
+weight: -10
 provider: null
 plugin: 'facet_block:map_status'
 settings:

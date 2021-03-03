@@ -11,8 +11,8 @@ dependencies:
     - common_design_subtheme
 id: map_levelofrepresentation
 theme: common_design_subtheme
-region: sidebar_first
-weight: -8
+region: facets
+weight: -7
 provider: null
 plugin: 'facet_block:map_level_of_representation'
 settings:

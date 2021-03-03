@@ -11,8 +11,8 @@ dependencies:
     - common_design_subtheme
 id: context
 theme: common_design_subtheme
-region: sidebar_first
-weight: -28
+region: facets
+weight: -27
 provider: null
 plugin: 'facet_block:context'
 settings:

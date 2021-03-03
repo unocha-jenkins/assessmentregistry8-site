@@ -11,8 +11,8 @@ dependencies:
     - common_design_subtheme
 id: lifecyclesteps
 theme: common_design_subtheme
-region: sidebar_first
-weight: -30
+region: facets
+weight: -29
 provider: null
 plugin: 'facet_block:life_cycle_steps'
 settings:

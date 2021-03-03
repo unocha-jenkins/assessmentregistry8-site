@@ -11,8 +11,8 @@ dependencies:
     - common_design_subtheme
 id: table_organizations
 theme: common_design_subtheme
-region: sidebar_first
-weight: -19
+region: facets
+weight: -18
 provider: null
 plugin: 'facet_block:table_organizations'
 settings:

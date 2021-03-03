@@ -11,8 +11,8 @@ dependencies:
     - common_design_subtheme
 id: table_summary
 theme: common_design_subtheme
-region: sidebar_first
-weight: -33
+region: facets
+weight: -32
 provider: null
 plugin: 'facets_summary_block:table_summary'
 settings:
