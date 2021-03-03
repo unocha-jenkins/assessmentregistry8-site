@@ -12,7 +12,7 @@ dependencies:
 id: context
 theme: common_design_subtheme
 region: facets
-weight: -27
+weight: -28
 provider: null
 plugin: 'facet_block:context'
 settings:

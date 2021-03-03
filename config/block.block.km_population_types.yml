@@ -12,7 +12,7 @@ dependencies:
 id: km_population_types
 theme: common_design_subtheme
 region: facets
-weight: -30
+weight: -31
 provider: null
 plugin: 'facet_block:km_population_types'
 settings:

@@ -12,7 +12,7 @@ dependencies:
 id: map_assessmentdate
 theme: common_design_subtheme
 region: facets
-weight: 3
+weight: 5
 provider: null
 plugin: 'facet_block:map_assessment_date'
 settings:
