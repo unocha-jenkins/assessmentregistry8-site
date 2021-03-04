@@ -43,6 +43,9 @@ before_script:
   # Ensure the PHP environment is ready.
   - phpenv rehash
 
+  # Authenticate github.
+  - composer config -g github-oauth.github.com $GITHUB_OAUTH_TOKEN
+  
   # Code sniff
   - cd $TRAVIS_BUILD_DIR
   - COMPOSER_MEMORY_LIMIT=-1 composer install
