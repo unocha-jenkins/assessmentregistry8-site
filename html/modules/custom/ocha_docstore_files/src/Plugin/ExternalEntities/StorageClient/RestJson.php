@@ -191,14 +191,10 @@ class RestJson extends Rest implements PluginFormInterface {
       if (isset($parameter['operator'])) {
         $query_parameters['filter'][$external_field_name]['condition']['operator'] = $parameter['operator'];
         $query_parameters['filter'][$external_field_name]['condition']['path'] = $external_field_name;
-        $query_parameters['filter'][$external_field_name]['condition']['value'] = is_array($parameter['value'])
-          ? implode(',', $parameter['value'])
-          : $parameter['value'];
+        $query_parameters['filter'][$external_field_name]['condition']['value'] = $parameter['value'];
       }
       else {
-        $query_parameters['filter'][$external_field_name] = is_array($parameter['value'])
-          ? implode(',', $parameter['value'])
-          : $parameter['value'];
+        $query_parameters['filter'][$external_field_name] = $parameter['value'];
       }
     }
 
